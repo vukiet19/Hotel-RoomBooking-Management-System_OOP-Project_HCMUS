@@ -1,14 +1,8 @@
 #pragma once
 
-enum MembershipTier {
+enum class RoomStatus {
     Available,
     Reserved,
     Occupied,
-    Maintenance,
-};
-
-enum class RoomType {
-    Standard,
-    VIP,
-    Presidential
+    Maintenance
 };
