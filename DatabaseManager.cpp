@@ -4,7 +4,7 @@
 DatabaseManager::DatabaseManager() {
 	db = QSqlDatabase::addDatabase("QSQLITE");
 	// Lay duong dan file exe va tro vao file hotel
-	QString dbPath = QCoreApplication::applicationDirPath() + "/hotel.db";
+	QString dbPath = QCoreApplication::applicationDirPath() + "/../../Hotel Management/Database/hotel.db";
 	db.setDatabaseName(dbPath);
 }
 
