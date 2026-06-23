@@ -32,7 +32,7 @@ public:
 
         this->roomNumber = roomNumber;
         this->basePrice = basePrice;
-        this->status = RoomStatus::Available;
+        this->status = Available;
         this->maxExtraBeds = 0;
     }
 

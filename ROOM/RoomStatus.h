@@ -1,6 +1,6 @@
 #pragma once
 
-enum class RoomStatus {
+enum RoomStatus {
     Available,
     Reserved,
     Occupied,

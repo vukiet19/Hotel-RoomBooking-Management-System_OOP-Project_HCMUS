@@ -15,7 +15,7 @@ public:
 
 
     RoomType getType() const override {
-        return RoomType::Standard;
+        return Standard;
     }
 
     int getBasePrice() const override {
@@ -31,7 +31,7 @@ public:
     }
 
     RoomType getType() const override {
-        return RoomType::VIP;
+        return VIP;
     }
 
     int getBasePrice() const override {
@@ -47,7 +47,7 @@ public:
     }
 
     RoomType getType() const override {
-        return RoomType::Presidential;
+        return Presidential;
     }
 
     int getBasePrice() const override {

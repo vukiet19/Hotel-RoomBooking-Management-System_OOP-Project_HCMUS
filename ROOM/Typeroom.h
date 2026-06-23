@@ -1,6 +1,6 @@
 #pragma once
 
-enum class RoomType {
+enum RoomType {
     Standard,
     VIP,
     Presidential
