@@ -1,0 +1,10 @@
+﻿   Qt/MSBuild: 3.5.0.0
+  Reading Qt configuration (C:/Qt/6.11.1/msvc2022_64/bin/qmake)
+   Qt: 6.11.1
+  BookingRepository.cpp
+  DashboardService.cpp
+  DatabaseManager.cpp
+  main.cpp
+  Room.cpp
+  RoomRepository.cpp
+  Hotel Management.vcxproj -> C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\x64\Debug\Hotel Management.exe
