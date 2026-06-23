@@ -20,6 +20,8 @@ public:
         this->name = name;
         this->unitPrice = price;
         this->quantity = quantity;
+        /* Luu y cho UI: kiem tra neu note == "" thi se khong hien thi.
+           Nguoc lai se hien thi Note: <noi dung note> tren bill*/
         this->note = note;
         // Moi tao ra thi trang thai la Pending
         changeStatus(ServiceStatus::Pending);
