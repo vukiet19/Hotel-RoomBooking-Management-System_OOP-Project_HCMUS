@@ -2,7 +2,8 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
-#include "ServiceStatus.h"
+#include <memory>
+#include "ServiceEnums.h"
 
 using namespace std;
 
@@ -12,13 +13,14 @@ private:
     string name;
     double unitPrice;
     ServiceStatus status;
-
+    string note;
 public:
-    ServiceItem(int id, string name, double price, int qantity) {
+    ServiceItem(int id, string name, double price, int quantity, string note) {
         this->id = id;
         this->name = name;
         this->unitPrice = price;
-        this-> quantity = quantity;
+        this->quantity = quantity;
+        this->note = note;
         // Moi tao ra thi trang thai la Pending
         changeStatus(ServiceStatus::Pending);
     }
@@ -30,6 +32,7 @@ public:
     double getUnitPrice() const { return unitPrice; }
     int getQuantity() const { return quantity; }
     ServiceStatus getStatus() const { return status; }
+    string getNote() const { return note; }
     
     void setName(const string& newName) {
         if (newName.empty()) {
@@ -82,28 +85,35 @@ public:
             this->status = newStatus;
         }
 
+        void setNote(string note) {
+            this->note = note;
+        }
+
         virtual ~ServiceItem() = default;
     };
     
-    class FoodOrderItem : public ServiceItem {
-    private:
-        // Bien nay de khach hang co ghi chu gi cho dau bep thi them vo
-        string note;
-    
+    class FoodOrderItem : public ServiceItem {    
     public:
-        //
-        FoodOrderItem(int id, string name, double price, int quantity)
-        : ServiceItem(id, name, price, quantity) {}
-
         FoodOrderItem(int id, string name, double price, int quantity, string note = "")
-        : ServiceItem(id, name, price, quantity) {
-            this->note = note;
-        }
+        : ServiceItem(id, name, price, quantity, note) {}
 
         double getSubtotal() const override {
             double base = ServiceItem::getSubtotal();
 
             // Vi du neu dung dich vu goi do an thi cong them 5% phi dich vu
             return base * 1.05;
+        }
+    };
+
+    class ServiceItemFactory {
+    public:
+        static unique_ptr<ServiceItem> createServiceItem(
+        ServiceType type, int id, string name, double price, int quantity, string note) {
+            switch (type) {
+                case ServiceType::FoodOrderItem:
+                    return make_unique<FoodOrderItem>(id, name, price, quantity, note);
+                default:
+                    return nullptr;
+            }
         }
     };
