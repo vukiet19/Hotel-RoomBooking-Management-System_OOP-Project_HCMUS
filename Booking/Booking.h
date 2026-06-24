@@ -2,49 +2,47 @@
 #include <QDateTime>
 #include <vector>
 #include "../ServiceItem/ServiceItem.h"
+#include "../CUSTOMER/Customer 21.56.18.h"
+#include "../ROOM/Room.h"
+#include "../ROOM/Typeroom.h"
+#include "BookingStatus.h"
 
-// Forward declarations to avoid heavy includes in header
-class Customer;
-class Room;
+using namespace std;
 
-enum class BookingStatus {
-    UNCONFIRMED, CONFIRMED, CHECKED_IN, CHECKED_OUT
-};
-
-class IBooking {
+class Booking {
 protected:
     int id;
     Customer* customer; 
     BookingStatus status;
-    std::vector<ServiceItem*> serviceItems; 
+    vector<ServiceItem*> serviceItems; 
     
 public:
-    IBooking(Customer* c);
-    virtual ~IBooking();
-    
+    Booking(Customer* c);
+    virtual ~Booking();
     virtual int getNights() const = 0; 
     void addServiceItem(ServiceItem* item);
     Customer* getCustomer() const;
 };
 
-// đổi cách đặt tên để phân biệt với FacilityBooking sau này
-class StandardRoomBooking : public IBooking {
+class StandardRoomBooking : public Booking {
 private:
     Room* room; 
     QDateTime checkInTime;
     QDateTime checkOutTime;
     double depositAmount;
-
 public:
-    StandardRoomBooking(Customer* c, Room* r);
+    StandardRoomBooking(Customer* c, Room* r,QDateTime in,QDateTime out,double depositAmount = 0.00);
+    ~StandardRoomBooking();
+    Room* getRoom() const;
+    void resolveDeposit();
     int getNights() const override;
 };
 
-// bàn thêm phần này tạo lấy sươn thôi
-class WalkInTab : public IBooking {
+
+class WalkInTab : public Booking {
 private:
     QDateTime dateCreated;
 public:
-    WalkInTab(Customer* c);
+    WalkInTab(Customer* c,QDateTime in);
     int getNights() const override;
 };
