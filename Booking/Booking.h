@@ -6,6 +6,7 @@
 #include "../ROOM/Room.h"
 #include "../ROOM/Typeroom.h"
 #include "BookingStatus.h"
+#include "DepositStatus.h"
 
 using namespace std;
 
@@ -20,6 +21,8 @@ public:
     Booking(Customer* c);
     virtual ~Booking();
     virtual int getNights() const = 0; 
+    virtual void checkIn() = 0;
+    virtual void checkOut() = 0;
     void addServiceItem(ServiceItem* item);
     Customer* getCustomer() const;
 };
@@ -30,12 +33,17 @@ private:
     QDateTime checkInTime;
     QDateTime checkOutTime;
     double depositAmount;
+    DepositStatus depositStatus = DepositStatus::NONE;
+
 public:
     StandardRoomBooking(Customer* c, Room* r,QDateTime in,QDateTime out,double depositAmount = 0.00);
     ~StandardRoomBooking();
     Room* getRoom() const;
     void resolveDeposit();
+    DepositStatus getDepositStatus() const;
     int getNights() const override;
+    void checkIn() override;
+    void checkOut() override;
 };
 
 
@@ -45,4 +53,6 @@ private:
 public:
     WalkInTab(Customer* c,QDateTime in);
     int getNights() const override;
+    void checkIn() override;
+    void checkOut() override;
 };
