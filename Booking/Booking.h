@@ -1,7 +1,7 @@
 #pragma once
 #include <QDateTime>
 #include <vector>
-#include "../ServiceItem/ServiceItem.h"
+#include "../SERVICE_ITEM/ServiceItem.h"
 #include "../CUSTOMER/Customer 21.56.18.h"
 #include "../ROOM/Room.h"
 #include "../ROOM/Typeroom.h"
@@ -15,15 +15,15 @@ protected:
     int id;
     Customer* customer; 
     BookingStatus status;
-    vector<ServiceItem*> serviceItems; 
+    vector<unique_ptr<ServiceItem>> serviceItems; 
     
 public:
     Booking(Customer* c);
-    virtual ~Booking();
+    virtual ~Booking() = default;
     virtual int getNights() const = 0; 
     virtual void checkIn() = 0;
     virtual void checkOut() = 0;
-    void addServiceItem(ServiceItem* item);
+    void addServiceItem(unique_ptr<ServiceItem> serviceItem);
     Customer* getCustomer() const;
 };
 

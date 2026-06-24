@@ -2,21 +2,14 @@
 
 Booking::Booking(Customer* c) : customer(c), status(BookingStatus::UNCONFIRMED) {}
 
-Booking::~Booking() {
-    for (ServiceItem* item : serviceItems) {
-        delete item; 
-    }
-    serviceItems.clear();
-}
-
 StandardRoomBooking::~StandardRoomBooking() {
     (this->room)->setStatus(Available);
 }
 
 //thêm serviceitems
-void Booking::addServiceItem(ServiceItem* item) {
-    if (item != nullptr) {
-        serviceItems.push_back(item);
+void Booking::addServiceItem(unique_ptr<ServiceItem> serviceItem) {
+    if (serviceItem != nullptr) {
+        serviceItems.push_back(move(serviceItem));
     }
 }
 
