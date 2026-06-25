@@ -1,4 +1,4 @@
-#include "DashboardService.h"
+﻿#include "DashboardService.h"
 #include "DatabaseManager.h"
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -33,7 +33,11 @@ double DashboardService::getMonthlyRevenue() {
 	// Lay ra thang va nam hien tai theo dinh dang "yyyy-mm"
 	QString currentMonthYear = QDateTime::currentDateTime().toString("yyyy-MM");
 
-	query.prepare("SELECT SUM(total_price) FROM Bookings WHERE check_in_time LIKE :currentMonth");
+	bool isPrepared = query.prepare("SELECT SUM(total_price) FROM Bookings WHERE check_in_time LIKE (:currentMonth || '%')");
+	if (!isPrepared) {
+		qDebug() << "LOI COT DASHBOARD:" << query.lastError().text();
+		return 0;
+	}
 	query.bindValue(":currentMonth", currentMonthYear + "%");
 
 	if (query.exec()) {
