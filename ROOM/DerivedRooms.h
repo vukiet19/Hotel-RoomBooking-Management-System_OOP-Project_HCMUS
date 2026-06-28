@@ -3,69 +3,40 @@
 using namespace std;
 // Note_can_chu_y , Tham khao https://viblo.asia/p/virtual-function-ham-ao-override-va-final-naQZRWRPlvx
 
+// Tóm tắt lại override: hàm này có chức năng chính là sẽ ghi đè lên hàm cha , ví dụ nếu hàm cha và con nếu cùng có hàm như getBasePrice thì hàm con này sẽ ghi đè lên hàm cha , kết quả sẽ in theo kết quả hàm con
+
 // Stadard room
 class StandardRoom : public Room
 {
 public:
-    StandardRoom(string roomNum, double basePrice)
-        : Room(roomNum, basePrice)
-    {
-        this->id = "R";
-        string tmp = to_string(nextid);
+    StandardRoom();
 
-        int zerosNeeded = 4 - tmp.size();
-        for (int i = 0; i < zerosNeeded; i++)
-        {
-            this->id += '0';
-        }
-        this->id += tmp;
-    }
+    StandardRoom(string roomNum);
 
-    RoomType getType() const override
-    {
-        return Standard;
-    }
+    RoomType getType() const override;
 
-    int getBasePrice() const override
-    {
-        return basePrice * 1.0;
-    }
+    int getBasePrice() const override;
 };
 
-class VIPROOM : public Room
+class VipRoom : public Room
 {
 public:
-    VIPROOM(string roomNum, double basePrice)
-        : Room(roomNum, basePrice)
-    {
-    }
+    VipRoom();
+    VipRoom(string roomNum);
 
-    RoomType getType() const override
-    {
-        return VIP;
-    }
+    RoomType getType() const override;
 
-    int getBasePrice() const override
-    {
-        return basePrice * 1.0;
-    }
+    int getBasePrice() const override;
 };
 
-class PresiROOM : public Room
+class PresiRoom : public Room
 {
 public:
-    PresiROOM(string roomNum, double basePrice)
-        : Room(roomNum, basePrice)
-    {
-    }
+    PresiRoom();
 
-    RoomType getType() const override
-    {
-        return Presidential;
-    }
+    PresiRoom(string roomNum);
 
-    int getBasePrice() const override
-    {
-        return basePrice * 1.0;
-    }
+    RoomType getType() const override;
+
+    int getBasePrice() const override;
 };

@@ -8,18 +8,17 @@
 using namespace std;
 
 // khai bao bien static
-int Room::nextid = 0;
 
 int main()
 {
-    StandardRoom r1("101", 10000000.0);
+    StandardRoom r1;
 
     std::cout << "Room " << r1.getType() << " created.\n";
 
-    Reservede reser;
-    Occupiede Occ;
-    Availablee Ava;
-    Maintenancee mai;
+    Room_Reserved reser;
+    Room_Occupied Occ;
+    Room_Available Ava;
+    Room_Maintenance mai;
 
     r1.addObserver(&Occ);
     r1.addObserver(&reser);
@@ -33,6 +32,9 @@ int main()
     r1.setStatus(Maintenance);
 
     r1.setStatus(Available);
+
+    r1.setBasePrice(1000000);
+    cout << r1.getBasePrice();
 
     return 0;
 }

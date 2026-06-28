@@ -3,6 +3,7 @@
 #include "RoomStatus.h"
 #include "Typeroom.h"
 #include "observer.h"
+#include <vector>
 
 using namespace std;
 
@@ -19,60 +20,33 @@ protected:
 public:
     static int nextid;
     // ham khoi tao
-    Room(string roomNumber, int basePrice)
-    {
-        // id co cau truc la "R" + 0000-> 9999
-        this->id = "R";
-        string tmp = to_string(nextid);
 
-        int zerosNeeded = 4 - tmp.size();
-        for (int i = 0; i < zerosNeeded; i++)
-        {
-            this->id += '0';
-        }
-        this->id += tmp;
-
-        nextid++;
-
-        this->roomNumber = roomNumber;
-        this->basePrice = basePrice;
-        this->status = Available;
-    }
+    Room();
+    Room(string roomNumber);
 
     // destructor
-    virtual ~Room() = default;
+    virtual ~Room();
 
     // get_type
     virtual RoomType getType() const = 0;
 
     // getbaseprice
-    virtual int getBasePrice() const
-    {
-        return basePrice;
-    }
+    virtual int getBasePrice() const;
 
-    void addObserver(Observer *observer)
-    {
-        observers.push_back(observer);
-    }
+    // Hàm này sẽ add observer cho Room, vì room có 4 status là Avaliable, reserved, Occupied và Maintance nên sẽ chứa là 4 biến tựng chưng observer của từng trạng thái, nếu có trạng thái đó thì observer sẽ báo.
+    void addObserver(Observer *observer);
 
-    void setStatus(RoomStatus status)
-    {
-        this->status = status;
+    void setBasePrice(int baseprice);
 
-        notify();
-    }
+    // setstatus
+    void setStatus(RoomStatus status);
 
-    string getId() const
-    {
-        return id;
-    }
+    // set room name
+    void setRoomNumber(string roomNumber);
 
-    void notify()
-    {
-        for (auto observer : observers)
-        {
-            observer->Ongoing_status_room(id, status);
-        }
-    }
+    // getId
+    string getId() const;
+
+    // Hàm này dùng để báo khi có sự thay đổi trạng thái của phòng
+    void notify();
 };
