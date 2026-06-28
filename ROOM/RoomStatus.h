@@ -1,6 +1,7 @@
 #pragma once
 
-enum RoomStatus {
+enum RoomStatus
+{
     Available,
     Reserved,
     Occupied,

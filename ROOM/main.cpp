@@ -2,34 +2,37 @@
 #include "Room.h"
 #include "RoomStatus.h"
 #include "Typeroom.h"
-#include "DerivedRooms.h" 
+#include "DerivedRooms.h"
+#include "observer.h"
 
 using namespace std;
 
-
-//khai bao bien static
+// khai bao bien static
 int Room::nextid = 0;
 
+int main()
+{
+    StandardRoom r1("101", 10000000.0);
 
+    std::cout << "Room " << r1.getType() << " created.\n";
 
+    Reservede reser;
+    Occupiede Occ;
+    Availablee Ava;
+    Maintenancee mai;
 
-int main() {
-    Room* r1 = new StandardRoom("S-101", 500000);
-    Room* r2 = new VIPROOM("V-201", 1200000);
-    Room* r3 = new PresiROOM("P-301", 5000000);
+    r1.addObserver(&Occ);
+    r1.addObserver(&reser);
+    r1.addObserver(&Ava);
+    r1.addObserver(&mai);
 
-    cout << "ID: " << r1->getId() << " | Room Type: " << r1->getType() << '\n';
-    cout << "Price: " << r1->getBasePrice() << " VND\n\n";
+    r1.setStatus(Reserved);
 
-    cout << "ID: " << r2->getId() << " | Room Type: " << r2->getType() << '\n';
-    cout << "Price: " << r2->getBasePrice() << " VND\n\n";
+    r1.setStatus(Occupied);
 
-    cout << "ID: " << r3->getId() << " | Room Type: " << r3->getType() << '\n';
-    cout << "Price: " << r3->getBasePrice() << " VND\n";
+    r1.setStatus(Maintenance);
 
-    delete r1;
-    delete r2;
-    delete r3;
+    r1.setStatus(Available);
 
     return 0;
 }

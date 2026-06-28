@@ -1,56 +1,71 @@
 #pragma once
 #include "Room.h"
 using namespace std;
-//Note_can_chu_y , Tham khao https://viblo.asia/p/virtual-function-ham-ao-override-va-final-naQZRWRPlvx
+// Note_can_chu_y , Tham khao https://viblo.asia/p/virtual-function-ham-ao-override-va-final-naQZRWRPlvx
 
-
-//Stadard room
-class StandardRoom : public Room {
+// Stadard room
+class StandardRoom : public Room
+{
 public:
-
     StandardRoom(string roomNum, double basePrice)
-        : Room(roomNum, basePrice) {
-        maxExtraBeds = 1; 
+        : Room(roomNum, basePrice)
+    {
+        this->id = "R";
+        string tmp = to_string(nextid);
+
+        int zerosNeeded = 4 - tmp.size();
+        for (int i = 0; i < zerosNeeded; i++)
+        {
+            this->id += '0';
+        }
+        this->id += tmp;
     }
 
-
-    RoomType getType() const override {
+    RoomType getType() const override
+    {
         return Standard;
     }
 
-    int getBasePrice() const override {
+    int getBasePrice() const override
+    {
         return basePrice * 1.0;
     }
 };
 
-class VIPROOM : public Room {
+class VIPROOM : public Room
+{
 public:
     VIPROOM(string roomNum, double basePrice)
-        : Room(roomNum, basePrice) {
-        this->maxExtraBeds = 2; 
+        : Room(roomNum, basePrice)
+    {
     }
 
-    RoomType getType() const override {
+    RoomType getType() const override
+    {
         return VIP;
     }
 
-    int getBasePrice() const override {
-        return basePrice * 1.2; 
+    int getBasePrice() const override
+    {
+        return basePrice * 1.0;
     }
 };
 
-class PresiROOM : public Room {
+class PresiROOM : public Room
+{
 public:
     PresiROOM(string roomNum, double basePrice)
-        : Room(roomNum, basePrice) {
-        this->maxExtraBeds = 3; 
+        : Room(roomNum, basePrice)
+    {
     }
 
-    RoomType getType() const override {
+    RoomType getType() const override
+    {
         return Presidential;
     }
 
-    int getBasePrice() const override {
-        return basePrice * 2.0; 
+    int getBasePrice() const override
+    {
+        return basePrice * 1.0;
     }
 };
