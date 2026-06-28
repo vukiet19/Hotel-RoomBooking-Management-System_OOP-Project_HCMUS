@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
 		qDebug() << "Ma dat phong    :" << finalInvoice.getBookingId();
 		qDebug() << "Ngay xuat       :" << finalInvoice.getCreatedAt().toString("dd/MM/yyyy HH:mm:ss");
 		qDebug() << "Trang thai      :" << finalInvoice.getPaymentStatus();
-		qDebug() << "Tien phong      :" << baseRoomCharge << "\n";
-		qDebug() << "Tien dich vu    :" << finalInvoice.getTotalAmount() - baseRoomCharge << "\n";
+		qDebug() << "Tien phong      :" << baseRoomCharge;
+		qDebug() << "Tien dich vu    :" << finalInvoice.getTotalAmount() - baseRoomCharge;
  		qDebug() << "-------------------------------------------------";
 		qDebug() << "TONG TIEN CAN THU:" << QString::number(finalInvoice.getTotalAmount(), 'f', 0) << "VND";
 
