@@ -1,8 +1,8 @@
 #pragma once
 
 enum class DepositStatus {
-    NONE,      
-    PENDING,    
-    PAID,       
-    REFUNDED   
+    NONE,  
+    PENDING,  
+    HELD,    
+    RETURNED 
 };

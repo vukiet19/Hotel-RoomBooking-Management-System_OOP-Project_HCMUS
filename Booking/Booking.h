@@ -15,7 +15,7 @@ protected:
     int id;
     Customer* customer; 
     BookingStatus status;
-    vector<unique_ptr<ServiceItem>> serviceItems; 
+    vector<unique_ptr<ServiceItem>> serviceItems;
     
 public:
     Booking(Customer* c);
@@ -25,6 +25,7 @@ public:
     virtual void checkOut() = 0;
     void addServiceItem(unique_ptr<ServiceItem> serviceItem);
     Customer* getCustomer() const;
+    void addDamagePenaltyItems();
 };
 
 class StandardRoomBooking : public Booking {
@@ -39,6 +40,7 @@ public:
     StandardRoomBooking(Customer* c, Room* r,QDateTime in,QDateTime out,double depositAmount = 0.00);
     ~StandardRoomBooking();
     Room* getRoom() const;
+    void cancelBooking();
     void resolveDeposit();
     DepositStatus getDepositStatus() const;
     int getNights() const override;

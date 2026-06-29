@@ -34,7 +34,7 @@ int main() {
     auto guest2 = make_unique<Customer>("Bob", "0000000001", "0000000001", MembershipTier::Sliver); 
         
     auto room101 = make_unique<StandardRoom>("S-101", 500000);
-    auto room102 = make_unique<VIPROOM>("V-201", 1200000);
+    auto room102 = make_unique<VipRoom>("V-201", 1200000);
 
     QDateTime checkInDate = QDateTime::currentDateTime();
     QDateTime checkOutDate = checkInDate.addDays(3);
@@ -70,6 +70,7 @@ int main() {
     if (doubleBookingAttempt == nullptr) {
         cout << "không cho tiếp cận room status occupied\n";
     }
+
 
     return 0;
 }
