@@ -4,7 +4,7 @@
 #include "Typeroom.h"
 #include "observer.h"
 #include <vector>
-
+#include "../CUSTOMER/Customer.h"
 using namespace std;
 
 class Room
@@ -46,6 +46,8 @@ public:
 
     // getId
     string getId() const;
+
+    void getBill(Customer &a);
 
     // Hàm này dùng để báo khi có sự thay đổi trạng thái của phòng
     void notify();

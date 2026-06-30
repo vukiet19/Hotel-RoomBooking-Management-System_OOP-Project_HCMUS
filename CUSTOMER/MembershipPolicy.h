@@ -1,25 +1,36 @@
+// File .h chứa  định nghĩa class của MembershipPolicy và định nghĩa hàm
+//  Các file liên quan: Customer.cpp(do customer là class con của MembershipPolicy nên trong phần constructor có tính chất kế thừa),Membership.cpp
+
 #pragma once
 #include <map>
-#include"MembershipTier.h"
+#include "MembershipTier.h"
 
 using namespace std;
 
-class MembershipPolicy {
+class MembershipPolicy
+
+{
 private:
+    // thuộc tính
+    int point;
+    MembershipTier tier;
     map<MembershipTier, double> discountRates;
 
 public:
-    MembershipPolicy() {
-        discountRates[Sliver] = 0.05;
-        discountRates[Gold] = 0.1;
-        discountRates[Platinum] = 0.2;
-    }
+    // constructor
+    MembershipPolicy();
 
-    double getDiscountRate(MembershipTier tier) {
-        return discountRates[tier];
-    }
+    MembershipPolicy(MembershipTier tier);
 
-    void setDiscount(double rate, MembershipTier tier) {
-        discountRates[tier] = rate;
-    }
+    double getDiscountRate(MembershipTier tier);
+
+    MembershipTier getTier();
+
+    int getPoint();
+
+    void setDiscount(double rate, MembershipTier tier);
+
+    void setTier(MembershipTier tier);
+
+    void setPoint(int point);
 };

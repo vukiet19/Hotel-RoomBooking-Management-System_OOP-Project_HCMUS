@@ -1,7 +1,9 @@
 #pragma once
 
-enum MembershipTier {
-    Sliver,
+enum MembershipTier
+{
+    Unknown,
+    Silver,
     Gold,
     Platinum
 };

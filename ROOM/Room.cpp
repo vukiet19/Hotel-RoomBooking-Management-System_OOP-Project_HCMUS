@@ -19,11 +19,20 @@ Room::Room()
     this->id += tmp;
 
     nextid++;
-}
 
-void Room::setBasePrice(int basePrice)
-{
-    this->basePrice = basePrice;
+    status = Available;
+
+    Room_Reserved reser;
+    Room_Occupied Occ;
+    Room_Available Ava;
+    Room_Maintenance mai;
+
+    addObserver(&Occ);
+    addObserver(&reser);
+    addObserver(&Ava);
+    addObserver(&mai);
+
+    notify();
 }
 
 // contructor
@@ -44,6 +53,18 @@ Room::Room(string roomNumber)
 
     this->roomNumber = roomNumber;
     this->status = Available; // Phòng được tạo thì sẽ Available
+
+    Room_Reserved reser;
+    Room_Occupied Occ;
+    Room_Available Ava;
+    Room_Maintenance mai;
+
+    addObserver(&Occ);
+    addObserver(&reser);
+    addObserver(&Ava);
+    addObserver(&mai);
+
+    notify();
 }
 
 // Destructor
@@ -87,4 +108,17 @@ void Room::notify()
     {
         observer->Ongoing_status_room(id, status);
     }
+}
+
+void Room::getBill(Customer &a)
+{
+    int room_baseprice = getBasePrice();
+
+    int addition_point = room_baseprice / 1000000;
+    a.setPoint(a.getPoint() + addition_point);
+}
+
+void Room::setBasePrice(int basePrice)
+{
+    this->basePrice = basePrice;
 }
