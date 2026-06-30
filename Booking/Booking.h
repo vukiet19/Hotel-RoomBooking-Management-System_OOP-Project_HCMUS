@@ -18,13 +18,19 @@ protected:
     vector<unique_ptr<ServiceItem>> serviceItems;
     
 public:
+
+    int getId() const;
+    Customer* getCustomer() const;
+    BookingStatus getBookingStatus() const;
+
+    //ko có setters cho status hay customer vì ép vòng đời và hành vi phải tuân theo logic
+
     Booking(Customer* c);
     virtual ~Booking() = default;
     virtual int getNights() const = 0; 
     virtual void checkIn() = 0;
     virtual void checkOut() = 0;
     void addServiceItem(unique_ptr<ServiceItem> serviceItem);
-    Customer* getCustomer() const;
     void addDamagePenaltyItems();
 };
 
@@ -46,6 +52,7 @@ public:
     int getNights() const override;
     void checkIn() override;
     void checkOut() override;
+
 };
 
 

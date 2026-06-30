@@ -14,6 +14,18 @@ StandardRoomBooking::~StandardRoomBooking() {
     }
 }
 
+int Booking::getId() const{
+    return this->id;
+}
+
+Customer* Booking::getCustomer() const{
+    return this->customer;
+}
+
+BookingStatus Booking::getBookingStatus() const{
+    return this->status;
+};
+
 //thêm serviceitems
 void Booking::addServiceItem(unique_ptr<ServiceItem> serviceItem) {
     if (serviceItem != nullptr) {
