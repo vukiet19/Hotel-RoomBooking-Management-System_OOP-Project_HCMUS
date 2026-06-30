@@ -1,3 +1,9 @@
+/* 
+File này phục vụ cho việc quản lý các dịch vụ, hàng hóa, phí phạt trong quá trình sử dụng
+khách sạn. ServiceItem sẽ được sử dụng dưới dạng một vector trong class Booking.
+
+Các file liên quan: SerivceEnums.h (chứa trạng thái và kiểu dịch vụ)
+*/
 #include "ServiceItem.h"
 
 ServiceItem::ServiceItem(int id, string name, double price, int quantity, string note) {
@@ -116,7 +122,7 @@ MinibarItem::MinibarItem(int id, string name, double price, int quantity, string
     dung no roi. Vi the trang thai cua no se la CHUA DUOC restock */
     this->isRestocked = false;
 }
-
+// isRestocked quan ly Object tung mon hang
 bool MinibarItem::getRestockedStatus() const {
     return isRestocked;
 }
@@ -140,6 +146,7 @@ bool FurnitureItem::getReturnStatus() const {
 bool FurnitureItem::getDamagedStatus() const {
     return isDamaged;
 }
+// Neu nhu isDamaged == true --> Khoi tao Object DamagePenaltyItem
 
 void FurnitureItem::markAsReturned(bool damaged /* Neu khong truyen tham so thi mac dinh no la false */) {
     this->isReturned = true;
@@ -152,7 +159,8 @@ DamagePenaltyItem::DamagePenaltyItem(int id, string name, double price, int quan
     ly do tai sao lai phat tien. VD: note = "Ban` la` bi mat" */
     if(note.empty()) {
         // Bao loi vi phat tien bat buoc phai co ghi chu ly do ro rang
-    }
+    } 
+    // Can nhac lai bien note o DamagePenaltyItem
 }
 
 unique_ptr<ServiceItem> ServiceItemFactory::createServiceItem(

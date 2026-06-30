@@ -1,4 +1,10 @@
 #pragma once
+/* 
+File này phục vụ cho việc quản lý các dịch vụ, hàng hóa, phí phạt trong quá trình sử dụng
+khách sạn. ServiceItem sẽ được sử dụng dưới dạng một vector trong class Booking.
+
+Các file liên quan: SerivceEnums.h (chứa trạng thái và kiểu dịch vụ)
+*/
 
 #include <string>
 #include <vector>
