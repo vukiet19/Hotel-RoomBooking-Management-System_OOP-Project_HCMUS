@@ -25,7 +25,7 @@ void Customer::setId(int id) { this->id = id; }
 void Customer::setPhone(string phone)
 {
     // Kiểm tra xem phone có độ dài 10 không
-    if (phone.length() == 10)
+    if (phone.length() != 10)
     {
         throw invalid_argument("Error: Phone number must be 10 digits long.");
     }
@@ -44,7 +44,7 @@ void Customer::setPhone(string phone)
 // logic hàm setter của idCard giống như hàm phone trên
 void Customer::setIdcard(string idcard)
 {
-    if (idcard.length() == 10)
+    if (idcard.length() != 10)
     {
         throw invalid_argument("Error: ID Card must be 10 digits long.");
     }
