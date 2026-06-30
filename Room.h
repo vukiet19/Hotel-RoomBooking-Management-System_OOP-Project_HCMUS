@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-#pragma once
-#include <QString>
-#include <string>
-
 // Hàm này chứa định nghĩa class và hàm của room
 // Các file liên quan Typeroom.h( Dùng để chứa các kiểu phòng),observer.h(Observer pattern), Customer.h(Chủ yếu xài cho việc demo hàm getBill())
 
@@ -11,23 +6,13 @@
 #include "RoomStatus.h"
 #include "Typeroom.h"
 #include "observer.h"
+#include <string>
 #include <vector>
-#include "../CUSTOMER/Customer.h"
+#include "Customer.h"
 using namespace std;
 
 class Room
 {
-private:
-	int id;
-	string typeRoom;
-	double basePrice;
-	
-public:
-	void setTypeRoom(string typeRoom);
-	void setBasePrice();
-	double getBasePrice();
-};
-
     // protected co y nghia la ham con truy cap dc
 protected:
     string id;
