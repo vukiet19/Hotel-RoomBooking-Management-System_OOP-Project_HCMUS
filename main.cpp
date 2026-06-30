@@ -1,4 +1,4 @@
-﻿#include "DatabaseManager.h"
+#include "DatabaseManager.h"
 #include "DashboardService.h"
 #include "BookingRepository.h"
 #include "Room.h"
@@ -79,4 +79,3 @@ int main(int argc, char* argv[]) {
 	}
 
 	return 0;
-}
