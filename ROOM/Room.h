@@ -1,3 +1,6 @@
+// Hàm này chứa định nghĩa class và hàm của room
+// Các file liên quan Typeroom.h( Dùng để chứa các kiểu phòng),observer.h(Observer pattern), Customer.h(Chủ yếu xài cho việc demo hàm getBill())
+
 #pragma once
 #include <string>
 #include "RoomStatus.h"
@@ -15,6 +18,7 @@ protected:
     string roomNumber;
     RoomStatus status;
     int basePrice;
+    // Dùng để chứa các observers
     vector<Observer *> observers;
 
 public:

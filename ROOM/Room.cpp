@@ -1,8 +1,10 @@
+// Hàm này dùng để viết các hàm đã được định nghĩa trước từ room.h
+//
 #include "Room.h"
 #include <string>
 
 using namespace std;
-
+// biến static lưu id
 int Room::nextid = 0;
 
 // contructor default
@@ -10,6 +12,8 @@ Room::Room()
 {
     this->id = "R";
     string tmp = to_string(nextid);
+
+    // id có cấu trúc là "R" + 0000 -> 9999
 
     int zerosNeeded = 4 - tmp.size();
     for (int i = 0; i < zerosNeeded; i++)
@@ -20,22 +24,25 @@ Room::Room()
 
     nextid++;
 
+    // Khi khởi tạo phòng thì sẽ là Available
     status = Available;
 
+    // Các Observers tương ứng trạng thái phòng
     Room_Reserved reser;
     Room_Occupied Occ;
     Room_Available Ava;
     Room_Maintenance mai;
 
+    // Thêm các observer , ở đây xài & tương ứng với địa chỉ cuả Observer và vì hàm addObserver nhận đầu vào là con trỏ (Observer *observer)
     addObserver(&Occ);
     addObserver(&reser);
     addObserver(&Ava);
     addObserver(&mai);
-
+    // Hàm thông báo khi có biến đổi
     notify();
 }
 
-// contructor
+// contructor (hầu hết giống constructor trên,) chỉ thêm nhập vào roomNumber( tương ứng số phòng)
 Room::Room(string roomNumber)
 {
     // id có cấu trúc là "R" + 0000 -> 9999
