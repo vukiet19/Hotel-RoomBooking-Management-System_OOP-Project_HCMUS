@@ -1,0 +1,19 @@
+# Visual Studio files
+.vs/
+*.user
+x64/
+Debug/
+Release/
+*.db
+*.obj
+*.pdb
+*.log
+*.ilk
+*.tlog
+*.idb
+*.recipe
+*.ipch
+*.suo
+*.bin
+*.stash
+*.xml

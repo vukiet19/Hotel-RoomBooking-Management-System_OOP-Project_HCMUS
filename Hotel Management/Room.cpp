@@ -1,24 +1,3 @@
-#include "Room.h"
-#include "RoomRepository.h"
-
-void Room::setTypeRoom(string typeRoom){
-	this->typeRoom = typeRoom;
-}
-
-void Room::setBasePrice() {
-	RoomRepository rr;
-	QString typeRoom = QString::fromStdString(this->typeRoom);
-	double price = rr.getRoomPriceData(typeRoom);
-	if (price) {
-		this->basePrice = price;
-		return;
-	}
-	throw "Price loi (0.0)";
-}
-
-double Room::getBasePrice() {
-	return basePrice;
-
 // Hàm này dùng để viết các hàm đã được định nghĩa trước từ room.h
 //
 #include "Room.h"
@@ -29,37 +8,23 @@ using namespace std;
 int Room::nextid = 0;
 
 // contructor default
-Room::Room()
-{
+Room::Room() {
     this->id = "R";
     string tmp = to_string(nextid);
-
-    // id có cấu trúc là "R" + 0000 -> 9999
-
-    int zerosNeeded = 4 - tmp.size();
-    for (int i = 0; i < zerosNeeded; i++)
-    {
+    size_t zerosNeeded = 4 - tmp.size();
+    for (int i = 0; i < (int)zerosNeeded; i++) {
         this->id += '0';
     }
     this->id += tmp;
-
     nextid++;
-
-    // Khi khởi tạo phòng thì sẽ là Available
     status = Available;
 
-    // Các Observers tương ứng trạng thái phòng
-    Room_Reserved reser;
-    Room_Occupied Occ;
-    Room_Available Ava;
-    Room_Maintenance mai;
+    // Cấp phát trên Heap để chúng sống sót sau khi hàm kết thúc
+    addObserver(new Room_Occupied());
+    addObserver(new Room_Reserved());
+    addObserver(new Room_Available());
+    addObserver(new Room_Maintenance());
 
-    // Thêm các observer , ở đây xài & tương ứng với địa chỉ cuả Observer và vì hàm addObserver nhận đầu vào là con trỏ (Observer *observer)
-    addObserver(&Occ);
-    addObserver(&reser);
-    addObserver(&Ava);
-    addObserver(&mai);
-    // Hàm thông báo khi có biến đổi
     notify();
 }
 
@@ -70,8 +35,8 @@ Room::Room(string roomNumber)
     this->id = "R";
     string tmp = to_string(nextid);
 
-    int zerosNeeded = 4 - tmp.size();
-    for (int i = 0; i < zerosNeeded; i++)
+    size_t zerosNeeded = 4 - tmp.size();
+    for (size_t i = 0; i < zerosNeeded; ++i)
     {
         this->id += '0';
     }
@@ -82,22 +47,24 @@ Room::Room(string roomNumber)
     this->roomNumber = roomNumber;
     this->status = Available; // Phòng được tạo thì sẽ Available
 
-    Room_Reserved reser;
-    Room_Occupied Occ;
-    Room_Available Ava;
-    Room_Maintenance mai;
-
-    addObserver(&Occ);
-    addObserver(&reser);
-    addObserver(&Ava);
-    addObserver(&mai);
+    // Allocate observers on the heap to ensure they outlive the constructor
+    addObserver(new Room_Reserved());
+    addObserver(new Room_Occupied());
+    addObserver(new Room_Available());
+    addObserver(new Room_Maintenance());
 
     notify();
 }
 
+
 // Destructor
 
-Room::~Room() = default;
+Room::~Room() {
+    for (Observer* obs : observers) {
+        delete obs;
+    }
+    observers.clear();
+}
 
 // getBasePrice
 int Room::getBasePrice() const
@@ -138,7 +105,7 @@ void Room::notify()
     }
 }
 
-void Room::getBill(Customer &a)
+void Room::getBill(Customer &a) const
 {
     int room_baseprice = getBasePrice();
 

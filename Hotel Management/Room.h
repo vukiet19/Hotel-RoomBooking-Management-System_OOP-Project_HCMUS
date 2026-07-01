@@ -1,0 +1,61 @@
+// Hàm này chứa định nghĩa class và hàm của room
+// Các file liên quan Typeroom.h( Dùng để chứa các kiểu phòng),observer.h(Observer pattern), Customer.h(Chủ yếu xài cho việc demo hàm getBill())
+
+#pragma once
+#include <string>
+#include "RoomStatus.h"
+#include "Typeroom.h"
+#include "Observer.h"
+#include <vector>
+#include "Customer.h"
+using namespace std;
+
+class Room
+{
+    // protected co y nghia la ham con truy cap dc
+protected:
+    string id;
+    string roomNumber;
+    RoomStatus status;
+    int basePrice;
+    // Dùng để chứa các observers
+    vector<Observer *> observers;
+
+public:
+    static int nextid;
+    // ham khoi tao
+
+    Room();
+    Room(string roomNumber);
+
+    // destructor
+    virtual ~Room();
+
+    // get_type
+    virtual RoomType getType() const = 0;
+
+    // getbaseprice
+    virtual int getBasePrice() const;
+
+    // Hàm này sẽ add observer cho Room, vì room có 4 status là Avaliable, reserved, Occupied và Maintance nên sẽ chứa là 4 biến tựng chưng observer của từng trạng thái, nếu có trạng thái đó thì observer sẽ báo.
+    void addObserver(Observer *observer);
+
+    void setBasePrice(int baseprice);
+
+    // setstatus
+    void setStatus(RoomStatus status);
+
+    // set room name
+    void setRoomNumber(string roomNumber);
+
+    // getId
+    string getId() const;
+
+    void getBill(Customer &a) const;
+
+    // Hàm này dùng để báo khi có sự thay đổi trạng thái của phòng
+    void notify();
+
+    //getters
+    virtual string getRoomNumber() const { return roomNumber; }
+};
