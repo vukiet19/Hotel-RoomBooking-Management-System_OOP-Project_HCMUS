@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\build\CMakeFiles\b79ec9a84277ce43e788ab985722cd0c\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F254F3EA-8B69-3DBA-8B3B-C7166169959F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

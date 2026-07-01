@@ -1,0 +1,10 @@
+^C:\USERS\DUY\ONEDRIVE\DESKTOP\OOP (TH)\MID-TERM PROJECT\HOTEL-ROOMBOOKING-MANAGEMENT-SYSTEM_OOP-PROJECT_HCMUS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS" "-BC:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build" --check-stamp-file "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

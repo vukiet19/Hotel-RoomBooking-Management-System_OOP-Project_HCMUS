@@ -1,0 +1,11 @@
+================================================================================
+Linker Errors
+Generated: 2026-06-29T05:36:00.950Z
+Total Errors: 2
+================================================================================
+
+[LNK2005] (MSVC)
+main already defined in CMakeCXXCompilerId.obj [C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\build\Hotel_Management.vcxproj]
+
+[LNK1169] (MSVC)
+one or more multiply defined symbols found [C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\build\Hotel_Management.vcxproj]

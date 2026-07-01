@@ -1,0 +1,3 @@
+C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management.dir
+C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/ZERO_CHECK.dir
