@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_HotelManagement_FILE /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/HotelManagement)
-set(__QT_DEPLOY_TARGET_HotelManagement_TYPE EXECUTABLE)
