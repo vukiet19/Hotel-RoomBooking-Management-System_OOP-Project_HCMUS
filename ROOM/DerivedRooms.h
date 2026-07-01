@@ -15,7 +15,7 @@ public:
 
     int getBasePrice() const override;
 };
-
+// Vip room
 class VipRoom : public Room
 {
 public:
@@ -27,6 +27,7 @@ public:
     int getBasePrice() const override;
 };
 
+// PresiRoom
 class PresiRoom : public Room
 {
 public:

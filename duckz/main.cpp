@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
 
 		testData.customerId = 1001;
 		testData.roomNumber = "Presidential Suite";
-		testData.checkInTime = "2026-06-10";
-		testData.checkOutTime = "2026-06-12";
+		testData.checkInTime = "2026-06-29";
+		testData.checkOutTime = "2026-06-30";
 		testData.totalPrice = r.getBasePrice();
 
 		repo.add(testData);

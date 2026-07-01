@@ -10,6 +10,8 @@ int main()
     // Khởi tạo customer
     Customer a("Megumin", "1234567890", "1234567890");
 
+    a.display();
+
     // Khởi tạo phòng
     StandardRoom r1;
 

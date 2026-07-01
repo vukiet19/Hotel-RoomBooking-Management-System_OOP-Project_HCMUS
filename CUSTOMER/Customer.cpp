@@ -74,6 +74,7 @@ string Customer::getIdRoom() { return idRoom; }
 /// hàm để display(lúc sau có thể đổi để cho phù hợp)
 void Customer::display()
 {
+    // cout << "67";
     cout << "Customer id: " << this->id << '\n';
     cout << "Customer phone: " << this->phone << '\n';
     cout << "Customer idcard: " << this->idcard << '\n';
