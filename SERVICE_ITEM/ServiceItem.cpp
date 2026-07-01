@@ -6,7 +6,7 @@ Các file liên quan: SerivceEnums.h (chứa trạng thái và kiểu dịch v�
 */
 #include "ServiceItem.h"
 
-ServiceItem::ServiceItem(int id, string name, double price, int quantity, string note) {
+ServiceItem::ServiceItem(string id, string name, double price, int quantity, string note) {
     this->id = id;
     this->name = name;
     this->unitPrice = price;
@@ -22,7 +22,7 @@ double ServiceItem::getSubtotal() const {
     return quantity * unitPrice;
 }
 
-int ServiceItem::getId() const {
+string ServiceItem::getId() const {
     return id;
 }
 
@@ -44,6 +44,14 @@ ServiceStatus ServiceItem::getStatus() const {
 
 string ServiceItem::getNote() const {
     return note;
+}
+
+void ServiceItem::setId(const string& newId) {
+    if (newId.empty()) {
+        // thong bao loi tren UI
+        return;
+    }
+    this->id = newId;
 }
 
 void ServiceItem::setName(const string& newName) {
@@ -106,7 +114,7 @@ void ServiceItem::setNote(string note) {
 
 ServiceItem::~ServiceItem() = default;
 
-FoodOrderItem::FoodOrderItem(int id, string name, double price, int quantity, string note)
+FoodOrderItem::FoodOrderItem(string id, string name, double price, int quantity, string note)
     : ServiceItem(id, name, price, quantity, note) {}
 
 double FoodOrderItem::getSubtotal() const {
@@ -116,7 +124,7 @@ double FoodOrderItem::getSubtotal() const {
     return base * 1.05;
 }
 
-MinibarItem::MinibarItem(int id, string name, double price, int quantity, string note)
+MinibarItem::MinibarItem(string id, string name, double price, int quantity, string note)
     : ServiceItem(id, name, price, quantity, note) {
     /* Ly do khoi tao false la khi mot mon do duoc khoi tao, tuc la khach hang da su
     dung no roi. Vi the trang thai cua no se la CHUA DUOC restock */
@@ -131,7 +139,7 @@ void MinibarItem::markAsRestocked() {
     this->isRestocked = true;
 }
 
-FurnitureItem::FurnitureItem(int id, string name, double price, int quantity, string note)
+FurnitureItem::FurnitureItem(string id, string name, double price, int quantity, string note)
     : ServiceItem(id, name, price, quantity, note) {
     /* Ly do khoi tao false la khi mot mon do noi that duoc khoi tao tuc la no dang duoc khach hang dung,
     chua duoc tra ve kho. Vi the trang thai cua no se la CHUA DUOC return */
@@ -153,7 +161,7 @@ void FurnitureItem::markAsReturned(bool damaged /* Neu khong truyen tham so thi 
     this->isDamaged = damaged;
 }
 
-DamagePenaltyItem::DamagePenaltyItem(int id, string name, double price, int quantity, string note)
+DamagePenaltyItem::DamagePenaltyItem(string id, string name, double price, int quantity, string note)
     : ServiceItem(id, name, price, quantity, note) {
     /* Bien note o day hoat dong khac so voi bien note o cac class ServiceItem khac. Note o day la ghi chu
     ly do tai sao lai phat tien. VD: note = "Ban` la` bi mat" */
@@ -164,7 +172,7 @@ DamagePenaltyItem::DamagePenaltyItem(int id, string name, double price, int quan
 }
 
 unique_ptr<ServiceItem> ServiceItemFactory::createServiceItem(
-    ServiceType type, int id, string name, double price, int quantity, string note) {
+    ServiceType type, string id, string name, double price, int quantity, string note) {
     switch (type) {
         case ServiceType::FoodOrderItem:
             return make_unique<FoodOrderItem>(id, name, price, quantity, note);

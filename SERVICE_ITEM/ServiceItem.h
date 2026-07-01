@@ -18,24 +18,26 @@ using namespace std;
 
 class ServiceItem {
 private:
-    int id, quantity;
+    string id; 
+    int quantity;
     string name;
     double unitPrice;
     ServiceStatus status;
     string note;
 
 public:
-    ServiceItem(int id, string name, double price, int quantity, string note);
+    ServiceItem(string id, string name, double price, int quantity, string note);
 
     virtual double getSubtotal() const;
 
-    int getId() const;
+    string getId() const;
     string getName() const;
     double getUnitPrice() const;
     int getQuantity() const;
     ServiceStatus getStatus() const;
     string getNote() const;
 
+    void setId(const string& newId);
     void setName(const string& newName);
     void setUnitPrice(double newPrice);
     void setQuantity(int newQuantity);
@@ -47,7 +49,7 @@ public:
 
 class FoodOrderItem : public ServiceItem {
 public:
-    FoodOrderItem(int id, string name, double price, int quantity, string note = "");
+    FoodOrderItem(string id, string name, double price, int quantity, string note = "");
 
     double getSubtotal() const override;
 };
@@ -57,7 +59,7 @@ private:
     bool isRestocked;
 
 public:
-    MinibarItem(int id, string name, double price, int quantity, string note = "");
+    MinibarItem(string id, string name, double price, int quantity, string note = "");
 
     bool getRestockedStatus() const;
     void markAsRestocked();
@@ -69,7 +71,7 @@ private:
     bool isDamaged;
 
 public:
-    FurnitureItem(int id, string name, double price, int quantity, string note = "");
+    FurnitureItem(string id, string name, double price, int quantity, string note = "");
 
     bool getReturnStatus() const;
     bool getDamagedStatus() const;
@@ -84,11 +86,11 @@ public:
 
 class DamagePenaltyItem : public ServiceItem {
 public:
-    DamagePenaltyItem(int id, string name, double price, int quantity, string note);
+    DamagePenaltyItem(string id, string name, double price, int quantity, string note);
 };
 
 class ServiceItemFactory {
 public:
     static unique_ptr<ServiceItem> createServiceItem(
-        ServiceType type, int id, string name, double price, int quantity, string note);
+        ServiceType type, string id, string name, double price, int quantity, string note);
 };
