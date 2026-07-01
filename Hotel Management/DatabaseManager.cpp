@@ -32,14 +32,14 @@ DatabaseManager::DatabaseManager() {
             // Chuẩn hóa đường dẫn cho đẹp (đổi // thành /) trước khi lưu
             dbPath = QDir::cleanPath(path);
             dbFound = true;
-            qDebug() << "=> DA TIM THAY DATABASE TAI:" << dbPath;
+            qDebug() << "DA TIM THAY DATABASE TAI:" << dbPath;
             break; // Tìm thấy thì thoát vòng lặp ngay
         }
     }
 
     // 4. Báo lỗi và dùng đường dẫn dự phòng nếu lỡ mọi thứ thất bại
     if (!dbFound) {
-        qDebug() << "!!! LỖI: KHÔNG TÌM THẤY hotel.db TRONG PROJECT !!!";
+        qDebug() << "!!! LỖI: KHÔNG TÌM THẤY hotel.db TRONG PROJECT !";
         // Fallback: Vẫn gán lại đường dẫn cũ của bạn để thử vận may
         dbPath = QDir::cleanPath(exePath + "/../../Database/hotel.db");
     }
