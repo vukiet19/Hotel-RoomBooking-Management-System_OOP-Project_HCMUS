@@ -102,6 +102,12 @@ void Room::setStatus(RoomStatus status)
     notify();
 }
 
+// get status
+RoomStatus Room::getStatus()
+{
+    return status;
+}
+
 // getId
 string Room::getId() const
 {
@@ -129,3 +135,10 @@ void Room::setBasePrice(int basePrice)
 {
     this->basePrice = basePrice;
 }
+
+void Room::setNumberPeople(int number_people)
+{
+    this->number_people = number_people;
+}
+
+int Room::getNumberPeople() { return number_people; }

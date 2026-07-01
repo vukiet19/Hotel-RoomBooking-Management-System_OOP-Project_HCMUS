@@ -18,6 +18,7 @@ protected:
     string roomNumber;
     RoomStatus status;
     int basePrice;
+    int number_people;
     // Dùng để chứa các observers
     vector<Observer *> observers;
 
@@ -48,10 +49,16 @@ public:
     // set room name
     void setRoomNumber(string roomNumber);
 
+    // set number people
+    void setNumberPeople(int number_people);
+
+    int getNumberPeople();
     // getId
     string getId() const;
 
     void getBill(Customer &a);
+
+    RoomStatus getStatus();
 
     // Hàm này dùng để báo khi có sự thay đổi trạng thái của phòng
     void notify();
