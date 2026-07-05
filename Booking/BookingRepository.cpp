@@ -1,10 +1,9 @@
 // File BookingRepos ~ trạm trung chuyển: kết nối giữa database và back-end: đọc dữ liệu Booking từ file Booking lên database
 
 #include "BookingRepository.h"
-#include "../Manager/DatabaseManager.h"
 
 // Đọc dữ liệu vào bảng Bookings trong hotel.db
-bool BookingRepository::add(const BookingData& booking) {
+int BookingRepository::add(const BookingData& booking) {
 	// Lấy ra cổng kết nối duy nhất
 	QSqlDatabase db = DatabaseManager::instance().database();
 	
@@ -26,8 +25,14 @@ bool BookingRepository::add(const BookingData& booking) {
 	if (!query.exec()) {
 		// Nếu không ghi được data
 		qDebug() << "ERROR: Khong the ghi data Booking!" << query.lastError().text();
-		return false;
+		return -1;
 	}
 
-	return true;
+	QVariant newId = query.lastInsertId();
+	if (!newId.isValid()) {
+		qDebug() << "ERROR: Khong lay duoc booking_id vua tao!";
+		return -1;
+	}
+
+	return newId.toInt();
 }

@@ -17,6 +17,6 @@ struct BookingData {
 class BookingRepository {
 public:
 	// const BookingData&: lay truc tiep du lieu bien booking trong bo nho
-	bool add(const BookingData& booking);
+	int add(const BookingData& booking); // tra ve booking_id
 };
 
