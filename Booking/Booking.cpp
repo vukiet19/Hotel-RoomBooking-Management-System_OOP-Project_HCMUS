@@ -1,4 +1,5 @@
-#include "../Booking/Booking.h"
+#include "Booking.h"
+#include "BookingRepository.h"
 
 Booking::Booking(Customer* c) : customer(c), status(BookingStatus::UNCONFIRMED) {}
 
@@ -29,7 +30,11 @@ BookingStatus Booking::getBookingStatus() const{
 //thêm serviceitems
 void Booking::addServiceItem(unique_ptr<ServiceItem> serviceItem) {
     if (serviceItem != nullptr) {
-        serviceItems.push_back(move(serviceItem));
+        if (this->id > 0) {
+            BookingRepository repo;
+            repo.addServiceItemToBooking(this->id, serviceItem->getId(), serviceItem->getQuantity(), serviceItem->getUnitPrice(), serviceItem->getNote());
+        }
+        serviceItems.push_back(std::move(serviceItem));
     }
 }
 
@@ -54,18 +59,14 @@ void Booking::addDamagePenaltyItems() {
                 furnitureItem->getQuantity(), 
                 furnitureItem->getNote()
             );
-            penalties.push_back(move(newDamageItem)); 
+            penalties.push_back(std::move(newDamageItem));
         }
     }
 
     for(auto& penalty : penalties) {
         //chuyển nhượng quyền sở hữu an toàn cho vector
-        this->serviceItems.push_back(move(penalty));
+        this->serviceItems.push_back(std::move(penalty));
     }
-}
-
-Customer* Booking::getCustomer() const {
-    return customer;
 }
 
 Room* StandardRoomBooking::getRoom() const{
@@ -119,6 +120,10 @@ void StandardRoomBooking::checkIn() {
     this->status = BookingStatus::CHECKED_IN;
     this->room->setStatus(RoomStatus::Occupied);
     this->resolveDeposit(); 
+    if (this->id > 0) {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }
 
 void StandardRoomBooking::checkOut() {
@@ -127,6 +132,10 @@ void StandardRoomBooking::checkOut() {
         this->room->setStatus(RoomStatus::Maintenance);
     }
     Booking::addDamagePenaltyItems();
+    if (this->id > 0) {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }
 
 //Checkout -> maintenace 
@@ -134,9 +143,17 @@ void StandardRoomBooking::checkOut() {
 
 void WalkInTab::checkIn() {
     this->status = BookingStatus::CHECKED_IN;
+    if (this->id > 0) {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }
 
 void WalkInTab::checkOut() {
     this->status = BookingStatus::CHECKED_OUT;
     Booking::addDamagePenaltyItems();
+    if (this->id > 0) {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }
