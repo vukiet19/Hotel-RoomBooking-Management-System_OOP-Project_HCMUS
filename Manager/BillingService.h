@@ -3,14 +3,15 @@
 #include "InvoiceRepository.h"
 #include "../Service/ServiceItem.h"
 #include "../Service/ServiceItemRepository.h"
+#include "../Booking/Booking.h"
 
 class BillingService
 {
 private:
 	InvoiceRepository invoiceRepo;
-	double calculateServiceCharge(int bookingId);
+	double calculateServiceCharge(const Booking& booking);
 public: 
 	BillingService() = default;
-	Invoice generateInvoice(int bookingId, double baseRoomCharge);
+	Invoice generateInvoice(const Booking& booking, double baseRoomCharge);
 };
 
