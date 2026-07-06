@@ -62,6 +62,7 @@ void BookingRepository::verifySchema() {
     bool hasDepositAmount = false;
     bool hasDepositStatus = false;
     
+    //thêm cột để track booking và lifecycle tốt hơn
     while (query.next()) {
         QString name = query.value("name").toString();
         if (name == "booking_type") hasType = true;
