@@ -35,7 +35,7 @@ public:
     void addServiceItem(unique_ptr<ServiceItem> serviceItem);
     void addDamagePenaltyItems();
     
-    const vector<unique_ptr<ServiceItem>>& getServiceItem() const;
+    const vector<unique_ptr<ServiceItem>>& getServiceItems() const;
 };
 
 class StandardRoomBooking : public Booking {

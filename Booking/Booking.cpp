@@ -64,7 +64,7 @@ void Booking::addDamagePenaltyItems() {
     }
 }
 
-const vector<unique_ptr<ServiceItem>>& Booking::getServiceItem() const {
+const vector<unique_ptr<ServiceItem>>& Booking::getServiceItems() const {
     return serviceItems;
 }
 
