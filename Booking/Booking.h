@@ -34,6 +34,8 @@ public:
     virtual void checkOut() = 0;
     void addServiceItem(unique_ptr<ServiceItem> serviceItem);
     void addDamagePenaltyItems();
+    
+    const vector<unique_ptr<ServiceItem>>& getServiceItem() const;
 };
 
 class StandardRoomBooking : public Booking {
@@ -54,7 +56,6 @@ public:
     int getNights() const override;
     void checkIn() override;
     void checkOut() override;
-
 };
 
 
