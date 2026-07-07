@@ -23,7 +23,7 @@ public:
 	
 	bool open();
 	// Explicitly close and remove the database connection while Qt is still alive
-	void shutdown();
+	void close();
 	~DatabaseManager();
 
 	// getter db

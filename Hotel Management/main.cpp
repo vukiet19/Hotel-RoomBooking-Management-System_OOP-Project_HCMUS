@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     }
     results.clear();
 
-    DatabaseManager::instance().shutdown();
+    DatabaseManager::instance().close();
 
     return 0;
 

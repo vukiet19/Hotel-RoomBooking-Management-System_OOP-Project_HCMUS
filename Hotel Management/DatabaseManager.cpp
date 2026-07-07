@@ -71,7 +71,7 @@ DatabaseManager::~DatabaseManager() {
     // Prefer explicit shutdown() to be called while QCoreApplication is still alive.
 }
 
-void DatabaseManager::shutdown() {
+void DatabaseManager::close() {
     // If Qt core is already torn down, avoid calling into QSqlDatabase/driver.
     if (!QCoreApplication::instance())
         return;
