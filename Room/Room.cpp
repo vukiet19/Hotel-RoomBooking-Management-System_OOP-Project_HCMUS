@@ -2,7 +2,7 @@
 //
 
 #include "Room.h"
-#include"../Observer.h"
+#include "../Observer.h"
 
 #include <string>
 
@@ -30,17 +30,12 @@ Room::Room()
     // Khi khởi tạo phòng thì sẽ là Available
     status = Available;
 
-    // Các Observers tương ứng trạng thái phòng
-    Room_Reserved reser;
-    Room_Occupied Occ;
-    Room_Available Ava;
-    Room_Maintenance mai;
-
     // Thêm các observer , ở đây xài & tương ứng với địa chỉ cuả Observer và vì hàm addObserver nhận đầu vào là con trỏ (Observer *observer)
-    addObserver(&Occ);
-    addObserver(&reser);
-    addObserver(&Ava);
-    addObserver(&mai);
+    
+    addObserver(new Room_Reserved());
+    addObserver(new Room_Occupied());
+    addObserver(new Room_Available());
+    addObserver(new Room_Maintenance());
     // Hàm thông báo khi có biến đổi
     notify();
 }
@@ -121,10 +116,10 @@ string Room::getId() const
 // dùng này dùng cho observer pattern( dùng cho thay đổi status của phòng)
 void Room::notify()
 {
-    for (auto& observer : observers)
+    /*for (auto& observer : observers)
     {
         observer->Ongoing_status_room(id, status);
-    }
+    }*/
 }
 
 void Room::getBill(Customer &a)

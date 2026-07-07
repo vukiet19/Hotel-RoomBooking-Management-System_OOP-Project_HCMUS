@@ -15,10 +15,17 @@ set(CMAKE_PREFIX_PATH "C:/Qt/6.11.1/msvc2022_64")
 find_package(Qt6 COMPONENTS Core Sql REQUIRED)
 
 file(GLOB_RECURSE SOURCES 
-    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    "*.cpp" 
-    "*.h"
+    "Customer/*.cpp"
+    "Booking/*.cpp"
+    "Room/*.cpp"
+    "Manager/*.cpp"
+    "Service/*.cpp"
+    "Repository/*.cpp"
+    "Observer.cpp"
+    "main.cpp"
 )
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Database 
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 list(FILTER SOURCES EXCLUDE REGEX "^build/")
 

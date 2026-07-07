@@ -1,12 +1,14 @@
 #include "Manager/DatabaseManager.h"
 #include "Manager/DashboardService.h"
-#include "Booking/BookingRepository.h"
-#include "Customer/CustomerRepository.h"
+#include "Repository/BookingRepository.h"
+#include "Repository/CustomerRepository.h"
 #include "Room/Room.h"
 #include "Room/DerivedRooms.h"
 #include "Booking/Booking.h"
 #include "Booking/BookingFactory.h"
 #include "Booking/BookingType.h"
+#include "Service/InventoryService.h"
+#include "Repository/InventoryRepository.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -40,58 +42,67 @@ int main(int argc, char* argv[]) {
 		repoCus.add(cus);
 
 		DashboardService ds;
-		cout << ds.getTodayBookings() << ' ' << fixed << setprecision(0) << ds.getRevenue("year") << endl;
+		cout << ds.getTodayBookings() << ' ' << fixed << setprecision(0) << ds.getRevenue("year") << endl;*/
 
-		DatabaseManager::instance().close();*/
 
-		cout << "test\n";
+
+		/*InventoryRepository invRepo;
+
+		// Danh sách các món đồ cần demo nạp vào kho
+		struct ItemDemo {
+			QString name;
+			int qty;
+			double price;
+		};
+
+		QList<ItemDemo> itemsToSeed = {
+			{"Nước suối", 100, 10000},
+			{"Khăn tắm", 50, 50000},
+			{"Bàn chải", 200, 5000},
+			{"Dầu gội", 80, 15000}
+		};
+
+		cout << "\n=== DANG KHOI TAO DU LIEU KHO ===" << endl;
+		for (const auto& item : itemsToSeed) {
+			if (invRepo.insertItem(item.name, item.qty, item.price)) {
+				cout << "Da them: " << item.name.toStdString() << " thanh cong!" << endl;
+			} else {
+				cout << "Da them: " << item.name.toStdString() << " that bai (co the do da ton tai)." << endl;
+			}
+		}
+		cout << "=================================\n" << endl;*/
+
 		
-		//auto cho tiện minh hoạ th chứ lúc làm cứ viết thẳng nó ra ví du unique_ptr<Customer> guest 1;
-		auto guest1 = make_unique<Customer>("Alice", "0000000000", "0000000000", MembershipTier::Gold);
-		auto guest2 = make_unique<Customer>("Bob", "0000000001", "0000000001", MembershipTier::Silver); 
-			
-		auto room101 = make_unique<StandardRoom>("S-101");
-		auto room102 = make_unique<VipRoom>("V-201");
 
 
-		room101->setBasePrice(500000);
-		room102->setBasePrice(500000);
-
-		QDateTime checkInDate = QDateTime::currentDateTime();
-		QDateTime checkOutDate = checkInDate.addDays(3);
-
-		//status room 101 đầu
-		cout<<"Status room 101 pre-book"<<'\n';
-
-		//GET LÀ HÀM CHO MƯỢN(ĐƯỢC NHÌN NHƯNG KO ĐƯỢC XOÁ) (MOVE MỚI LÀ CHUYỂN NHƯỢNG QUYỀN SỞ HỮU)
-		printRoomStatus("Room 101 (Pre-book)", room101.get());
-
-		unique_ptr<StandardRoomBooking> booking1(static_cast<StandardRoomBooking*>(
-			BookingFactory::createBooking(BookingType::STANDARD, guest1.get(), checkInDate, checkOutDate, room101.get(), 50.00)
-		));
+		cout << "\n=== TEST INVENTORY SERVICE ===" << endl;
+		InventoryService invService;
 		
-		cout<<"Status room 101 sau book"<<'\n';
-		//nên hiện status reserved
-		printRoomStatus("Room 101 (Post-book)", room101.get());
+		// LƯU Ý: Thay "Nước suối" bằng một item_name đang có thật trong bảng Inventory trên SQLite của bạn
+		QString testItem = "Khăn tắm"; 
+		int testQty = 2;
 
-		cout<<"hoàn tất reservation (giai quyết deposi)"<<'\n';
-		//nên hiện occupied 
-		booking1->resolveDeposit();
-		printRoomStatus("Room 101 (Checked In)", room101.get());
+		// 1. Test hàm checkStock
+		cout << "[1] Kiem tra kho cho " << testItem.toStdString() << "..." << endl;
+		bool hasStock = invService.checkStock(testItem, testQty);
+		cout << "-> Ket qua checkStock: " << (hasStock ? "Kho du hang!" : "Kho KHONG du hang hoac khong ton tai!") << endl;
 
-		unique_ptr<Booking> booking2(
-			BookingFactory::createBooking(BookingType::STANDARD, guest2.get(), checkInDate, checkOutDate, room102.get(), 0.00)
-		);
-		printRoomStatus("Room 102", room102.get());
-
-		unique_ptr<Booking> doubleBookingAttempt(
-			BookingFactory::createBooking(BookingType::STANDARD, guest1.get(), checkInDate, checkOutDate, room102.get(), 0.00)
-		);
-			
-		if (doubleBookingAttempt == nullptr) {
-			cout << "không cho tiếp cận room status occupied\n";
+		// 2. Test hàm reserveItem (chỉ xuất kho nếu bước 1 true)
+		if (hasStock) {
+			cout << "\n[2] Tien hanh xuat kho " << testQty << " " << testItem.toStdString() << "..." << endl;
+			bool reserved = invService.reserveItem(testItem, testQty);
+			cout << "-> Ket qua reserveItem: " << (reserved ? "Thanh cong" : "That bai") << endl;
 		}
 
+		// 3. Test hàm releaseItem (Hoàn kho lại)
+		/*cout << "\n[3] Tien hanh hoan tra kho " << testQty << " " << testItem.toStdString() << "..." << endl;
+		bool released = invService.releaseItem(testItem, testQty);
+		cout << "-> Ket qua releaseItem: " << (released ? "Thanh cong" : "That bai") << endl;
+
+		cout << "==============================\n" << endl;*/
+		
+		
+		DatabaseManager::instance().close();
 
 	}
 	else {

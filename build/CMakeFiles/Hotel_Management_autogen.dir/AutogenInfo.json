@@ -8,114 +8,10 @@
 	"CMAKE_LIST_FILES" : 
 	[
 		"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/CMakeLists.txt",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeSystem.cmake.in",
 		"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/3.31.6-msvc6/CMakeSystem.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCompilerIdDetection.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/ADSP-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/ARMCC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/ARMClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/AppleClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Borland-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Bruce-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Compaq-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Cray-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/CrayClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Embarcadero-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Fujitsu-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/GHS-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/GNU-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/HP-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IAR-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Intel-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/LCC-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/MSVC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/NVHPC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/NVIDIA-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/OrangeC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/PGI-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/PathScale-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/SCO-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/SDCC-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/SunPro-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/TI-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/TIClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Tasking-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Watcom-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/XL-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/XLClang-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/zOS-C-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CompilerId/VS-10.vcxproj.in",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeFindBinUtils.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCCompiler.cmake.in",
 		"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/3.31.6-msvc6/CMakeCCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-Determine-CXX.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCompilerIdDetection.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/ADSP-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/ARMCC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/ARMClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/AppleClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Borland-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Cray-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/CrayClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Embarcadero-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Fujitsu-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/GHS-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/HP-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IAR-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Intel-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/MSVC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/NVHPC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/NVIDIA-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/OrangeC-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/PGI-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/PathScale-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/SCO-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/TI-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/TIClang-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Tasking-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/Watcom-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/XL-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CompilerId/VS-10.vcxproj.in",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeFindBinUtils.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCXXCompiler.cmake.in",
 		"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/3.31.6-msvc6/CMakeCXXCompiler.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake",
@@ -129,25 +25,9 @@
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC-C.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineRCCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeRCCompiler.cmake.in",
 		"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/3.31.6-msvc6/CMakeRCCompiler.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestRCCompiler.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeParseImplicitIncludeInfo.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeParseImplicitLinkInfo.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeParseLibraryArchitecture.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCCompilerABI.c",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerSupport.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/FeatureTesting.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCCompiler.cmake.in",
-		"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/3.31.6-msvc6/CMakeCCompiler.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-MSVC-C.cmake",
@@ -160,19 +40,6 @@
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC-CXX.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeParseImplicitIncludeInfo.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeParseImplicitLinkInfo.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeParseLibraryArchitecture.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerSupport.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/FeatureTesting.cmake",
-		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCXXCompiler.cmake.in",
-		"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/3.31.6-msvc6/CMakeCXXCompiler.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake",
 		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-MSVC-CXX.cmake",
@@ -354,45 +221,15 @@
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Booking/BookingRepository.h",
-			"MU",
-			"2LVHDVNRXR/moc_BookingRepository.cpp",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Booking/BookingStatus.h",
-			"MU",
-			"2LVHDVNRXR/moc_BookingStatus.cpp",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Booking/BookingType.h",
-			"MU",
-			"2LVHDVNRXR/moc_BookingType.cpp",
-			null
-		],
-		[
 			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/Customer.h",
 			"MU",
 			"LSYMCGT25G/moc_Customer.cpp",
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/CustomerRepository.h",
-			"MU",
-			"LSYMCGT25G/moc_CustomerRepository.cpp",
-			null
-		],
-		[
 			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/MembershipPolicy.h",
 			"MU",
 			"LSYMCGT25G/moc_MembershipPolicy.cpp",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/MembershipTier.h",
-			"MU",
-			"LSYMCGT25G/moc_MembershipTier.cpp",
 			null
 		],
 		[
@@ -414,27 +251,45 @@
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/Invoice.h",
-			"MU",
-			"BSZN444ZLF/moc_Invoice.cpp",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/InvoiceRepository.h",
-			"MU",
-			"BSZN444ZLF/moc_InvoiceRepository.cpp",
-			null
-		],
-		[
 			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Observer.h",
 			"MU",
 			"EWIEGA46WW/moc_Observer.cpp",
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/DepositStatus.h",
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/BookingRepository.h",
 			"MU",
-			"4SMAVUGUGG/moc_DepositStatus.cpp",
+			"RSXGBB323P/moc_BookingRepository.cpp",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/CustomerRepository.h",
+			"MU",
+			"RSXGBB323P/moc_CustomerRepository.cpp",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InventoryRepository.h",
+			"MU",
+			"RSXGBB323P/moc_InventoryRepository.cpp",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InvoiceRepository.h",
+			"MU",
+			"RSXGBB323P/moc_InvoiceRepository.cpp",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/RoomRepository.h",
+			"MU",
+			"RSXGBB323P/moc_RoomRepository.cpp",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/ServiceItemRepository.h",
+			"MU",
+			"RSXGBB323P/moc_ServiceItemRepository.cpp",
 			null
 		],
 		[
@@ -450,39 +305,21 @@
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomRepository.h",
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomFactory.h",
 			"MU",
-			"4SMAVUGUGG/moc_RoomRepository.cpp",
+			"4SMAVUGUGG/moc_RoomFactory.cpp",
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomStatus.h",
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Service/InventoryService.h",
 			"MU",
-			"4SMAVUGUGG/moc_RoomStatus.cpp",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/TypeRoom.h",
-			"MU",
-			"4SMAVUGUGG/moc_TypeRoom.cpp",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Service/ServiceEnums.h",
-			"MU",
-			"QJ36PKLCSN/moc_ServiceEnums.cpp",
+			"QJ36PKLCSN/moc_InventoryService.cpp",
 			null
 		],
 		[
 			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Service/ServiceItem.h",
 			"MU",
 			"QJ36PKLCSN/moc_ServiceItem.cpp",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Service/ServiceItemRepository.h",
-			"MU",
-			"QJ36PKLCSN/moc_ServiceItemRepository.cpp",
 			null
 		]
 	],
@@ -629,17 +466,7 @@
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Booking/BookingRepository.cpp",
-			"MU",
-			null
-		],
-		[
 			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/Customer.cpp",
-			"MU",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/CustomerRepository.cpp",
 			"MU",
 			null
 		],
@@ -664,12 +491,37 @@
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/InvoiceRepository.cpp",
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Observer.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Observer.cpp",
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/BookingRepository.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/CustomerRepository.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InventoryRepository.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InvoiceRepository.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/RoomRepository.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/ServiceItemRepository.cpp",
 			"MU",
 			null
 		],
@@ -684,17 +536,17 @@
 			null
 		],
 		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomRepository.cpp",
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Service/InventoryService.cpp",
 			"MU",
 			null
 		],
 		[
 			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Service/ServiceItem.cpp",
-			"MU",
-			null
-		],
-		[
-			"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Service/ServiceItemRepository.cpp",
 			"MU",
 			null
 		],

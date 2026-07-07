@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "Invoice.h"
-#include "InvoiceRepository.h"
+#include "../Repository/InvoiceRepository.h"
 #include "../Service/ServiceItem.h"
-#include "../Service/ServiceItemRepository.h"
+#include "../Repository/ServiceItemRepository.h"
 
 class BillingService
 {

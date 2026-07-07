@@ -24,7 +24,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.40+3e7442088 for .NET Framework
-      Build started 7/1/2026 12:14:54 PM.
+      Build started 7/6/2026 9:43:11 PM.
       
       Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -53,7 +53,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.78
+      Time Elapsed 00:00:01.28
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -79,7 +79,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.40+3e7442088 for .NET Framework
-      Build started 7/1/2026 12:14:55 PM.
+      Build started 7/6/2026 9:43:12 PM.
       
       Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -108,7 +108,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.77
+      Time Elapsed 00:00:00.72
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -127,8 +127,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wp1raj"
-      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wp1raj"
+      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-fxcwn2"
+      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-fxcwn2"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -137,40 +137,40 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wp1raj'
+        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-fxcwn2'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_922b2.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_2fa09.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.40+3e7442088 for .NET Framework
-        Build started 7/1/2026 12:14:56 PM.
+        Build started 7/6/2026 9:43:13 PM.
         
-        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wp1raj\\cmTC_922b2.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fxcwn2\\cmTC_2fa09.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_922b2.dir\\Debug\\".
+          Creating directory "cmTC_2fa09.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wp1raj\\Debug\\".
-          Creating directory "cmTC_922b2.dir\\Debug\\cmTC_922b2.tlog\\".
+          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fxcwn2\\Debug\\".
+          Creating directory "cmTC_2fa09.dir\\Debug\\cmTC_2fa09.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_922b2.dir\\Debug\\cmTC_922b2.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_922b2.dir\\Debug\\cmTC_922b2.tlog\\unsuccessfulbuild".
+          Creating "cmTC_2fa09.dir\\Debug\\cmTC_2fa09.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_2fa09.dir\\Debug\\cmTC_2fa09.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_922b2.dir\\Debug\\\\" /Fd"cmTC_922b2.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_2fa09.dir\\Debug\\\\" /Fd"cmTC_2fa09.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35228 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_922b2.dir\\Debug\\\\" /Fd"cmTC_922b2.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_2fa09.dir\\Debug\\\\" /Fd"cmTC_2fa09.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wp1raj\\Debug\\cmTC_922b2.exe" /INCREMENTAL /ILK:"cmTC_922b2.dir\\Debug\\cmTC_922b2.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wp1raj/Debug/cmTC_922b2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wp1raj/Debug/cmTC_922b2.lib" /MACHINE:X64  /machine:x64 cmTC_922b2.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_922b2.vcxproj -> C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wp1raj\\Debug\\cmTC_922b2.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fxcwn2\\Debug\\cmTC_2fa09.exe" /INCREMENTAL /ILK:"cmTC_2fa09.dir\\Debug\\cmTC_2fa09.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-fxcwn2/Debug/cmTC_2fa09.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-fxcwn2/Debug/cmTC_2fa09.lib" /MACHINE:X64  /machine:x64 cmTC_2fa09.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_2fa09.vcxproj -> C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fxcwn2\\Debug\\cmTC_2fa09.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_922b2.dir\\Debug\\cmTC_922b2.tlog\\unsuccessfulbuild".
-          Touching "cmTC_922b2.dir\\Debug\\cmTC_922b2.tlog\\cmTC_922b2.lastbuildstate".
-        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wp1raj\\cmTC_922b2.vcxproj" (default targets).
+          Deleting file "cmTC_2fa09.dir\\Debug\\cmTC_2fa09.tlog\\unsuccessfulbuild".
+          Touching "cmTC_2fa09.dir\\Debug\\cmTC_2fa09.tlog\\cmTC_2fa09.lastbuildstate".
+        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fxcwn2\\cmTC_2fa09.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.79
+        Time Elapsed 00:00:00.75
         
       exitCode: 0
   -
@@ -210,8 +210,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-rob7mj"
-      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-rob7mj"
+      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-7e90ns"
+      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-7e90ns"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -221,40 +221,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-rob7mj'
+        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-7e90ns'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_5e903.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_014ef.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.40+3e7442088 for .NET Framework
-        Build started 7/1/2026 12:14:57 PM.
+        Build started 7/6/2026 9:43:15 PM.
         
-        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rob7mj\\cmTC_5e903.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7e90ns\\cmTC_014ef.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_5e903.dir\\Debug\\".
+          Creating directory "cmTC_014ef.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rob7mj\\Debug\\".
-          Creating directory "cmTC_5e903.dir\\Debug\\cmTC_5e903.tlog\\".
+          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7e90ns\\Debug\\".
+          Creating directory "cmTC_014ef.dir\\Debug\\cmTC_014ef.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_5e903.dir\\Debug\\cmTC_5e903.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_5e903.dir\\Debug\\cmTC_5e903.tlog\\unsuccessfulbuild".
+          Creating "cmTC_014ef.dir\\Debug\\cmTC_014ef.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_014ef.dir\\Debug\\cmTC_014ef.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_5e903.dir\\Debug\\\\" /Fd"cmTC_5e903.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_014ef.dir\\Debug\\\\" /Fd"cmTC_014ef.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35228 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_5e903.dir\\Debug\\\\" /Fd"cmTC_5e903.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_014ef.dir\\Debug\\\\" /Fd"cmTC_014ef.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rob7mj\\Debug\\cmTC_5e903.exe" /INCREMENTAL /ILK:"cmTC_5e903.dir\\Debug\\cmTC_5e903.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-rob7mj/Debug/cmTC_5e903.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-rob7mj/Debug/cmTC_5e903.lib" /MACHINE:X64  /machine:x64 cmTC_5e903.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_5e903.vcxproj -> C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rob7mj\\Debug\\cmTC_5e903.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7e90ns\\Debug\\cmTC_014ef.exe" /INCREMENTAL /ILK:"cmTC_014ef.dir\\Debug\\cmTC_014ef.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-7e90ns/Debug/cmTC_014ef.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-7e90ns/Debug/cmTC_014ef.lib" /MACHINE:X64  /machine:x64 cmTC_014ef.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_014ef.vcxproj -> C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7e90ns\\Debug\\cmTC_014ef.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_5e903.dir\\Debug\\cmTC_5e903.tlog\\unsuccessfulbuild".
-          Touching "cmTC_5e903.dir\\Debug\\cmTC_5e903.tlog\\cmTC_5e903.lastbuildstate".
-        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rob7mj\\cmTC_5e903.vcxproj" (default targets).
+          Deleting file "cmTC_014ef.dir\\Debug\\cmTC_014ef.tlog\\unsuccessfulbuild".
+          Touching "cmTC_014ef.dir\\Debug\\cmTC_014ef.tlog\\cmTC_014ef.lastbuildstate".
+        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7e90ns\\cmTC_014ef.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.79
+        Time Elapsed 00:00:00.78
         
       exitCode: 0
   -
@@ -300,8 +300,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-vaaqq9"
-      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-vaaqq9"
+      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-uled8q"
+      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-uled8q"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -311,40 +311,40 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-vaaqq9'
+        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-uled8q'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d212f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8d991.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.40+3e7442088 for .NET Framework
-        Build started 7/1/2026 12:14:59 PM.
+        Build started 7/6/2026 9:43:16 PM.
         
-        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\cmTC_d212f.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\cmTC_8d991.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_d212f.dir\\Debug\\".
+          Creating directory "cmTC_8d991.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\Debug\\".
-          Creating directory "cmTC_d212f.dir\\Debug\\cmTC_d212f.tlog\\".
+          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\Debug\\".
+          Creating directory "cmTC_8d991.dir\\Debug\\cmTC_8d991.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_d212f.dir\\Debug\\cmTC_d212f.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_d212f.dir\\Debug\\cmTC_d212f.tlog\\unsuccessfulbuild".
+          Creating "cmTC_8d991.dir\\Debug\\cmTC_8d991.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_8d991.dir\\Debug\\cmTC_8d991.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d212f.dir\\Debug\\\\" /Fd"cmTC_d212f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\src.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8d991.dir\\Debug\\\\" /Fd"cmTC_8d991.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\src.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35228 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d212f.dir\\Debug\\\\" /Fd"cmTC_d212f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\src.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8d991.dir\\Debug\\\\" /Fd"cmTC_8d991.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\src.c"
           src.c
-        C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\cmTC_d212f.vcxproj]
-        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\cmTC_d212f.vcxproj" (default targets) -- FAILED.
+        C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\cmTC_8d991.vcxproj]
+        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\cmTC_8d991.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\cmTC_d212f.vcxproj" (default target) (1) ->
+        "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\cmTC_8d991.vcxproj" (default target) (1) ->
         (ClCompile target) -> 
-          C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vaaqq9\\cmTC_d212f.vcxproj]
+          C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uled8q\\cmTC_8d991.vcxproj]
         
             0 Warning(s)
             1 Error(s)
         
-        Time Elapsed 00:00:00.48
+        Time Elapsed 00:00:00.51
         
       exitCode: 1
   -
@@ -361,8 +361,8 @@ events:
     checks:
       - "Looking for pthread_create in pthreads"
     directories:
-      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-q12185"
-      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-q12185"
+      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-eyi801"
+      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-eyi801"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -372,42 +372,42 @@ events:
       variable: "CMAKE_HAVE_PTHREADS_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-q12185'
+        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-eyi801'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4778e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a3698.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.40+3e7442088 for .NET Framework
-        Build started 7/1/2026 12:15:00 PM.
+        Build started 7/6/2026 9:43:17 PM.
         
-        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\cmTC_4778e.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\cmTC_a3698.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_4778e.dir\\Debug\\".
+          Creating directory "cmTC_a3698.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\Debug\\".
-          Creating directory "cmTC_4778e.dir\\Debug\\cmTC_4778e.tlog\\".
+          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\Debug\\".
+          Creating directory "cmTC_a3698.dir\\Debug\\cmTC_a3698.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_4778e.dir\\Debug\\cmTC_4778e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_4778e.dir\\Debug\\cmTC_4778e.tlog\\unsuccessfulbuild".
+          Creating "cmTC_a3698.dir\\Debug\\cmTC_a3698.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_a3698.dir\\Debug\\cmTC_a3698.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4778e.dir\\Debug\\\\" /Fd"cmTC_4778e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a3698.dir\\Debug\\\\" /Fd"cmTC_a3698.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\CheckFunctionExists.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35228 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4778e.dir\\Debug\\\\" /Fd"cmTC_4778e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\CheckFunctionExists.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a3698.dir\\Debug\\\\" /Fd"cmTC_a3698.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\Debug\\cmTC_4778e.exe" /INCREMENTAL /ILK:"cmTC_4778e.dir\\Debug\\cmTC_4778e.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-q12185/Debug/cmTC_4778e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-q12185/Debug/cmTC_4778e.lib" /MACHINE:X64  /machine:x64 cmTC_4778e.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\cmTC_4778e.vcxproj]
-        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\cmTC_4778e.vcxproj" (default targets) -- FAILED.
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\Debug\\cmTC_a3698.exe" /INCREMENTAL /ILK:"cmTC_a3698.dir\\Debug\\cmTC_a3698.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-eyi801/Debug/cmTC_a3698.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-eyi801/Debug/cmTC_a3698.lib" /MACHINE:X64  /machine:x64 cmTC_a3698.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\cmTC_a3698.vcxproj]
+        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\cmTC_a3698.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\cmTC_4778e.vcxproj" (default target) (1) ->
+        "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\cmTC_a3698.vcxproj" (default target) (1) ->
         (Link target) -> 
-          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q12185\\cmTC_4778e.vcxproj]
+          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-eyi801\\cmTC_a3698.vcxproj]
         
             0 Warning(s)
             1 Error(s)
         
-        Time Elapsed 00:00:00.58
+        Time Elapsed 00:00:00.49
         
       exitCode: 1
   -
@@ -424,8 +424,8 @@ events:
     checks:
       - "Looking for pthread_create in pthread"
     directories:
-      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-qd6qy1"
-      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-qd6qy1"
+      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wgfz47"
+      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wgfz47"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -435,42 +435,42 @@ events:
       variable: "CMAKE_HAVE_PTHREAD_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-qd6qy1'
+        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wgfz47'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_b428e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_53eec.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.40+3e7442088 for .NET Framework
-        Build started 7/1/2026 12:15:01 PM.
+        Build started 7/6/2026 9:43:17 PM.
         
-        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\cmTC_b428e.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\cmTC_53eec.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_b428e.dir\\Debug\\".
+          Creating directory "cmTC_53eec.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\Debug\\".
-          Creating directory "cmTC_b428e.dir\\Debug\\cmTC_b428e.tlog\\".
+          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\Debug\\".
+          Creating directory "cmTC_53eec.dir\\Debug\\cmTC_53eec.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_b428e.dir\\Debug\\cmTC_b428e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_b428e.dir\\Debug\\cmTC_b428e.tlog\\unsuccessfulbuild".
+          Creating "cmTC_53eec.dir\\Debug\\cmTC_53eec.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_53eec.dir\\Debug\\cmTC_53eec.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b428e.dir\\Debug\\\\" /Fd"cmTC_b428e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_53eec.dir\\Debug\\\\" /Fd"cmTC_53eec.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\CheckFunctionExists.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35228 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b428e.dir\\Debug\\\\" /Fd"cmTC_b428e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\CheckFunctionExists.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_53eec.dir\\Debug\\\\" /Fd"cmTC_53eec.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\Debug\\cmTC_b428e.exe" /INCREMENTAL /ILK:"cmTC_b428e.dir\\Debug\\cmTC_b428e.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-qd6qy1/Debug/cmTC_b428e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-qd6qy1/Debug/cmTC_b428e.lib" /MACHINE:X64  /machine:x64 cmTC_b428e.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\cmTC_b428e.vcxproj]
-        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\cmTC_b428e.vcxproj" (default targets) -- FAILED.
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\Debug\\cmTC_53eec.exe" /INCREMENTAL /ILK:"cmTC_53eec.dir\\Debug\\cmTC_53eec.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wgfz47/Debug/cmTC_53eec.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-wgfz47/Debug/cmTC_53eec.lib" /MACHINE:X64  /machine:x64 cmTC_53eec.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\cmTC_53eec.vcxproj]
+        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\cmTC_53eec.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\cmTC_b428e.vcxproj" (default target) (1) ->
+        "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\cmTC_53eec.vcxproj" (default target) (1) ->
         (Link target) -> 
-          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qd6qy1\\cmTC_b428e.vcxproj]
+          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wgfz47\\cmTC_53eec.vcxproj]
         
             0 Warning(s)
             1 Error(s)
         
-        Time Elapsed 00:00:00.61
+        Time Elapsed 00:00:00.45
         
       exitCode: 1
   -
@@ -488,8 +488,8 @@ events:
     checks:
       - "Performing Test HAVE_STDATOMIC"
     directories:
-      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-8h5c5e"
-      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-8h5c5e"
+      source: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-xxh19g"
+      binary: "C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-xxh19g"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -499,40 +499,40 @@ events:
       variable: "HAVE_STDATOMIC"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-8h5c5e'
+        Change Dir: 'C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-xxh19g'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3b07a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_7b29b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.40+3e7442088 for .NET Framework
-        Build started 7/1/2026 12:15:02 PM.
+        Build started 7/6/2026 9:43:18 PM.
         
-        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8h5c5e\\cmTC_3b07a.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxh19g\\cmTC_7b29b.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_3b07a.dir\\Debug\\".
+          Creating directory "cmTC_7b29b.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8h5c5e\\Debug\\".
-          Creating directory "cmTC_3b07a.dir\\Debug\\cmTC_3b07a.tlog\\".
+          Creating directory "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxh19g\\Debug\\".
+          Creating directory "cmTC_7b29b.dir\\Debug\\cmTC_7b29b.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_3b07a.dir\\Debug\\cmTC_3b07a.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_3b07a.dir\\Debug\\cmTC_3b07a.tlog\\unsuccessfulbuild".
+          Creating "cmTC_7b29b.dir\\Debug\\cmTC_7b29b.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_7b29b.dir\\Debug\\cmTC_7b29b.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D HAVE_STDATOMIC /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_3b07a.dir\\Debug\\\\" /Fd"cmTC_3b07a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8h5c5e\\src.cxx"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D HAVE_STDATOMIC /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_7b29b.dir\\Debug\\\\" /Fd"cmTC_7b29b.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxh19g\\src.cxx"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35228 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D HAVE_STDATOMIC /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_3b07a.dir\\Debug\\\\" /Fd"cmTC_3b07a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8h5c5e\\src.cxx"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D HAVE_STDATOMIC /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_7b29b.dir\\Debug\\\\" /Fd"cmTC_7b29b.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxh19g\\src.cxx"
           src.cxx
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8h5c5e\\Debug\\cmTC_3b07a.exe" /INCREMENTAL /ILK:"cmTC_3b07a.dir\\Debug\\cmTC_3b07a.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-8h5c5e/Debug/cmTC_3b07a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-8h5c5e/Debug/cmTC_3b07a.lib" /MACHINE:X64  /machine:x64 cmTC_3b07a.dir\\Debug\\src.obj
-          cmTC_3b07a.vcxproj -> C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8h5c5e\\Debug\\cmTC_3b07a.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxh19g\\Debug\\cmTC_7b29b.exe" /INCREMENTAL /ILK:"cmTC_7b29b.dir\\Debug\\cmTC_7b29b.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-xxh19g/Debug/cmTC_7b29b.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Duy/OneDrive/Desktop/OOP (TH)/Mid-term Project/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/CMakeScratch/TryCompile-xxh19g/Debug/cmTC_7b29b.lib" /MACHINE:X64  /machine:x64 cmTC_7b29b.dir\\Debug\\src.obj
+          cmTC_7b29b.vcxproj -> C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxh19g\\Debug\\cmTC_7b29b.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_3b07a.dir\\Debug\\cmTC_3b07a.tlog\\unsuccessfulbuild".
-          Touching "cmTC_3b07a.dir\\Debug\\cmTC_3b07a.tlog\\cmTC_3b07a.lastbuildstate".
-        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8h5c5e\\cmTC_3b07a.vcxproj" (default targets).
+          Deleting file "cmTC_7b29b.dir\\Debug\\cmTC_7b29b.tlog\\unsuccessfulbuild".
+          Touching "cmTC_7b29b.dir\\Debug\\cmTC_7b29b.tlog\\cmTC_7b29b.lastbuildstate".
+        Done Building Project "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxh19g\\cmTC_7b29b.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.84
+        Time Elapsed 00:00:00.67
         
       exitCode: 0
 ...
