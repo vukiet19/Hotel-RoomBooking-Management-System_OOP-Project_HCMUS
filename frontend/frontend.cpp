@@ -281,8 +281,8 @@ void MainWindow::handleLogin_10()
 // dùng để load data, sẽ nhận là table (dạng table gì) và là query được yêu cầu làm
 void MainWindow::loadTableData(QTableWidget *table, QString queryStr)
 {
-    Dòng này để
-        table->setRowCount(0);
+    // Dòng này để reset lại dòng ,nghĩa là sẽ chỉ còn lại 1 cái bảng với không có dòng nào
+    table->setRowCount(0);
 
     if (!DatabaseManager::instance().open())
         return;
@@ -293,6 +293,8 @@ void MainWindow::loadTableData(QTableWidget *table, QString queryStr)
         int row = 0;
         while (query.next())
         {
+            // Thêm cột
+            table->insertRow(row);
             for (int col = 0; col < table->columnCount(); ++col)
             {
                 table->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
