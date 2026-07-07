@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+145b83648ab4239bd435332c874d07cf CMakeFiles/Hotel_Management_autogen
