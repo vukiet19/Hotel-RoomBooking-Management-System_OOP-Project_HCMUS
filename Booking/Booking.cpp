@@ -1,5 +1,6 @@
 #include "Booking.h"
 #include "BookingRepository.h"
+#include "../Observer.h"
 
 Booking::Booking(Customer* c) : customer(c), status(BookingStatus::UNCONFIRMED) {}
 
@@ -77,6 +78,10 @@ DepositStatus StandardRoomBooking::getDepositStatus() const {
     return this->depositStatus;
 }
 
+const vector<unique_ptr<ServiceItem>>& Booking::getServiceItems() const {
+    return serviceItems;
+}
+
 StandardRoomBooking::StandardRoomBooking(Customer* c, Room* r, QDateTime in, QDateTime out, double depositAmount) 
 : Booking(c), room(r), checkInTime(in), checkOutTime(out), depositAmount(depositAmount) {
     
@@ -120,6 +125,7 @@ void StandardRoomBooking::checkIn() {
     this->status = BookingStatus::CHECKED_IN;
     this->room->setStatus(RoomStatus::Occupied);
     this->resolveDeposit(); 
+    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);
@@ -132,6 +138,7 @@ void StandardRoomBooking::checkOut() {
         this->room->setStatus(RoomStatus::Maintenance);
     }
     Booking::addDamagePenaltyItems();
+    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);
@@ -143,6 +150,7 @@ void StandardRoomBooking::checkOut() {
 
 void WalkInTab::checkIn() {
     this->status = BookingStatus::CHECKED_IN;
+    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);
@@ -152,6 +160,7 @@ void WalkInTab::checkIn() {
 void WalkInTab::checkOut() {
     this->status = BookingStatus::CHECKED_OUT;
     Booking::addDamagePenaltyItems();
+    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);

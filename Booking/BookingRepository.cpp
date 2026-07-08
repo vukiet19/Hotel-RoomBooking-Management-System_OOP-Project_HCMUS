@@ -2,7 +2,6 @@
 #include "Booking.h"
 #include "../Customer/Customer.h"
 #include "../Room/Room.h"
-#include "BookingFactory.h"
 #include "../Service/ServiceItem.h"
 #include <QtSql/QSqlError>
 #include <QDebug>
@@ -308,12 +307,12 @@ Booking* BookingRepository::getById(int bookingId, Customer* customer, Room* roo
         
         if (itemQuery.exec()) {
             while (itemQuery.next()) {
-                std::string itemId = itemQuery.value("item_id").toString().toStdString();
+                string itemId = itemQuery.value("item_id").toString().toStdString();
                 int qty = itemQuery.value("quantity").toInt();
-                std::string note = itemQuery.value("customer_note").toString().toStdString();
+                string note = itemQuery.value("customer_note").toString().toStdString();
                 double finalPrice = itemQuery.value("final_price").toDouble();
-                std::string name = itemQuery.value("item_name").toString().toStdString();
-                std::string category = itemQuery.value("category").toString().toStdString();
+                string name = itemQuery.value("item_name").toString().toStdString();
+                string category = itemQuery.value("category").toString().toStdString();
                 
                 unique_ptr<ServiceItem> item;
                 if (category == "Food") {
@@ -338,8 +337,8 @@ Booking* BookingRepository::getById(int bookingId, Customer* customer, Room* roo
     return booking;
 }
 
-std::vector<Booking*> BookingRepository::getAll(const std::vector<Customer*>& customers, const std::vector<Room*>& rooms) {
-    std::vector<Booking*> list;
+vector<Booking*> BookingRepository::getAll(const vector<Customer*>& customers, const vector<Room*>& rooms) {
+    vector<Booking*> list;
     QSqlDatabase db = DatabaseManager::instance().database();
     QSqlQuery query(db);
     
@@ -348,7 +347,7 @@ std::vector<Booking*> BookingRepository::getAll(const std::vector<Customer*>& cu
         return list;
     }
     
-    std::vector<std::tuple<int, int, std::string>> records;
+    vector<tuple<int, int, string>> records;
     while (query.next()) {
         records.push_back({
             query.value("id").toInt(),
@@ -360,7 +359,7 @@ std::vector<Booking*> BookingRepository::getAll(const std::vector<Customer*>& cu
     for (const auto& rec : records) {
         int id = std::get<0>(rec);
         int custId = std::get<1>(rec);
-        std::string rmNum = std::get<2>(rec);
+        string rmNum = std::get<2>(rec);
         
         Customer* matchedCust = nullptr;
         for (auto* c : customers) {
@@ -387,7 +386,106 @@ std::vector<Booking*> BookingRepository::getAll(const std::vector<Customer*>& cu
     return list;
 }
 
-bool BookingRepository::addServiceItemToBooking(int bookingId, const std::string& itemId, int quantity, double finalPrice, const std::string& note) {
+
+//method để lọc dựa trên điều kiện (loại filter, vector chứa customer và room)
+vector<Booking*> BookingRepository::getFiltered(const BookingFilter& filter, const vector<Customer*>& customers, const vector<Room*>& rooms) {
+    
+    vector<Booking*> list;
+    QSqlDatabase db = DatabaseManager::instance().database();
+    
+    QString sql = "SELECT id, customer_id, room_number FROM Bookings";
+    vector<QString> conditions;
+    
+    //AI kiểm tra thì kêu đổi từ các if riêng lẻ r làm như dưới thì gắn vào vector conditions để ko lỗi hoặc hacking(SQL injection)
+    if (filter.customerId != -1) {
+        conditions.push_back("customer_id = :customer_id");
+    }
+    if (!filter.roomNumber.empty()) {
+        conditions.push_back("room_number = :room_number");
+    }
+    if (!filter.status.empty()) {
+        conditions.push_back("status = :status");
+    }
+    if (!filter.bookingType.empty()) {
+        conditions.push_back("booking_type = :booking_type");
+    }
+    
+    if (!conditions.empty()) {
+        sql += " WHERE " + conditions[0];
+        for (size_t i = 1; i < conditions.size(); ++i) {
+            sql += " AND " + conditions[i];
+        }
+    }
+
+    //nếu lọc bằng customerId
+    //sql(Qstring khai báo trên thành)
+    // : SELECT id, customer_id, room_number FROM Bookings WHERE customer_id = :customer_id
+    // nếu còn tiếp thì sẽ thêm AND và thêm điều kiện tiếp
+    
+    QSqlQuery query(db);
+    query.prepare(sql);
+    
+    if (filter.customerId != -1) {
+        query.bindValue(":customer_id", filter.customerId);
+    }
+    if (!filter.roomNumber.empty()) {
+        query.bindValue(":room_number", QString::fromStdString(filter.roomNumber));
+    }
+    if (!filter.status.empty()) {
+        query.bindValue(":status", QString::fromStdString(filter.status));
+    }
+    if (!filter.bookingType.empty()) {
+        query.bindValue(":booking_type", QString::fromStdString(filter.bookingType));
+    }
+    
+    if (!query.exec()) {
+        qDebug() << "ERROR: Failed to fetch filtered Bookings!" << query.lastError().text();
+        return list;
+    }
+    
+    vector<tuple<int, int, string>> records;
+    while (query.next()) {
+        records.push_back({
+            query.value("id").toInt(),
+            query.value("customer_id").toInt(),
+            //Qvariant -> Qstring -> std::string
+            query.value("room_number").toString().toStdString()
+        });
+    }
+     
+    for (const auto& rec : records) {
+
+        //syntax của tuple vẫn để namespace std:: để sợ conflict vs get khác
+        int id = std::get<0>(rec);
+        int custId = std::get<1>(rec);
+        string rmNum = std::get<2>(rec);
+        
+        Customer* matchedCust = nullptr;
+        for (auto* c : customers) {
+            if (c && c->getId() == custId) {
+                matchedCust = c;
+                break;
+            }
+        }
+        
+        Room* matchedRoom = nullptr;
+        for (auto* r : rooms) {
+            if (r && r->getId() == rmNum) {
+                matchedRoom = r;
+                break;
+            }
+        }
+        
+        Booking* booking = getById(id, matchedCust, matchedRoom);
+        if (booking) {
+            list.push_back(booking);
+        }
+    }
+    
+    return list;
+}
+
+bool BookingRepository::addServiceItemToBooking(int bookingId, const string& itemId, int quantity, double finalPrice, const string& note) {
     QSqlDatabase db = DatabaseManager::instance().database();
     QSqlQuery query(db);
     

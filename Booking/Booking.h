@@ -38,6 +38,8 @@ public:
   virtual void checkOut() = 0;
   void addServiceItem(unique_ptr<ServiceItem> serviceItem);
   void addDamagePenaltyItems();
+
+  const vector<unique_ptr<ServiceItem>>& getServiceItems() const;
 };
 
 class StandardRoomBooking : public Booking {
