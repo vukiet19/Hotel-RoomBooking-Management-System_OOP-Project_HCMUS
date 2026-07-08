@@ -4,6 +4,27 @@
 
 Booking::Booking(Customer* c) : customer(c), status(BookingStatus::UNCONFIRMED) {}
 
+//TẤT CẢ CÁC this->status ĐỔI QUA SETSTATUS() ĐỂ OBSERVER NHẬN ĐƯỢC THÔNG TIN QUA EVENT 
+void Booking::setStatus(BookingStatus status) {
+    this->status = status;
+
+    BookingEvent event;
+    event.bookingId = this->id;
+    event.customerName = this->customer ? this->customer->getFullname() : "N/A";
+    
+    // sài dynamic cast để check phải standardroombooking ko
+    StandardRoomBooking* srb = dynamic_cast<StandardRoomBooking*>(this);
+    event.roomNumber = (srb && srb->getRoom()) ? srb->getRoom()->getId() : "Walk-in";
+    
+    event.newStatus = this->status;
+    event.totalPrice = this->totalPrice;
+
+    //chuyển qua kiểu string để xuất dễ. cái này interchangeable bàn cho UI sài dễ thôi
+    event.timestamp = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss").toStdString();
+
+    HotelEventManager::instance().notifyBookingStatus(event);
+}
+
 StandardRoomBooking::~StandardRoomBooking() {
     if(this->room->getStatus() == RoomStatus::Occupied){
         //LƯU THÔNG TIN KHÁCH HÀNG VÀO DATABASE
@@ -122,10 +143,9 @@ int WalkInTab::getNights() const {
 
 //check in thì resolve deposit (quá hợp lý =))
 void StandardRoomBooking::checkIn() {
-    this->status = BookingStatus::CHECKED_IN;
+    this->setStatus(BookingStatus::CHECKED_IN);
     this->room->setStatus(RoomStatus::Occupied);
     this->resolveDeposit(); 
-    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);
@@ -133,12 +153,11 @@ void StandardRoomBooking::checkIn() {
 }
 
 void StandardRoomBooking::checkOut() {
-    this->status = BookingStatus::CHECKED_OUT;
+    this->setStatus(BookingStatus::CHECKED_OUT);
     if(this->room) {
         this->room->setStatus(RoomStatus::Maintenance);
     }
     Booking::addDamagePenaltyItems();
-    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);
@@ -149,8 +168,7 @@ void StandardRoomBooking::checkOut() {
 //maintenace() -> ktra dvu + damamge penalty item
 
 void WalkInTab::checkIn() {
-    this->status = BookingStatus::CHECKED_IN;
-    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
+    this->setStatus(BookingStatus::CHECKED_IN);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);
@@ -158,9 +176,8 @@ void WalkInTab::checkIn() {
 }
 
 void WalkInTab::checkOut() {
-    this->status = BookingStatus::CHECKED_OUT;
+    this->setStatus(BookingStatus::CHECKED_OUT);
     Booking::addDamagePenaltyItems();
-    HotelEventManager::instance().notifyBookingStatus(this->id, this->status);
     if (this->id > 0) {
         BookingRepository repo;
         repo.update(this);
