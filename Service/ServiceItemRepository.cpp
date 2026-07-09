@@ -26,8 +26,13 @@ vector<ServiceCatalogData> ServiceItemRepository::getAllCatalogItems() {
 
     query.prepare(
         "SELECT item_id, item_name, category, base_price, vip_free_status "
-        "FROM ServiceCalalog"
+        "FROM ServiceCatalog"
     );
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Khong the doc ServiceCatalog!" << query.lastError().text();
+        return items;
+    }
 
     while(query.next()) {
         ServiceCatalogData item;
@@ -59,7 +64,7 @@ optional<ServiceCatalogData> ServiceItemRepository::findCatalogItemById(const st
 
     query.prepare(
         "SELECT item_id, item_name, category, base_price, vip_free_status "
-        "FROM ServiceCalalog "
+        "FROM ServiceCatalog "
         "WHERE item_id = :item_id"
     );
 
@@ -134,7 +139,7 @@ vector<BookingServiceItemData> ServiceItemRepository::getItemsByBookingId(int bo
     QSqlQuery query(db);
 
     query.prepare(
-        "SELECT booking_id, item_id, quantity, customer_note, final_price "
+        "SELECT id, booking_id, item_id, quantity, customer_note, final_price "
         "FROM BookingServiceItems "
         "WHERE booking_id = :booking_id"
     );
@@ -148,6 +153,8 @@ vector<BookingServiceItemData> ServiceItemRepository::getItemsByBookingId(int bo
 
     while (query.next()) {
         BookingServiceItemData item;
+
+        item.id = query.value("id").toInt();
         item.bookingId = query.value("booking_id").toInt();
         item.itemId = query.value("item_id").toString().toStdString();
         item.quantity = query.value("quantity").toInt();
@@ -158,4 +165,44 @@ vector<BookingServiceItemData> ServiceItemRepository::getItemsByBookingId(int bo
     }
 
     return items;
+}
+
+// xóa dòng của một dịch vụ dựa trên id của dịch vụ đó
+bool ServiceItemRepository::removeBookingServiceItem(int id) {
+    QSqlDatabase db = DatabaseManager::instance().database();
+    QSqlQuery query(db);
+
+    query.prepare(
+        "DELETE FROM BookingServiceItems "
+        "WHERE id = :id"
+    );
+
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Khong the xoa BookingServiceItem!" << query.lastError().text();
+        return false;
+    }
+
+    return query.numRowsAffected() > 0;
+}
+
+// xóa toàn bộ dịch vụ có trong bookingId được truyền vào
+bool ServiceItemRepository::removeItemsByBookingId(int bookingId) {
+    QSqlDatabase db = DatabaseManager::instance().database();
+    QSqlQuery query(db);
+
+    query.prepare(
+        "DELETE FROM BookingServiceItems "
+        "WHERE booking_id = :booking_id"
+    );
+
+    query.bindValue(":booking_id", bookingId);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Khong the xoa BookingServiceItems theo booking_id!" << query.lastError().text();
+        return false;
+    }
+    // trường hợp một booking chưa dùng dịch vụ gì hết thì vẫn trả về true
+    return true;
 }

@@ -43,4 +43,10 @@ public:
     
     // lấy toàn bộ item đã được thêm vào một booking thông qua booking_id
     vector<BookingServiceItemData> getItemsByBookingId(int bookingId);
+    
+    // xóa dòng của một dịch vụ dựa trên id của dịch vụ đó
+    bool removeBookingServiceItem(int id);
+
+    // xóa toàn bộ dịch vụ có trong bookingId được truyền vào
+    bool removeItemsByBookingId(int bookingId);
 };
