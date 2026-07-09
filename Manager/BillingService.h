@@ -9,8 +9,8 @@ class BillingService
 {
 private:
 	InvoiceRepository invoiceRepo;
-	double calculateServiceCharge(const Booking& booking);
 public: 
+	double calculateServiceCharge(const Booking& booking);
 	BillingService() = default;
 	Invoice generateInvoice(const Booking& booking, double baseRoomCharge);
 };
