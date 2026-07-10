@@ -16,12 +16,20 @@ set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt")
 # 2. Added 'Widgets' to fix the QApplication error
 find_package(Qt6 COMPONENTS Core Sql Widgets REQUIRED)
 
-file(GLOB_RECURSE SOURCES 
+file(GLOB_RECURSE SOURCES  MACOSX_BUNDLE
+
+    "Customer/*.cpp"
+    "Room/*.cpp"
+    "Manager/DatabaseManager.cpp"
+    "Repository/*.cpp"
+    "Observer.cpp"
+
     main.cpp
     frontend.cpp
-    frontend.h
-    DatabaseManager.cpp   
-    DatabaseManager.h
+    backend.cpp
+    Customerwin.cpp
+
+
 )
 
 list(FILTER SOURCES EXCLUDE REGEX "^build/")
@@ -33,3 +41,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Sql Qt6::Widgets)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Database 
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+     target_include_directories(Hotel_Management PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

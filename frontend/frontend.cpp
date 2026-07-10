@@ -1,26 +1,25 @@
-// Hàm này dùng để display, thực hiện của backend trong UI
-// Hàm này sẽ liên kết với các hàm Repository vì đây sẽ lấy dự liệu từ database
-
 #include "frontend.h"
+#include "backend.h"
+#include "Booking/Booking.h"
 #include <QPainter>
 #include <QPixmap>
+#include <QDialog>
 #include <QString>
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
+#include <QDateEdit>
+#include <QFormLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QMessageBox>
 #include <QFile>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QHeaderView>
-#include "Manager/DatabaseManager.h"
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QHeaderView>
-#include <QPushButton>
+#include <QComboBox>
+#include "Room/Room.h"
+#include "customerwin.h"
+#include "Repository/RoomRepository.h"
+#include "Room/DerivedRooms.h"
+#include "Room/TypeRoom.h"
+#include "Room/RoomFactory.h"
 
-// Trong đây parent nó có ý nghĩa là khi mình đóng chương trình thì qt sẽ tự xoá widget của chính nó, không cần gọi delete
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 {
     setAttribute(Qt::WA_StyledBackground, true);
@@ -28,12 +27,10 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     setWindowTitle("Hotel Management System");
     setObjectName("MyMainWindow");
 
-    // Cái này dùng để lưu những thứ được hiện thị trong main
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
-    // Dùng để xếp các nút như sidebar
     QWidget *sidebar = new QWidget(this);
     sidebar->setFixedWidth(220);
     sidebar->setObjectName("sidebar");
@@ -56,13 +53,12 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     QList<QPushButton *> buttons = {button1, button2, button3, button4, button5,
                                     button6, button7, button8, button9, button10};
 
-    // Lưu bottons
     for (QPushButton *btn : buttons)
     {
         sidebarLayout->addWidget(btn);
         btn->setCursor(Qt::PointingHandCursor);
     }
-    // Hàm này dùng để giản để lắp đầu khoảng chống nếu không sử dụng
+
     sidebarLayout->addStretch();
 
     QWidget *contentArea = new QWidget(this);
@@ -73,11 +69,10 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 
     QHBoxLayout *actionBarLayout = new QHBoxLayout();
 
-    // Nút thực hiện các hàm add,Updaye,Delete,Filter
-    QPushButton *btnAdd = new QPushButton("Add", contentArea);
-    QPushButton *btnUpdate = new QPushButton("Update", contentArea);
-    QPushButton *btnDelete = new QPushButton("Delete", contentArea);
-    QPushButton *btnFilter = new QPushButton("Filter", contentArea);
+    btnAdd = new QPushButton("Add", contentArea);
+    btnUpdate = new QPushButton("Update", contentArea);
+    btnDelete = new QPushButton("Delete", contentArea);
+    btnFilter = new QPushButton("Filter", contentArea);
 
     actionBarLayout->addWidget(btnAdd);
     actionBarLayout->addWidget(btnUpdate);
@@ -111,7 +106,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     tableService->setHorizontalHeaderLabels({"Service ID", "Name", "Category", "Price"});
     tableBill->setHorizontalHeaderLabels({"Bill ID", "Booking ID", "Total Amount"});
 
-    // Danh sách chứa các table
     QList<QTableWidget *> tables = {tableBooking, tableBookingItems, tableCustomer, tableFood, tableInventory,
                                     tableInventoryLog, tableRoom, tableRoomType, tableService, tableBill};
     for (QTableWidget *tb : tables)
@@ -126,12 +120,10 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     mainLayout->addWidget(sidebar);
     mainLayout->addWidget(contentArea);
 
-    // Set up CSS cho button SIDEBAR
     this->setStyleSheet(R"(
         #contentArea { background-color: #e8f0fa; }
         #sidebar { background-color: white; border-right: 1px solid #e2e8f0; }
         
-        /* SIDEBAR BUTTONS */
         #sidebar QPushButton {
             background-color: transparent;
             color: #64748b;
@@ -151,7 +143,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
             border-bottom-left-radius: 4px;
         }
 
-        /* NEW: TOP ACTION BUTTONS (Add, Update, Delete) */
         #contentArea QPushButton {
             background-color: white;
             color: #333333;
@@ -164,7 +155,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
         }
         #contentArea QPushButton:hover { background-color: #f3f4f6; }
         
-        /* TABLES */
         QTableWidget {
             background-color: white;
             border: none;
@@ -176,7 +166,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
             selection-color: #1e3a8a;
         }
         
-        /* FIXED: Top Headers (Thick padding) */
         QHeaderView::section:horizontal {
             background-color: white;
             color: #64748b;
@@ -186,7 +175,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
             border-bottom: 2px solid #e2e8f0;
         }
 
-        /* FIXED: Left Row Numbers (Thin padding so numbers don't get cut off) */
         QHeaderView::section:vertical {
             background-color: white;
             color: #64748b;
@@ -197,7 +185,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
         }
     )");
 
-    // Đây dùng để liên kết hàm( trong đó khi ấn button1 thì sẽ thực hiện hàm. tương ứng)
     connect(button1, &QPushButton::clicked, this, &MainWindow::handleLogin_1);
     connect(button2, &QPushButton::clicked, this, &MainWindow::handleLogin_2);
     connect(button3, &QPushButton::clicked, this, &MainWindow::handleLogin_3);
@@ -209,99 +196,88 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     connect(button9, &QPushButton::clicked, this, &MainWindow::handleLogin_9);
     connect(button10, &QPushButton::clicked, this, &MainWindow::handleLogin_10);
 }
+
 void MainWindow::handleLogin_1()
 {
     stackedWidget->setCurrentIndex(0);
     setActiveButton(button1);
-    loadTableData(tableBooking, "SELECT * FROM Bookings");
+    Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+    btnAdd->disconnect();
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::showAddBookingDialog);
 }
 
 void MainWindow::handleLogin_2()
 {
     stackedWidget->setCurrentIndex(1);
     setActiveButton(button2);
-    loadTableData(tableBookingItems, "SELECT * FROM BookingServiceItems");
+    Backend::loadTableData(tableBookingItems, "SELECT * FROM BookingServiceItems");
+    btnAdd->disconnect();
 }
 
 void MainWindow::handleLogin_3()
 {
     stackedWidget->setCurrentIndex(2);
     setActiveButton(button3);
-    loadTableData(tableCustomer, "SELECT * FROM Customer");
+    Backend::loadTableData(tableCustomer, "SELECT * FROM Customer");
+    btnAdd->disconnect();
+    connect(this->btnAdd, &QPushButton::clicked, this, &MainWindow::AddNewCustomerClicked);
 }
 
 void MainWindow::handleLogin_4()
 {
     stackedWidget->setCurrentIndex(3);
     setActiveButton(button4);
-    loadTableData(tableFood, "SELECT * FROM FoodOptions");
+    Backend::loadTableData(tableFood, "SELECT * FROM FoodOptions");
+    btnAdd->disconnect();
 }
 
 void MainWindow::handleLogin_5()
 {
     stackedWidget->setCurrentIndex(4);
     setActiveButton(button5);
-    loadTableData(tableInventory, "SELECT * FROM Inventory");
+    Backend::loadTableData(tableInventory, "SELECT * FROM Inventory");
+    btnAdd->disconnect();
 }
 
 void MainWindow::handleLogin_6()
 {
     stackedWidget->setCurrentIndex(5);
     setActiveButton(button6);
-    loadTableData(tableInventoryLog, "SELECT * FROM InventoryLog");
+    Backend::loadTableData(tableInventoryLog, "SELECT * FROM InventoryLog");
+    btnAdd->disconnect();
 }
 
 void MainWindow::handleLogin_7()
 {
     stackedWidget->setCurrentIndex(6);
     setActiveButton(button7);
-    loadTableData(tableRoom, "SELECT * FROM ListRooms");
+    Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
+    btnAdd->disconnect();
+    connect(this->btnAdd, &QPushButton::clicked, this, &MainWindow::showAddRoomDialog);
 }
 
 void MainWindow::handleLogin_8()
 {
     stackedWidget->setCurrentIndex(7);
     setActiveButton(button8);
-    loadTableData(tableRoomType, "SELECT * FROM RoomTypeCatalog");
+    Backend::loadTableData(tableRoomType, "SELECT * FROM RoomTypeCatalog");
+    btnAdd->disconnect();
 }
 
 void MainWindow::handleLogin_9()
 {
     stackedWidget->setCurrentIndex(8);
     setActiveButton(button9);
-    loadTableData(tableService, "SELECT * FROM ListServiceItems");
+    Backend::loadTableData(tableService, "SELECT * FROM ListServiceItems");
+    btnAdd->disconnect();
 }
 
 void MainWindow::handleLogin_10()
 {
     stackedWidget->setCurrentIndex(9);
     setActiveButton(button10);
-    loadTableData(tableBill, "SELECT * FROM Bills");
-}
-// dùng để load data, sẽ nhận là table (dạng table gì) và là query được yêu cầu làm
-void MainWindow::loadTableData(QTableWidget *table, QString queryStr)
-{
-    // Dòng này để reset lại dòng ,nghĩa là sẽ chỉ còn lại 1 cái bảng với không có dòng nào
-    table->setRowCount(0);
-
-    if (!DatabaseManager::instance().open())
-        return;
-
-    QSqlQuery query(DatabaseManager::instance().database());
-    if (query.exec(queryStr))
-    {
-        int row = 0;
-        while (query.next())
-        {
-            // Thêm cột
-            table->insertRow(row);
-            for (int col = 0; col < table->columnCount(); ++col)
-            {
-                table->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
-            }
-            row++;
-        }
-    }
+    Backend::loadTableData(tableBill, "SELECT * FROM Bills");
+    btnAdd->disconnect();
 }
 
 LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
@@ -323,7 +299,6 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
 
     inputBox_user = new QLineEdit(this);
     inputBox_pass = new QLineEdit(this);
-    // Echomode là mode mà khi nhập mật khậu sẽ không hiện ra
     inputBox_pass->setEchoMode(QLineEdit::Password);
 
     button = new QPushButton("Log in", this);
@@ -351,7 +326,6 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
     l1->setAlignment(Qt::AlignCenter);
 
     label1->setStyleSheet("font-size: 38px; color: #333333;");
-
     subLabel->setStyleSheet("font-size: 18px; color: #6b7280;");
 
     QString inputStyle =
@@ -388,45 +362,113 @@ LoginWindow::~LoginWindow()
     delete window2;
 }
 
-bool LoginWindow::check_valid_username(const std::string &g)
-{
-    if (g.size() == 0)
-        return false;
-    for (size_t i = 0; i < g.size(); i++)
-    {
-        if (g[i] == ' ')
-            return false;
-    }
-    return true;
-}
-
-bool LoginWindow::check_valid_password(const std::string &g, const std::string &p)
-{
-    return g == p;
-}
-
 void LoginWindow::handleLogin()
 {
+    // Cập nhật tên biến cho khớp với của bạn!
     QString user = inputBox_user->text();
     QString pass = inputBox_pass->text();
 
-    if (check_valid_username(user.toStdString()) && check_valid_password(pass.toStdString(), "suuu"))
+    if (user == "admin" && pass == "admin123")
     {
-        l1->setText("Correct");
-        l1->setGeometry(325, 560, 400, 50);
-        l1->setStyleSheet("font-size: 18px; font-weight: bold; color: green;");
-        l1->show();
-
-        window2->show();
+        MainWindow *mainWindow = new MainWindow();
+        mainWindow->show();
+        this->close();
+    }
+    else if (user == "customer" && pass == "123456")
+    {
+        CustomerInputWindow *customerWindow = new CustomerInputWindow();
+        customerWindow->show();
         this->close();
     }
     else
     {
-        l1->setText("Incorrect username or password");
-        l1->setGeometry(325, 560, 400, 50);
-        l1->setStyleSheet("font-size: 18px; font-weight: bold; color: RED;");
-        l1->show();
+        QMessageBox::warning(this, "Lỗi", "Sai tên đăng nhập hoặc mật khẩu!");
     }
+}
+
+void MainWindow::AddNewCustomerClicked()
+{
+    QDialog *addDialog = new QDialog(this);
+
+    addDialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; font-size: 14px; }");
+    addDialog->setWindowTitle("Add Customer");
+    addDialog->setFixedSize(350, 350);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(addDialog);
+    mainLayout->setContentsMargins(30, 30, 30, 30);
+
+    QLabel *titleLabel = new QLabel("Customer's infomation", addDialog);
+    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #1e3a8a; margin-bottom: 15px;");
+    mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+    QFormLayout *formLayout = new QFormLayout();
+    formLayout->setSpacing(15);
+
+    QString inputStyle = "QLineEdit { border: 1px solid #000000; border-radius: 6px; padding: 8px; font-size: 14px; color: #f3efef; }"
+                         "QLineEdit:focus { border: 2px solid #3b82f6; }";
+
+    QLineEdit *txtName = new QLineEdit(addDialog);
+    txtName->setPlaceholderText("Type your name...");
+    txtName->setStyleSheet(inputStyle);
+
+    QLineEdit *txtPhone = new QLineEdit(addDialog);
+    txtPhone->setPlaceholderText("Type your Phone number...");
+    txtPhone->setStyleSheet(inputStyle);
+
+    QLineEdit *txtType = new QLineEdit(addDialog);
+    txtType->setPlaceholderText("Type Customer...");
+    txtType->setStyleSheet(inputStyle);
+
+    QLineEdit *txtPoint = new QLineEdit(addDialog);
+    txtPoint->setPlaceholderText("Type your point...");
+    txtPoint->setStyleSheet(inputStyle);
+
+    formLayout->addRow(new QLabel("Customer's name", addDialog), txtName);
+    formLayout->addRow(new QLabel("Phone number", addDialog), txtPhone);
+    formLayout->addRow(new QLabel("Type:", addDialog), txtType);
+    formLayout->addRow(new QLabel("Point:", addDialog), txtPoint);
+
+    mainLayout->addLayout(formLayout);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnSave = new QPushButton("Save", addDialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
+
+    btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnSave);
+    mainLayout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, addDialog, &QDialog::reject);
+
+    connect(btnSave, &QPushButton::clicked, [=]()
+            {
+        QString name = txtName->text();
+        QString phone = txtPhone->text();
+        QString type = txtType->text();
+        QString point = txtPoint->text();
+
+        if (name.isEmpty() || phone.isEmpty()) {
+            QMessageBox::warning(addDialog, "Error", "Please input your name or phone number");
+            return; 
+        }
+
+        bool success = Backend::addCustomer(name, phone, point.toInt());
+
+        if (success) {
+            QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
+            addDialog->accept(); 
+            handleLogin_3(); 
+        } else {
+            QMessageBox::critical(addDialog, "Error", "Can not save into database");
+        } });
+
+    addDialog->exec();
+    addDialog->deleteLater();
 }
 
 void MainWindow::setActiveButton(QPushButton *clickedButton)
@@ -449,4 +491,203 @@ void MainWindow::setActiveButton(QPushButton *clickedButton)
         btn->style()->unpolish(btn);
         btn->style()->polish(btn);
     }
+}
+
+void MainWindow::showAddBookingDialog()
+{
+    QDialog *addDialog = new QDialog(this);
+    addDialog->setWindowTitle("Add Booking");
+    addDialog->setFixedSize(450, 420);
+
+    addDialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; font-size: 14px; }");
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(addDialog);
+    mainLayout->setContentsMargins(30, 30, 30, 30);
+
+    QLabel *titleLabel = new QLabel("Booking Information", addDialog);
+    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #1e3a8a; margin-bottom: 15px;");
+    mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+    QFormLayout *formLayout = new QFormLayout();
+    formLayout->setSpacing(15);
+
+    QString inputStyle = "QLineEdit, QDateEdit { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; font-size: 14px; color: #333; background-color: white; }"
+                         "QLineEdit:focus, QDateEdit:focus { border: 2px solid #3b82f6; }";
+
+    QLineEdit *txtCustomer = new QLineEdit(addDialog);
+    txtCustomer->setPlaceholderText("Customer Name...");
+    txtCustomer->setStyleSheet(inputStyle);
+
+    QLineEdit *txtRoom = new QLineEdit(addDialog);
+    txtRoom->setPlaceholderText("Room Number...");
+    txtRoom->setStyleSheet(inputStyle);
+
+    QDateEdit *dateCheckIn = new QDateEdit(QDate::currentDate(), addDialog);
+    dateCheckIn->setCalendarPopup(true);
+    dateCheckIn->setStyleSheet(inputStyle);
+
+    QDateEdit *dateCheckOut = new QDateEdit(QDate::currentDate().addDays(1), addDialog);
+    dateCheckOut->setCalendarPopup(true);
+    dateCheckOut->setStyleSheet(inputStyle);
+
+    QLineEdit *txtPrice = new QLineEdit(addDialog);
+    txtPrice->setPlaceholderText("Total Price ($)...");
+    txtPrice->setStyleSheet(inputStyle);
+
+    formLayout->addRow(new QLabel("Customer:", addDialog), txtCustomer);
+    formLayout->addRow(new QLabel("Room Number:", addDialog), txtRoom);
+    formLayout->addRow(new QLabel("Check-In:", addDialog), dateCheckIn);
+    formLayout->addRow(new QLabel("Check-Out:", addDialog), dateCheckOut);
+    formLayout->addRow(new QLabel("Total Price:", addDialog), txtPrice);
+
+    mainLayout->addLayout(formLayout);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnSave = new QPushButton("Save", addDialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
+
+    btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnSave);
+    mainLayout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, addDialog, &QDialog::reject);
+
+    connect(btnSave, &QPushButton::clicked, [=]()
+            {
+        QString customer = txtCustomer->text();
+        QString room = txtRoom->text();
+        QString price = txtPrice->text();
+        
+        QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
+        QString checkOutDate = dateCheckOut->date().toString("yyyy-MM-dd");
+
+        if (customer.isEmpty() || room.isEmpty()) {
+            QMessageBox::warning(addDialog, "Error", "Please input Customer Name and Room Number!");
+            return; 
+        } });
+
+    addDialog->exec();
+    addDialog->deleteLater();
+}
+void MainWindow::showAddRoomDialog()
+{
+    // 1. Tạo cửa sổ Dialog
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Add room");
+    dialog->setFixedSize(400, 470); // Tăng chiều cao để đủ chỗ cho ô mới
+
+    dialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; }"
+        "QMessageBox { background-color: white; }"
+        "QMessageBox QLabel { color: #333333; font-size: 13px; font-weight: normal; }"
+        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 20px; font-weight: bold; }"
+        "QMessageBox QPushButton:hover { background-color: #cbd5e1; }");
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    QFormLayout *form = new QFormLayout();
+    form->setSpacing(15);
+
+    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; background-color: white; color: #333333; }"
+                         "QLineEdit:focus, QComboBox:focus { border: 2px solid #3b82f6; }";
+
+    QLineEdit *txtId = new QLineEdit(dialog);
+    txtId->setPlaceholderText("VD: R101, R102...");
+    txtId->setStyleSheet(inputStyle);
+
+    QLineEdit *txtNumber = new QLineEdit(dialog);
+    txtNumber->setPlaceholderText("VD: 101, 102...");
+    txtNumber->setStyleSheet(inputStyle);
+
+    QComboBox *cbType = new QComboBox(dialog);
+    cbType->addItems({"Standard", "VIP", "President"});
+    cbType->setStyleSheet(inputStyle);
+
+    QComboBox *cbStatus = new QComboBox(dialog);
+    cbStatus->addItems({"Available", "Reserved", "Occupied", "Maintenance"});
+    cbStatus->setStyleSheet(inputStyle);
+
+    QLineEdit *txtPrice = new QLineEdit(dialog);
+    txtPrice->setPlaceholderText("VD: 500000");
+    txtPrice->setStyleSheet(inputStyle);
+
+    QLineEdit *txtPeople = new QLineEdit(dialog);
+    txtPeople->setPlaceholderText("VD: 2, 4...");
+    txtPeople->setStyleSheet(inputStyle);
+
+    form->addRow("Room ID:", txtId);
+    form->addRow("Room number:", txtNumber);
+    form->addRow("Type Room:", cbType);
+    form->addRow("Status", cbStatus);
+    form->addRow("Base price:", txtPrice);
+    form->addRow("Capicity", txtPeople);
+
+    layout->addLayout(form);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnSave = new QPushButton("Lưu Thông Tin", dialog);
+    QPushButton *btnCancel = new QPushButton("Hủy", dialog);
+
+    btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnSave);
+    layout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+
+    connect(btnSave, &QPushButton::clicked, [=]()
+            {
+        if (txtId->text().isEmpty() || txtNumber->text().isEmpty() || txtPrice->text().isEmpty() || txtPeople->text().isEmpty()) {
+            QMessageBox::warning(dialog, "Lỗi", "Vui lòng nhập đầy đủ các trường thông tin!");
+            return;
+        }
+
+        StandardRoom newRoom;
+        
+        newRoom.setRoomNumber(txtNumber->text().toStdString());
+
+        QString statusText = cbStatus->currentText();
+        RoomStatus statusEnum;
+
+        if (statusText == "Available") {
+            statusEnum = RoomStatus::Available; 
+        } 
+        else if (statusText == "Reserved") {
+            statusEnum = RoomStatus::Maintenance; 
+        } 
+        else if (statusText == "Occupied") {
+            statusEnum = RoomStatus::Occupied; 
+        } 
+        else {
+            statusEnum = RoomStatus::Maintenance;
+        }
+        newRoom.setStatus(statusEnum); 
+        newRoom.setBasePrice(txtPrice->text().toInt());
+        
+        newRoom.setNumberPeople(txtPeople->text().toInt());
+
+        qDebug() << txtPeople->text().toInt()<< '\n';
+
+        
+        RoomRepository repo;
+        bool success = repo.add(newRoom);
+
+        if (success) {
+            QMessageBox::information(dialog, "Thành công", "Đã thêm phòng mới thành công!");
+            dialog->accept();
+            
+            handleLogin_7(); 
+        } else {
+            QMessageBox::critical(dialog, "Lỗi", "Không thể lưu vào CSDL. Kiểm tra xem Room ID đã tồn tại chưa!");
+        } });
+
+    dialog->exec();
+    dialog->deleteLater();
 }

@@ -68,7 +68,7 @@ include CMakeFiles/Hotel_Management_autogen.dir/progress.make
 
 CMakeFiles/Hotel_Management_autogen:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Hotel_Management"
-	/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/bin/cmake -E cmake_autogen /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/CMakeFiles/Hotel_Management_autogen.dir/AutogenInfo.json ""
+	/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/bin/cmake -E cmake_autogen /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/CMakeFiles/Hotel_Management_autogen.dir/AutogenInfo.json Debug
 
 Hotel_Management_autogen: CMakeFiles/Hotel_Management_autogen
 Hotel_Management_autogen: CMakeFiles/Hotel_Management_autogen.dir/build.make
