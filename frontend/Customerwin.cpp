@@ -171,6 +171,7 @@ void CustomerWindow::onBookRoomClicked()
     // id sẽ được lấy là người cuối cùng được nhập vào
     int newCustomerId = query.lastInsertId().toInt();
 
+    // Nhap thong tin vao
     query.prepare("INSERT INTO Bookings (customer_id, room_number, check_in_time) VALUES (?, ?, ?)");
     query.addBindValue(newCustomerId);
     query.addBindValue(roomId);
