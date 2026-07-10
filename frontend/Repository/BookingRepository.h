@@ -6,7 +6,8 @@
 #include <QString>
 
 // Truyen du lieu ve thong tin dat phong vao file hotel.db
-struct BookingData {
+struct BookingData
+{
 	int customerId;
 	QString roomNumber;
 	QString checkInTime;
@@ -14,9 +15,9 @@ struct BookingData {
 	double totalPrice;
 };
 
-class BookingRepository {
+class BookingRepository
+{
 public:
 	// const BookingData&: lay truc tiep du lieu bien booking trong bo nho
-	bool add(const BookingData& booking);
+	bool add(const BookingData &booking);
 };
-

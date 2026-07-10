@@ -9,8 +9,11 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include "Booking/Booking.h"
+#include "Repository/BookingRepository.h"
 #include <QDebug>
 #include <QDate>
+#include "Customer/Customer.h"
+#include "Repository/CustomerRepository.h"
 #include <iostream>
 #include <memory>
 #include "Manager/DatabaseManager.h"
@@ -20,7 +23,7 @@ using namespace std;
 // Hàm này để chứa thông tin nhập customer infomation
 CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
 {
-    setFixedSize(400, 350);
+    setFixedSize(800, 600);
     setWindowTitle("Customer Information");
     setStyleSheet("QWidget { background-color: white; color: #333333; }");
 
@@ -45,7 +48,11 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
     spinPeople->setMaximum(10);
     spinPeople->setStyleSheet(inputStyle);
 
+    ID = new QLineEdit(this);
+    ID->setStyleSheet(inputStyle);
+
     form->addRow("Your name", txtName);
+    form->addRow("Your ID", ID);
     form->addRow("Your phone number", txtPhone);
     form->addRow("Check-in day", dateCheckIn);
     form->addRow("Number people", spinPeople);
@@ -71,19 +78,20 @@ void CustomerInputWindow::onNextClicked()
     // Lấy dữ liệu
     QString name = txtName->text();
     QString phone = txtPhone->text();
+    QString id = ID->text();
     QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
     int people = spinPeople->value();
 
     // Mở Window tìm phòng và truyền dữ liệu sang
-    CustomerWindow *roomWindow = new CustomerWindow(name, phone, checkInDate, people);
+    CustomerWindow *roomWindow = new CustomerWindow(name, phone, id, checkInDate, people);
     roomWindow->show();
 
     // Đóng Window
     this->close();
 }
 
-CustomerWindow::CustomerWindow(QString name, QString phone, QString date, int people, QWidget *parent)
-    : QWidget(parent), customerName(name), customerPhone(phone), checkInDate(date), numPeople(people)
+CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString date, int people, QWidget *parent)
+    : QWidget(parent), customerName(name), ID(id), customerPhone(phone), checkInDate(date), numPeople(people)
 {
     setFixedSize(800, 600);
     setWindowTitle("Select a Room");
@@ -158,29 +166,28 @@ void CustomerWindow::onBookRoomClicked()
     double price = tableRoom->item(selectedRow, 3)->text().toDouble();
 
     QSqlDatabase db = DatabaseManager::instance().database();
+
     QSqlQuery query(db);
 
-    query.prepare("INSERT INTO Customer (full_name, phone_number) VALUES (?, ?)");
-    query.addBindValue(this->customerName);
-    query.addBindValue(this->customerPhone);
-    if (!query.exec())
-    {
-        qDebug() << "Lỗi Insert Customer:" << query.lastError().text();
-        return;
-    }
-    // id sẽ được lấy là người cuối cùng được nhập vào
-    int newCustomerId = query.lastInsertId().toInt();
+    Customer a(customerName.toStdString(), ID.toStdString(), customerPhone.toStdString());
 
-    // Nhap thong tin vao
-    query.prepare("INSERT INTO Bookings (customer_id, room_number, check_in_time) VALUES (?, ?, ?)");
-    query.addBindValue(newCustomerId);
-    query.addBindValue(roomId);
-    query.addBindValue(this->checkInDate);
-    if (!query.exec())
-    {
-        qDebug() << "Lỗi Insert booking:" << query.lastError().text();
-        return;
-    }
+    a.setIdroom(roomId.toStdString());
+
+    CustomerRepository t;
+    // Them customer
+    t.add(a);
+
+    BookingData bookingData;
+    BookingRepository sp;
+
+    bookingData.customerId = newCustomerId;
+    bookingData.roomNumber = roomId;
+    bookingData.checkInTime = checkInDate;
+    bookingData.checkOutTime = checkInDate;
+    bookingData.totalPrice = 1000000;
+
+    // Them booking vao
+    sp.add(bookingData);
 
     // Set status của list room là 1
     query.prepare("UPDATE ListRooms SET status = 1 WHERE room_id = ?");

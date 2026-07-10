@@ -15,13 +15,13 @@ bool CustomerRepository::add(Customer customer)
     QSqlQuery query(db);
 
     // Tạo các ô trống có dấu : phía trước ở các column
-    query.prepare("INSERT INTO Customer (id_customer, full_name, phone_number, id_card, id_room)"
-                  "VALUES (:id_customer, :full_name, :phone_number, :id_card, :id_room)");
+    query.prepare("INSERT INTO Customer (id_customer, full_name, phone_number,Type, id_room)"
+                  "VALUES (:id_customer, :full_name, :phone_number,:Type, :id_room)");
     // Điền vào các ô trống đã tạo
-    query.bindValue(":id_customer", customer.getId());
+    query.bindValue(":id_customer", QString::fromStdString(customer.getIdcard()));
     query.bindValue(":full_name", QString::fromStdString(customer.getFullname()));
     query.bindValue(":phone_number", QString::fromStdString(customer.getPhone()));
-    query.bindValue(":id_card", QString::fromStdString(customer.getIdcard()));
+    query.bindValue(":Type", customer.getTier());
     query.bindValue(":id_room", QString::fromStdString(customer.getIdRoom()));
 
     // Thực thi ghi data lên database

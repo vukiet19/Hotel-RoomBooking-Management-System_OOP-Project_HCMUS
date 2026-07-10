@@ -53,14 +53,3 @@ void Backend::loadTableData(QTableWidget *table, const QString &queryStr)
         }
     }
 }
-
-bool Backend::addCustomer(const QString &name, const QString &phone, int point)
-{
-    Customer t;
-    t.setFullname(name.toStdString());
-    t.setPhone(phone.toStdString());
-    t.setPoint(point);
-
-    CustomerRepository repo;
-    return repo.add(t);
-}

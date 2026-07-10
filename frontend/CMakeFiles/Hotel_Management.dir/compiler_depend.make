@@ -2679,7 +2679,11 @@ CMakeFiles/Hotel_Management.dir/Customerwin.cpp.o: Customerwin.cpp \
   Room/TypeRoom.h \
   Room/DepositStatus.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDateTime \
+  Repository/BookingRepository.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDate \
+  Customer/Customer.h \
+  Repository/CustomerRepository.h \
+  Customer/Customer.h \
   Manager/DatabaseManager.h
 
 CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.o: Hotel_Management_autogen/mocs_compilation.cpp \
@@ -16129,8 +16133,6 @@ Repository/InventoryRepository.h:
 
 Repository/InventoryRepository.cpp:
 
-Repository/CustomerRepository.h:
-
 Repository/CustomerRepository.cpp:
 
 Observer.cpp:
@@ -16160,6 +16162,8 @@ Observer.cpp:
 Customerwin.h:
 
 Hotel_Management_autogen/mocs_compilation.cpp:
+
+Repository/CustomerRepository.h:
 
 /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDateTime:
 

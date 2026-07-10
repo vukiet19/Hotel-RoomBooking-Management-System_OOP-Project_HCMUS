@@ -1078,5 +1078,9 @@ CMakeFiles/Hotel_Management.dir/Customerwin.cpp.o: \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/TypeRoom.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/DepositStatus.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDateTime \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDate \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Customer/Customer.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.h

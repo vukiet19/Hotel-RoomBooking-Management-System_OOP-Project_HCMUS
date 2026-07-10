@@ -24,7 +24,7 @@ public:
     static int nextId;
 
     // Constructor
-    Customer(){}
+    Customer();
     Customer(string fullname, string phone, string idcard, MembershipTier tier = Unknown);
 
     // setter

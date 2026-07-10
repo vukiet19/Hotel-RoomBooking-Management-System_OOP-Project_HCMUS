@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 
     tableBooking = new QTableWidget(100, 6, this);
     tableBookingItems = new QTableWidget(100, 6, this);
-    tableCustomer = new QTableWidget(100, 5, this);
+    tableCustomer = new QTableWidget(100, 6, this);
     tableFood = new QTableWidget(100, 4, this);
     tableInventory = new QTableWidget(100, 5, this);
     tableInventoryLog = new QTableWidget(100, 5, this);
@@ -97,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 
     tableBooking->setHorizontalHeaderLabels({"Booking ID", "Customer Name", "Room Number", "Check-in", "Check-out", "Total Price"});
     tableBookingItems->setHorizontalHeaderLabels({"ID", "Booking id", "Item id", "Quantity", "Customer note", "Final price"});
-    tableCustomer->setHorizontalHeaderLabels({"Customer ID", "Name", "Phone Number", "Type", "Point"});
+    tableCustomer->setHorizontalHeaderLabels({"Customer ID", "ID number", "Name", "Phone Number", "Type", "Point"});
     tableFood->setHorizontalHeaderLabels({"Food ID", "Type food", "Name", "Price"});
     tableInventory->setHorizontalHeaderLabels({"Item ID", "Name", "Type", "Quantity", "Price"});
     tableInventoryLog->setHorizontalHeaderLabels({"Log ID", "Item ID", "Quantity", "Action type", "Date"});
@@ -210,8 +210,8 @@ void MainWindow::handleLogin_2()
 {
     stackedWidget->setCurrentIndex(1);
     setActiveButton(button2);
-    Backend::loadTableData(tableBookingItems, "SELECT * FROM BookingServiceItems");
     btnAdd->disconnect();
+    Backend::loadTableData(tableBookingItems, "SELECT * FROM BookingServiceItems");
 }
 
 void MainWindow::handleLogin_3()
@@ -364,7 +364,6 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::handleLogin()
 {
-    // Cập nhật tên biến cho khớp với của bạn!
     QString user = inputBox_user->text();
     QString pass = inputBox_pass->text();
 
@@ -382,7 +381,7 @@ void LoginWindow::handleLogin()
     }
     else
     {
-        QMessageBox::warning(this, "Lỗi", "Sai tên đăng nhập hoặc mật khẩu!");
+        QMessageBox::warning(this, "Error", "Incorrect usename or password!");
     }
 }
 
@@ -445,27 +444,29 @@ void MainWindow::AddNewCustomerClicked()
 
     connect(btnCancel, &QPushButton::clicked, addDialog, &QDialog::reject);
 
-    connect(btnSave, &QPushButton::clicked, [=]()
-            {
-        QString name = txtName->text();
-        QString phone = txtPhone->text();
-        QString type = txtType->text();
-        QString point = txtPoint->text();
-
-        if (name.isEmpty() || phone.isEmpty()) {
-            QMessageBox::warning(addDialog, "Error", "Please input your name or phone number");
-            return; 
-        }
-
-        bool success = Backend::addCustomer(name, phone, point.toInt());
-
-        if (success) {
-            QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
-            addDialog->accept(); 
-            handleLogin_3(); 
-        } else {
-            QMessageBox::critical(addDialog, "Error", "Can not save into database");
-        } });
+    //    connect(btnSave, &QPushButton::clicked, [=]()
+    //            {
+    //        QString name = txtName->text();
+    //        QString phone = txtPhone->text();
+    //        QString type = txtType->text();
+    //        QString point = txtPoint->text();
+    //
+    //        if (name.isEmpty() || phone.isEmpty())
+    //        {
+    //            QMessageBox::warning(addDialog, "Error", "Please input your name or phone number");
+    //            return;
+    //        }
+    //
+    //                CustomerRepository re;
+    //                Customer a(name.toStdString,)
+    //
+    //                if (success) {
+    //                    QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
+    //                    addDialog->accept();
+    //                    handleLogin_3();
+    //                } else {
+    //                    QMessageBox::critical(addDialog, "Error", "Can not save into database");
+    //                } });
 
     addDialog->exec();
     addDialog->deleteLater();
@@ -576,10 +577,9 @@ void MainWindow::showAddBookingDialog()
 }
 void MainWindow::showAddRoomDialog()
 {
-    // 1. Tạo cửa sổ Dialog
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Add room");
-    dialog->setFixedSize(400, 470); // Tăng chiều cao để đủ chỗ cho ô mới
+    dialog->setFixedSize(400, 470);
 
     dialog->setStyleSheet(
         "QDialog { background-color: white; }"
@@ -630,8 +630,8 @@ void MainWindow::showAddRoomDialog()
     layout->addLayout(form);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
-    QPushButton *btnSave = new QPushButton("Lưu Thông Tin", dialog);
-    QPushButton *btnCancel = new QPushButton("Hủy", dialog);
+    QPushButton *btnSave = new QPushButton("Save", dialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
     btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
     btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
@@ -645,7 +645,7 @@ void MainWindow::showAddRoomDialog()
     connect(btnSave, &QPushButton::clicked, [=]()
             {
         if (txtId->text().isEmpty() || txtNumber->text().isEmpty() || txtPrice->text().isEmpty() || txtPeople->text().isEmpty()) {
-            QMessageBox::warning(dialog, "Lỗi", "Vui lòng nhập đầy đủ các trường thông tin!");
+            QMessageBox::warning(dialog, "Error", "Please fill up information");
             return;
         }
 
