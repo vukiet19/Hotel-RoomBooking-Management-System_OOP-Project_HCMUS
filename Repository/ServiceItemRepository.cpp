@@ -94,6 +94,115 @@ optional<ServiceCatalogData> ServiceItemRepository::findCatalogItemById(const st
 }
 
 /*
+hàm này dùng để lọc các dịch vụ có trong menu ServiceCatalog theo nhiều điều kiện khác nhau
+Nếu một field trong filter mang giá trị mặc định thì mình bỏ qua điều kiện đó
+
+ví dụ:
+- id rỗng thì không lọc theo item_id
+- name rỗng thì không lọc theo item_name
+- category rỗng thì không lọc theo category
+- minBasePrice/maxBasePrice < 0 thì không lọc theo giá
+- vipFreeStatus = -1 thì không lọc theo trạng thái miễn phí cho VIP
+
+cách làm giống BookingRepository::getFiltered:
+gom các điều kiện cần dùng vào vector conditions, ghép thành câu WHERE bằng AND,
+sau đó bindValue từng giá trị để tránh nối trực tiếp input vào SQL
+*/
+vector<ServiceCatalogData> ServiceItemRepository::getFilteredCatalogItems(const ServiceCatalogFilter &filter)
+{
+	vector<ServiceCatalogData> items;
+
+	QSqlDatabase db = DatabaseManager::instance().database();
+
+	QString sql =
+		"SELECT item_id, item_name, category, base_price, vip_free_status "
+		"FROM ServiceCatalog";
+	vector<QString> conditions;
+
+	if (!filter.id.empty())
+	{
+		conditions.push_back("item_id = :item_id");
+	}
+	if (!filter.name.empty())
+	{
+		conditions.push_back("item_name LIKE :item_name");
+	}
+	if (!filter.category.empty())
+	{
+		conditions.push_back("category = :category");
+	}
+	if (filter.minBasePrice >= 0.0)
+	{
+		conditions.push_back("base_price >= :min_base_price");
+	}
+	if (filter.maxBasePrice >= 0.0)
+	{
+		conditions.push_back("base_price <= :max_base_price");
+	}
+	if (filter.vipFreeStatus != -1)
+	{
+		conditions.push_back("vip_free_status = :vip_free_status");
+	}
+
+	if (!conditions.empty())
+	{
+		sql += QString(" WHERE ") + conditions[0];
+		for (size_t i = 1; i < conditions.size(); ++i)
+		{
+			sql += QString(" AND ") + conditions[i];
+		}
+	}
+
+	QSqlQuery query(db);
+	query.prepare(sql);
+
+	if (!filter.id.empty())
+	{
+		query.bindValue(":item_id", QString::fromStdString(filter.id));
+	}
+	if (!filter.name.empty())
+	{
+		query.bindValue(":item_name", QString("%") + QString::fromStdString(filter.name) + "%");
+	}
+	if (!filter.category.empty())
+	{
+		query.bindValue(":category", QString::fromStdString(filter.category));
+	}
+	if (filter.minBasePrice >= 0.0)
+	{
+		query.bindValue(":min_base_price", filter.minBasePrice);
+	}
+	if (filter.maxBasePrice >= 0.0)
+	{
+		query.bindValue(":max_base_price", filter.maxBasePrice);
+	}
+	if (filter.vipFreeStatus != -1)
+	{
+		query.bindValue(":vip_free_status", filter.vipFreeStatus);
+	}
+
+	if (!query.exec())
+	{
+		qDebug() << "ERROR: Khong the loc ServiceCatalog!" << query.lastError().text();
+		return items;
+	}
+
+	while (query.next())
+	{
+		ServiceCatalogData item;
+		item.id = query.value("item_id").toString().toStdString();
+		item.name = query.value("item_name").toString().toStdString();
+		item.category = query.value("category").toString().toStdString();
+		item.basePrice = query.value("base_price").toDouble();
+		item.vipFreeStatus = query.value("vip_free_status").toBool();
+
+		items.push_back(item);
+	}
+
+	return items;
+}
+
+/*
 Hàm này là để ghi thông tin dịch vụ được khách hàng chọn vào booking của họ
 vào trong database
 
@@ -153,6 +262,132 @@ vector<BookingServiceItemData> ServiceItemRepository::getItemsByBookingId(int bo
 	if (!query.exec())
 	{
 		qDebug() << "ERROR: Khong the doc BookingServiceItems!" << query.lastError().text();
+		return items;
+	}
+
+	while (query.next())
+	{
+		BookingServiceItemData item;
+
+		item.id = query.value("id").toInt();
+		item.bookingId = query.value("booking_id").toInt();
+		item.itemId = query.value("item_id").toString().toStdString();
+		item.quantity = query.value("quantity").toInt();
+		item.customerNote = query.value("customer_note").toString().toStdString();
+		item.finalPrice = query.value("final_price").toDouble();
+
+		items.push_back(item);
+	}
+
+	return items;
+}
+
+/*
+hàm này dùng để lọc các dịch vụ đã được thêm vào một booking trong bảng BookingServiceItems
+Nó khác ServiceCatalog ở chỗ bảng này lưu dịch vụ phát sinh thực tế của khách,
+nên filter sẽ dựa trên booking_id, item_id, quantity, final_price và customer_note
+
+nếu một field trong BookingServiceItemFilter mang giá trị mặc định thì mình bỏ qua điều kiện đó
+Ví dụ bookingId = -1 thì không lọc theo booking_id, itemId rỗng thì không lọc theo item_id,
+minQuantity/maxQuantity = -1 thì không lọc theo số lượng,
+minFinalPrice/maxFinalPrice < 0 thì không lọc theo tiền cuối cùng
+
+cách làm giống filter của BookingRepository:
+tạo câu SELECT gốc, thêm các điều kiện cần lọc vào vector conditions,
+ghép WHERE bằng AND, rồi bindValue các tham số trước khi query.exec()
+*/
+vector<BookingServiceItemData> ServiceItemRepository::getFilteredBookingServiceItems(const BookingServiceItemFilter &filter)
+{
+	vector<BookingServiceItemData> items;
+
+	QSqlDatabase db = DatabaseManager::instance().database();
+
+	QString sql =
+		"SELECT id, booking_id, item_id, quantity, customer_note, final_price "
+		"FROM BookingServiceItems";
+	vector<QString> conditions;
+
+	if (filter.id != -1)
+	{
+		conditions.push_back("id = :id");
+	}
+	if (filter.bookingId != -1)
+	{
+		conditions.push_back("booking_id = :booking_id");
+	}
+	if (!filter.itemId.empty())
+	{
+		conditions.push_back("item_id = :item_id");
+	}
+	if (filter.minQuantity != -1)
+	{
+		conditions.push_back("quantity >= :min_quantity");
+	}
+	if (filter.maxQuantity != -1)
+	{
+		conditions.push_back("quantity <= :max_quantity");
+	}
+	if (filter.minFinalPrice >= 0.0)
+	{
+		conditions.push_back("final_price >= :min_final_price");
+	}
+	if (filter.maxFinalPrice >= 0.0)
+	{
+		conditions.push_back("final_price <= :max_final_price");
+	}
+	if (!filter.customerNote.empty())
+	{
+		conditions.push_back("customer_note LIKE :customer_note");
+	}
+
+	if (!conditions.empty())
+	{
+		sql += QString(" WHERE ") + conditions[0];
+		for (size_t i = 1; i < conditions.size(); ++i)
+		{
+			sql += QString(" AND ") + conditions[i];
+		}
+	}
+
+	QSqlQuery query(db);
+	query.prepare(sql);
+
+	if (filter.id != -1)
+	{
+		query.bindValue(":id", filter.id);
+	}
+	if (filter.bookingId != -1)
+	{
+		query.bindValue(":booking_id", filter.bookingId);
+	}
+	if (!filter.itemId.empty())
+	{
+		query.bindValue(":item_id", QString::fromStdString(filter.itemId));
+	}
+	if (filter.minQuantity != -1)
+	{
+		query.bindValue(":min_quantity", filter.minQuantity);
+	}
+	if (filter.maxQuantity != -1)
+	{
+		query.bindValue(":max_quantity", filter.maxQuantity);
+	}
+	if (filter.minFinalPrice >= 0.0)
+	{
+		query.bindValue(":min_final_price", filter.minFinalPrice);
+	}
+	if (filter.maxFinalPrice >= 0.0)
+	{
+		query.bindValue(":max_final_price", filter.maxFinalPrice);
+	}
+	if (!filter.customerNote.empty())
+	{
+		query.bindValue(":customer_note", QString("%") + QString::fromStdString(filter.customerNote) + "%");
+	}
+
+	if (!query.exec())
+	{
+		qDebug() << "ERROR: Khong the loc BookingServiceItems!" << query.lastError().text();
 		return items;
 	}
 
