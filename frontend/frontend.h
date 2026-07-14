@@ -25,9 +25,17 @@ public:
 
     void handleLogin_9();
     void handleLogin_10();
-    void AddNewCustomerClicked();
+
     void showAddBookingDialog();
+
     void showAddRoomDialog();
+
+    void showFilterCustomerDialog();
+    void showDeleteCustomerDialog();
+    void AddNewCustomerClicked();
+    void showUpdateCustomerDialog();
+    void showUpdateRoomDialog();
+    void showDeleteRoomDialog();
 
 private:
     void loadTableData(QTableWidget *table, QString queryStr);

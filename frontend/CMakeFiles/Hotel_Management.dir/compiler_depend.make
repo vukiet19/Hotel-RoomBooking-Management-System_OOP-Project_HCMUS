@@ -7247,10 +7247,9 @@ CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: Repository/
   Customer/MembershipPolicy.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/map \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__tree \
-  Manager/DatabaseManager.h \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlDatabase \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqldatabase.h \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlglobal.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QString \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstring.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qchar.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qglobal.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/assert.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/_assert.h \
@@ -7305,21 +7304,14 @@ CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: Repository/
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtresource.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qttranslation.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qversiontagging.h \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsql-config.h \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlexports.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetaobject.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobjectdefs.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qnamespace.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcompare.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstdlibdetection.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcomparehelpers.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtmetamacros.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobjectdefs_impl.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qfunctionaltools_impl.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qvariant.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetatype.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringview.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbytearray.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qrefcount.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qnamespace.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtmetamacros.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qarraydata.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qpair.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qarraydatapointer.h \
@@ -7333,15 +7325,7 @@ CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: Repository/
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbytearrayalgorithms.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbytearrayview.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringfwd.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdatastream.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qchar.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringview.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringalgorithms.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qiodevicebase.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qscopedpointer.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qfloat16.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qhashfunctions.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstring.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qlatin1stringview.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qanystringview.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qutf8stringview.h \
@@ -7349,6 +7333,23 @@ CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: Repository/
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringbuilder.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringconverter.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringconverter_base.h \
+  Manager/DatabaseManager.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlDatabase \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqldatabase.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlglobal.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsql-config.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlexports.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetaobject.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobjectdefs.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobjectdefs_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qfunctionaltools_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qvariant.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetatype.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdatastream.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qiodevicebase.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qscopedpointer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qfloat16.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qhashfunctions.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/numeric \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/accumulate.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h \
@@ -7415,8 +7416,7 @@ CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: Repository/
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcoreapplication_platform.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDebug \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlQuery \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QString
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h
 
 CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o: Repository/InventoryRepository.cpp \
   Repository/InventoryRepository.h \
@@ -10305,9 +10305,12 @@ CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: Repository/Room
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qnativeinterface.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcoreapplication_platform.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDebug \
+  Room/Room.h \
+  Room/DerivedRooms.h \
+  Room/Typeroom.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlQuery \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h \
-  Room/DerivedRooms.h
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QVariant
 
 CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o: Repository/ServiceItemRepository.cpp
 
@@ -13946,7 +13949,8 @@ CMakeFiles/Hotel_Management.dir/backend.cpp.o: backend.cpp \
   Repository/CustomerRepository.h \
   Customer/Customer.h \
   Customer/Customer.h \
-  Repository/RoomRepository.h
+  Repository/RoomRepository.h \
+  Room/Room.h
 
 CMakeFiles/Hotel_Management.dir/frontend.cpp.o: frontend.cpp \
   frontend.h \
@@ -15061,6 +15065,9 @@ CMakeFiles/Hotel_Management.dir/frontend.cpp.o: frontend.cpp \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QSpinBox \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qspinbox.h \
   Repository/RoomRepository.h \
+  Room/Room.h \
+  Repository/CustomerRepository.h \
+  Customer/Customer.h \
   Room/DerivedRooms.h \
   Room/TypeRoom.h \
   Room/RoomFactory.h \

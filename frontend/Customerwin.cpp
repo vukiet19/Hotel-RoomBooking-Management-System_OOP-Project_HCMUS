@@ -43,6 +43,10 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
     dateCheckIn->setCalendarPopup(true);
     dateCheckIn->setStyleSheet(inputStyle);
 
+    datecheckout = new QDateEdit(QDate::currentDate(), this);
+    datecheckout->setCalendarPopup(true);
+    datecheckout->setStyleSheet(inputStyle);
+
     spinPeople = new QSpinBox(this);
     spinPeople->setMinimum(1);
     spinPeople->setMaximum(10);
@@ -55,6 +59,7 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
     form->addRow("Your ID", ID);
     form->addRow("Your phone number", txtPhone);
     form->addRow("Check-in day", dateCheckIn);
+    form->addRow("Check-out day", datecheckout);
     form->addRow("Number people", spinPeople);
 
     layout->addLayout(form);
@@ -80,18 +85,19 @@ void CustomerInputWindow::onNextClicked()
     QString phone = txtPhone->text();
     QString id = ID->text();
     QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
+    QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd");
     int people = spinPeople->value();
 
     // Mở Window tìm phòng và truyền dữ liệu sang
-    CustomerWindow *roomWindow = new CustomerWindow(name, phone, id, checkInDate, people);
+    CustomerWindow *roomWindow = new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people);
     roomWindow->show();
 
     // Đóng Window
     this->close();
 }
 
-CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString date, int people, QWidget *parent)
-    : QWidget(parent), customerName(name), ID(id), customerPhone(phone), checkInDate(date), numPeople(people)
+CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString date, QString dateout, int people, QWidget *parent)
+    : QWidget(parent), customerName(name), ID(id), customerPhone(phone), checkInDate(date), datecheckout(dateout), numPeople(people)
 {
     setFixedSize(800, 600);
     setWindowTitle("Select a Room");
@@ -130,7 +136,14 @@ void CustomerWindow::loadFilteredRooms()
     QSqlQuery query(DatabaseManager::instance().database());
 
     query.prepare("SELECT room_id, room_number, room_type, base_price, number_people "
-                  "FROM ListRooms WHERE status = 0 AND number_people >= ?");
+                  "FROM ListRooms "
+                  "WHERE status = 0 "
+                  "  AND number_people >= ? "
+                  "  AND room_number NOT IN ("
+                  "      SELECT room_number FROM Bookings "
+                  "      WHERE check_in_date <= ? AND check_out_date >= ?"
+                  "  )");
+
     query.addBindValue(this->numPeople);
 
     if (!query.exec())
@@ -173,6 +186,8 @@ void CustomerWindow::onBookRoomClicked()
 
     a.setIdroom(roomId.toStdString());
 
+    a.setIdroom(roomId.toStdString());
+
     CustomerRepository t;
     // Them customer
     t.add(a);
@@ -180,7 +195,7 @@ void CustomerWindow::onBookRoomClicked()
     BookingData bookingData;
     BookingRepository sp;
 
-    bookingData.customerId = newCustomerId;
+    bookingData.customerId = a.getId();
     bookingData.roomNumber = roomId;
     bookingData.checkInTime = checkInDate;
     bookingData.checkOutTime = checkInDate;

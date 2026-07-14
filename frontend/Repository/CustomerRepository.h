@@ -2,9 +2,13 @@
 
 #pragma once
 #include "../Customer/Customer.h"
+#include <QString>
 
 class CustomerRepository
 {
 public:
     bool add(Customer customer);
+    std::vector<Customer> filter(QString columnName, QString searchValue);
+    bool update(Customer customer);
+    bool remove(std::string id_customer);
 };

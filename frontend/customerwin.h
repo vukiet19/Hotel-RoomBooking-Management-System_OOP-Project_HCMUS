@@ -18,6 +18,7 @@ private:
     QLineEdit *txtName;
     QLineEdit *txtPhone;
     QDateEdit *dateCheckIn;
+    QDateEdit *datecheckout;
     QSpinBox *spinPeople;
     QPushButton *btnNext;
     QLineEdit *ID;
@@ -28,7 +29,7 @@ class CustomerWindow : public QWidget
 {
 
 public:
-    CustomerWindow(QString name, QString phone, QString id, QString date, int people, QWidget *parent = nullptr);
+    CustomerWindow(QString name, QString phone, QString id, QString date, QString datecheckout, int people, QWidget *parent = nullptr);
 
 private:
     QTableWidget *tableRoom;
@@ -38,6 +39,9 @@ private:
     QString customerPhone;
     QString ID;
     QString checkInDate;
+
+    QString datecheckout;
+
     int numPeople;
 
     void loadFilteredRooms();

@@ -16,6 +16,8 @@
 #include "Room/Room.h"
 #include "customerwin.h"
 #include "Repository/RoomRepository.h"
+#include "Repository/CustomerRepository.h"
+
 #include "Room/DerivedRooms.h"
 #include "Room/TypeRoom.h"
 #include "Room/RoomFactory.h"
@@ -95,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     tableService = new QTableWidget(100, 4, this);
     tableBill = new QTableWidget(100, 3, this);
 
-    tableBooking->setHorizontalHeaderLabels({"Booking ID", "Customer Name", "Room Number", "Check-in", "Check-out", "Total Price"});
+    tableBooking->setHorizontalHeaderLabels({"Booking ID", "Customer ID", "Room Number", "Check-in", "Check-out", "Total Price"});
     tableBookingItems->setHorizontalHeaderLabels({"ID", "Booking id", "Item id", "Quantity", "Customer note", "Final price"});
     tableCustomer->setHorizontalHeaderLabels({"Customer ID", "ID number", "Name", "Phone Number", "Type", "Point"});
     tableFood->setHorizontalHeaderLabels({"Food ID", "Type food", "Name", "Price"});
@@ -220,7 +222,13 @@ void MainWindow::handleLogin_3()
     setActiveButton(button3);
     Backend::loadTableData(tableCustomer, "SELECT * FROM Customer");
     btnAdd->disconnect();
-    connect(this->btnAdd, &QPushButton::clicked, this, &MainWindow::AddNewCustomerClicked);
+    btnUpdate->disconnect();
+    btnDelete->disconnect();
+    btnFilter->disconnect();
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::AddNewCustomerClicked);
+    connect(btnUpdate, &QPushButton::clicked, this, &MainWindow::showUpdateCustomerDialog);
+    connect(btnDelete, &QPushButton::clicked, this, &MainWindow::showDeleteCustomerDialog);
+    connect(btnFilter, &QPushButton::clicked, this, &MainWindow::showFilterCustomerDialog);
 }
 
 void MainWindow::handleLogin_4()
@@ -252,8 +260,14 @@ void MainWindow::handleLogin_7()
     stackedWidget->setCurrentIndex(6);
     setActiveButton(button7);
     Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
+
     btnAdd->disconnect();
-    connect(this->btnAdd, &QPushButton::clicked, this, &MainWindow::showAddRoomDialog);
+    btnUpdate->disconnect();
+    btnDelete->disconnect();
+
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::showAddRoomDialog);
+    connect(btnUpdate, &QPushButton::clicked, this, &MainWindow::showUpdateRoomDialog);
+    connect(btnDelete, &QPushButton::clicked, this, &MainWindow::showDeleteRoomDialog);
 }
 
 void MainWindow::handleLogin_8()
@@ -412,6 +426,10 @@ void MainWindow::AddNewCustomerClicked()
     txtName->setPlaceholderText("Type your name...");
     txtName->setStyleSheet(inputStyle);
 
+    QLineEdit *ID = new QLineEdit(addDialog);
+    ID->setPlaceholderText("Type your ID:...");
+    ID->setStyleSheet(inputStyle);
+
     QLineEdit *txtPhone = new QLineEdit(addDialog);
     txtPhone->setPlaceholderText("Type your Phone number...");
     txtPhone->setStyleSheet(inputStyle);
@@ -425,6 +443,7 @@ void MainWindow::AddNewCustomerClicked()
     txtPoint->setStyleSheet(inputStyle);
 
     formLayout->addRow(new QLabel("Customer's name", addDialog), txtName);
+    formLayout->addRow(new QLabel("ID:", addDialog), ID);
     formLayout->addRow(new QLabel("Phone number", addDialog), txtPhone);
     formLayout->addRow(new QLabel("Type:", addDialog), txtType);
     formLayout->addRow(new QLabel("Point:", addDialog), txtPoint);
@@ -444,29 +463,33 @@ void MainWindow::AddNewCustomerClicked()
 
     connect(btnCancel, &QPushButton::clicked, addDialog, &QDialog::reject);
 
-    //    connect(btnSave, &QPushButton::clicked, [=]()
-    //            {
-    //        QString name = txtName->text();
-    //        QString phone = txtPhone->text();
-    //        QString type = txtType->text();
-    //        QString point = txtPoint->text();
-    //
-    //        if (name.isEmpty() || phone.isEmpty())
-    //        {
-    //            QMessageBox::warning(addDialog, "Error", "Please input your name or phone number");
-    //            return;
-    //        }
-    //
-    //                CustomerRepository re;
-    //                Customer a(name.toStdString,)
-    //
-    //                if (success) {
-    //                    QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
-    //                    addDialog->accept();
-    //                    handleLogin_3();
-    //                } else {
-    //                    QMessageBox::critical(addDialog, "Error", "Can not save into database");
-    //                } });
+    connect(btnSave, &QPushButton::clicked, [=]()
+            {
+            QString name = txtName->text();
+            QString phone = txtPhone->text();
+            QString IDcard = ID->text();
+            QString type = txtType->text();
+            QString point = txtPoint->text();
+    
+            if (name.isEmpty() || phone.isEmpty())
+            {
+                QMessageBox::warning(addDialog, "Error", "Please input your name or phone number");
+                return;
+            }
+    
+                    CustomerRepository re;
+                    Customer a(name.toStdString(), phone.toStdString(),IDcard.toStdString());
+                    a.setPoint(point.toInt());
+
+                    bool success = re.add(a);
+    
+                    if (success) {
+                        QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
+                        addDialog->accept();
+                        handleLogin_3();
+                    } else {
+                        QMessageBox::critical(addDialog, "Error", "Can not save into database");
+                    } });
 
     addDialog->exec();
     addDialog->deleteLater();
@@ -498,7 +521,8 @@ void MainWindow::showAddBookingDialog()
 {
     QDialog *addDialog = new QDialog(this);
     addDialog->setWindowTitle("Add Booking");
-    addDialog->setFixedSize(450, 420);
+    // Increased height from 420 to 520 to fit the new Phone and ID fields
+    addDialog->setFixedSize(450, 520);
 
     addDialog->setStyleSheet(
         "QDialog { background-color: white; }"
@@ -517,12 +541,22 @@ void MainWindow::showAddBookingDialog()
     QString inputStyle = "QLineEdit, QDateEdit { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; font-size: 14px; color: #333; background-color: white; }"
                          "QLineEdit:focus, QDateEdit:focus { border: 2px solid #3b82f6; }";
 
+    // --- NEW FIELDS: ID and Phone ---
+    QLineEdit *txtId = new QLineEdit(addDialog);
+    txtId->setPlaceholderText("Customer ID ...");
+    txtId->setStyleSheet(inputStyle);
+
     QLineEdit *txtCustomer = new QLineEdit(addDialog);
     txtCustomer->setPlaceholderText("Customer Name...");
     txtCustomer->setStyleSheet(inputStyle);
 
+    QLineEdit *txtPhone = new QLineEdit(addDialog);
+    txtPhone->setPlaceholderText("Phone Number...");
+    txtPhone->setStyleSheet(inputStyle);
+
+    // --- EXISTING FIELDS ---
     QLineEdit *txtRoom = new QLineEdit(addDialog);
-    txtRoom->setPlaceholderText("Room Number...");
+    txtRoom->setPlaceholderText("Room ID...");
     txtRoom->setStyleSheet(inputStyle);
 
     QDateEdit *dateCheckIn = new QDateEdit(QDate::currentDate(), addDialog);
@@ -537,8 +571,10 @@ void MainWindow::showAddBookingDialog()
     txtPrice->setPlaceholderText("Total Price ($)...");
     txtPrice->setStyleSheet(inputStyle);
 
-    formLayout->addRow(new QLabel("Customer:", addDialog), txtCustomer);
-    formLayout->addRow(new QLabel("Room Number:", addDialog), txtRoom);
+    formLayout->addRow(new QLabel("Customer ID:", addDialog), txtId);
+    formLayout->addRow(new QLabel("Customer Name:", addDialog), txtCustomer);
+    formLayout->addRow(new QLabel("Phone Number:", addDialog), txtPhone);
+    formLayout->addRow(new QLabel("Room ID:", addDialog), txtRoom);
     formLayout->addRow(new QLabel("Check-In:", addDialog), dateCheckIn);
     formLayout->addRow(new QLabel("Check-Out:", addDialog), dateCheckOut);
     formLayout->addRow(new QLabel("Total Price:", addDialog), txtPrice);
@@ -560,17 +596,55 @@ void MainWindow::showAddBookingDialog()
 
     connect(btnSave, &QPushButton::clicked, [=]()
             {
+        QString id = txtId->text();
         QString customer = txtCustomer->text();
+        QString phone = txtPhone->text();
         QString room = txtRoom->text();
         QString price = txtPrice->text();
         
         QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
         QString checkOutDate = dateCheckOut->date().toString("yyyy-MM-dd");
 
-        if (customer.isEmpty() || room.isEmpty()) {
-            QMessageBox::warning(addDialog, "Error", "Please input Customer Name and Room Number!");
+        if (id.isEmpty() || customer.isEmpty() || phone.isEmpty() || room.isEmpty()) {
+            QMessageBox::warning(addDialog, "Error", "Please fill in all customer and room details!");
             return; 
-        } });
+        }
+
+        CustomerRepository re;
+       Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
+        re.add(a);
+
+        QSqlDatabase db = DatabaseManager::instance().database();
+        QSqlQuery query(db);
+
+        query.prepare("UPDATE ListRooms SET Status = 1 WHERE room_id = ?");
+        query.addBindValue(room);
+        
+        if (!query.exec()) {
+            QMessageBox::critical(addDialog, "Database Error", "Failed to update Room status:\n" + query.lastError().text());
+            return;
+        }
+
+        // (Optional but Recommended) Insert into Bookings table if you have one
+        /*
+        query.prepare("INSERT INTO Bookings (CustomerID, RoomID, CheckInDate, Status) VALUES (?, ?, ?, 'Pending')");
+        query.addBindValue(id);
+        query.addBindValue(room);
+        query.addBindValue(checkInDate);
+        query.exec();
+        */
+       BookingRepository r;
+
+        BookingData t;
+        t.customerId = 100;
+        t.roomNumber = room; 
+        t.checkInTime = checkInDate;
+        t.checkOutTime = checkOutDate;
+        r.add(t);
+
+
+        QMessageBox::information(addDialog, "Success", "Booking created and room status updated successfully!");
+        addDialog->accept(); });
 
     addDialog->exec();
     addDialog->deleteLater();
@@ -597,11 +671,11 @@ void MainWindow::showAddRoomDialog()
                          "QLineEdit:focus, QComboBox:focus { border: 2px solid #3b82f6; }";
 
     QLineEdit *txtId = new QLineEdit(dialog);
-    txtId->setPlaceholderText("VD: R101, R102...");
+    txtId->setPlaceholderText("EX: R101, R102...");
     txtId->setStyleSheet(inputStyle);
 
     QLineEdit *txtNumber = new QLineEdit(dialog);
-    txtNumber->setPlaceholderText("VD: 101, 102...");
+    txtNumber->setPlaceholderText("EX: 101, 102...");
     txtNumber->setStyleSheet(inputStyle);
 
     QComboBox *cbType = new QComboBox(dialog);
@@ -613,11 +687,11 @@ void MainWindow::showAddRoomDialog()
     cbStatus->setStyleSheet(inputStyle);
 
     QLineEdit *txtPrice = new QLineEdit(dialog);
-    txtPrice->setPlaceholderText("VD: 500000");
+    txtPrice->setPlaceholderText("EX: 500000");
     txtPrice->setStyleSheet(inputStyle);
 
     QLineEdit *txtPeople = new QLineEdit(dialog);
-    txtPeople->setPlaceholderText("VD: 2, 4...");
+    txtPeople->setPlaceholderText("EX: 2, 4...");
     txtPeople->setStyleSheet(inputStyle);
 
     form->addRow("Room ID:", txtId);
@@ -649,9 +723,9 @@ void MainWindow::showAddRoomDialog()
             return;
         }
 
-        StandardRoom newRoom;
+        StandardRoom* newRoom;
         
-        newRoom.setRoomNumber(txtNumber->text().toStdString());
+        //newRoom->setStatus(txtNumber->text().toStdString());
 
         QString statusText = cbStatus->currentText();
         RoomStatus statusEnum;
@@ -668,24 +742,339 @@ void MainWindow::showAddRoomDialog()
         else {
             statusEnum = RoomStatus::Maintenance;
         }
-        newRoom.setStatus(statusEnum); 
-        newRoom.setBasePrice(txtPrice->text().toInt());
+        newRoom->setStatus(statusEnum); 
+        newRoom->setBasePrice(txtPrice->text().toInt());
         
-        newRoom.setNumberPeople(txtPeople->text().toInt());
+        newRoom->setNumberPeople(txtPeople->text().toInt());
 
-        qDebug() << txtPeople->text().toInt()<< '\n';
 
         
         RoomRepository repo;
         bool success = repo.add(newRoom);
 
         if (success) {
-            QMessageBox::information(dialog, "Thành công", "Đã thêm phòng mới thành công!");
+            QMessageBox::information(dialog, "Successfully", "Successfully add new room");
             dialog->accept();
             
             handleLogin_7(); 
         } else {
-            QMessageBox::critical(dialog, "Lỗi", "Không thể lưu vào CSDL. Kiểm tra xem Room ID đã tồn tại chưa!");
+            QMessageBox::critical(dialog, "Error", "Can save into room id");
+        } });
+
+    dialog->exec();
+    dialog->deleteLater();
+}
+
+void MainWindow::showUpdateCustomerDialog()
+{
+    handleLogin_3();
+}
+
+void MainWindow::showDeleteCustomerDialog()
+{
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Delete Customer");
+    dialog->setFixedSize(350, 180);
+
+    dialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; }");
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    QFormLayout *form = new QFormLayout();
+
+    QLineEdit *txtId = new QLineEdit(dialog);
+    txtId->setPlaceholderText("Enter Customer ID to delete...");
+    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;");
+
+    form->addRow("Customer ID:", txtId);
+    layout->addLayout(form);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnDelete = new QPushButton("Delete", dialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+    btnDelete->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnDelete);
+    layout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+
+    connect(btnDelete, &QPushButton::clicked, [=]()
+            {
+        if (txtId->text().isEmpty()) {
+            QMessageBox::warning(dialog, "Error", "Please enter a Customer ID!");
+            return;
+        }
+
+        QMessageBox::StandardButton reply = QMessageBox::question(dialog, "Confirm", "Are you sure you want to delete this customer?", QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::No) return;
+
+        CustomerRepository repo;
+        bool success = repo.remove(txtId->text().toStdString());
+
+        if (success) {
+            QMessageBox::information(dialog, "Success", "Customer deleted successfully!");
+            dialog->accept();
+            handleLogin_3();
+        } else {
+            QMessageBox::critical(dialog, "Error", "Cannot delete customer. It may not exist.");
+        } });
+
+    dialog->exec();
+    dialog->deleteLater();
+}
+
+void MainWindow::showFilterCustomerDialog()
+{
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Filter Customers");
+    dialog->setFixedSize(400, 200);
+
+    dialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; }");
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    QFormLayout *form = new QFormLayout();
+
+    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; }";
+
+    QComboBox *cbCriteria = new QComboBox(dialog);
+    cbCriteria->addItem("Customer Name", "full_name");
+    cbCriteria->addItem("Customer ID", "id_customer");
+    cbCriteria->addItem("Phone Number", "phone_number");
+    cbCriteria->addItem("Room ID", "id_room");
+    cbCriteria->setStyleSheet(inputStyle);
+
+    QLineEdit *txtValue = new QLineEdit(dialog);
+    txtValue->setPlaceholderText("Enter search value...");
+    txtValue->setStyleSheet(inputStyle);
+
+    form->addRow("Search By:", cbCriteria);
+    form->addRow("Search Value:", txtValue);
+    layout->addLayout(form);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnSearch = new QPushButton("Search", dialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+    btnSearch->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnSearch);
+    layout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+
+    connect(btnSearch, &QPushButton::clicked, [=]()
+            {
+        if (txtValue->text().isEmpty())
+        {
+            QMessageBox::warning(dialog, "Error", "Please enter a value to search!");
+            return;
+        }
+
+        QString columnToSearch = cbCriteria->currentData().toString();
+        QString searchValue = txtValue->text();
+
+        CustomerRepository repo;
+        std::vector<Customer> filteredCustomers = repo.filter(columnToSearch, searchValue);
+
+        if (filteredCustomers.empty())
+        {
+            QMessageBox::information(dialog, "Result", "No customers found matching your criteria.");
+        }
+        else
+        {
+            tableCustomer->setRowCount(0);
+
+            int row = 0;
+            for (auto &cus : filteredCustomers)
+            {
+                tableCustomer->insertRow(row);
+
+                tableCustomer->setItem(row, 0, new QTableWidgetItem(cus.getId()));
+                 tableCustomer->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(cus.getIdcard())));
+                
+                tableCustomer->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(cus.getFullname())));
+                tableCustomer->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(cus.getPhone())));
+                
+                
+                tableCustomer->setItem(row, 4, new QTableWidgetItem(cus.getTier() ));
+                tableCustomer->setItem(row, 5, new QTableWidgetItem(QString::fromStdString(cus.getIdRoom())));
+
+                row++;
+            }
+
+            QMessageBox::information(dialog, "Success", QString("Found %1 customers!").arg(filteredCustomers.size()));
+            dialog->accept();
+        } });
+
+    dialog->exec();
+    dialog->deleteLater();
+}
+
+void MainWindow::showDeleteRoomDialog()
+{
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Delete Room");
+    dialog->setFixedSize(350, 180);
+
+    dialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; }");
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    QFormLayout *form = new QFormLayout();
+
+    QLineEdit *txtId = new QLineEdit(dialog);
+    txtId->setPlaceholderText("Enter Room Number to delete...");
+    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;");
+
+    form->addRow("Room Number:", txtId);
+    layout->addLayout(form);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnDelete = new QPushButton("Delete", dialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+    btnDelete->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnDelete);
+    layout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+
+    connect(btnDelete, &QPushButton::clicked, dialog, [=]()
+            {
+        if (txtId->text().isEmpty()) {
+            QMessageBox::warning(dialog, "Error", "Please enter a Room Number!");
+            return;
+        }
+
+        QMessageBox::StandardButton reply = QMessageBox::question(dialog, "Confirm", "Are you sure you want to delete this room?", QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::No) return;
+
+        RoomRepository repo;
+        
+        bool success = repo.remove(txtId->text().toStdString());
+
+        if (success) {
+            QMessageBox::information(dialog, "Success", "Room deleted successfully!");
+            dialog->accept();
+            handleLogin_7(); 
+        } else {
+            QMessageBox::critical(dialog, "Error", "Cannot delete room. It may not exist or is currently booked.");
+        } });
+
+    dialog->exec();
+    dialog->deleteLater();
+}
+
+void MainWindow::showUpdateRoomDialog()
+{
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Update Room");
+    dialog->setFixedSize(400, 400);
+
+    dialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; }"
+        "QMessageBox { background-color: white; }"
+        "QMessageBox QLabel { color: #333333; font-size: 13px; font-weight: normal; }"
+        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 20px; font-weight: bold; }"
+        "QMessageBox QPushButton:hover { background-color: #cbd5e1; }");
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    QFormLayout *form = new QFormLayout();
+    form->setSpacing(15);
+
+    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; background-color: white; color: #333333; }"
+                         "QLineEdit:focus, QComboBox:focus { border: 2px solid #3b82f6; }";
+
+    QLineEdit *txtNumber = new QLineEdit(dialog);
+    txtNumber->setPlaceholderText("Enter Room Number to update...");
+    txtNumber->setStyleSheet(inputStyle);
+
+    QComboBox *cbStatus = new QComboBox(dialog);
+    cbStatus->addItems({"Available", "Reserved", "Occupied", "Maintenance"});
+    cbStatus->setStyleSheet(inputStyle);
+
+    QLineEdit *txtPrice = new QLineEdit(dialog);
+    txtPrice->setPlaceholderText("New Base Price...");
+    txtPrice->setStyleSheet(inputStyle);
+
+    QLineEdit *txtPeople = new QLineEdit(dialog);
+    txtPeople->setPlaceholderText("New Capacity...");
+    txtPeople->setStyleSheet(inputStyle);
+
+    form->addRow("Target Room Number:", txtNumber);
+    form->addRow("New Status:", cbStatus);
+    form->addRow("New Base price:", txtPrice);
+    form->addRow("New Capacity:", txtPeople);
+
+    layout->addLayout(form);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnSave = new QPushButton("Update", dialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+    btnSave->setStyleSheet("background-color: #3b82f6; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnSave);
+    layout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+
+    connect(btnSave, &QPushButton::clicked, dialog, [=]()
+            {
+        if (txtNumber->text().isEmpty() || txtPrice->text().isEmpty() || txtPeople->text().isEmpty()) {
+            QMessageBox::warning(dialog, "Error", "Please fill up all information");
+            return;
+        }
+
+        StandardRoom* updatedRoom = new StandardRoom();
+        updatedRoom->setRoomNumber(txtNumber->text().toStdString());
+
+        QString statusText = cbStatus->currentText();
+        RoomStatus statusEnum;
+
+        if (statusText == "Available") {
+            statusEnum = RoomStatus::Available; 
+        } 
+        else if (statusText == "Reserved") {
+            statusEnum = RoomStatus::Maintenance; 
+        } 
+        else if (statusText == "Occupied") {
+            statusEnum = RoomStatus::Occupied; 
+        } 
+        else {
+            statusEnum = RoomStatus::Maintenance;
+        }
+        
+        updatedRoom->setStatus(statusEnum); 
+        updatedRoom->setBasePrice(txtPrice->text().toInt());
+        updatedRoom->setNumberPeople(txtPeople->text().toInt());
+
+        RoomRepository repo;
+        bool success = repo.update(updatedRoom);
+
+        delete updatedRoom;
+        if (success) {
+            QMessageBox::information(dialog, "Successfully", "Successfully updated the room");
+            dialog->accept();
+            handleLogin_7();
+        } else {
+            QMessageBox::critical(dialog, "Error", "Cannot update room. It may not exist.");
         } });
 
     dialog->exec();
