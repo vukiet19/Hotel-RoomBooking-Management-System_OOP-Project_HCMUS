@@ -4,9 +4,10 @@
 #pragma once
 
 #include "RoomStatus.h"
-#include "TypeRoom.h"
+#include "Typeroom.h"
+#include <QDateTime>
 #include "../Observer.h"
-#include "../Customer/Customer.h"
+#include "../CUSTOMER/Customer.h"
 
 #include <string>
 #include <vector>

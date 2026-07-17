@@ -2,8 +2,8 @@
 //
 
 #include "Room.h"
-#include"../Observer.h"
-#include <QDateTime>
+#include "../Observer.h"
+
 #include <string>
 
 using namespace std;
@@ -75,8 +75,6 @@ int Room::getBasePrice() const
     return basePrice;
 }
 
-
-
 void Room::setRoomNumber(string roomNumber)
 {
     this->roomNumber = roomNumber;
@@ -87,7 +85,7 @@ void Room::setStatus(RoomStatus status)
 {
     this->status = status;
 
-    //thêm setStatus để ôm event vào
+    // thêm setStatus để ôm event vào
     RoomEvent event;
     event.roomId = this->id;
     event.newStatus = this->status;
@@ -106,8 +104,6 @@ string Room::getId() const
 {
     return id;
 }
-
-
 
 void Room::getBill(Customer &a)
 {

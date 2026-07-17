@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Chạy Dự Án Qt (MSVC)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/Hotel_Management.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "%PATH%;C:\\Qt\\6.11.1\\msvc2022_64\\bin"
+                }
+            ],
+            "externalConsole": true,
+            "visualizerFile": "/Users/sunix/Library/Application Support/Code/User/workspaceStorage/e2d22646a76ae1e3125e3060d9ebcbce/tonka3000.qtvsctools/qt.natvis.xml"
+        }
+    ]
+}
