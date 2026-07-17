@@ -2,6 +2,7 @@
 #include "Manager/DashboardService.h"
 #include "Repository/BookingRepository.h"
 #include "Repository/CustomerRepository.h"
+#include "Repository/RoomRepository.h"
 #include "Room/Room.h"
 #include "Room/DerivedRooms.h"
 #include "Booking/Booking.h"
@@ -46,6 +47,9 @@ int main(int argc, char *argv[])
 
 	if (DatabaseManager::instance().open())
 	{
+		// Khởi tạo repository để chạy verifySchema() tự động cập nhật cấu trúc database
+		CustomerRepository custRepo;
+		RoomRepository roomRepo;
 
 		DatabaseManager::instance().close();
 	}

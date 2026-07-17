@@ -16,6 +16,7 @@ using namespace std;
 
 class Room
 {
+    friend class RoomRepository;
     // protected co y nghia la ham con truy cap dc
 protected:
     string id;
