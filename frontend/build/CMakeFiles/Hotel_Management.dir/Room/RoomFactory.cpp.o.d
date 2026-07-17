@@ -909,6 +909,7 @@ CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../Booking/BookingStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../Room/RoomStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/Customer.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/MembershipTier.h \

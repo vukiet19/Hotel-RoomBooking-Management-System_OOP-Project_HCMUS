@@ -1020,6 +1020,7 @@ CMakeFiles/Hotel_Management.dir/backend.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../Booking/BookingStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../Room/RoomStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/Customer.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/MembershipTier.h \
@@ -1044,4 +1045,5 @@ CMakeFiles/Hotel_Management.dir/backend.cpp.o: \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Customer/Customer.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.h
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Room/Room.h

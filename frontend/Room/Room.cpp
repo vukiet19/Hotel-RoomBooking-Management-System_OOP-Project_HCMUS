@@ -3,7 +3,7 @@
 
 #include "Room.h"
 #include "../Observer.h"
-
+#include <QDateTime>
 #include <string>
 
 using namespace std;
@@ -30,13 +30,12 @@ Room::Room()
     // Khi khởi tạo phòng thì sẽ là Available
     status = Available;
 
-    // Thêm các observer , ở đây xài & tương ứng với địa chỉ cuả Observer và vì hàm addObserver nhận đầu vào là con trỏ (Observer *observer)
-    addObserver(new Room_Reserved());
-    addObserver(new Room_Occupied());
-    addObserver(new Room_Available());
-    addObserver(new Room_Maintenance());
-    // Hàm thông báo khi có biến đổi
-    notify();
+    // Hàm thông báo khi khởi tạo
+    RoomEvent event;
+    event.roomId = this->id;
+    event.newStatus = this->status;
+    event.timestamp = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss").toStdString();
+    HotelEventManager::instance().notifyRoomStatus(event);
 }
 
 // contructor (hầu hết giống constructor trên,) chỉ thêm nhập vào roomNumber( tương ứng số phòng)
@@ -58,12 +57,12 @@ Room::Room(string roomNumber)
     this->roomNumber = roomNumber;
     this->status = Available; // Phòng được tạo thì sẽ Available
 
-    addObserver(new Room_Reserved());
-    addObserver(new Room_Occupied());
-    addObserver(new Room_Available());
-    addObserver(new Room_Maintenance());
-
-    notify();
+    // Hàm thông báo khi khởi tạo
+    RoomEvent event;
+    event.roomId = this->id;
+    event.newStatus = this->status;
+    event.timestamp = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss").toStdString();
+    HotelEventManager::instance().notifyRoomStatus(event);
 }
 
 // Destructor
@@ -76,12 +75,10 @@ int Room::getBasePrice() const
     return basePrice;
 }
 
-// addObserver
-void Room::addObserver(Observer *observer)
+string Room::getRoomNumber() const
 {
-    observers.push_back(observer);
+    return roomNumber;
 }
-
 void Room::setRoomNumber(string roomNumber)
 {
     this->roomNumber = roomNumber;
@@ -91,7 +88,13 @@ void Room::setRoomNumber(string roomNumber)
 void Room::setStatus(RoomStatus status)
 {
     this->status = status;
-    notify();
+
+    // thêm setStatus để ôm event vào
+    RoomEvent event;
+    event.roomId = this->id;
+    event.newStatus = this->status;
+    event.timestamp = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss").toStdString();
+    HotelEventManager::instance().notifyRoomStatus(event);
 }
 
 // get status
@@ -100,22 +103,10 @@ RoomStatus Room::getStatus() const
     return status;
 }
 
-string Room::getRoomNumber() const { return roomNumber; }
-
 // getId
 string Room::getId() const
 {
     return id;
-}
-
-// dùng này dùng cho observer pattern( dùng cho thay đổi status của phòng)
-void Room::notify()
-{
-    for (auto observer : observers)
-    {
-
-        observer->Ongoing_status_room(id, status);
-    }
 }
 
 // void Room::getBill(Customer &a)
@@ -125,11 +116,11 @@ void Room::notify()
 //     int addition_point = room_baseprice / 1000000;
 //     a.setPoint(a.getPoint() + addition_point);
 // }
-
-void Room::setBasePrice(int basePrice)
-{
-    this->basePrice = basePrice;
-}
+//
+// void Room::setBasePrice(int basePrice)
+//{
+//     this->basePrice = basePrice;
+// }
 
 void Room::setNumberPeople(int number_people)
 {
@@ -137,3 +128,8 @@ void Room::setNumberPeople(int number_people)
 }
 
 int Room::getNumberPeople() const { return number_people; }
+
+void Room::setBasePrice(int price)
+{
+    basePrice = price;
+}

@@ -794,4 +794,5 @@ CMakeFiles/Hotel_Management.dir/Observer.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomStatus.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/BookingStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.h

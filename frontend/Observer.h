@@ -1,47 +1,81 @@
 #pragma once
 #include <string>
+
 #include <iostream>
+#include <vector>
+#include "Booking/BookingStatus.h"
 #include "Room/RoomStatus.h"
 using namespace std;
+// TÓM TẮT:
+// CÓ MANAGER ĐỂ QUẢN LÝ CÁC EVENT ĐƯỢC NOTIFY VÀ CHECK COI CÓ OBSERVER NÀO ĐẢM NHẬN
+// VIỆC BÁO LÊN UI VỀ EVENT NÀY HAY KHÔNG . NẾU CÓ THÌ MANAGER GỌI HÀM TƯƠNG ỨNG
+// VIỆC PHÒNG NÀO CẦN OBSERVER HAY BOOKING NÀO CẦN MÌNH SẼ MANUALLY TẠO VÀ THÊM OBSERVER ĐÓ VÀO HOTELEVENTMANAGER
+// SETSTATUS() -> TẠO VÀ TRUYỀN EVENT VỀ MANAGER -> OBSERVER CÓ THÌ BÁO LÊN UI
 
-// Hàm này dùng cho observer pattern cho các phòng nếu có thay đổi status
-
-// class cho observer
-class Observer
+// các struct này sẽ quy định những thông tin observer hiển thị trên dashboard
+struct RoomEvent
 {
-public:
-    // destructor
-    virtual ~Observer();
-
-    // Hàm để xem thông báo status của phòng( nếu phòng status đó thì sẽ báo) .
-    //= 0 trong hàm nghĩa là class con phải tự viết cách hoạt động của hàm đó
-    virtual void Ongoing_status_room(string roomId, RoomStatus newStatus) = 0;
+    string roomId;
+    RoomStatus newStatus;
+    string timestamp;
 };
 
-class Room_Available : public Observer
+struct BookingEvent
 {
-public:
-    // Nếu observer của phòng là Available thì sẽ báo status
-    void Ongoing_status_room(string roomId, RoomStatus newStatus) override;
+    int bookingId;
+    string customerName;
+    string roomNumber;
+    BookingStatus newStatus;
+    double totalPrice;
+    string timestamp;
 };
 
-class Room_Reserved : public Observer
+// Interfaces for observing Room and Booking changes
+class RoomObserver
 {
 public:
-    // Nếu observer của phòng là Reserved thì sẽ báo status
-    void Ongoing_status_room(string roomId, RoomStatus newStatus) override;
+    virtual ~RoomObserver() = default;
+    virtual void onRoomStatusChanged(const RoomEvent &event) = 0;
 };
 
-class Room_Occupied : public Observer
+class BookingObserver
 {
 public:
-    // Nếu observer của phòng là Occupied thì sẽ báo status
-    void Ongoing_status_room(string roomId, RoomStatus newStatus) override;
+    virtual ~BookingObserver() = default;
+    virtual void onBookingStatusChanged(const BookingEvent &event) = 0;
 };
 
-class Room_Maintenance : public Observer
+// class này sẽ nhận thông tin từ các events và xuất ra console
+// coi này như placeholder thôi để test
+class StatusLogger : public RoomObserver, public BookingObserver
 {
 public:
-    // Nếu observer của phòng là Maintenance  thì sẽ báo status
-    void Ongoing_status_room(string roomId, RoomStatus newStatus) override;
+    void onRoomStatusChanged(const RoomEvent &event) override;
+    void onBookingStatusChanged(const BookingEvent &event) override;
+};
+
+// Event Manager
+class HotelEventManager
+{
+private:
+    HotelEventManager();
+    ~HotelEventManager() = default;
+
+    // cấm copy hay copy constructor vì chỉ có 1 manager duy nhất
+    HotelEventManager(const HotelEventManager &) = delete;
+    HotelEventManager &operator=(const HotelEventManager &) = delete;
+
+    vector<RoomObserver *> roomObservers;
+    vector<BookingObserver *> bookingObservers;
+
+public:
+    static HotelEventManager &instance();
+
+    void addRoomObserver(RoomObserver *observer);
+    void removeRoomObserver(RoomObserver *observer);
+    void notifyRoomStatus(const RoomEvent &event);
+
+    void addBookingObserver(BookingObserver *observer);
+    void removeBookingObserver(BookingObserver *observer);
+    void notifyBookingStatus(const BookingEvent &event);
 };

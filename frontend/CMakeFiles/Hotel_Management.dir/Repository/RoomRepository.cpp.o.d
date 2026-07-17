@@ -798,6 +798,7 @@ CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../Booking/BookingStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../Room/RoomStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../CUSTOMER/Customer.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../CUSTOMER/MembershipTier.h \

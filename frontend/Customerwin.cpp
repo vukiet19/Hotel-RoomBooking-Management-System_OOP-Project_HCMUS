@@ -25,25 +25,41 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(800, 600);
     setWindowTitle("Customer Information");
-    setStyleSheet("QWidget { background-color: white; color: #333333; }");
+
+    // Premium background and global font
+    setStyleSheet("QWidget { background-color: #f8fafc; color: #1e293b; font-family: 'Segoe UI', Arial, sans-serif; }");
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    QFormLayout *form = new QFormLayout();
-    form->setSpacing(15);
+    layout->setContentsMargins(50, 40, 50, 40); // Added breathing room around edges
 
-    QString inputStyle = "QLineEdit, QDateEdit, QSpinBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; }";
+    // Added an elegant title
+    QLabel *titleLabel = new QLabel("Guest Registration", this);
+    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #1e293b; margin-bottom: 20px;");
+    layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+    QFormLayout *form = new QFormLayout();
+    form->setSpacing(20); // Increased spacing for a cleaner look
+
+    // Modernized input styling with focus effects
+    QString inputStyle = "QLineEdit, QDateEdit, QSpinBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background-color: white; font-size: 15px; color: #1e293b; }"
+                         "QLineEdit:focus, QDateEdit:focus, QSpinBox:focus { border: 2px solid #3b82f6; }";
+
+    // Style for the form labels
+    QString labelStyle = "font-size: 15px; font-weight: 600; color: #475569;";
 
     txtName = new QLineEdit(this);
     txtName->setStyleSheet(inputStyle);
+    txtName->setPlaceholderText("Enter full name");
 
     txtPhone = new QLineEdit(this);
     txtPhone->setStyleSheet(inputStyle);
+    txtPhone->setPlaceholderText("Enter phone number");
 
     dateCheckIn = new QDateEdit(QDate::currentDate(), this);
     dateCheckIn->setCalendarPopup(true);
     dateCheckIn->setStyleSheet(inputStyle);
 
-    datecheckout = new QDateEdit(QDate::currentDate(), this);
+    datecheckout = new QDateEdit(QDate::currentDate().addDays(1), this); // Default to tomorrow
     datecheckout->setCalendarPopup(true);
     datecheckout->setStyleSheet(inputStyle);
 
@@ -54,18 +70,38 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
 
     ID = new QLineEdit(this);
     ID->setStyleSheet(inputStyle);
+    ID->setPlaceholderText("Enter ID or Passport number");
 
-    form->addRow("Your name", txtName);
-    form->addRow("Your ID", ID);
-    form->addRow("Your phone number", txtPhone);
-    form->addRow("Check-in day", dateCheckIn);
-    form->addRow("Check-out day", datecheckout);
-    form->addRow("Number people", spinPeople);
+    // Adding styled labels to the form
+    QLabel *lblName = new QLabel("Your name:", this);
+    lblName->setStyleSheet(labelStyle);
+    QLabel *lblID = new QLabel("Your ID:", this);
+    lblID->setStyleSheet(labelStyle);
+    QLabel *lblPhone = new QLabel("Phone number:", this);
+    lblPhone->setStyleSheet(labelStyle);
+    QLabel *lblCheckIn = new QLabel("Check-in day:", this);
+    lblCheckIn->setStyleSheet(labelStyle);
+    QLabel *lblCheckOut = new QLabel("Check-out day:", this);
+    lblCheckOut->setStyleSheet(labelStyle);
+    QLabel *lblPeople = new QLabel("Number of people:", this);
+    lblPeople->setStyleSheet(labelStyle);
+
+    form->addRow(lblName, txtName);
+    form->addRow(lblID, ID);
+    form->addRow(lblPhone, txtPhone);
+    form->addRow(lblCheckIn, dateCheckIn);
+    form->addRow(lblCheckOut, datecheckout);
+    form->addRow(lblPeople, spinPeople);
 
     layout->addLayout(form);
 
+    layout->addStretch(); // Pushes the button to the bottom nicely
+
     btnNext = new QPushButton("Find Available Rooms", this);
-    btnNext->setStyleSheet("background-color: #3b82f6; color: white; padding: 10px; font-weight: bold; border-radius: 6px;");
+    btnNext->setCursor(Qt::PointingHandCursor);
+    btnNext->setStyleSheet(
+        "QPushButton { background-color: #3b82f6; color: white; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
+        "QPushButton:hover { background-color: #2563eb; }");
     layout->addWidget(btnNext);
 
     connect(btnNext, &QPushButton::clicked, this, &CustomerInputWindow::onNextClicked);
@@ -99,23 +135,88 @@ void CustomerInputWindow::onNextClicked()
 CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString date, QString dateout, int people, QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone), checkInDate(date), datecheckout(dateout), numPeople(people)
 {
-    setFixedSize(800, 600);
+    setFixedSize(850, 650); // Made slightly larger to accommodate the beautiful table
     setWindowTitle("Select a Room");
-    setStyleSheet("QWidget { background-color: #f8fafc; color: #333333; }");
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(30, 30, 30, 30);
+    layout->setContentsMargins(40, 40, 40, 40);
+    layout->setSpacing(20);
+
+    // Added an elegant title
+    QLabel *titleLabel = new QLabel("Available Rooms", this);
+    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #1e293b; margin-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif;");
+    layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     tableRoom = new QTableWidget(0, 5, this);
     tableRoom->setHorizontalHeaderLabels({"Room ID", "Room Number", "Type Room", "Price", "Capacity"});
     tableRoom->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableRoom->setSelectionBehavior(QAbstractItemView::SelectRows);
     tableRoom->setSelectionMode(QAbstractItemView::SingleSelection);
-    tableRoom->setStyleSheet("QTableWidget { background-color: white; color: #333333; }");
+    tableRoom->verticalHeader()->setDefaultSectionSize(45); // Taller rows for readability
+    tableRoom->setAlternatingRowColors(true);
+
+    // Applied the exact premium table stylesheet from the main window
+    this->setStyleSheet(R"(
+        QWidget { background-color: #f8fafc; color: #1e293b; }
+        
+        QTableWidget {
+            background-color: #ffffff;
+            alternate-background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            gridline-color: #e2e8f0; 
+            font-size: 14px;
+            color: #1e293b;
+            selection-background-color: #3b82f6;
+            selection-color: #ffffff;
+            outline: none;
+        }
+        
+        QTableWidget::item {
+            padding: 5px;
+        }
+
+        QTableWidget::item:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        
+        QHeaderView::section:horizontal {
+            background-color: #1e293b;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 12px;
+            border: none;
+            border-right: 1px solid #334155;
+        }
+
+        QHeaderView::section:horizontal:first {
+            border-top-left-radius: 8px;
+        }
+
+        QHeaderView::section:horizontal:last {
+            border-top-right-radius: 8px;
+            border-right: none;
+        }
+
+        QHeaderView::section:vertical {
+            background-color: #f8fafc;
+            color: #64748b;
+            font-weight: bold;
+            padding: 4px; 
+            border: none;
+            border-right: 1px solid #cbd5e1;
+        }
+    )");
+
     layout->addWidget(tableRoom);
 
     btnBook = new QPushButton("Confirm Booking", this);
-    btnBook->setStyleSheet("background-color: #10b981; color: white; padding: 12px; font-weight: bold; border-radius: 6px;");
+    btnBook->setCursor(Qt::PointingHandCursor);
+    btnBook->setStyleSheet(
+        "QPushButton { background-color: #10b981; color: white; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
+        "QPushButton:hover { background-color: #059669; }"); // Darker green on hover
     layout->addWidget(btnBook);
 
     connect(btnBook, &QPushButton::clicked, this, &CustomerWindow::onBookRoomClicked);
@@ -164,6 +265,7 @@ void CustomerWindow::loadFilteredRooms()
         row++;
     }
 }
+
 void CustomerWindow::onBookRoomClicked()
 {
     int selectedRow = tableRoom->currentRow();
@@ -215,6 +317,13 @@ void CustomerWindow::onBookRoomClicked()
     else
     {
         qDebug() << "Booking successfully saved to database!";
+
+        // Added a beautiful success message for the user before closing
+        QMessageBox msgBox(this);
+        msgBox.setWindowTitle("Success");
+        msgBox.setText("Your room has been booked successfully!");
+        msgBox.setStyleSheet("QMessageBox { background-color: #ffffff; } QLabel { color: #1e293b; font-size: 14px; } QPushButton { background-color: #3b82f6; color: white; padding: 6px 20px; border-radius: 4px; border: none; font-weight: bold; }");
+        msgBox.exec();
     }
 
     this->close();

@@ -1,10 +1,10 @@
 CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.cpp \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomStatus.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Typeroom.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../Observer.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/RoomRepository.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/Room.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/RoomStatus.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/Typeroom.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../Observer.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/string \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__algorithm/max.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__algorithm/comp.h \
@@ -798,10 +798,11 @@ CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../Room/RoomStatus.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/Customer.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/MembershipTier.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/MembershipPolicy.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../Booking/BookingStatus.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../Room/RoomStatus.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../CUSTOMER/Customer.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../CUSTOMER/MembershipTier.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Repository/../Room/../CUSTOMER/MembershipPolicy.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/map \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__tree \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QString \
@@ -890,7 +891,7 @@ CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringbuilder.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringconverter.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringconverter_base.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Manager/DatabaseManager.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlDatabase \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqldatabase.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlglobal.h \
@@ -972,6 +973,9 @@ CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qnativeinterface.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcoreapplication_platform.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDebug \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Room/Room.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Room/DerivedRooms.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Room/Typeroom.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlQuery \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.h
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QVariant

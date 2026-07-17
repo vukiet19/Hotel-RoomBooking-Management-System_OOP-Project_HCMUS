@@ -2674,6 +2674,7 @@ CMakeFiles/Hotel_Management.dir/Customerwin.cpp.o: Customerwin.cpp \
   Room/RoomStatus.h \
   Room/Typeroom.h \
   Observer.h \
+  Booking/BookingStatus.h \
   Room/RoomStatus.h \
   CUSTOMER/Customer.h \
   Room/TypeRoom.h \
@@ -5492,6 +5493,7 @@ CMakeFiles/Hotel_Management.dir/Observer.cpp.o: Observer.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
   Room/RoomStatus.h \
+  Booking/BookingStatus.h \
   Observer.h
 
 CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o: Repository/BookingRepository.cpp \
@@ -10131,6 +10133,7 @@ CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: Repository/Room
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  Booking/BookingStatus.h \
   Room/RoomStatus.h \
   CUSTOMER/Customer.h \
   CUSTOMER/MembershipTier.h \
@@ -11113,6 +11116,7 @@ CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o: Room/DerivedRooms.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  Booking/BookingStatus.h \
   Room/RoomStatus.h \
   CUSTOMER/Customer.h \
   CUSTOMER/MembershipTier.h \
@@ -11918,12 +11922,165 @@ CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o: Room/Room.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  Booking/BookingStatus.h \
   Room/RoomStatus.h \
   CUSTOMER/Customer.h \
   CUSTOMER/MembershipTier.h \
   CUSTOMER/MembershipPolicy.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/map \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__tree
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__tree \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDateTime \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdatetime.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcalendar.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qglobal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/assert.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/_assert.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/_static_assert.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/stdbool.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtcoreglobal.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtversionchecks.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtconfiginclude.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qconfig.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtcore-config.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtconfigmacros.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtdeprecationdefinitions.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcompilerdetection.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qprocessordetection.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qsystemdetection.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/TargetConditionals.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/AvailabilityMacros.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtcoreexports.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtdeprecationmarkers.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtclasshelpermacros.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtpreprocessorsupport.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qassert.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtnoop.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtypes.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtversion.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtypeinfo.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcontainerfwd.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qsysinfo.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qlogging.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qflags.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcompare_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qatomic.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbasicatomic.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qatomic_cxx11.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qgenericatomic.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qyieldcpu.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qconstructormacros.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdarwinhelpers.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qexceptionhandling.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qforeach.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qttypetraits.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qfunctionpointer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qglobalstatic.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmalloc.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qminmax.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qnumeric.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q20type_traits.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qoverload.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qswap.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtenvironmentvariables.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtresource.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qttranslation.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qversiontagging.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qlocale.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qvariant.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcompare.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstdlibdetection.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcomparehelpers.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetatype.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbytearray.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qrefcount.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qnamespace.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtmetamacros.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qarraydata.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qpair.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qarraydatapointer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qarraydataops.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcontainertools_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qxptype_traits.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q23type_traits.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q20functional.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q20memory.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q17memory.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbytearrayalgorithms.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbytearrayview.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringfwd.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdatastream.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobjectdefs.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobjectdefs_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qfunctionaltools_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qchar.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringview.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringalgorithms.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qiodevicebase.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qscopedpointer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qfloat16.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qhashfunctions.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstring.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qlatin1stringview.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qanystringview.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qutf8stringview.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringtokenizer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringbuilder.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringconverter.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringconverter_base.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/numeric \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/accumulate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/inner_product.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/iota.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/partial_sum.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/gcd_lcm.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/inclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/pstl.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/transform_exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/transform_inclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__numeric/transform_reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/execution \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__type_traits/is_execution_policy.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmath.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qalgorithms.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q20bit.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtformat_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qiterable.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtaggedpointer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetacontainer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcontainerinfo.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qscopeguard.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/list \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdebug.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtextstream.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcontiguouscache.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qsharedpointer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qshareddata.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qsharedpointer_impl.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/chrono \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__chrono/file_clock.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/forward_list \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/set \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/unordered_set \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qlist.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qiterator.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbytearraylist.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringlist.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qstringmatcher.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmap.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qshareddata_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qset.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qhash.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qvarlengtharray.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qalloc.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q23utility.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q20utility.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobject.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qobject_impl.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbindingstorage.h
 
 CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o: Room/RoomFactory.cpp \
   Room/RoomFactory.h \
@@ -12835,6 +12992,7 @@ CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o: Room/RoomFactory.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  Booking/BookingStatus.h \
   Room/RoomStatus.h \
   CUSTOMER/Customer.h \
   CUSTOMER/MembershipTier.h \
@@ -13925,6 +14083,7 @@ CMakeFiles/Hotel_Management.dir/backend.cpp.o: backend.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/unistd.h \
+  Booking/BookingStatus.h \
   Room/RoomStatus.h \
   CUSTOMER/Customer.h \
   CUSTOMER/MembershipTier.h \
@@ -15008,6 +15167,7 @@ CMakeFiles/Hotel_Management.dir/frontend.cpp.o: frontend.cpp \
   Room/RoomStatus.h \
   Room/Typeroom.h \
   Observer.h \
+  Booking/BookingStatus.h \
   Room/RoomStatus.h \
   CUSTOMER/Customer.h \
   Room/TypeRoom.h \

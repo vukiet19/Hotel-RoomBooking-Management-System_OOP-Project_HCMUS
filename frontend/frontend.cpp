@@ -34,12 +34,12 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     mainLayout->setSpacing(0);
 
     QWidget *sidebar = new QWidget(this);
-    sidebar->setFixedWidth(220);
+    sidebar->setFixedWidth(240); // Slightly wider for a premium feel
     sidebar->setObjectName("sidebar");
 
     QVBoxLayout *sidebarLayout = new QVBoxLayout(sidebar);
     sidebarLayout->setContentsMargins(15, 30, 15, 30);
-    sidebarLayout->setSpacing(5);
+    sidebarLayout->setSpacing(8);
 
     button1 = new QPushButton("Booking", sidebar);
     button2 = new QPushButton("Booking Services", sidebar);
@@ -66,8 +66,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     QWidget *contentArea = new QWidget(this);
     contentArea->setObjectName("contentArea");
     QVBoxLayout *contentLayout = new QVBoxLayout(contentArea);
-    contentLayout->setContentsMargins(30, 30, 30, 30);
-    contentLayout->setSpacing(15);
+    contentLayout->setContentsMargins(40, 40, 40, 40);
+    contentLayout->setSpacing(20);
 
     QHBoxLayout *actionBarLayout = new QHBoxLayout();
 
@@ -113,7 +113,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     for (QTableWidget *tb : tables)
     {
         tb->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        tb->verticalHeader()->setDefaultSectionSize(40);
+        tb->verticalHeader()->setDefaultSectionSize(45);
+        tb->setAlternatingRowColors(true); // Ensures the alternate colors work
         stackedWidget->addWidget(tb);
     }
 
@@ -122,68 +123,110 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     mainLayout->addWidget(sidebar);
     mainLayout->addWidget(contentArea);
 
+    // --- ENHANCED MAIN WINDOW STYLESHEET ---
     this->setStyleSheet(R"(
-        #contentArea { background-color: #e8f0fa; }
-        #sidebar { background-color: white; border-right: 1px solid #e2e8f0; }
+        #contentArea { 
+            background-color: #f8fafc; 
+        }
+        #sidebar { 
+            background-color: #1e293b; 
+            border-right: 1px solid #0f172a; 
+        }
         
         #sidebar QPushButton {
             background-color: transparent;
-            color: #64748b;
+            color: #94a3b8;
             border: none;
             border-radius: 8px;
-            padding: 10px 15px;
+            padding: 12px 20px;
             font-size: 15px;
-            font-weight: bold;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-weight: 600;
             text-align: left;
         }
-        #sidebar QPushButton:hover { background-color: #f1f5f9; color: #2563eb; }
+        #sidebar QPushButton:hover { 
+            background-color: #334155; 
+            color: #f8fafc; 
+        }
         #sidebar QPushButton[active="true"] { 
-            background-color: #eff6ff; 
-            color: #1d4ed8; 
-            border-left: 4px solid #3b82f6; 
+            background-color: #3b82f6; 
+            color: #ffffff; 
+            border-left: 5px solid #93c5fd; 
             border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;
         }
 
         #contentArea QPushButton {
-            background-color: white;
-            color: #333333;
-            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
             border-radius: 6px;
-            padding: 8px 16px;
+            padding: 8px 20px;
             font-size: 14px;
             font-weight: bold;
-            text-align: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
-        #contentArea QPushButton:hover { background-color: #f3f4f6; }
+        #contentArea QPushButton:hover { 
+            background-color: #f1f5f9; 
+            border-color: #94a3b8;
+            color: #3b82f6;
+        }
         
+        /* --- UPGRADED TABLE STYLES --- */
         QTableWidget {
-            background-color: white;
-            border: none;
+            background-color: #ffffff;
+            alternate-background-color: #f8fafc; /* Crisp, subtle alternating rows */
+            border: 1px solid #cbd5e1;
             border-radius: 8px;
-            gridline-color: #f1f5f9;
+            gridline-color: #e2e8f0; 
             font-size: 14px;
-            color: #333333;
-            selection-background-color: #eff6ff;
-            selection-color: #1e3a8a;
+            color: #1e293b;
+            selection-background-color: #3b82f6; /* Vibrant blue selection */
+            selection-color: #ffffff;
+            outline: none; /* Removes the ugly dotted focus rectangle */
         }
         
+        QTableWidget::item {
+            padding: 5px; /* Gives the text some breathing room */
+        }
+
+        QTableWidget::item:hover {
+            background-color: #f1f5f9; /* Soft gray hover effect on rows */
+            color: #0f172a;
+        }
+        
+        /* --- BOLD, PREMIUM HEADERS --- */
         QHeaderView::section:horizontal {
-            background-color: white;
-            color: #64748b;
+            background-color: #1e293b; /* Dark slate to match the sidebar */
+            color: #ffffff;
             font-weight: bold;
+            font-size: 14px;
             padding: 12px;
             border: none;
-            border-bottom: 2px solid #e2e8f0;
+            border-right: 1px solid #334155; /* Subtle separator between columns */
+        }
+
+        QHeaderView::section:horizontal:first {
+            border-top-left-radius: 8px; /* Rounds the top corners of the table */
+        }
+
+        QHeaderView::section:horizontal:last {
+            border-top-right-radius: 8px;
+            border-right: none;
         }
 
         QHeaderView::section:vertical {
-            background-color: white;
+            background-color: #f8fafc;
             color: #64748b;
             font-weight: bold;
             padding: 4px; 
             border: none;
-            border-right: 1px solid #e2e8f0;
+            border-right: 1px solid #cbd5e1;
+        }
+        
+        QTableCornerButton::section {
+            background-color: #1e293b; /* Matches the top-left corner box to the header */
+            border: none;
         }
     )");
 
@@ -301,71 +344,81 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
     setWindowTitle("Hotel_Management");
     setObjectName("MyMainWindow");
 
+    // --- PREMIUM DARK GRADIENT BACKGROUND ---
     setStyleSheet(
         "#MyMainWindow {"
-        "   background-color: #e8f0fa;"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #1e293b, stop:1 #0f172a);"
         "}");
 
     window2 = new MainWindow();
 
-    label1 = new QLabel("Log in", this);
-    QLabel *subLabel = new QLabel("Please log in to use services", this);
+    label1 = new QLabel("Welcome Back", this);
+    QLabel *subLabel = new QLabel("Please log in to manage your hotel", this);
 
     inputBox_user = new QLineEdit(this);
     inputBox_pass = new QLineEdit(this);
     inputBox_pass->setEchoMode(QLineEdit::Password);
 
-    button = new QPushButton("Log in", this);
+    button = new QPushButton("Sign In", this);
 
     imageLabel = new QLabel(this);
-    l1 = new QLabel(this);
+    l1 = new QLabel("© 2026 Premium Hotel Management System", this);
 
     QPixmap myImage("NTH.png");
     imageLabel->setPixmap(myImage);
     imageLabel->setScaledContents(true);
-    imageLabel->setGeometry(100, 50, 120, 120);
+    imageLabel->setGeometry(440, 80, 120, 120); // Centered logo above title
 
-    label1->setGeometry(0, 200, 1000, 60);
+    label1->setGeometry(0, 230, 1000, 60);
     label1->setAlignment(Qt::AlignCenter);
 
-    subLabel->setGeometry(0, 270, 1000, 30);
+    subLabel->setGeometry(0, 290, 1000, 30);
     subLabel->setAlignment(Qt::AlignCenter);
 
-    inputBox_user->setGeometry(300, 370, 400, 50);
-    inputBox_pass->setGeometry(300, 440, 400, 50);
+    inputBox_user->setGeometry(300, 370, 400, 55); // Slightly taller
+    inputBox_pass->setGeometry(300, 445, 400, 55);
 
-    button->setGeometry(425, 520, 150, 45);
+    button->setGeometry(300, 530, 400, 55); // Full width button to match inputs
 
-    l1->setGeometry(0, 630, 1000, 40);
+    l1->setGeometry(0, 720, 1000, 40);
     l1->setAlignment(Qt::AlignCenter);
 
-    label1->setStyleSheet("font-size: 38px; color: #333333;");
-    subLabel->setStyleSheet("font-size: 18px; color: #6b7280;");
+    // --- ELEGANT TYPOGRAPHY ---
+    label1->setStyleSheet("font-size: 42px; font-weight: bold; color: #ffffff; font-family: 'Segoe UI', Arial;");
+    subLabel->setStyleSheet("font-size: 18px; color: #94a3b8; font-family: 'Segoe UI', Arial;");
+    l1->setStyleSheet("font-size: 13px; color: #475569;");
 
+    // --- SLEEK INPUT STYLES ---
     QString inputStyle =
-        "background-color: white; "
-        "border: none; "
-        "border-radius: 2px; "
-        "padding: 10px; "
+        "background-color: rgba(255, 255, 255, 0.05); "
+        "border: 1px solid rgba(255, 255, 255, 0.2); "
+        "border-radius: 27px; "
+        "padding: 10px 25px; "
         "font-size: 16px; "
-        "color: #333333;";
+        "color: #ffffff;"
+        "selection-background-color: #3b82f6;";
 
-    inputBox_user->setStyleSheet(inputStyle);
-    inputBox_pass->setStyleSheet(inputStyle);
+    inputBox_user->setStyleSheet(inputStyle + "QLineEdit:focus { border: 1px solid #60a5fa; background-color: rgba(255, 255, 255, 0.1); }");
+    inputBox_pass->setStyleSheet(inputStyle + "QLineEdit:focus { border: 1px solid #60a5fa; background-color: rgba(255, 255, 255, 0.1); }");
 
     inputBox_user->setPlaceholderText("Username");
     inputBox_pass->setPlaceholderText("Password");
 
+    // --- MODERN GRADIENT BUTTON ---
     button->setStyleSheet(
         "QPushButton {"
         "   background-color: #3b82f6; "
         "   color: white; "
         "   border: none; "
-        "   border-radius: 4px; "
+        "   border-radius: 27px; "
         "   font-size: 18px; "
+        "   font-weight: bold;"
         "}"
         "QPushButton:hover {"
         "   background-color: #2563eb; "
+        "}"
+        "QPushButton:pressed {"
+        "   background-color: #1d4ed8; "
         "}");
 
     connect(button, &QPushButton::clicked, this, &LoginWindow::handleLogin);
@@ -404,22 +457,22 @@ void MainWindow::AddNewCustomerClicked()
     QDialog *addDialog = new QDialog(this);
 
     addDialog->setStyleSheet(
-        "QDialog { background-color: white; }"
-        "QLabel { color: #333333; font-weight: bold; font-size: 14px; }");
+        "QDialog { background-color: #f8fafc; }"
+        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
     addDialog->setWindowTitle("Add Customer");
-    addDialog->setFixedSize(350, 350);
+    addDialog->setFixedSize(400, 420); // Slightly larger for breathing room
 
     QVBoxLayout *mainLayout = new QVBoxLayout(addDialog);
     mainLayout->setContentsMargins(30, 30, 30, 30);
 
-    QLabel *titleLabel = new QLabel("Customer's infomation", addDialog);
-    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #1e3a8a; margin-bottom: 15px;");
+    QLabel *titleLabel = new QLabel("Customer's Information", addDialog);
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 20px;");
     mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *formLayout = new QFormLayout();
     formLayout->setSpacing(15);
 
-    QString inputStyle = "QLineEdit { border: 1px solid #000000; border-radius: 6px; padding: 8px; font-size: 14px; color: #f3efef; }"
+    QString inputStyle = "QLineEdit { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; color: #1e293b; background-color: #ffffff; }"
                          "QLineEdit:focus { border: 2px solid #3b82f6; }";
 
     QLineEdit *txtName = new QLineEdit(addDialog);
@@ -442,20 +495,25 @@ void MainWindow::AddNewCustomerClicked()
     txtPoint->setPlaceholderText("Type your point...");
     txtPoint->setStyleSheet(inputStyle);
 
-    formLayout->addRow(new QLabel("Customer's name", addDialog), txtName);
+    formLayout->addRow(new QLabel("Customer's name:", addDialog), txtName);
     formLayout->addRow(new QLabel("ID:", addDialog), ID);
-    formLayout->addRow(new QLabel("Phone number", addDialog), txtPhone);
+    formLayout->addRow(new QLabel("Phone number:", addDialog), txtPhone);
     formLayout->addRow(new QLabel("Type:", addDialog), txtType);
     formLayout->addRow(new QLabel("Point:", addDialog), txtPoint);
 
     mainLayout->addLayout(formLayout);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnSave = new QPushButton("Save", addDialog);
     QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
 
-    btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnSave->setStyleSheet("background-color: #10b981; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+
+    // Quick hover effects for dialog buttons
+    btnSave->setCursor(Qt::PointingHandCursor);
+    btnCancel->setCursor(Qt::PointingHandCursor);
 
     buttonLayout->addWidget(btnCancel);
     buttonLayout->addWidget(btnSave);
@@ -522,23 +580,23 @@ void MainWindow::showAddBookingDialog()
     QDialog *addDialog = new QDialog(this);
     addDialog->setWindowTitle("Add Booking");
     // Increased height from 420 to 520 to fit the new Phone and ID fields
-    addDialog->setFixedSize(450, 520);
+    addDialog->setFixedSize(450, 560);
 
     addDialog->setStyleSheet(
-        "QDialog { background-color: white; }"
-        "QLabel { color: #333333; font-weight: bold; font-size: 14px; }");
+        "QDialog { background-color: #f8fafc; }"
+        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
 
     QVBoxLayout *mainLayout = new QVBoxLayout(addDialog);
     mainLayout->setContentsMargins(30, 30, 30, 30);
 
     QLabel *titleLabel = new QLabel("Booking Information", addDialog);
-    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #1e3a8a; margin-bottom: 15px;");
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 20px;");
     mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *formLayout = new QFormLayout();
     formLayout->setSpacing(15);
 
-    QString inputStyle = "QLineEdit, QDateEdit { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; font-size: 14px; color: #333; background-color: white; }"
+    QString inputStyle = "QLineEdit, QDateEdit { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; color: #1e293b; background-color: white; }"
                          "QLineEdit:focus, QDateEdit:focus { border: 2px solid #3b82f6; }";
 
     // --- NEW FIELDS: ID and Phone ---
@@ -582,11 +640,15 @@ void MainWindow::showAddBookingDialog()
     mainLayout->addLayout(formLayout);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnSave = new QPushButton("Save", addDialog);
     QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
 
-    btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnSave->setStyleSheet("background-color: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+
+    btnSave->setCursor(Qt::PointingHandCursor);
+    btnCancel->setCursor(Qt::PointingHandCursor);
 
     buttonLayout->addWidget(btnCancel);
     buttonLayout->addWidget(btnSave);
@@ -653,21 +715,26 @@ void MainWindow::showAddRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Add room");
-    dialog->setFixedSize(400, 470);
+    dialog->setFixedSize(420, 500); // More height for neatness
 
     dialog->setStyleSheet(
-        "QDialog { background-color: white; }"
-        "QLabel { color: #333333; font-weight: bold; }"
+        "QDialog { background-color: #f8fafc; }"
+        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }"
         "QMessageBox { background-color: white; }"
         "QMessageBox QLabel { color: #333333; font-size: 13px; font-weight: normal; }"
-        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 20px; font-weight: bold; }"
-        "QMessageBox QPushButton:hover { background-color: #cbd5e1; }");
+        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: none; border-radius: 4px; padding: 6px 20px; font-weight: bold; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
+    layout->setContentsMargins(30, 30, 30, 30);
+
+    QLabel *titleLabel = new QLabel("Room Details", dialog);
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 15px;");
+    layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
     QFormLayout *form = new QFormLayout();
     form->setSpacing(15);
 
-    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; background-color: white; color: #333333; }"
+    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; background-color: white; color: #1e293b; font-size: 14px; }"
                          "QLineEdit:focus, QComboBox:focus { border: 2px solid #3b82f6; }";
 
     QLineEdit *txtId = new QLineEdit(dialog);
@@ -697,18 +764,22 @@ void MainWindow::showAddRoomDialog()
     form->addRow("Room ID:", txtId);
     form->addRow("Room number:", txtNumber);
     form->addRow("Type Room:", cbType);
-    form->addRow("Status", cbStatus);
+    form->addRow("Status:", cbStatus);
     form->addRow("Base price:", txtPrice);
-    form->addRow("Capicity", txtPeople);
+    form->addRow("Capacity:", txtPeople);
 
     layout->addLayout(form);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnSave = new QPushButton("Save", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnSave->setStyleSheet("background-color: #10b981; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+
+    btnSave->setCursor(Qt::PointingHandCursor);
+    btnCancel->setCursor(Qt::PointingHandCursor);
 
     buttonLayout->addWidget(btnCancel);
     buttonLayout->addWidget(btnSave);
@@ -723,9 +794,8 @@ void MainWindow::showAddRoomDialog()
             return;
         }
 
-        StandardRoom* newRoom;
-        
-        //newRoom->setStatus(txtNumber->text().toStdString());
+        StandardRoom* newRoom = new StandardRoom();        
+        newRoom->setRoomNumber(txtNumber->text().toStdString());
 
         QString statusText = cbStatus->currentText();
         RoomStatus statusEnum;
@@ -752,6 +822,8 @@ void MainWindow::showAddRoomDialog()
         RoomRepository repo;
         bool success = repo.add(newRoom);
 
+        delete newRoom;
+
         if (success) {
             QMessageBox::information(dialog, "Successfully", "Successfully add new room");
             dialog->accept();
@@ -774,28 +846,38 @@ void MainWindow::showDeleteCustomerDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Delete Customer");
-    dialog->setFixedSize(350, 180);
+    dialog->setFixedSize(380, 220);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: white; }"
-        "QLabel { color: #333333; font-weight: bold; }");
+        "QDialog { background-color: #f8fafc; }"
+        "QLabel { color: #334155; font-weight: bold; font-size: 14px;}");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
+    layout->setContentsMargins(30, 20, 30, 20);
+
+    QLabel *titleLabel = new QLabel("Remove Customer", dialog);
+    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #e11d48; margin-bottom: 10px;");
+    layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
     QFormLayout *form = new QFormLayout();
 
     QLineEdit *txtId = new QLineEdit(dialog);
-    txtId->setPlaceholderText("Enter Customer ID to delete...");
-    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;");
+    txtId->setPlaceholderText("Enter Customer ID...");
+    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; background: white; color: #1e293b;");
 
     form->addRow("Customer ID:", txtId);
     layout->addLayout(form);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnDelete = new QPushButton("Delete", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnDelete->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnDelete->setStyleSheet("background-color: #e11d48; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+
+    btnDelete->setCursor(Qt::PointingHandCursor);
+    btnCancel->setCursor(Qt::PointingHandCursor);
 
     buttonLayout->addWidget(btnCancel);
     buttonLayout->addWidget(btnDelete);
@@ -832,16 +914,22 @@ void MainWindow::showFilterCustomerDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Filter Customers");
-    dialog->setFixedSize(400, 200);
+    dialog->setFixedSize(420, 250);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: white; }"
-        "QLabel { color: #333333; font-weight: bold; }");
+        "QDialog { background-color: #f8fafc; }"
+        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
+    layout->setContentsMargins(30, 20, 30, 20);
+
+    QLabel *titleLabel = new QLabel("Advanced Search", dialog);
+    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 15px;");
+    layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
     QFormLayout *form = new QFormLayout();
 
-    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; }";
+    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; background: white; color: #1e293b; }";
 
     QComboBox *cbCriteria = new QComboBox(dialog);
     cbCriteria->addItem("Customer Name", "full_name");
@@ -855,15 +943,19 @@ void MainWindow::showFilterCustomerDialog()
     txtValue->setStyleSheet(inputStyle);
 
     form->addRow("Search By:", cbCriteria);
-    form->addRow("Search Value:", txtValue);
+    form->addRow("Keyword:", txtValue);
     layout->addLayout(form);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnSearch = new QPushButton("Search", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnSearch->setStyleSheet("background-color: #10b981; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnSearch->setStyleSheet("background-color: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+
+    btnSearch->setCursor(Qt::PointingHandCursor);
+    btnCancel->setCursor(Qt::PointingHandCursor);
 
     buttonLayout->addWidget(btnCancel);
     buttonLayout->addWidget(btnSearch);
@@ -923,28 +1015,38 @@ void MainWindow::showDeleteRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Delete Room");
-    dialog->setFixedSize(350, 180);
+    dialog->setFixedSize(380, 220);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: white; }"
-        "QLabel { color: #333333; font-weight: bold; }");
+        "QDialog { background-color: #f8fafc; }"
+        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
+    layout->setContentsMargins(30, 20, 30, 20);
+
+    QLabel *titleLabel = new QLabel("Remove Room", dialog);
+    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #e11d48; margin-bottom: 10px;");
+    layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
     QFormLayout *form = new QFormLayout();
 
     QLineEdit *txtId = new QLineEdit(dialog);
-    txtId->setPlaceholderText("Enter Room Number to delete...");
-    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;");
+    txtId->setPlaceholderText("Enter Room Number...");
+    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; background: white; color: #1e293b;");
 
     form->addRow("Room Number:", txtId);
     layout->addLayout(form);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnDelete = new QPushButton("Delete", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnDelete->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnDelete->setStyleSheet("background-color: #e11d48; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+
+    btnDelete->setCursor(Qt::PointingHandCursor);
+    btnCancel->setCursor(Qt::PointingHandCursor);
 
     buttonLayout->addWidget(btnCancel);
     buttonLayout->addWidget(btnDelete);
@@ -982,25 +1084,31 @@ void MainWindow::showUpdateRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Update Room");
-    dialog->setFixedSize(400, 400);
+    dialog->setFixedSize(420, 420);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: white; }"
-        "QLabel { color: #333333; font-weight: bold; }"
+        "QDialog { background-color: #f8fafc; }"
+        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }"
         "QMessageBox { background-color: white; }"
         "QMessageBox QLabel { color: #333333; font-size: 13px; font-weight: normal; }"
-        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 20px; font-weight: bold; }"
+        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: none; border-radius: 4px; padding: 6px 20px; font-weight: bold; }"
         "QMessageBox QPushButton:hover { background-color: #cbd5e1; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
+    layout->setContentsMargins(30, 20, 30, 20);
+
+    QLabel *titleLabel = new QLabel("Update Room Details", dialog);
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #3b82f6; margin-bottom: 15px;");
+    layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
     QFormLayout *form = new QFormLayout();
     form->setSpacing(15);
 
-    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; background-color: white; color: #333333; }"
+    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; background-color: white; color: #1e293b; font-size: 14px; }"
                          "QLineEdit:focus, QComboBox:focus { border: 2px solid #3b82f6; }";
 
     QLineEdit *txtNumber = new QLineEdit(dialog);
-    txtNumber->setPlaceholderText("Enter Room Number to update...");
+    txtNumber->setPlaceholderText("Target Room Number...");
     txtNumber->setStyleSheet(inputStyle);
 
     QComboBox *cbStatus = new QComboBox(dialog);
@@ -1015,7 +1123,7 @@ void MainWindow::showUpdateRoomDialog()
     txtPeople->setPlaceholderText("New Capacity...");
     txtPeople->setStyleSheet(inputStyle);
 
-    form->addRow("Target Room Number:", txtNumber);
+    form->addRow("Room Number:", txtNumber);
     form->addRow("New Status:", cbStatus);
     form->addRow("New Base price:", txtPrice);
     form->addRow("New Capacity:", txtPeople);
@@ -1023,11 +1131,15 @@ void MainWindow::showUpdateRoomDialog()
     layout->addLayout(form);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnSave = new QPushButton("Update", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnSave->setStyleSheet("background-color: #3b82f6; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #ef4444; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnSave->setStyleSheet("background-color: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+
+    btnSave->setCursor(Qt::PointingHandCursor);
+    btnCancel->setCursor(Qt::PointingHandCursor);
 
     buttonLayout->addWidget(btnCancel);
     buttonLayout->addWidget(btnSave);

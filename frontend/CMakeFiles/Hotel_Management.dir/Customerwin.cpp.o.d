@@ -1073,6 +1073,7 @@ CMakeFiles/Hotel_Management.dir/Customerwin.cpp.o: \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/RoomStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/Typeroom.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/../Observer.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/../Booking/BookingStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/../Room/RoomStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/../CUSTOMER/Customer.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Booking/../Room/TypeRoom.h \

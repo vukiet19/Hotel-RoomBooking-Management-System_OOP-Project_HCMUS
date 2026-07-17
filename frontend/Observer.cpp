@@ -4,40 +4,119 @@
 #include <string>
 #include <iostream>
 #include "Room/RoomStatus.h"
+#include "Booking/BookingStatus.h"
 #include "Observer.h"
 using namespace std;
-Observer::~Observer() = default;
-
-// Hàm này dùng cho observer pattern cho các phòng nếu có thay đổi status
-
-void Room_Available::Ongoing_status_room(string roomId, RoomStatus newStatus)
+HotelEventManager::HotelEventManager()
 {
-    if (newStatus == 0)
+    // mặc định có 1 observer là StatusLogger khi sinh ra
+    static StatusLogger *defaultLogger = new StatusLogger();
+    addRoomObserver(defaultLogger);
+    addBookingObserver(defaultLogger);
+}
+
+HotelEventManager &HotelEventManager::instance()
+{
+    static HotelEventManager inst;
+    return inst;
+}
+
+// thêm RoomObserver vào manager
+void HotelEventManager::addRoomObserver(RoomObserver *observer)
+{
+    if (observer)
     {
-        cout << "Room is avaiable\n";
+        roomObservers.push_back(observer);
     }
 }
 
-void Room_Reserved::Ongoing_status_room(std::string roomId, RoomStatus newStatus)
+// xoá observer khỏi manager
+void HotelEventManager::removeRoomObserver(RoomObserver *observer)
 {
-    if (newStatus == 1)
+    roomObservers.erase(remove(roomObservers.begin(), roomObservers.end(), observer), roomObservers.end());
+}
+
+// truyền thông tin thay đổi cho observer
+void HotelEventManager::notifyRoomStatus(const RoomEvent &event)
+{
+    for (auto *obs : roomObservers)
     {
-        cout << "Room is reserved\n";
+        if (obs)
+        {
+            obs->onRoomStatusChanged(event);
+        }
     }
 }
 
-void Room_Occupied::Ongoing_status_room(std::string roomId, RoomStatus newStatus)
+// thêm BookingObserver vào manager
+void HotelEventManager::addBookingObserver(BookingObserver *observer)
 {
-    if (newStatus == 2)
+    if (observer)
     {
-        cout << "Room is Occupied\n";
+        bookingObservers.push_back(observer);
     }
 }
 
-void Room_Maintenance::Ongoing_status_room(std::string roomId, RoomStatus newStatus)
+// xoá BookingObserver khỏi manager
+void HotelEventManager::removeBookingObserver(BookingObserver *observer)
 {
-    if (newStatus == 3)
+    bookingObservers.erase(remove(bookingObservers.begin(), bookingObservers.end(), observer), bookingObservers.end());
+}
+
+// truyền thông tin thay đổi cho observer
+void HotelEventManager::notifyBookingStatus(const BookingEvent &event)
+{
+    for (auto *obs : bookingObservers)
     {
-        cout << "Room is Maintenance\n";
+        if (obs)
+        {
+            obs->onBookingStatusChanged(event);
+        }
     }
+}
+
+// xuất ra thay đổi
+void StatusLogger::onRoomStatusChanged(const RoomEvent &event)
+{
+    string statusStr;
+    switch (event.newStatus)
+    {
+    case RoomStatus::Available:
+        statusStr = "Available";
+        break;
+    case RoomStatus::Reserved:
+        statusStr = "Reserved";
+        break;
+    case RoomStatus::Occupied:
+        statusStr = "Occupied";
+        break;
+    case RoomStatus::Maintenance:
+        statusStr = "Maintenance";
+        break;
+    }
+    cout << "[" << event.timestamp << "] [LOG] Room " << event.roomId
+         << " status changed to: " << statusStr << endl;
+}
+
+void StatusLogger::onBookingStatusChanged(const BookingEvent &event)
+{
+    string statusStr;
+    switch (event.newStatus)
+    {
+    case BookingStatus::UNCONFIRMED:
+        statusStr = "UNCONFIRMED";
+        break;
+    case BookingStatus::CONFIRMED:
+        statusStr = "CONFIRMED";
+        break;
+    case BookingStatus::CHECKED_IN:
+        statusStr = "CHECKED_IN";
+        break;
+    case BookingStatus::CHECKED_OUT:
+        statusStr = "CHECKED_OUT";
+        break;
+    }
+    cout << "[" << event.timestamp << "] [LOG] Booking ID " << event.bookingId
+         << " (" << event.customerName << ", Room " << event.roomNumber
+         << ", Price: " << event.totalPrice << ") status changed to: " << statusStr << endl;
 }
