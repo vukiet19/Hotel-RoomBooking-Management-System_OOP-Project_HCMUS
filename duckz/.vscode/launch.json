@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Chạy Dự Án Qt (MSVC)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/Hotel_Management.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "%PATH%;C:\\Qt\\6.11.1\\msvc2022_64\\bin"
+                }
+            ],
+            "externalConsole": true
+        }
+    ]
+}

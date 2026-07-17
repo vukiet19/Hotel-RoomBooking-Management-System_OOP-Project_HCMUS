@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Hotel_Management_autogen\mocs_compilation_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\Booking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\BookingFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\BookingRepository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\CMakeFiles\3.31.6-msvc6\CompilerIdCXX\CMakeCXXCompilerId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Customer\Customer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Customer\CustomerRepository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Customer\MembershipPolicy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\BillingService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\DashboardService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\DatabaseManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\InvoiceRepository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Observer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\DerivedRooms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\Room.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\RoomRepository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Service\ServiceItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Service\ServiceItemRepository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Hotel_Management_autogen\mocs_compilation_Release.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Hotel_Management_autogen\mocs_compilation_MinSizeRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Hotel_Management_autogen\mocs_compilation_RelWithDebInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\Booking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\BookingFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\BookingRepository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\BookingStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Booking\BookingType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Customer\Customer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Customer\CustomerRepository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Customer\MembershipPolicy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Customer\MembershipTier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\BillingService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\DashboardService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\DatabaseManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\Invoice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Manager\InvoiceRepository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\DepositStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\DerivedRooms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\Room.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\RoomRepository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\RoomStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Room\TypeRoom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Service\ServiceEnums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Service\ServiceItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\Service\ServiceItemRepository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{FBB0B8B2-1567-3302-BA17-A351814452DC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2851F97A-28A8-380A-9751-7FBA050B334F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

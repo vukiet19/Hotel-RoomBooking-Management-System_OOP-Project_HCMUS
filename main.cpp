@@ -1,42 +1,84 @@
-#include "CUSTOMER/Customer.h"
-#include "ROOM/Room.h"
-#include "ROOM/RoomStatus.h"
-#include "ROOM/Typeroom.h"
-#include "ROOM/DerivedRooms.h"
-#include "ROOM/observer.h"
+#include <iostream>
+#include <string>
+#include <memory>
+#include <QDateTime>
+
+#include "BookingFactory.h"
+#include "../CUSTOMER/Customer 21.56.18.h"
+#include "../ROOM/Room.h"
+#include "../ROOM/DerivedRooms.h"
+#include "../ROOM/Typeroom.h"
+
+using namespace std;
+
+// tại chạy trong local cái lày ko quan trọng
+int Room::nextid = 1;
+int Customer::nextId = 1;
+
+// hàm hiển thị
+void printRoomStatus(const string &roomName, Room *r)
+{
+    cout << roomName << " Status: ";
+    switch (r->getStatus())
+    {
+    case RoomStatus::Available:
+        cout << "Available\n";
+        break;
+    case RoomStatus::Reserved:
+        cout << "Reserved\n";
+        break;
+    case RoomStatus::Occupied:
+        cout << "Occupied\n";
+        break;
+    case RoomStatus::Maintenance:
+        cout << "Maintenance\n";
+        break;
+    }
+}
 
 int main()
 {
-    // Khởi tạo customer
-    Customer a("Megumin", "1234567890", "1234567890");
+    cout << "test\n";
 
-    a.display();
+    // auto cho tiện minh hoạ th chứ lúc làm cứ viết thẳng nó ra ví du unique_ptr<Customer> guest 1;
+    auto guest1 = make_unique<Customer>("Alice", "0000000000", "0000000000", MembershipTier::Gold);
+    auto guest2 = make_unique<Customer>("Bob", "0000000001", "0000000001", MembershipTier::Sliver);
 
-    // Khởi tạo phòng
-    StandardRoom r1;
+    auto room101 = make_unique<StandardRoom>("S-101", 500000);
+    auto room102 = make_unique<VipRoom>("V-201", 1200000);
 
-    a.setIdroom(r1.getId());
-    cout << a.getIdRoom() << '\n';
+    QDateTime checkInDate = QDateTime::currentDateTime();
+    QDateTime checkOutDate = checkInDate.addDays(3);
 
-    // Setbaseprice
-    r1.setBasePrice(10000000);
+    // status room 101 đầu
+    cout << "Status room 101 pre-book" << '\n';
 
-    // Kiểm tra tier hiện tại của khách hàng
-    cout << a.getTier() << '\n';
+    // GET LÀ HÀM CHO MƯỢN(ĐƯỢC NHÌN NHƯNG KO ĐƯỢC XOÁ) (MOVE MỚI LÀ CHUYỂN NHƯỢNG QUYỀN SỞ HỮU)
+    printRoomStatus("Room 101 (Pre-book)", room101.get());
 
-    // Lúc sau hàm này sẽ là checkout, dùng để tính điểm.
-    r1.getBill(a);
+    unique_ptr<StandardRoomBooking> booking1(static_cast<StandardRoomBooking *>(
+        BookingFactory::createBooking(BookingType::STANDARD, guest1.get(), checkInDate, checkOutDate, room101.get(), 50.00)));
 
-    cout << a.getPoint() << '\n';
+    cout << "Status room 101 sau book" << '\n';
+    // nên hiện status reserved
+    printRoomStatus("Room 101 (Post-book)", room101.get());
 
-    cout << a.getTier() << '\n';
+    cout << "hoàn tất reservation (giai quyết deposi)" << '\n';
+    // nên hiện occupied
+    booking1->resolveDeposit();
+    printRoomStatus("Room 101 (Checked In)", room101.get());
 
-    for (int i = 0; i < 10; i++)
+    unique_ptr<Booking> booking2(
+        BookingFactory::createBooking(BookingType::STANDARD, guest2.get(), checkInDate, checkOutDate, room102.get(), 0.00));
+    printRoomStatus("Room 102", room102.get());
+
+    unique_ptr<Booking> doubleBookingAttempt(
+        BookingFactory::createBooking(BookingType::STANDARD, guest1.get(), checkInDate, checkOutDate, room102.get(), 0.00));
+
+    if (doubleBookingAttempt == nullptr)
     {
-        r1.getBill(a);
+        cout << "không cho tiếp cận room status occupied\n";
     }
 
-    cout << a.getPoint() << '\n';
-
-    cout << a.getTier() << '\n';
+    return 0;
 }

@@ -7,9 +7,11 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "CMakeFiles/3.25.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.25.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.25.2/CMakeSystem.cmake"
   "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeLists.txt"
+  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCInformation.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCXXInformation.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake"
@@ -19,10 +21,12 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake"
+  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCXXCompilerFlag.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCXXSourceCompiles.cmake"
-  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFileCXX.cmake"
+  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFile.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CheckLibraryExists.cmake"
+  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/Clang.cmake"
@@ -37,7 +41,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckFlagCommonConfig.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/MacroAddFileDependencies.cmake"
+  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake"
+  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake"
@@ -335,7 +341,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "CMakeFiles/HotelManagement_autogen.dir/AutogenInfo.json"
+  "CMakeFiles/Hotel_Management_autogen.dir/AutogenInfo.json"
   ".qt/QtDeploySupport.cmake"
   ".qt/QtDeployTargets.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
@@ -343,6 +349,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/HotelManagement.dir/DependInfo.cmake"
-  "CMakeFiles/HotelManagement_autogen.dir/DependInfo.cmake"
+  "CMakeFiles/Hotel_Management.dir/DependInfo.cmake"
+  "CMakeFiles/Hotel_Management_autogen.dir/DependInfo.cmake"
   )

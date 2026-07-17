@@ -1,0 +1,97 @@
+[
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/mocs_compilation.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/mocs_compilation.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Booking/Booking.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/Booking.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/Booking.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Booking/BookingFactory.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingFactory.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingFactory.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Booking/BookingRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingRepository.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingRepository.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/Customer.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/Customer.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Customer/CustomerRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/CustomerRepository.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/CustomerRepository.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/MembershipPolicy.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/MembershipPolicy.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/BillingService.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/BillingService.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DashboardService.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DashboardService.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DatabaseManager.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DatabaseManager.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/InvoiceRepository.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/InvoiceRepository.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Observer.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Observer.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Observer.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/DerivedRooms.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/DerivedRooms.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/Room.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/Room.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Room/RoomRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/RoomRepository.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/RoomRepository.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Service/ServiceItem.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItem.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItem.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/Service/ServiceItemRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItemRepository.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItemRepository.cpp"
+},
+{
+  "directory": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DQT_CORE_LIB -DQT_NO_DEBUG -DQT_SQL_LIB -I/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtSql.framework/Headers  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -std=gnu++17 -o CMakeFiles/Hotel_Management.dir/main.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/main.cpp",
+  "file": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/main.cpp"
+}
+]

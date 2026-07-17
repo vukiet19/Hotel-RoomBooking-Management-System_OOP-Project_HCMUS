@@ -28,16 +28,12 @@ Room::Room()
     status = Available;
 
     // Các Observers tương ứng trạng thái phòng
-    Room_Reserved reser;
-    Room_Occupied Occ;
-    Room_Available Ava;
-    Room_Maintenance mai;
 
     // Thêm các observer , ở đây xài & tương ứng với địa chỉ cuả Observer và vì hàm addObserver nhận đầu vào là con trỏ (Observer *observer)
-    addObserver(&Occ);
-    addObserver(&reser);
-    addObserver(&Ava);
-    addObserver(&mai);
+    addObserver(new Room_Reserved());
+    addObserver(new Room_Occupied());
+    addObserver(new Room_Available());
+    addObserver(new Room_Maintenance());
     // Hàm thông báo khi có biến đổi
     notify();
 }
@@ -61,22 +57,24 @@ Room::Room(string roomNumber)
     this->roomNumber = roomNumber;
     this->status = Available; // Phòng được tạo thì sẽ Available
 
-    Room_Reserved reser;
-    Room_Occupied Occ;
-    Room_Available Ava;
-    Room_Maintenance mai;
-
-    addObserver(&Occ);
-    addObserver(&reser);
-    addObserver(&Ava);
-    addObserver(&mai);
+    addObserver(new Room_Reserved());
+    addObserver(new Room_Occupied());
+    addObserver(new Room_Available());
+    addObserver(new Room_Maintenance());
 
     notify();
 }
 
 // Destructor
 
-Room::~Room() = default;
+Room::~Room()
+{
+    for (Observer *obs : observers)
+    {
+        delete obs;
+    }
+    observers.clear();
+}
 
 // getBasePrice
 int Room::getBasePrice() const
@@ -117,9 +115,13 @@ string Room::getId() const
 // dùng này dùng cho observer pattern( dùng cho thay đổi status của phòng)
 void Room::notify()
 {
+
     for (auto observer : observers)
     {
-        observer->Ongoing_status_room(id, status);
+        if (observer != nullptr)
+        {
+            observer->Ongoing_status_room(id, status);
+        }
     }
 }
 
@@ -141,4 +143,4 @@ void Room::setNumberPeople(int number_people)
     this->number_people = number_people;
 }
 
-int Room::getNumberPeople() { return number_people; }
+int Room::getNumberPeople() const { return number_people; }

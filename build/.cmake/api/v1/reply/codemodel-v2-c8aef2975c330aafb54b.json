@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Hotel_Management",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Hotel_Management::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Hotel_Management-Debug-0f22204670d3a9d5fcd6.json",
+					"name" : "Hotel_Management",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Hotel_Management_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Hotel_Management_autogen-Debug-4a81733b70d5c52a3018.json",
+					"name" : "Hotel_Management_autogen",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build",
+		"source" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

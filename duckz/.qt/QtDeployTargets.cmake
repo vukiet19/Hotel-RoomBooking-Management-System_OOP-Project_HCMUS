@@ -1,2 +1,2 @@
-set(__QT_DEPLOY_TARGET_HotelManagement_FILE /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/HotelManagement)
-set(__QT_DEPLOY_TARGET_HotelManagement_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_Hotel_Management_FILE /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management)
+set(__QT_DEPLOY_TARGET_Hotel_Management_TYPE EXECUTABLE)

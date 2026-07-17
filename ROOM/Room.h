@@ -24,6 +24,10 @@ protected:
 
 public:
     static int nextid;
+
+    Room(const Room &) = delete;
+    Room &operator=(const Room &) = delete;
+
     // ham khoi tao
 
     Room();
@@ -52,7 +56,7 @@ public:
     // set number people
     void setNumberPeople(int number_people);
 
-    int getNumberPeople();
+    int getNumberPeople() const;
     // getId
     string getId() const;
 

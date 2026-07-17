@@ -1,4 +1,4 @@
-/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/HotelManagement.dir
+/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/Hotel_Management.dir
 /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/edit_cache.dir
 /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/rebuild_cache.dir
-/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/HotelManagement_autogen.dir
+/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/Hotel_Management_autogen.dir
