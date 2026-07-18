@@ -1,0 +1,4 @@
+/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/CMakeFiles/Hotel_Management.dir
+/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/CMakeFiles/edit_cache.dir
+/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/CMakeFiles/rebuild_cache.dir
+/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build/CMakeFiles/Hotel_Management_autogen.dir

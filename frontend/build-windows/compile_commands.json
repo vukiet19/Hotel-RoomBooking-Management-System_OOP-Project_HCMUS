@@ -1,0 +1,116 @@
+[
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Hotel_Management_autogen\\mocs_compilation.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\build-windows\\Hotel_Management_autogen\\mocs_compilation.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows/Hotel_Management_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Checkout\\CheckoutPage.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Checkout\\CheckoutPage.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/CheckoutPage.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Customer\\Customer.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Customer\\Customer.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Customer\\MembershipPolicy.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Customer\\MembershipPolicy.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/MembershipPolicy.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Customerwin.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Customerwin.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customerwin.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Customerwin.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Manager\\DatabaseManager.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Manager\\DatabaseManager.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Observer.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Observer.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Observer.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Repository\\BookingRepository.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Repository\\BookingRepository.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Repository\\CustomerRepository.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Repository\\CustomerRepository.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Repository\\InventoryRepository.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Repository\\InventoryRepository.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InventoryRepository.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Repository\\InvoiceRepository.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Repository\\InvoiceRepository.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InvoiceRepository.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Repository\\RoomRepository.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Repository\\RoomRepository.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Repository\\ServiceItemRepository.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Repository\\ServiceItemRepository.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/ServiceItemRepository.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Room\\DerivedRooms.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Room\\DerivedRooms.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Room\\Room.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Room\\Room.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Room/Room.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\Room\\RoomFactory.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\Room\\RoomFactory.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\backend.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\backend.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/backend.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\frontend.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\frontend.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/frontend.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/frontend.cpp.obj"
+},
+{
+  "directory": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/build-windows",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Hotel_Management.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Hotel_Management.dir\\main.cpp.obj -c D:\\Uni\\Sem3\\OOP\\Lab\\Merge\\Hotel-RoomBooking-Management-System_OOP-Project_HCMUS\\frontend\\main.cpp",
+  "file": "D:/Uni/Sem3/OOP/Lab/Merge/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/main.cpp",
+  "output": "CMakeFiles/Hotel_Management.dir/main.cpp.obj"
+}
+]
