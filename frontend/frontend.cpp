@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     sidebar->setObjectName("sidebar");
 
     QVBoxLayout *sidebarLayout = new QVBoxLayout(sidebar);
-    sidebarLayout->setContentsMargins(15, 30, 15, 30);
+    sidebarLayout->setContentsMargins(15, 30, 0, 30); // Removed right margin for flush active buttons
     sidebarLayout->setSpacing(8);
 
     button1 = new QPushButton("Booking", sidebar);
@@ -123,91 +123,96 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     mainLayout->addWidget(sidebar);
     mainLayout->addWidget(contentArea);
 
-    // --- ENHANCED MAIN WINDOW STYLESHEET ---
+    // --- ENHANCED MAIN WINDOW STYLESHEET (MATCHING LIGHT & VIBRANT THEME) ---
     this->setStyleSheet(R"(
         #contentArea { 
-            background-color: #f8fafc; 
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff); 
         }
+        /* --- BRAND NEW PREMIUM SIDEBAR --- */
+        /* --- PREMIUM SIDEBAR (TONE TÍM/INDIGO SÁNG HƠN) --- */
         #sidebar { 
-            background-color: #1e293b; 
-            border-right: 1px solid #0f172a; 
+            background-color: #47456d; /* Màu Tím/Indigo sáng hơn màu bảng cũ */
+            border-right: 1px solid #312e81; /* Viền phân cách nhẹ nhàng */
         }
         
         #sidebar QPushButton {
             background-color: transparent;
-            color: #94a3b8;
+            color: #e0e7ff; /* Chữ màu xanh tím nhạt cực êm mắt */
             border: none;
-            border-radius: 8px;
+            border-radius: 10px; /* Bo góc tròn hiện đại */
             padding: 12px 20px;
+            margin: 4px 12px; /* Khoảng cách thở cho các nút */
             font-size: 15px;
             font-family: 'Segoe UI', Arial, sans-serif;
             font-weight: 600;
             text-align: left;
         }
+        
         #sidebar QPushButton:hover { 
-            background-color: #334155; 
-            color: #f8fafc; 
-        }
-        #sidebar QPushButton[active="true"] { 
-            background-color: #3b82f6; 
+            background-color: #818cf8; /* Màu tím pastel sáng bừng, tách biệt hoàn toàn với nền */
             color: #ffffff; 
-            border-left: 5px solid #93c5fd; 
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
+        }
+        
+        #sidebar QPushButton[active="true"] { 
+            /* Gradient Tím - Xanh hòa hợp tuyệt đối với bảng bên phải */
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #0a7ed0);
+            color: #ffffff; 
+            border-radius: 10px; 
+            font-weight: bold;
         }
 
         #contentArea QPushButton {
             background-color: #ffffff;
-            color: #1e293b;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
+            color: #3730a3; /* Deep vibrant text */
+            border: 2px solid #a5b4fc;
+            border-radius: 18px; /* Bo viền tròn trịa */
             padding: 8px 20px;
             font-size: 14px;
             font-weight: bold;
             font-family: 'Segoe UI', Arial, sans-serif;
         }
         #contentArea QPushButton:hover { 
-            background-color: #f1f5f9; 
-            border-color: #94a3b8;
-            color: #3b82f6;
+            background-color: #e0e7ff; 
+            border-color: #6366f1;
+            color: #312e81;
         }
         
-        /* --- UPGRADED TABLE STYLES --- */
+        /* --- VIBRANT TABLE STYLES --- */
         QTableWidget {
             background-color: #ffffff;
-            alternate-background-color: #f8fafc; /* Crisp, subtle alternating rows */
-            border: 1px solid #cbd5e1;
+            alternate-background-color: #f0f9ff; /* Xanh lơ nhạt */
+            border: 1px solid #bae6fd;
             border-radius: 8px;
-            gridline-color: #e2e8f0; 
+            gridline-color: #e0f2fe; 
             font-size: 14px;
-            color: #1e293b;
-            selection-background-color: #3b82f6; /* Vibrant blue selection */
+            color: #0f172a;
+            selection-background-color: #38bdf8; /* Sky blue selection */
             selection-color: #ffffff;
-            outline: none; /* Removes the ugly dotted focus rectangle */
+            outline: none; 
         }
         
         QTableWidget::item {
-            padding: 5px; /* Gives the text some breathing room */
+            padding: 5px; 
         }
 
         QTableWidget::item:hover {
-            background-color: #f1f5f9; /* Soft gray hover effect on rows */
+            background-color: #e0f2fe; 
             color: #0f172a;
         }
         
         /* --- BOLD, PREMIUM HEADERS --- */
         QHeaderView::section:horizontal {
-            background-color: #1e293b; /* Dark slate to match the sidebar */
+            background-color: #312e81; /* Deep Indigo Header */
             color: #ffffff;
             font-weight: bold;
             font-size: 14px;
             padding: 12px;
             border: none;
-            border-right: 1px solid #334155; /* Subtle separator between columns */
+            border-right: 1px solid #1e1b4b; 
         }
 
         QHeaderView::section:horizontal:first {
-            border-top-left-radius: 8px; /* Rounds the top corners of the table */
+            border-top-left-radius: 8px; 
         }
 
         QHeaderView::section:horizontal:last {
@@ -221,11 +226,11 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
             font-weight: bold;
             padding: 4px; 
             border: none;
-            border-right: 1px solid #cbd5e1;
+            border-right: 1px solid #bae6fd;
         }
         
         QTableCornerButton::section {
-            background-color: #1e293b; /* Matches the top-left corner box to the header */
+            background-color: #312e81; 
             border: none;
         }
     )");
@@ -344,10 +349,10 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
     setWindowTitle("Hotel_Management");
     setObjectName("MyMainWindow");
 
-    // --- PREMIUM DARK GRADIENT BACKGROUND ---
+    // --- LIGHT, FRESH, & AIRY GRADIENT BACKGROUND ---
     setStyleSheet(
         "#MyMainWindow {"
-        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #1e293b, stop:1 #0f172a);"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff);"
         "}");
 
     window2 = new MainWindow();
@@ -375,39 +380,53 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
     subLabel->setGeometry(0, 290, 1000, 30);
     subLabel->setAlignment(Qt::AlignCenter);
 
-    inputBox_user->setGeometry(300, 370, 400, 55); // Slightly taller
+    inputBox_user->setGeometry(300, 370, 400, 55);
     inputBox_pass->setGeometry(300, 445, 400, 55);
 
-    button->setGeometry(300, 530, 400, 55); // Full width button to match inputs
+    button->setGeometry(300, 530, 400, 55);
 
     l1->setGeometry(0, 720, 1000, 40);
     l1->setAlignment(Qt::AlignCenter);
 
-    // --- ELEGANT TYPOGRAPHY ---
-    label1->setStyleSheet("font-size: 42px; font-weight: bold; color: #ffffff; font-family: 'Segoe UI', Arial;");
-    subLabel->setStyleSheet("font-size: 18px; color: #94a3b8; font-family: 'Segoe UI', Arial;");
-    l1->setStyleSheet("font-size: 13px; color: #475569;");
+    // --- TYPOGRAPHY (Dark slate colors for the light background) ---
+    label1->setStyleSheet("font-size: 42px; font-weight: bold; color: #0f172a; font-family: 'Segoe UI', Arial;");
+    subLabel->setStyleSheet("font-size: 18px; color: #475569; font-family: 'Segoe UI', Arial;");
+    l1->setStyleSheet("font-size: 13px; color: #94a3b8;");
 
-    // --- SLEEK INPUT STYLES ---
+    // --- COLORFUL & VIBRANT INPUT STYLES ---
+    // --- STYLE CHO Ô NHẬP LIỆU (Hợp với nền xanh sáng) ---
     QString inputStyle =
-        "background-color: rgba(255, 255, 255, 0.05); "
-        "border: 1px solid rgba(255, 255, 255, 0.2); "
-        "border-radius: 27px; "
-        "padding: 10px 25px; "
-        "font-size: 16px; "
-        "color: #ffffff;"
-        "selection-background-color: #3b82f6;";
+        "QLineEdit {"
+        "   background-color: #ffffff; " // Nền trắng tinh
+        "   border: 3px solid #38bdf8; " // KHUNG VIỀN 3px màu xanh dương sáng (rất nổi bật)
+        "   border-radius: 22px; "       // Bo góc khung viền
+        "   padding: 10px 20px; "
+        "   font-size: 16px; "
+        "   color: #0f172a; " // Chữ màu đậm
+        "}"
+        "QLineEdit:hover {"
+        "   border: 3px solid #0284c7; " // Khung viền đậm hơn khi rà chuột vào
+        "}"
+        "QLineEdit:focus {"
+        "   border: 3px solid #0369a1; " // Khung viền xanh ngọc biển sẫm khi click vào gõ
+        "   background-color: #f0f9ff; " // Nền đổi màu xanh lơ nhạt xíu khi đang gõ
+        "}";
 
-    inputBox_user->setStyleSheet(inputStyle + "QLineEdit:focus { border: 1px solid #60a5fa; background-color: rgba(255, 255, 255, 0.1); }");
-    inputBox_pass->setStyleSheet(inputStyle + "QLineEdit:focus { border: 1px solid #60a5fa; background-color: rgba(255, 255, 255, 0.1); }");
+    // Áp dụng style cho 2 ô nhập liệu
+    inputBox_user->setStyleSheet(inputStyle);
+    inputBox_pass->setStyleSheet(inputStyle);
+
+    // Inputs get a stronger, brighter border and background when clicked
+    inputBox_user->setStyleSheet(inputStyle + "QLineEdit:focus { border: 2px solid #6366f1; background-color: #e0e7ff; }");
+    inputBox_pass->setStyleSheet(inputStyle + "QLineEdit:focus { border: 2px solid #6366f1; background-color: #e0e7ff; }");
 
     inputBox_user->setPlaceholderText("Username");
     inputBox_pass->setPlaceholderText("Password");
 
-    // --- MODERN GRADIENT BUTTON ---
+    // --- COLORFUL VIBRANT BUTTON (Indigo to Purple Gradient) ---
     button->setStyleSheet(
         "QPushButton {"
-        "   background-color: #3b82f6; "
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); "
         "   color: white; "
         "   border: none; "
         "   border-radius: 27px; "
@@ -415,11 +434,13 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
         "   font-weight: bold;"
         "}"
         "QPushButton:hover {"
-        "   background-color: #2563eb; "
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); "
         "}"
         "QPushButton:pressed {"
-        "   background-color: #1d4ed8; "
+        "   background: #4338ca; "
         "}");
+
+    button->setCursor(Qt::PointingHandCursor);
 
     connect(button, &QPushButton::clicked, this, &LoginWindow::handleLogin);
 }
@@ -457,8 +478,8 @@ void MainWindow::AddNewCustomerClicked()
     QDialog *addDialog = new QDialog(this);
 
     addDialog->setStyleSheet(
-        "QDialog { background-color: #f8fafc; }"
-        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
+        "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
     addDialog->setWindowTitle("Add Customer");
     addDialog->setFixedSize(400, 420); // Slightly larger for breathing room
 
@@ -466,14 +487,24 @@ void MainWindow::AddNewCustomerClicked()
     mainLayout->setContentsMargins(30, 30, 30, 30);
 
     QLabel *titleLabel = new QLabel("Customer's Information", addDialog);
-    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 20px;");
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #3730a3; margin-bottom: 20px;");
     mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *formLayout = new QFormLayout();
     formLayout->setSpacing(15);
 
-    QString inputStyle = "QLineEdit { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; color: #1e293b; background-color: #ffffff; }"
-                         "QLineEdit:focus { border: 2px solid #3b82f6; }";
+    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO DIALOG ---
+    QString inputStyle =
+        "QLineEdit {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 10px; "
+        "   font-size: 14px; "
+        "   color: #0f172a; "
+        "}"
+        "QLineEdit:hover { border: 2px solid #0284c7; }"
+        "QLineEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
 
     QLineEdit *txtName = new QLineEdit(addDialog);
     txtName->setPlaceholderText("Type your name...");
@@ -508,8 +539,11 @@ void MainWindow::AddNewCustomerClicked()
     QPushButton *btnSave = new QPushButton("Save", addDialog);
     QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
 
-    btnSave->setStyleSheet("background-color: #10b981; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+    // --- ĐỒNG BỘ NÚT VIBRANT CHO DIALOG ---
+    btnSave->setStyleSheet(
+        "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
+        "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
 
     // Quick hover effects for dialog buttons
     btnSave->setCursor(Qt::PointingHandCursor);
@@ -583,21 +617,31 @@ void MainWindow::showAddBookingDialog()
     addDialog->setFixedSize(450, 560);
 
     addDialog->setStyleSheet(
-        "QDialog { background-color: #f8fafc; }"
-        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
+        "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
 
     QVBoxLayout *mainLayout = new QVBoxLayout(addDialog);
     mainLayout->setContentsMargins(30, 30, 30, 30);
 
     QLabel *titleLabel = new QLabel("Booking Information", addDialog);
-    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 20px;");
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #3730a3; margin-bottom: 20px;");
     mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *formLayout = new QFormLayout();
     formLayout->setSpacing(15);
 
-    QString inputStyle = "QLineEdit, QDateEdit { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; color: #1e293b; background-color: white; }"
-                         "QLineEdit:focus, QDateEdit:focus { border: 2px solid #3b82f6; }";
+    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO DIALOG ---
+    QString inputStyle =
+        "QLineEdit, QDateEdit {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 10px; "
+        "   font-size: 14px; "
+        "   color: #0f172a; "
+        "}"
+        "QLineEdit:hover, QDateEdit:hover { border: 2px solid #0284c7; }"
+        "QLineEdit:focus, QDateEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
 
     // --- NEW FIELDS: ID and Phone ---
     QLineEdit *txtId = new QLineEdit(addDialog);
@@ -644,8 +688,11 @@ void MainWindow::showAddBookingDialog()
     QPushButton *btnSave = new QPushButton("Save", addDialog);
     QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
 
-    btnSave->setStyleSheet("background-color: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+    // --- ĐỒNG BỘ NÚT VIBRANT CHO DIALOG ---
+    btnSave->setStyleSheet(
+        "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
+        "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
 
     btnSave->setCursor(Qt::PointingHandCursor);
     btnCancel->setCursor(Qt::PointingHandCursor);
@@ -718,24 +765,34 @@ void MainWindow::showAddRoomDialog()
     dialog->setFixedSize(420, 500); // More height for neatness
 
     dialog->setStyleSheet(
-        "QDialog { background-color: #f8fafc; }"
-        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }"
+        "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }"
         "QMessageBox { background-color: white; }"
         "QMessageBox QLabel { color: #333333; font-size: 13px; font-weight: normal; }"
-        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: none; border-radius: 4px; padding: 6px 20px; font-weight: bold; }");
+        "QMessageBox QPushButton { background-color: #cbd5e1; color: #1e293b; border: none; border-radius: 4px; padding: 6px 20px; font-weight: bold; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
     layout->setContentsMargins(30, 30, 30, 30);
 
     QLabel *titleLabel = new QLabel("Room Details", dialog);
-    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 15px;");
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #3730a3; margin-bottom: 15px;");
     layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *form = new QFormLayout();
     form->setSpacing(15);
 
-    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; background-color: white; color: #1e293b; font-size: 14px; }"
-                         "QLineEdit:focus, QComboBox:focus { border: 2px solid #3b82f6; }";
+    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO DIALOG ---
+    QString inputStyle =
+        "QLineEdit, QComboBox {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 10px; "
+        "   font-size: 14px; "
+        "   color: #0f172a; "
+        "}"
+        "QLineEdit:hover, QComboBox:hover { border: 2px solid #0284c7; }"
+        "QLineEdit:focus, QComboBox:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
 
     QLineEdit *txtId = new QLineEdit(dialog);
     txtId->setPlaceholderText("EX: R101, R102...");
@@ -775,8 +832,11 @@ void MainWindow::showAddRoomDialog()
     QPushButton *btnSave = new QPushButton("Save", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnSave->setStyleSheet("background-color: #10b981; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+    // --- ĐỒNG BỘ NÚT VIBRANT CHO DIALOG ---
+    btnSave->setStyleSheet(
+        "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
+        "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
 
     btnSave->setCursor(Qt::PointingHandCursor);
     btnCancel->setCursor(Qt::PointingHandCursor);
@@ -849,8 +909,8 @@ void MainWindow::showDeleteCustomerDialog()
     dialog->setFixedSize(380, 220);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: #f8fafc; }"
-        "QLabel { color: #334155; font-weight: bold; font-size: 14px;}");
+        "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 14px;}");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
     layout->setContentsMargins(30, 20, 30, 20);
@@ -861,9 +921,21 @@ void MainWindow::showDeleteCustomerDialog()
 
     QFormLayout *form = new QFormLayout();
 
+    QString inputStyle =
+        "QLineEdit {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 10px; "
+        "   font-size: 14px; "
+        "   color: #0f172a; "
+        "}"
+        "QLineEdit:hover { border: 2px solid #0284c7; }"
+        "QLineEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
+
     QLineEdit *txtId = new QLineEdit(dialog);
     txtId->setPlaceholderText("Enter Customer ID...");
-    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; background: white; color: #1e293b;");
+    txtId->setStyleSheet(inputStyle);
 
     form->addRow("Customer ID:", txtId);
     layout->addLayout(form);
@@ -874,7 +946,7 @@ void MainWindow::showDeleteCustomerDialog()
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
     btnDelete->setStyleSheet("background-color: #e11d48; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
 
     btnDelete->setCursor(Qt::PointingHandCursor);
     btnCancel->setCursor(Qt::PointingHandCursor);
@@ -917,19 +989,50 @@ void MainWindow::showFilterCustomerDialog()
     dialog->setFixedSize(420, 250);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: #f8fafc; }"
-        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
+        "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
     layout->setContentsMargins(30, 20, 30, 20);
 
     QLabel *titleLabel = new QLabel("Advanced Search", dialog);
-    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 15px;");
+    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #3730a3; margin-bottom: 15px;");
     layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *form = new QFormLayout();
 
-    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; background: white; color: #1e293b; }";
+    // --- STYLE CHO COMBOBOX VÀ INPUT (Ép nền trắng, loại bỏ Dark Mode của Mac) ---
+    QString inputStyle =
+        "QLineEdit, QComboBox {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 10px; "
+        "   font-size: 14px; "
+        "   color: #312e81; "
+        "}"
+        "QLineEdit:hover, QComboBox:hover { border: 2px solid #6366f1; }"
+        "QLineEdit:focus, QComboBox:focus { border: 2px solid #8b5cf6; background-color: #f0f9ff; }"
+
+        /* Mẹo để vô hiệu hóa Native Mac Dark Mode Menu */
+        "QComboBox::drop-down {"
+        "   border: none; "
+        "   width: 25px; "
+        "}"
+        "QComboBox::down-arrow {"
+        "   image: none; " /* Qt sẽ tự vẽ mũi tên mặc định nếu không set ảnh */
+        "}"
+
+        /* Ép nền trắng tinh cho danh sách xổ xuống */
+        "QComboBox QAbstractItemView, QComboBox QListView {"
+        "   background-color: #ffffff; "
+        "   color: #312e81; "
+        "   border: 2px solid #a5b4fc; "
+        "   border-radius: 4px; "
+        "   selection-background-color: #e0e7ff; " /* Xanh lơ nhạt khi hover vào dòng */
+        "   selection-color: #312e81; "            /* Chữ vẫn giữ màu đậm cho dễ đọc */
+        "   outline: none;"
+        "}";
 
     QComboBox *cbCriteria = new QComboBox(dialog);
     cbCriteria->addItem("Customer Name", "full_name");
@@ -951,8 +1054,10 @@ void MainWindow::showFilterCustomerDialog()
     QPushButton *btnSearch = new QPushButton("Search", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnSearch->setStyleSheet("background-color: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnSearch->setStyleSheet(
+        "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold; }"
+        "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
 
     btnSearch->setCursor(Qt::PointingHandCursor);
     btnCancel->setCursor(Qt::PointingHandCursor);
@@ -1018,8 +1123,8 @@ void MainWindow::showDeleteRoomDialog()
     dialog->setFixedSize(380, 220);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: #f8fafc; }"
-        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }");
+        "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
     layout->setContentsMargins(30, 20, 30, 20);
@@ -1030,9 +1135,21 @@ void MainWindow::showDeleteRoomDialog()
 
     QFormLayout *form = new QFormLayout();
 
+    QString inputStyle =
+        "QLineEdit {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 10px; "
+        "   font-size: 14px; "
+        "   color: #0f172a; "
+        "}"
+        "QLineEdit:hover { border: 2px solid #0284c7; }"
+        "QLineEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
+
     QLineEdit *txtId = new QLineEdit(dialog);
     txtId->setPlaceholderText("Enter Room Number...");
-    txtId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 14px; background: white; color: #1e293b;");
+    txtId->setStyleSheet(inputStyle);
 
     form->addRow("Room Number:", txtId);
     layout->addLayout(form);
@@ -1043,7 +1160,7 @@ void MainWindow::showDeleteRoomDialog()
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
     btnDelete->setStyleSheet("background-color: #e11d48; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
 
     btnDelete->setCursor(Qt::PointingHandCursor);
     btnCancel->setCursor(Qt::PointingHandCursor);
@@ -1087,25 +1204,33 @@ void MainWindow::showUpdateRoomDialog()
     dialog->setFixedSize(420, 420);
 
     dialog->setStyleSheet(
-        "QDialog { background-color: #f8fafc; }"
-        "QLabel { color: #334155; font-weight: bold; font-size: 14px; }"
+        "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }"
         "QMessageBox { background-color: white; }"
         "QMessageBox QLabel { color: #333333; font-size: 13px; font-weight: normal; }"
-        "QMessageBox QPushButton { background-color: #e2e8f0; color: #1e293b; border: none; border-radius: 4px; padding: 6px 20px; font-weight: bold; }"
-        "QMessageBox QPushButton:hover { background-color: #cbd5e1; }");
+        "QMessageBox QPushButton { background-color: #cbd5e1; color: #1e293b; border: none; border-radius: 4px; padding: 6px 20px; font-weight: bold; }");
 
     QVBoxLayout *layout = new QVBoxLayout(dialog);
     layout->setContentsMargins(30, 20, 30, 20);
 
     QLabel *titleLabel = new QLabel("Update Room Details", dialog);
-    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #3b82f6; margin-bottom: 15px;");
+    titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #3730a3; margin-bottom: 15px;");
     layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *form = new QFormLayout();
     form->setSpacing(15);
 
-    QString inputStyle = "QLineEdit, QComboBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; background-color: white; color: #1e293b; font-size: 14px; }"
-                         "QLineEdit:focus, QComboBox:focus { border: 2px solid #3b82f6; }";
+    QString inputStyle =
+        "QLineEdit, QComboBox {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 10px; "
+        "   font-size: 14px; "
+        "   color: #0f172a; "
+        "}"
+        "QLineEdit:hover, QComboBox:hover { border: 2px solid #0284c7; }"
+        "QLineEdit:focus, QComboBox:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
 
     QLineEdit *txtNumber = new QLineEdit(dialog);
     txtNumber->setPlaceholderText("Target Room Number...");
@@ -1135,8 +1260,10 @@ void MainWindow::showUpdateRoomDialog()
     QPushButton *btnSave = new QPushButton("Update", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    btnSave->setStyleSheet("background-color: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
-    btnCancel->setStyleSheet("background-color: #e2e8f0; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
+    btnSave->setStyleSheet(
+        "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold; }"
+        "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
 
     btnSave->setCursor(Qt::PointingHandCursor);
     btnCancel->setCursor(Qt::PointingHandCursor);

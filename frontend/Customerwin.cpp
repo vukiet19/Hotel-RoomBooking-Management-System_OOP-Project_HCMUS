@@ -26,26 +26,53 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
     setFixedSize(800, 600);
     setWindowTitle("Customer Information");
 
-    // Premium background and global font
-    setStyleSheet("QWidget { background-color: #f8fafc; color: #1e293b; font-family: 'Segoe UI', Arial, sans-serif; }");
+    // --- LIGHT & AIRY GRADIENT BACKGROUND ---
+    // --- LIGHT & AIRY BACKGROUND + COLORFUL DATE CALENDAR TABLE ---
+    setStyleSheet(
+        "QWidget { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff); color: #1e293b; font-family: 'Segoe UI', Arial, sans-serif; }"
 
+        /* --- STYLE CHO BẢNG CHỌN NGÀY (DATE CALENDAR) --- */
+        "QCalendarWidget QWidget { background-color: #ffffff; }"
+        "QCalendarWidget QToolButton { "
+        "   color: #4f46e5; font-weight: bold; font-size: 14px; background-color: #e0e7ff; border-radius: 6px; padding: 4px;"
+        "}"
+        "QCalendarWidget QToolButton:hover { background-color: #c7d2fe; }"
+        "QCalendarWidget QMenu { background-color: white; color: #3730a3; }"
+        "QCalendarWidget QSpinBox { background-color: #f0f9ff; color: #3730a3; border: 1px solid #bae6fd; border-radius: 4px; }"
+
+        /* --- BẢNG NGÀY THÁNG TRONG LỊCH --- */
+        "QCalendarWidget QAbstractItemView:enabled { "
+        "   color: #1e293b; background-color: #ffffff; "
+        "   selection-background-color: #38bdf8; " /* Chọn ngày sẽ có màu xanh sáng chói */
+        "   selection-color: white; "
+        "}"
+        "QCalendarWidget QAbstractItemView:disabled { color: #cbd5e1; }");
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(50, 40, 50, 40); // Added breathing room around edges
 
     // Added an elegant title
     QLabel *titleLabel = new QLabel("Guest Registration", this);
-    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #1e293b; margin-bottom: 20px;");
+    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #3730a3; margin-bottom: 20px; background: transparent;"); // Transparent background for label
     layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *form = new QFormLayout();
     form->setSpacing(20); // Increased spacing for a cleaner look
 
-    // Modernized input styling with focus effects
-    QString inputStyle = "QLineEdit, QDateEdit, QSpinBox { border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background-color: white; font-size: 15px; color: #1e293b; }"
-                         "QLineEdit:focus, QDateEdit:focus, QSpinBox:focus { border: 2px solid #3b82f6; }";
+    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO FORM ---
+    QString inputStyle =
+        "QLineEdit, QDateEdit, QSpinBox {"
+        "   background-color: #ffffff; "
+        "   border: 2px solid #38bdf8; "
+        "   border-radius: 8px; "
+        "   padding: 12px; "
+        "   font-size: 15px; "
+        "   color: #0f172a; "
+        "}"
+        "QLineEdit:hover, QDateEdit:hover, QSpinBox:hover { border: 2px solid #0284c7; }"
+        "QLineEdit:focus, QDateEdit:focus, QSpinBox:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
 
     // Style for the form labels
-    QString labelStyle = "font-size: 15px; font-weight: 600; color: #475569;";
+    QString labelStyle = "font-size: 15px; font-weight: 600; color: #475569; background: transparent;";
 
     txtName = new QLineEdit(this);
     txtName->setStyleSheet(inputStyle);
@@ -99,9 +126,11 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
 
     btnNext = new QPushButton("Find Available Rooms", this);
     btnNext->setCursor(Qt::PointingHandCursor);
+
+    // --- ĐỒNG BỘ NÚT VIBRANT GRADIENT ---
     btnNext->setStyleSheet(
-        "QPushButton { background-color: #3b82f6; color: white; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
-        "QPushButton:hover { background-color: #2563eb; }");
+        "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
+        "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
     layout->addWidget(btnNext);
 
     connect(btnNext, &QPushButton::clicked, this, &CustomerInputWindow::onNextClicked);
@@ -144,7 +173,7 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString 
 
     // Added an elegant title
     QLabel *titleLabel = new QLabel("Available Rooms", this);
-    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #1e293b; margin-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif;");
+    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #3730a3; margin-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif; background: transparent;");
     layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     tableRoom = new QTableWidget(0, 5, this);
@@ -155,19 +184,20 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString 
     tableRoom->verticalHeader()->setDefaultSectionSize(45); // Taller rows for readability
     tableRoom->setAlternatingRowColors(true);
 
-    // Applied the exact premium table stylesheet from the main window
+    // --- ĐỒNG BỘ TABLE VÀ BACKGROUND VỚI ADMIN THEME ---
     this->setStyleSheet(R"(
-        QWidget { background-color: #f8fafc; color: #1e293b; }
+        QWidget { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff); color: #1e293b; }
+        QLabel { background: transparent; }
         
         QTableWidget {
             background-color: #ffffff;
-            alternate-background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
+            alternate-background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
             border-radius: 8px;
-            gridline-color: #e2e8f0; 
+            gridline-color: #e0f2fe; 
             font-size: 14px;
-            color: #1e293b;
-            selection-background-color: #3b82f6;
+            color: #0f172a;
+            selection-background-color: #38bdf8;
             selection-color: #ffffff;
             outline: none;
         }
@@ -177,18 +207,18 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString 
         }
 
         QTableWidget::item:hover {
-            background-color: #f1f5f9;
+            background-color: #e0f2fe;
             color: #0f172a;
         }
         
         QHeaderView::section:horizontal {
-            background-color: #1e293b;
+            background-color: #312e81; /* Deep Indigo Header */
             color: #ffffff;
             font-weight: bold;
             font-size: 14px;
             padding: 12px;
             border: none;
-            border-right: 1px solid #334155;
+            border-right: 1px solid #1e1b4b;
         }
 
         QHeaderView::section:horizontal:first {
@@ -206,7 +236,12 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString 
             font-weight: bold;
             padding: 4px; 
             border: none;
-            border-right: 1px solid #cbd5e1;
+            border-right: 1px solid #bae6fd;
+        }
+
+        QTableCornerButton::section {
+            background-color: #312e81; 
+            border: none;
         }
     )");
 
@@ -214,9 +249,11 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString 
 
     btnBook = new QPushButton("Confirm Booking", this);
     btnBook->setCursor(Qt::PointingHandCursor);
+
+    // --- ĐỒNG BỘ NÚT VIBRANT GRADIENT ---
     btnBook->setStyleSheet(
-        "QPushButton { background-color: #10b981; color: white; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
-        "QPushButton:hover { background-color: #059669; }"); // Darker green on hover
+        "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
+        "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
     layout->addWidget(btnBook);
 
     connect(btnBook, &QPushButton::clicked, this, &CustomerWindow::onBookRoomClicked);
@@ -322,7 +359,10 @@ void CustomerWindow::onBookRoomClicked()
         QMessageBox msgBox(this);
         msgBox.setWindowTitle("Success");
         msgBox.setText("Your room has been booked successfully!");
-        msgBox.setStyleSheet("QMessageBox { background-color: #ffffff; } QLabel { color: #1e293b; font-size: 14px; } QPushButton { background-color: #3b82f6; color: white; padding: 6px 20px; border-radius: 4px; border: none; font-weight: bold; }");
+        msgBox.setStyleSheet(
+            "QMessageBox { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); } "
+            "QLabel { color: #1e293b; font-size: 14px; background: transparent; } "
+            "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; padding: 6px 20px; border-radius: 4px; border: none; font-weight: bold; }");
         msgBox.exec();
     }
 
