@@ -41,13 +41,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 37,
+				"line" : 43,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 40,
+				"line" : 46,
 				"parent" : 0
 			},
 			{
@@ -163,7 +163,7 @@
 			{
 				"command" : 7,
 				"file" : 0,
-				"line" : 45,
+				"line" : 51,
 				"parent" : 0
 			}
 		]
@@ -289,7 +289,10 @@
 				14,
 				15,
 				16,
-				17
+				17,
+				18,
+				19,
+				20
 			]
 		}
 	],
@@ -413,7 +416,10 @@
 				14,
 				15,
 				16,
-				17
+				17,
+				18,
+				19,
+				20
 			]
 		}
 	],
@@ -424,6 +430,12 @@
 			"compileGroupIndex" : 0,
 			"isGenerated" : true,
 			"path" : "build/Hotel_Management_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Checkout/Checkoutpage.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -441,7 +453,25 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Customerwin.cpp",
+			"path" : "CustomerWindow/Customerwin.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Login/Login.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Mainwindow/Control/Control.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Mainwindow/UI/UI.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -513,13 +543,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "backend.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "frontend.cpp",
+			"path" : "backend/backend.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

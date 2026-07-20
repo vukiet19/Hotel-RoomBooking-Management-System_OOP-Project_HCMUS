@@ -421,6 +421,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.h",
+			"MU",
+			"YJ3R5EBCHP/moc_Checkoutpage.cpp",
+			null
+		],
+		[
 			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.h",
 			"MU",
 			"LSYMCGT25G/moc_Customer.cpp",
@@ -433,9 +439,27 @@
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customerwin.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.h",
 			"MU",
-			"EWIEGA46WW/moc_Customerwin.cpp",
+			"ALPL7RR5MU/moc_Customerwin.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.h",
+			"MU",
+			"DBZLJR3XRS/moc_Login.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.h",
+			"MU",
+			"VMI5B5UPTX/moc_Control.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.h",
+			"MU",
+			"SLQUN6OS33/moc_UI.cpp",
 			null
 		],
 		[
@@ -505,15 +529,9 @@
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.h",
 			"MU",
-			"EWIEGA46WW/moc_backend.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/frontend.h",
-			"MU",
-			"EWIEGA46WW/moc_frontend.cpp",
+			"FVSNT77ZGO/moc_backend.cpp",
 			null
 		]
 	],
@@ -579,6 +597,11 @@
 	"SOURCES" : 
 	[
 		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.cpp",
+			"MU",
+			null
+		],
+		[
 			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.cpp",
 			"MU",
 			null
@@ -589,7 +612,22 @@
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customerwin.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.cpp",
 			"MU",
 			null
 		],
@@ -649,12 +687,7 @@
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/frontend.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.cpp",
 			"MU",
 			null
 		],

@@ -1,311 +1,111 @@
-#include "frontend.h"
-#include "backend.h"
-#include "Booking/Booking.h"
-#include <QPainter>
-#include <QPixmap>
-#include <QDialog>
-#include <QString>
-#include <QDateEdit>
-#include <QFormLayout>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QHeaderView>
+#include "Control.h"
+#include "../UI/UI.h"
+#include "../../backend/backend.h"
+#include "../../Repository/CustomerRepository.h"
+#include "../../Repository/RoomRepository.h"
+#include "../../Checkout/CheckoutPage.h"
+#include "../../Manager/DatabaseManager.h"
 #include <QMessageBox>
-#include <QFile>
+#include <QDialog>
+#include <QFormLayout>
 #include <QComboBox>
-#include "Room/Room.h"
-#include "customerwin.h"
-#include "Repository/RoomRepository.h"
-#include "Repository/CustomerRepository.h"
+#include <QDateEdit>
+#include <QSqlDatabase>
+#include <QLineEdit>
 
-#include "Room/DerivedRooms.h"
-#include "Room/TypeRoom.h"
-#include "Room/RoomFactory.h"
+#include <QSqlQuery>
+#include <QSqlError>
+#include "../../Booking/Booking.h"
+#include "../../Room/DerivedRooms.h"
 
-MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
+MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(parent)
 {
-    setAttribute(Qt::WA_StyledBackground, true);
-    setFixedSize(1000, 800);
-    setWindowTitle("Hotel Management System");
-    setObjectName("MyMainWindow");
-
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->setSpacing(0);
-
-    QWidget *sidebar = new QWidget(this);
-    sidebar->setFixedWidth(240); // Slightly wider for a premium feel
-    sidebar->setObjectName("sidebar");
-
-    QVBoxLayout *sidebarLayout = new QVBoxLayout(sidebar);
-    sidebarLayout->setContentsMargins(15, 30, 0, 30); // Removed right margin for flush active buttons
-    sidebarLayout->setSpacing(8);
-
-    button1 = new QPushButton("Booking", sidebar);
-    button2 = new QPushButton("Booking Services", sidebar);
-    button3 = new QPushButton("Customer", sidebar);
-    button4 = new QPushButton("Food Options", sidebar);
-    button5 = new QPushButton("Inventory", sidebar);
-    button6 = new QPushButton("Inventory Log", sidebar);
-    button7 = new QPushButton("Room", sidebar);
-    button8 = new QPushButton("Room Type", sidebar);
-    button9 = new QPushButton("Service", sidebar);
-    button10 = new QPushButton("Bill", sidebar);
-
-    QList<QPushButton *> buttons = {button1, button2, button3, button4, button5,
-                                    button6, button7, button8, button9, button10};
-
-    for (QPushButton *btn : buttons)
-    {
-        sidebarLayout->addWidget(btn);
-        btn->setCursor(Qt::PointingHandCursor);
-    }
-
-    sidebarLayout->addStretch();
-
-    QWidget *contentArea = new QWidget(this);
-    contentArea->setObjectName("contentArea");
-    QVBoxLayout *contentLayout = new QVBoxLayout(contentArea);
-    contentLayout->setContentsMargins(40, 40, 40, 40);
-    contentLayout->setSpacing(20);
-
-    QHBoxLayout *actionBarLayout = new QHBoxLayout();
-
-    btnAdd = new QPushButton("Add", contentArea);
-    btnUpdate = new QPushButton("Update", contentArea);
-    btnDelete = new QPushButton("Delete", contentArea);
-    btnFilter = new QPushButton("Filter", contentArea);
-
-    actionBarLayout->addWidget(btnAdd);
-    actionBarLayout->addWidget(btnUpdate);
-    actionBarLayout->addWidget(btnDelete);
-    actionBarLayout->addWidget(btnFilter);
-    actionBarLayout->addStretch();
-
-    contentLayout->addLayout(actionBarLayout);
-
-    stackedWidget = new QStackedWidget(this);
-
-    tableBooking = new QTableWidget(100, 6, this);
-    tableBookingItems = new QTableWidget(100, 6, this);
-    tableCustomer = new QTableWidget(100, 6, this);
-    tableFood = new QTableWidget(100, 4, this);
-    tableInventory = new QTableWidget(100, 5, this);
-    tableInventoryLog = new QTableWidget(100, 5, this);
-    tableRoom = new QTableWidget(100, 6, this);
-    tableRoomType = new QTableWidget(100, 2, this);
-    tableService = new QTableWidget(100, 4, this);
-    tableBill = new QTableWidget(100, 3, this);
-
-    tableBooking->setHorizontalHeaderLabels({"Booking ID", "Customer ID", "Room Number", "Check-in", "Check-out", "Total Price"});
-    tableBookingItems->setHorizontalHeaderLabels({"ID", "Booking id", "Item id", "Quantity", "Customer note", "Final price"});
-    tableCustomer->setHorizontalHeaderLabels({"Customer ID", "ID number", "Name", "Phone Number", "Type", "Point"});
-    tableFood->setHorizontalHeaderLabels({"Food ID", "Type food", "Name", "Price"});
-    tableInventory->setHorizontalHeaderLabels({"Item ID", "Name", "Type", "Quantity", "Price"});
-    tableInventoryLog->setHorizontalHeaderLabels({"Log ID", "Item ID", "Quantity", "Action type", "Date"});
-    tableRoom->setHorizontalHeaderLabels({"Room ID", "Room Number", "Type", "Status", "Price", "number people"});
-    tableRoomType->setHorizontalHeaderLabels({"Type ", "Base Price"});
-    tableService->setHorizontalHeaderLabels({"Service ID", "Name", "Category", "Price"});
-    tableBill->setHorizontalHeaderLabels({"Bill ID", "Booking ID", "Total Amount"});
-
-    QList<QTableWidget *> tables = {tableBooking, tableBookingItems, tableCustomer, tableFood, tableInventory,
-                                    tableInventoryLog, tableRoom, tableRoomType, tableService, tableBill};
-    for (QTableWidget *tb : tables)
-    {
-        tb->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        tb->verticalHeader()->setDefaultSectionSize(45);
-        tb->setAlternatingRowColors(true); // Ensures the alternate colors work
-        stackedWidget->addWidget(tb);
-    }
-
-    contentLayout->addWidget(stackedWidget);
-
-    mainLayout->addWidget(sidebar);
-    mainLayout->addWidget(contentArea);
-
-    // --- ENHANCED MAIN WINDOW STYLESHEET (MATCHING LIGHT & VIBRANT THEME) ---
-    this->setStyleSheet(R"(
-        #contentArea { 
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff); 
-        }
-        /* --- BRAND NEW PREMIUM SIDEBAR --- */
-        /* --- PREMIUM SIDEBAR (TONE TÍM/INDIGO SÁNG HƠN) --- */
-        #sidebar { 
-            background-color: #47456d; /* Màu Tím/Indigo sáng hơn màu bảng cũ */
-            border-right: 1px solid #312e81; /* Viền phân cách nhẹ nhàng */
-        }
-        
-        #sidebar QPushButton {
-            background-color: transparent;
-            color: #e0e7ff; /* Chữ màu xanh tím nhạt cực êm mắt */
-            border: none;
-            border-radius: 10px; /* Bo góc tròn hiện đại */
-            padding: 12px 20px;
-            margin: 4px 12px; /* Khoảng cách thở cho các nút */
-            font-size: 15px;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-weight: 600;
-            text-align: left;
-        }
-        
-        #sidebar QPushButton:hover { 
-            background-color: #818cf8; /* Màu tím pastel sáng bừng, tách biệt hoàn toàn với nền */
-            color: #ffffff; 
-        }
-        
-        #sidebar QPushButton[active="true"] { 
-            /* Gradient Tím - Xanh hòa hợp tuyệt đối với bảng bên phải */
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #0a7ed0);
-            color: #ffffff; 
-            border-radius: 10px; 
-            font-weight: bold;
-        }
-
-        #contentArea QPushButton {
-            background-color: #ffffff;
-            color: #3730a3; /* Deep vibrant text */
-            border: 2px solid #a5b4fc;
-            border-radius: 18px; /* Bo viền tròn trịa */
-            padding: 8px 20px;
-            font-size: 14px;
-            font-weight: bold;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        #contentArea QPushButton:hover { 
-            background-color: #e0e7ff; 
-            border-color: #6366f1;
-            color: #312e81;
-        }
-        
-        /* --- VIBRANT TABLE STYLES --- */
-        QTableWidget {
-            background-color: #ffffff;
-            alternate-background-color: #f0f9ff; /* Xanh lơ nhạt */
-            border: 1px solid #bae6fd;
-            border-radius: 8px;
-            gridline-color: #e0f2fe; 
-            font-size: 14px;
-            color: #0f172a;
-            selection-background-color: #38bdf8; /* Sky blue selection */
-            selection-color: #ffffff;
-            outline: none; 
-        }
-        
-        QTableWidget::item {
-            padding: 5px; 
-        }
-
-        QTableWidget::item:hover {
-            background-color: #e0f2fe; 
-            color: #0f172a;
-        }
-        
-        /* --- BOLD, PREMIUM HEADERS --- */
-        QHeaderView::section:horizontal {
-            background-color: #312e81; /* Deep Indigo Header */
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 14px;
-            padding: 12px;
-            border: none;
-            border-right: 1px solid #1e1b4b; 
-        }
-
-        QHeaderView::section:horizontal:first {
-            border-top-left-radius: 8px; 
-        }
-
-        QHeaderView::section:horizontal:last {
-            border-top-right-radius: 8px;
-            border-right: none;
-        }
-
-        QHeaderView::section:vertical {
-            background-color: #f8fafc;
-            color: #64748b;
-            font-weight: bold;
-            padding: 4px; 
-            border: none;
-            border-right: 1px solid #bae6fd;
-        }
-        
-        QTableCornerButton::section {
-            background-color: #312e81; 
-            border: none;
-        }
-    )");
-
-    connect(button1, &QPushButton::clicked, this, &MainWindow::handleLogin_1);
-    connect(button2, &QPushButton::clicked, this, &MainWindow::handleLogin_2);
-    connect(button3, &QPushButton::clicked, this, &MainWindow::handleLogin_3);
-    connect(button4, &QPushButton::clicked, this, &MainWindow::handleLogin_4);
-    connect(button5, &QPushButton::clicked, this, &MainWindow::handleLogin_5);
-    connect(button6, &QPushButton::clicked, this, &MainWindow::handleLogin_6);
-    connect(button7, &QPushButton::clicked, this, &MainWindow::handleLogin_7);
-    connect(button8, &QPushButton::clicked, this, &MainWindow::handleLogin_8);
-    connect(button9, &QPushButton::clicked, this, &MainWindow::handleLogin_9);
-    connect(button10, &QPushButton::clicked, this, &MainWindow::handleLogin_10);
+    MainWindowUi::setupUi();
+    initConnections();
 }
 
-void MainWindow::handleLogin_1()
+void MainWindowController::initConnections()
 {
+    // FIX: Thay &MainWindow:: thành &MainWindowController:: vì đây là class Controller
+    connect(button1, &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
+    connect(button2, &QPushButton::clicked, this, &MainWindowController::handleLogin_2);
+    connect(button3, &QPushButton::clicked, this, &MainWindowController::handleLogin_3);
+    connect(button4, &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
+    connect(button5, &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
+    connect(button6, &QPushButton::clicked, this, &MainWindowController::handleLogin_6);
+    connect(button7, &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
+    connect(button8, &QPushButton::clicked, this, &MainWindowController::handleLogin_8);
+    connect(button9, &QPushButton::clicked, this, &MainWindowController::handleLogin_9);
+    connect(button10, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
+    connect(buttonCheckout, &QPushButton::clicked, this, &MainWindowController::handleCheckout);
+}
+
+void MainWindowController::handleLogin_1()
+{
+    setActionBarVisible(true);
     stackedWidget->setCurrentIndex(0);
     setActiveButton(button1);
     Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
     btnAdd->disconnect();
-    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::showAddBookingDialog);
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::showAddBookingDialog);
 }
 
-void MainWindow::handleLogin_2()
+void MainWindowController::handleLogin_2()
 {
     stackedWidget->setCurrentIndex(1);
+    setActionBarVisible(true);
     setActiveButton(button2);
     btnAdd->disconnect();
     Backend::loadTableData(tableBookingItems, "SELECT * FROM BookingServiceItems");
 }
 
-void MainWindow::handleLogin_3()
+void MainWindowController::handleLogin_3()
 {
     stackedWidget->setCurrentIndex(2);
+    setActionBarVisible(true);
     setActiveButton(button3);
     Backend::loadTableData(tableCustomer, "SELECT * FROM Customer");
     btnAdd->disconnect();
     btnUpdate->disconnect();
     btnDelete->disconnect();
     btnFilter->disconnect();
-    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::AddNewCustomerClicked);
-    connect(btnUpdate, &QPushButton::clicked, this, &MainWindow::showUpdateCustomerDialog);
-    connect(btnDelete, &QPushButton::clicked, this, &MainWindow::showDeleteCustomerDialog);
-    connect(btnFilter, &QPushButton::clicked, this, &MainWindow::showFilterCustomerDialog);
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::AddNewCustomerClicked);
+    connect(btnUpdate, &QPushButton::clicked, this, &MainWindowController::showUpdateCustomerDialog);
+    connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteCustomerDialog);
+    connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::showFilterCustomerDialog);
 }
 
-void MainWindow::handleLogin_4()
+void MainWindowController::handleLogin_4()
 {
     stackedWidget->setCurrentIndex(3);
+    setActionBarVisible(true);
     setActiveButton(button4);
     Backend::loadTableData(tableFood, "SELECT * FROM FoodOptions");
     btnAdd->disconnect();
 }
 
-void MainWindow::handleLogin_5()
+void MainWindowController::handleLogin_5()
 {
     stackedWidget->setCurrentIndex(4);
+    setActionBarVisible(true);
     setActiveButton(button5);
     Backend::loadTableData(tableInventory, "SELECT * FROM Inventory");
     btnAdd->disconnect();
 }
 
-void MainWindow::handleLogin_6()
+void MainWindowController::handleLogin_6()
 {
     stackedWidget->setCurrentIndex(5);
+    setActionBarVisible(true);
     setActiveButton(button6);
     Backend::loadTableData(tableInventoryLog, "SELECT * FROM InventoryLog");
     btnAdd->disconnect();
 }
 
-void MainWindow::handleLogin_7()
+void MainWindowController::handleLogin_7()
 {
     stackedWidget->setCurrentIndex(6);
+    setActionBarVisible(true);
     setActiveButton(button7);
     Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
 
@@ -313,175 +113,46 @@ void MainWindow::handleLogin_7()
     btnUpdate->disconnect();
     btnDelete->disconnect();
 
-    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::showAddRoomDialog);
-    connect(btnUpdate, &QPushButton::clicked, this, &MainWindow::showUpdateRoomDialog);
-    connect(btnDelete, &QPushButton::clicked, this, &MainWindow::showDeleteRoomDialog);
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::showAddRoomDialog);
+    connect(btnUpdate, &QPushButton::clicked, this, &MainWindowController::showUpdateRoomDialog);
+    connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteRoomDialog);
 }
 
-void MainWindow::handleLogin_8()
+void MainWindowController::handleLogin_8()
 {
     stackedWidget->setCurrentIndex(7);
+    setActionBarVisible(true);
     setActiveButton(button8);
     Backend::loadTableData(tableRoomType, "SELECT * FROM RoomTypeCatalog");
     btnAdd->disconnect();
 }
 
-void MainWindow::handleLogin_9()
+void MainWindowController::handleLogin_9()
 {
     stackedWidget->setCurrentIndex(8);
+    setActionBarVisible(true);
     setActiveButton(button9);
     Backend::loadTableData(tableService, "SELECT * FROM ListServiceItems");
     btnAdd->disconnect();
 }
 
-void MainWindow::handleLogin_10()
+void MainWindowController::handleLogin_10()
 {
     stackedWidget->setCurrentIndex(9);
+    setActionBarVisible(true);
     setActiveButton(button10);
     Backend::loadTableData(tableBill, "SELECT * FROM Bills");
     btnAdd->disconnect();
 }
 
-LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent)
-{
-    setAttribute(Qt::WA_StyledBackground, true);
-    setFixedSize(1000, 800);
-    setWindowTitle("Hotel_Management");
-    setObjectName("MyMainWindow");
-
-    // --- LIGHT, FRESH, & AIRY GRADIENT BACKGROUND ---
-    setStyleSheet(
-        "#MyMainWindow {"
-        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff);"
-        "}");
-
-    window2 = new MainWindow();
-
-    label1 = new QLabel("Welcome Back", this);
-    QLabel *subLabel = new QLabel("Please log in to manage your hotel", this);
-
-    inputBox_user = new QLineEdit(this);
-    inputBox_pass = new QLineEdit(this);
-    inputBox_pass->setEchoMode(QLineEdit::Password);
-
-    button = new QPushButton("Sign In", this);
-
-    imageLabel = new QLabel(this);
-    l1 = new QLabel("© 2026 Premium Hotel Management System", this);
-
-    QPixmap myImage("NTH.png");
-    imageLabel->setPixmap(myImage);
-    imageLabel->setScaledContents(true);
-    imageLabel->setGeometry(440, 80, 120, 120); // Centered logo above title
-
-    label1->setGeometry(0, 230, 1000, 60);
-    label1->setAlignment(Qt::AlignCenter);
-
-    subLabel->setGeometry(0, 290, 1000, 30);
-    subLabel->setAlignment(Qt::AlignCenter);
-
-    inputBox_user->setGeometry(300, 370, 400, 55);
-    inputBox_pass->setGeometry(300, 445, 400, 55);
-
-    button->setGeometry(300, 530, 400, 55);
-
-    l1->setGeometry(0, 720, 1000, 40);
-    l1->setAlignment(Qt::AlignCenter);
-
-    // --- TYPOGRAPHY (Dark slate colors for the light background) ---
-    label1->setStyleSheet("font-size: 42px; font-weight: bold; color: #0f172a; font-family: 'Segoe UI', Arial;");
-    subLabel->setStyleSheet("font-size: 18px; color: #475569; font-family: 'Segoe UI', Arial;");
-    l1->setStyleSheet("font-size: 13px; color: #94a3b8;");
-
-    // --- COLORFUL & VIBRANT INPUT STYLES ---
-    // --- STYLE CHO Ô NHẬP LIỆU (Hợp với nền xanh sáng) ---
-    QString inputStyle =
-        "QLineEdit {"
-        "   background-color: #ffffff; " // Nền trắng tinh
-        "   border: 3px solid #38bdf8; " // KHUNG VIỀN 3px màu xanh dương sáng (rất nổi bật)
-        "   border-radius: 22px; "       // Bo góc khung viền
-        "   padding: 10px 20px; "
-        "   font-size: 16px; "
-        "   color: #0f172a; " // Chữ màu đậm
-        "}"
-        "QLineEdit:hover {"
-        "   border: 3px solid #0284c7; " // Khung viền đậm hơn khi rà chuột vào
-        "}"
-        "QLineEdit:focus {"
-        "   border: 3px solid #0369a1; " // Khung viền xanh ngọc biển sẫm khi click vào gõ
-        "   background-color: #f0f9ff; " // Nền đổi màu xanh lơ nhạt xíu khi đang gõ
-        "}";
-
-    // Áp dụng style cho 2 ô nhập liệu
-    inputBox_user->setStyleSheet(inputStyle);
-    inputBox_pass->setStyleSheet(inputStyle);
-
-    // Inputs get a stronger, brighter border and background when clicked
-    inputBox_user->setStyleSheet(inputStyle + "QLineEdit:focus { border: 2px solid #6366f1; background-color: #e0e7ff; }");
-    inputBox_pass->setStyleSheet(inputStyle + "QLineEdit:focus { border: 2px solid #6366f1; background-color: #e0e7ff; }");
-
-    inputBox_user->setPlaceholderText("Username");
-    inputBox_pass->setPlaceholderText("Password");
-
-    // --- COLORFUL VIBRANT BUTTON (Indigo to Purple Gradient) ---
-    button->setStyleSheet(
-        "QPushButton {"
-        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); "
-        "   color: white; "
-        "   border: none; "
-        "   border-radius: 27px; "
-        "   font-size: 18px; "
-        "   font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); "
-        "}"
-        "QPushButton:pressed {"
-        "   background: #4338ca; "
-        "}");
-
-    button->setCursor(Qt::PointingHandCursor);
-
-    connect(button, &QPushButton::clicked, this, &LoginWindow::handleLogin);
-}
-
-LoginWindow::~LoginWindow()
-{
-    delete window2;
-}
-
-void LoginWindow::handleLogin()
-{
-    QString user = inputBox_user->text();
-    QString pass = inputBox_pass->text();
-
-    if (user == "admin" && pass == "admin123")
-    {
-        MainWindow *mainWindow = new MainWindow();
-        mainWindow->show();
-        this->close();
-    }
-    else if (user == "customer" && pass == "123456")
-    {
-        CustomerInputWindow *customerWindow = new CustomerInputWindow();
-        customerWindow->show();
-        this->close();
-    }
-    else
-    {
-        QMessageBox::warning(this, "Error", "Incorrect usename or password!");
-    }
-}
-
-void MainWindow::AddNewCustomerClicked()
+void MainWindowController::AddNewCustomerClicked()
 {
     QDialog *addDialog = new QDialog(this);
-
     addDialog->setStyleSheet(
         "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
         "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
     addDialog->setWindowTitle("Add Customer");
-    addDialog->setFixedSize(400, 420); // Slightly larger for breathing room
+    addDialog->setFixedSize(400, 420);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(addDialog);
     mainLayout->setContentsMargins(30, 30, 30, 30);
@@ -493,7 +164,6 @@ void MainWindow::AddNewCustomerClicked()
     QFormLayout *formLayout = new QFormLayout();
     formLayout->setSpacing(15);
 
-    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO DIALOG ---
     QString inputStyle =
         "QLineEdit {"
         "   background-color: #ffffff; "
@@ -539,13 +209,11 @@ void MainWindow::AddNewCustomerClicked()
     QPushButton *btnSave = new QPushButton("Save", addDialog);
     QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
 
-    // --- ĐỒNG BỘ NÚT VIBRANT CHO DIALOG ---
     btnSave->setStyleSheet(
         "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
         "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
     btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
 
-    // Quick hover effects for dialog buttons
     btnSave->setCursor(Qt::PointingHandCursor);
     btnCancel->setCursor(Qt::PointingHandCursor);
 
@@ -557,41 +225,41 @@ void MainWindow::AddNewCustomerClicked()
 
     connect(btnSave, &QPushButton::clicked, [=]()
             {
-            QString name = txtName->text();
-            QString phone = txtPhone->text();
-            QString IDcard = ID->text();
-            QString type = txtType->text();
-            QString point = txtPoint->text();
+        QString name = txtName->text();
+        QString phone = txtPhone->text();
+        QString IDcard = ID->text();
+        QString type = txtType->text();
+        QString point = txtPoint->text();
     
-            if (name.isEmpty() || phone.isEmpty())
-            {
-                QMessageBox::warning(addDialog, "Error", "Please input your name or phone number");
-                return;
-            }
+        if (name.isEmpty() || phone.isEmpty())
+        {
+            QMessageBox::warning(addDialog, "Error", "Please input your name or phone number");
+            return;
+        }
     
-                    CustomerRepository re;
-                    Customer a(name.toStdString(), phone.toStdString(),IDcard.toStdString());
-                    a.setPoint(point.toInt());
+        CustomerRepository re;
+        Customer a(name.toStdString(), phone.toStdString(), IDcard.toStdString());
+        a.setPoint(point.toInt());
 
-                    bool success = re.add(a);
+        bool success = re.add(a);
     
-                    if (success) {
-                        QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
-                        addDialog->accept();
-                        handleLogin_3();
-                    } else {
-                        QMessageBox::critical(addDialog, "Error", "Can not save into database");
-                    } });
+        if (success) {
+            QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
+            addDialog->accept();
+            handleLogin_3();
+        } else {
+            QMessageBox::critical(addDialog, "Error", "Can not save into database");
+        } });
 
     addDialog->exec();
     addDialog->deleteLater();
 }
 
-void MainWindow::setActiveButton(QPushButton *clickedButton)
+void MainWindowController::setActiveButton(QPushButton *clickedButton)
 {
     QList<QPushButton *> buttons = {
         button1, button2, button3, button4, button5,
-        button6, button7, button8, button9, button10};
+        button6, button7, button8, button9, button10, buttonCheckout};
 
     for (QPushButton *btn : buttons)
     {
@@ -609,11 +277,10 @@ void MainWindow::setActiveButton(QPushButton *clickedButton)
     }
 }
 
-void MainWindow::showAddBookingDialog()
+void MainWindowController::showAddBookingDialog()
 {
     QDialog *addDialog = new QDialog(this);
     addDialog->setWindowTitle("Add Booking");
-    // Increased height from 420 to 520 to fit the new Phone and ID fields
     addDialog->setFixedSize(450, 560);
 
     addDialog->setStyleSheet(
@@ -630,7 +297,6 @@ void MainWindow::showAddBookingDialog()
     QFormLayout *formLayout = new QFormLayout();
     formLayout->setSpacing(15);
 
-    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO DIALOG ---
     QString inputStyle =
         "QLineEdit, QDateEdit {"
         "   background-color: #ffffff; "
@@ -643,7 +309,6 @@ void MainWindow::showAddBookingDialog()
         "QLineEdit:hover, QDateEdit:hover { border: 2px solid #0284c7; }"
         "QLineEdit:focus, QDateEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
 
-    // --- NEW FIELDS: ID and Phone ---
     QLineEdit *txtId = new QLineEdit(addDialog);
     txtId->setPlaceholderText("Customer ID ...");
     txtId->setStyleSheet(inputStyle);
@@ -656,7 +321,6 @@ void MainWindow::showAddBookingDialog()
     txtPhone->setPlaceholderText("Phone Number...");
     txtPhone->setStyleSheet(inputStyle);
 
-    // --- EXISTING FIELDS ---
     QLineEdit *txtRoom = new QLineEdit(addDialog);
     txtRoom->setPlaceholderText("Room ID...");
     txtRoom->setStyleSheet(inputStyle);
@@ -688,7 +352,6 @@ void MainWindow::showAddBookingDialog()
     QPushButton *btnSave = new QPushButton("Save", addDialog);
     QPushButton *btnCancel = new QPushButton("Cancel", addDialog);
 
-    // --- ĐỒNG BỘ NÚT VIBRANT CHO DIALOG ---
     btnSave->setStyleSheet(
         "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
         "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
@@ -720,7 +383,7 @@ void MainWindow::showAddBookingDialog()
         }
 
         CustomerRepository re;
-       Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
+        Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
         re.add(a);
 
         QSqlDatabase db = DatabaseManager::instance().database();
@@ -734,16 +397,7 @@ void MainWindow::showAddBookingDialog()
             return;
         }
 
-        // (Optional but Recommended) Insert into Bookings table if you have one
-        /*
-        query.prepare("INSERT INTO Bookings (CustomerID, RoomID, CheckInDate, Status) VALUES (?, ?, ?, 'Pending')");
-        query.addBindValue(id);
-        query.addBindValue(room);
-        query.addBindValue(checkInDate);
-        query.exec();
-        */
-       BookingRepository r;
-
+        BookingRepository r;
         BookingData t;
         t.customerId = 100;
         t.roomNumber = room; 
@@ -751,18 +405,18 @@ void MainWindow::showAddBookingDialog()
         t.checkOutTime = checkOutDate;
         r.add(t);
 
-
         QMessageBox::information(addDialog, "Success", "Booking created and room status updated successfully!");
         addDialog->accept(); });
 
     addDialog->exec();
     addDialog->deleteLater();
 }
-void MainWindow::showAddRoomDialog()
+
+void MainWindowController::showAddRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Add room");
-    dialog->setFixedSize(420, 500); // More height for neatness
+    dialog->setFixedSize(420, 500);
 
     dialog->setStyleSheet(
         "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
@@ -781,7 +435,6 @@ void MainWindow::showAddRoomDialog()
     QFormLayout *form = new QFormLayout();
     form->setSpacing(15);
 
-    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO DIALOG ---
     QString inputStyle =
         "QLineEdit, QComboBox {"
         "   background-color: #ffffff; "
@@ -832,7 +485,6 @@ void MainWindow::showAddRoomDialog()
     QPushButton *btnSave = new QPushButton("Save", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-    // --- ĐỒNG BỘ NÚT VIBRANT CHO DIALOG ---
     btnSave->setStyleSheet(
         "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
         "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
@@ -874,10 +526,7 @@ void MainWindow::showAddRoomDialog()
         }
         newRoom->setStatus(statusEnum); 
         newRoom->setBasePrice(txtPrice->text().toInt());
-        
         newRoom->setNumberPeople(txtPeople->text().toInt());
-
-
         
         RoomRepository repo;
         bool success = repo.add(newRoom);
@@ -887,7 +536,6 @@ void MainWindow::showAddRoomDialog()
         if (success) {
             QMessageBox::information(dialog, "Successfully", "Successfully add new room");
             dialog->accept();
-            
             handleLogin_7(); 
         } else {
             QMessageBox::critical(dialog, "Error", "Can save into room id");
@@ -897,12 +545,12 @@ void MainWindow::showAddRoomDialog()
     dialog->deleteLater();
 }
 
-void MainWindow::showUpdateCustomerDialog()
+void MainWindowController::showUpdateCustomerDialog()
 {
     handleLogin_3();
 }
 
-void MainWindow::showDeleteCustomerDialog()
+void MainWindowController::showDeleteCustomerDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Delete Customer");
@@ -982,7 +630,7 @@ void MainWindow::showDeleteCustomerDialog()
     dialog->deleteLater();
 }
 
-void MainWindow::showFilterCustomerDialog()
+void MainWindowController::showFilterCustomerDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Filter Customers");
@@ -1001,7 +649,6 @@ void MainWindow::showFilterCustomerDialog()
 
     QFormLayout *form = new QFormLayout();
 
-    // --- STYLE CHO COMBOBOX VÀ INPUT (Ép nền trắng, loại bỏ Dark Mode của Mac) ---
     QString inputStyle =
         "QLineEdit, QComboBox {"
         "   background-color: #ffffff; "
@@ -1013,24 +660,15 @@ void MainWindow::showFilterCustomerDialog()
         "}"
         "QLineEdit:hover, QComboBox:hover { border: 2px solid #6366f1; }"
         "QLineEdit:focus, QComboBox:focus { border: 2px solid #8b5cf6; background-color: #f0f9ff; }"
-
-        /* Mẹo để vô hiệu hóa Native Mac Dark Mode Menu */
-        "QComboBox::drop-down {"
-        "   border: none; "
-        "   width: 25px; "
-        "}"
-        "QComboBox::down-arrow {"
-        "   image: none; " /* Qt sẽ tự vẽ mũi tên mặc định nếu không set ảnh */
-        "}"
-
-        /* Ép nền trắng tinh cho danh sách xổ xuống */
+        "QComboBox::drop-down { border: none; width: 25px; }"
+        "QComboBox::down-arrow { image: none; }"
         "QComboBox QAbstractItemView, QComboBox QListView {"
         "   background-color: #ffffff; "
         "   color: #312e81; "
         "   border: 2px solid #a5b4fc; "
         "   border-radius: 4px; "
-        "   selection-background-color: #e0e7ff; " /* Xanh lơ nhạt khi hover vào dòng */
-        "   selection-color: #312e81; "            /* Chữ vẫn giữ màu đậm cho dễ đọc */
+        "   selection-background-color: #e0e7ff; "
+        "   selection-color: #312e81; "
         "   outline: none;"
         "}";
 
@@ -1089,22 +727,16 @@ void MainWindow::showFilterCustomerDialog()
         else
         {
             tableCustomer->setRowCount(0);
-
             int row = 0;
             for (auto &cus : filteredCustomers)
             {
                 tableCustomer->insertRow(row);
-
                 tableCustomer->setItem(row, 0, new QTableWidgetItem(cus.getId()));
-                 tableCustomer->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(cus.getIdcard())));
-                
+                tableCustomer->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(cus.getIdcard())));
                 tableCustomer->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(cus.getFullname())));
                 tableCustomer->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(cus.getPhone())));
-                
-                
-                tableCustomer->setItem(row, 4, new QTableWidgetItem(cus.getTier() ));
+                tableCustomer->setItem(row, 4, new QTableWidgetItem(cus.getTier()));
                 tableCustomer->setItem(row, 5, new QTableWidgetItem(QString::fromStdString(cus.getIdRoom())));
-
                 row++;
             }
 
@@ -1116,7 +748,7 @@ void MainWindow::showFilterCustomerDialog()
     dialog->deleteLater();
 }
 
-void MainWindow::showDeleteRoomDialog()
+void MainWindowController::showDeleteRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Delete Room");
@@ -1182,7 +814,6 @@ void MainWindow::showDeleteRoomDialog()
         if (reply == QMessageBox::No) return;
 
         RoomRepository repo;
-        
         bool success = repo.remove(txtId->text().toStdString());
 
         if (success) {
@@ -1197,7 +828,7 @@ void MainWindow::showDeleteRoomDialog()
     dialog->deleteLater();
 }
 
-void MainWindow::showUpdateRoomDialog()
+void MainWindowController::showUpdateRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Update Room");
@@ -1318,4 +949,19 @@ void MainWindow::showUpdateRoomDialog()
 
     dialog->exec();
     dialog->deleteLater();
+}
+
+void MainWindowController::handleCheckout()
+{
+    setActionBarVisible(false);
+    stackedWidget->setCurrentWidget(checkoutPage);
+    setActiveButton(buttonCheckout);
+}
+
+void MainWindowController::setActionBarVisible(bool visible)
+{
+    if (actionBar)
+    {
+        actionBar->setVisible(visible);
+    }
 }

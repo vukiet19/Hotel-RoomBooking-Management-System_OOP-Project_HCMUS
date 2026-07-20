@@ -970,7 +970,7 @@ CMakeFiles/Hotel_Management.dir/main.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qvarlengtharray.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qalloc.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qguiapplication_platform.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/frontend.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QWidget \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qwidget.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qaction.h \
@@ -984,40 +984,19 @@ CMakeFiles/Hotel_Management.dir/main.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qfontinfo.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qfontvariableaxis.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qsizepolicy.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QStackedWidget \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qstackedwidget.h \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QLabel \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qlabel.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qframe.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QTableWidget \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qtablewidget.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qtableview.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractitemview.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractscrollarea.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qabstractitemmodel.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qitemselectionmodel.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractitemdelegate.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qstyleoption.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractspinbox.h \
-  /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qvalidator.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qregularexpression.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qslider.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractslider.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qstyle.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qtabbar.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qtabwidget.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qrubberband.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QPushButton \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qpushbutton.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractbutton.h \
+  /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qpicture.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qiodevice.h \
+  /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qtextdocument.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qurl.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QLineEdit \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qlineedit.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qtextcursor.h \
-  /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qtextdocument.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qurl.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qtextformat.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qpen.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qtextoption.h \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QLabel \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qlabel.h \
-  /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qpicture.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qiodevice.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QString
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QPushButton \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qpushbutton.h \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractbutton.h

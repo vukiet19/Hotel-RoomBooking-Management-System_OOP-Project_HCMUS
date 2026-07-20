@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "frontend.h"
+#include "Login/Login.h"
 
 int main(int argc, char *argv[])
 {

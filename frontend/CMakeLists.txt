@@ -23,11 +23,17 @@ file(GLOB_RECURSE SOURCES  MACOSX_BUNDLE
     "Manager/DatabaseManager.cpp"
     "Repository/*.cpp"
     "Observer.cpp"
+    "Mainwindow/UI/*.cpp"
+     "Mainwindow/Control/*.cpp"
+
+    "Login/*.cpp"
+    "CustomerWindow/*.cpp"
+    "Checkout/*.cpp"
+    "backend/*.cpp"
 
     main.cpp
-    frontend.cpp
-    backend.cpp
-    Customerwin.cpp
+
+    
 
 
 )

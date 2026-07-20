@@ -1065,6 +1065,9 @@ CMakeFiles/Hotel_Management.dir/frontend.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcalendar.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/QPainter \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qpainter.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/CheckoutPage.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QVector \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qvector.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/QPixmap \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QDialog \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -1118,6 +1121,4 @@ CMakeFiles/Hotel_Management.dir/frontend.cpp.o: \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/../Customer/Customer.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/TypeRoom.h \
-  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QVector \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qvector.h
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.h
