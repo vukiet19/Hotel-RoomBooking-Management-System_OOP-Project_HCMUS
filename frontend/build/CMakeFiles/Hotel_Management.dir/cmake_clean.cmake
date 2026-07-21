@@ -18,6 +18,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o"
   "CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o.d"
+  "CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o"
+  "CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o"
   "CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Observer.cpp.o"

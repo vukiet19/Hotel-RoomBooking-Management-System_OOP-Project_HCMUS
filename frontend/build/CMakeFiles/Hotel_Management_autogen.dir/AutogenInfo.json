@@ -463,6 +463,12 @@
 			null
 		],
 		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.h",
+			"MU",
+			"BSZN444ZLF/moc_DashboardService.cpp",
+			null
+		],
+		[
 			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.h",
 			"MU",
 			"BSZN444ZLF/moc_DatabaseManager.cpp",
@@ -628,6 +634,11 @@
 		],
 		[
 			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.cpp",
 			"MU",
 			null
 		],

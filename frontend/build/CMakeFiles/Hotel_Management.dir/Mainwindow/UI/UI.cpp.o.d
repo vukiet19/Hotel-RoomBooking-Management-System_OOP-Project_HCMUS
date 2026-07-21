@@ -1018,4 +1018,9 @@ CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qgridlayout.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QVBoxLayout \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QHeaderView \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qheaderview.h
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qheaderview.h \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QDialog \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qdialog.h \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QFormLayout \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qformlayout.h \
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QLayout

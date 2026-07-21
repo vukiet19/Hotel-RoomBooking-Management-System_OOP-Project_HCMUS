@@ -334,6 +334,30 @@ Mainwindow/UI/UI.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.s
 .PHONY : Mainwindow/UI/UI.cpp.s
 
+Manager/DashboardService.o: Manager/DashboardService.cpp.o
+.PHONY : Manager/DashboardService.o
+
+# target to build an object file
+Manager/DashboardService.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o
+.PHONY : Manager/DashboardService.cpp.o
+
+Manager/DashboardService.i: Manager/DashboardService.cpp.i
+.PHONY : Manager/DashboardService.i
+
+# target to preprocess a source file
+Manager/DashboardService.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.i
+.PHONY : Manager/DashboardService.cpp.i
+
+Manager/DashboardService.s: Manager/DashboardService.cpp.s
+.PHONY : Manager/DashboardService.s
+
+# target to generate assembly for a file
+Manager/DashboardService.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.s
+.PHONY : Manager/DashboardService.cpp.s
+
 Manager/DatabaseManager.o: Manager/DatabaseManager.cpp.o
 .PHONY : Manager/DatabaseManager.o
 
@@ -680,6 +704,9 @@ help:
 	@echo "... Mainwindow/UI/UI.o"
 	@echo "... Mainwindow/UI/UI.i"
 	@echo "... Mainwindow/UI/UI.s"
+	@echo "... Manager/DashboardService.o"
+	@echo "... Manager/DashboardService.i"
+	@echo "... Manager/DashboardService.s"
 	@echo "... Manager/DatabaseManager.o"
 	@echo "... Manager/DatabaseManager.i"
 	@echo "... Manager/DatabaseManager.s"

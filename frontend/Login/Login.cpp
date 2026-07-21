@@ -122,12 +122,14 @@ void LoginWindow::handleLogin()
     {
         MainWindowController *mainWindow = new MainWindowController();
         mainWindow->show();
+        mainWindow->handleDashboardTab();
         this->close();
     }
     else if (user == "customer" && pass == "123456")
     {
         CustomerInputWindow *customerWindow = new CustomerInputWindow();
         customerWindow->show();
+
         this->close();
     }
     else

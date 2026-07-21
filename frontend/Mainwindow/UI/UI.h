@@ -21,6 +21,7 @@ protected:
     QPushButton *button1, *button2, *button3, *button4, *button5;
     QPushButton *button6, *button7, *button8, *button9, *button10;
     QPushButton *buttonCheckout;
+    QPushButton *buttonDashboard;
 
     QPushButton *btnAdd;
     QPushButton *btnUpdate;
@@ -40,4 +41,10 @@ protected:
     QTableWidget *tableRoomType;
     QTableWidget *tableService;
     QTableWidget *tableBill;
+    QTableWidget *tableDashboard;
+
+    QLabel *lblTodayBookings;
+    QLabel *lblDailyRevenue;
+    QLabel *lblMonthlyRevenue;
+    QLabel *lblYearlyRevenue;
 };

@@ -3,6 +3,12 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QFormLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 MainWindowUi::MainWindowUi(QWidget *parent) : QWidget(parent)
 {
@@ -37,8 +43,9 @@ void MainWindowUi::setupUi()
     button9 = new QPushButton("Service", sidebar);
     button10 = new QPushButton("Bill", sidebar);
     buttonCheckout = new QPushButton("Checkout", sidebar);
+    buttonDashboard = new QPushButton("Dashboard", sidebar);
 
-    QList<QPushButton *> buttons = {button1, button2, button3, button4, button5,
+    QList<QPushButton *> buttons = {buttonDashboard, button1, button2, button3, button4, button5,
                                     button6, button7, button8, button9, button10, buttonCheckout};
 
     for (QPushButton *btn : buttons)
@@ -73,7 +80,6 @@ void MainWindowUi::setupUi()
     actionBarLayout->addStretch();
 
     contentLayout->addWidget(actionBar);
-    // -------------------------------------------------------------
 
     stackedWidget = new QStackedWidget(this);
 
@@ -87,6 +93,7 @@ void MainWindowUi::setupUi()
     tableRoomType = new QTableWidget(100, 2, this);
     tableService = new QTableWidget(100, 4, this);
     tableBill = new QTableWidget(100, 3, this);
+    tableDashboard = new QTableWidget(100, 4, this);
 
     tableBooking->setHorizontalHeaderLabels({"Booking ID", "Customer ID", "Room Number", "Check-in", "Check-out", "Total Price"});
     tableBookingItems->setHorizontalHeaderLabels({"ID", "Booking id", "Item id", "Quantity", "Customer note", "Final price"});
@@ -98,6 +105,7 @@ void MainWindowUi::setupUi()
     tableRoomType->setHorizontalHeaderLabels({"Type ", "Base Price"});
     tableService->setHorizontalHeaderLabels({"Service ID", "Name", "Category", "Price"});
     tableBill->setHorizontalHeaderLabels({"Bill ID", "Booking ID", "Total Amount"});
+    tableDashboard->setHorizontalHeaderLabels({"Booking ID", "Customer Name", "Revenue", "Check-in Date"});
 
     QList<QTableWidget *> tables = {tableBooking, tableBookingItems, tableCustomer, tableFood, tableInventory,
                                     tableInventoryLog, tableRoom, tableRoomType, tableService, tableBill};
@@ -108,6 +116,52 @@ void MainWindowUi::setupUi()
         tb->setAlternatingRowColors(true); // Ensures the alternate colors work
         stackedWidget->addWidget(tb);
     }
+
+    QWidget *dashboardPage = new QWidget(this);
+    QVBoxLayout *dashboardLayout = new QVBoxLayout(dashboardPage);
+    dashboardLayout->setContentsMargins(0, 0, 0, 0);
+    dashboardLayout->setSpacing(20);
+
+    QHBoxLayout *summaryLayout = new QHBoxLayout();
+    summaryLayout->setSpacing(15);
+
+    // Initialize labels qua QLable có sẵn
+    lblTodayBookings = new QLabel("0");
+    lblDailyRevenue = new QLabel("0");
+    lblMonthlyRevenue = new QLabel("0");
+    lblYearlyRevenue = new QLabel("0");
+
+    auto createCard = [](const QString &title, QLabel *valLabel, const QString &color)
+    {
+        QWidget *card = new QWidget();
+        card->setStyleSheet(QString("background-color: white; border-radius: 8px; border-left: 5px solid %1;").arg(color));
+        QVBoxLayout *cLayout = new QVBoxLayout(card);
+        cLayout->setContentsMargins(15, 15, 15, 15);
+
+        QLabel *tLabel = new QLabel(title);
+        tLabel->setStyleSheet("color: #64748b; font-size: 13px; font-weight: bold;");
+        valLabel->setStyleSheet("color: #1e293b; font-size: 20px; font-weight: bold; margin-top: 5px;");
+
+        cLayout->addWidget(tLabel);
+        cLayout->addWidget(valLabel);
+        return card;
+    };
+
+    summaryLayout->addWidget(createCard("Today's Bookings", lblTodayBookings, "#3b82f6"));
+    summaryLayout->addWidget(createCard("Daily Revenue", lblDailyRevenue, "#10b981"));
+    summaryLayout->addWidget(createCard("Monthly Revenue", lblMonthlyRevenue, "#f59e0b"));
+    summaryLayout->addWidget(createCard("Yearly Revenue", lblYearlyRevenue, "#ef4444"));
+
+    dashboardLayout->addLayout(summaryLayout);
+
+    tableDashboard->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tableDashboard->verticalHeader()->setDefaultSectionSize(40);
+    dashboardLayout->addWidget(tableDashboard);
+
+    stackedWidget->addWidget(dashboardPage);
+    //
+
+    contentLayout->addWidget(stackedWidget);
 
     checkoutPage = new CheckoutPage(this);
     stackedWidget->addWidget(checkoutPage);
@@ -227,3 +281,72 @@ void MainWindowUi::setupUi()
         }
     )");
 }
+
+QString getDialogInputStyle()
+{
+    return "QLineEdit, QComboBox, QDateEdit {"
+           "   background-color: #ffffff; "
+           "   border: 2px solid #38bdf8; "
+           "   border-radius: 8px; "
+           "   padding: 10px; "
+           "   font-size: 14px; "
+           "   color: #0f172a; "
+           "}"
+           "QLineEdit:hover, QComboBox:hover { border: 2px solid #0284c7; }"
+           "QLineEdit:focus, QComboBox:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
+}
+
+// MainWindowUi::CustomerDialogResult MainWindowUi::createAddCustomerDialog()
+//{
+//     QDialog *dialog = new QDialog(this);
+//     dialog->setStyleSheet("QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); } QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
+//     dialog->setWindowTitle("Add Customer");
+//     dialog->setFixedSize(400, 420);
+//
+//     QVBoxLayout *mainLayout = new QVBoxLayout(dialog);
+//     mainLayout->setContentsMargins(30, 30, 30, 30);
+//
+//     QLabel *titleLabel = new QLabel("Customer's Information", dialog);
+//     titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #3730a3; margin-bottom: 20px;");
+//     mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+//
+//     QFormLayout *formLayout = new QFormLayout();
+//     formLayout->setSpacing(15);
+//
+//     QLineEdit *txtName = new QLineEdit(dialog);
+//     txtName->setPlaceholderText("Type your name...");
+//     txtName->setStyleSheet(getDialogInputStyle());
+//     QLineEdit *txtId = new QLineEdit(dialog);
+//     txtId->setPlaceholderText("Type your ID:...");
+//     txtId->setStyleSheet(getDialogInputStyle());
+//     QLineEdit *txtPhone = new QLineEdit(dialog);
+//     txtPhone->setPlaceholderText("Type your Phone number...");
+//     txtPhone->setStyleSheet(getDialogInputStyle());
+//     QLineEdit *txtType = new QLineEdit(dialog);
+//     txtType->setPlaceholderText("Type Customer...");
+//     txtType->setStyleSheet(getDialogInputStyle());
+//     QLineEdit *txtPoint = new QLineEdit(dialog);
+//     txtPoint->setPlaceholderText("Type your point...");
+//     txtPoint->setStyleSheet(getDialogInputStyle());
+//
+//     formLayout->addRow(new QLabel("Customer's name:", dialog), txtName);
+//     formLayout->addRow(new QLabel("ID:", dialog), txtId);
+//     formLayout->addRow(new QLabel("Phone number:", dialog), txtPhone);
+//     formLayout->addRow(new QLabel("Type:", dialog), txtType);
+//     formLayout->addRow(new QLabel("Point:", dialog), txtPoint);
+//     mainLayout->addLayout(formLayout);
+//
+//     QHBoxLayout *buttonLayout = new QHBoxLayout();
+//     QPushButton *btnSave = new QPushButton("Save", dialog);
+//     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+//     btnSave->setStyleSheet("QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; } QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
+//     btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+//
+//     buttonLayout->addWidget(btnCancel);
+//     buttonLayout->addWidget(btnSave);
+//     mainLayout->addLayout(buttonLayout);
+//
+//     connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+//
+//     return {dialog, txtName, txtId, txtPhone, txtType, txtPoint, btnSave};
+// }

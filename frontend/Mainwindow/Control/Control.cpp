@@ -5,6 +5,7 @@
 #include "../../Repository/RoomRepository.h"
 #include "../../Checkout/CheckoutPage.h"
 #include "../../Manager/DatabaseManager.h"
+#include "../../Manager/DashboardService.h"
 #include <QMessageBox>
 #include <QDialog>
 #include <QFormLayout>
@@ -17,6 +18,14 @@
 #include <QSqlError>
 #include "../../Booking/Booking.h"
 #include "../../Room/DerivedRooms.h"
+
+#include <QDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QFormLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
 
 MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(parent)
 {
@@ -38,6 +47,7 @@ void MainWindowController::initConnections()
     connect(button9, &QPushButton::clicked, this, &MainWindowController::handleLogin_9);
     connect(button10, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
     connect(buttonCheckout, &QPushButton::clicked, this, &MainWindowController::handleCheckout);
+    connect(buttonDashboard, &QPushButton::clicked, this, &MainWindowController::handleDashboardTab);
 }
 
 void MainWindowController::handleLogin_1()
@@ -259,7 +269,7 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton)
 {
     QList<QPushButton *> buttons = {
         button1, button2, button3, button4, button5,
-        button6, button7, button8, button9, button10, buttonCheckout};
+        button6, button7, button8, button9, button10, buttonCheckout, buttonDashboard};
 
     for (QPushButton *btn : buttons)
     {
@@ -964,4 +974,138 @@ void MainWindowController::setActionBarVisible(bool visible)
     {
         actionBar->setVisible(visible);
     }
+}
+
+void MainWindowController::handleDashboardTab()
+{
+    qDebug() << "[DEBUG] handleDashboardTab - Switched to Dashboard tab";
+    stackedWidget->setCurrentIndex(10);
+    setActiveButton(buttonDashboard);
+    btnAdd->disconnect();
+    btnUpdate->disconnect();
+    btnDelete->disconnect();
+    btnFilter->disconnect();
+
+    // link btnFilter vs hàm
+    connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::showFilterDashboardDialog);
+
+    DashboardService ds;
+
+    // lấy thông số
+    int todayBookings = ds.getTodayBookings();
+    double dailyRevenue = ds.getRevenue("day");
+    double monthlyRevenue = ds.getRevenue("month");
+    double yearlyRevenue = ds.getRevenue("year");
+
+    qDebug() << "[DEBUG] Today's Bookings:" << todayBookings
+             << "| Daily:" << dailyRevenue
+             << "| Monthly:" << monthlyRevenue
+             << "| Yearly:" << yearlyRevenue;
+
+    // ép vào UI
+    lblTodayBookings->setText(QString::number(todayBookings));
+    lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2) + " VND");
+    lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2) + " VND");
+    lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
+
+    // lấy booking
+    std::vector<BookingRevenue> data = ds.getBookingRevenues("2026-01-01", "2026-12-31");
+    qDebug() << "[DEBUG] Revenues table row count:" << data.size();
+
+    tableDashboard->setRowCount(0);
+    int row = 0;
+    for (const auto &record : data)
+    {
+        tableDashboard->insertRow(row);
+        tableDashboard->setItem(row, 0, new QTableWidgetItem(QString::number(record.bookingId)));
+        tableDashboard->setItem(row, 1, new QTableWidgetItem(record.customerName));
+        tableDashboard->setItem(row, 2, new QTableWidgetItem(QString::number(record.revenue, 'f', 2)));
+        tableDashboard->setItem(row, 3, new QTableWidgetItem(record.checkIn));
+        row++;
+    }
+}
+
+void MainWindowController::showFilterDashboardDialog()
+{
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Filter Dashboard Revenues");
+    dialog->setFixedSize(400, 220);
+
+    dialog->setStyleSheet(
+        "QDialog { background-color: white; }"
+        "QLabel { color: #333333; font-weight: bold; }");
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    QFormLayout *form = new QFormLayout();
+
+    QString inputStyle = "QLineEdit { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; }";
+
+    QLineEdit *txtStartDate = new QLineEdit(dialog);
+    txtStartDate->setPlaceholderText("YYYY-MM-DD");
+    txtStartDate->setText("2026-01-01");
+    txtStartDate->setStyleSheet(inputStyle);
+
+    QLineEdit *txtEndDate = new QLineEdit(dialog);
+    txtEndDate->setPlaceholderText("YYYY-MM-DD");
+    txtEndDate->setText("2026-12-31");
+    txtEndDate->setStyleSheet(inputStyle);
+
+    form->addRow("Start Date:", txtStartDate);
+    form->addRow("End Date:", txtEndDate);
+    layout->addLayout(form);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnApply = new QPushButton("Apply", dialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+    btnApply->setStyleSheet("background-color: #3b82f6; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnApply);
+    layout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+
+    connect(btnApply, &QPushButton::clicked, [=]()
+            {
+        qDebug() << "[DEBUG] Filter Dialog - Apply clicked";
+        QString startStr = txtStartDate->text();
+        QString endStr = txtEndDate->text();
+
+        if (startStr.isEmpty() || endStr.isEmpty())
+        {
+            QMessageBox::warning(this, "Error", "Please enter both Start Date and End Date!");
+            return;
+        }
+
+        if (!DatabaseManager::instance().open())
+        {
+            QMessageBox::warning(this, "Error", "Could not open database connection!");
+            return;
+        }
+
+        DashboardService ds;
+        qDebug() << "[DEBUG] Filter Dialog - Querying from" << startStr << "to" << endStr;
+        std::vector<BookingRevenue> data = ds.getBookingRevenues(startStr, endStr);
+        qDebug() << "[DEBUG] Filter Dialog - Query returned" << data.size() << "records";
+
+        tableDashboard->setRowCount(0);
+        int row = 0;
+        for (const auto& record : data) {
+            tableDashboard->insertRow(row);
+            tableDashboard->setItem(row, 0, new QTableWidgetItem(QString::number(record.bookingId)));
+            tableDashboard->setItem(row, 1, new QTableWidgetItem(record.customerName));
+            tableDashboard->setItem(row, 2, new QTableWidgetItem(QString::number(record.revenue, 'f', 2)));
+            tableDashboard->setItem(row, 3, new QTableWidgetItem(record.checkIn));
+            row++;
+        }
+        qDebug() << "[DEBUG] Filter Dialog - Table populated with" << row << "rows";
+
+        QMessageBox::information(this, "Success", QString("Filtered and found %1 booking records!").arg(data.size()));
+        qDebug() << "[DEBUG] Filter Dialog - Accepting dialog";
+        dialog->accept(); });
+
+    dialog->exec();
+    dialog->deleteLater();
 }

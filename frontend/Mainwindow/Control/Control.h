@@ -7,6 +7,7 @@ class MainWindowController : public MainWindowUi
 {
 public:
     MainWindowController(QWidget *parent = nullptr);
+    void handleDashboardTab();
 
 private:
     void initConnections();
@@ -24,6 +25,7 @@ private:
     void handleLogin_9();
     void handleLogin_10();
     void handleCheckout();
+    void showFilterDashboardDialog();
 
     void showAddBookingDialog();
     void showAddRoomDialog();
