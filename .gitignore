@@ -1,0 +1,14 @@
+# Ignore build directories and visual studio project caches
+duckz/
+build/
+frontend/build/
+frontend/CMakeFiles/
+frontend/CMakeCache.txt
+frontend/Makefile
+frontend/cmake_install.cmake
+frontend/compile_commands.json
+frontend/Hotel_Management_autogen/
+a.out
+*.o
+*.dylib
+*.app

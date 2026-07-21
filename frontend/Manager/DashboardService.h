@@ -4,7 +4,6 @@
 
 #include <vector>
 
-//filter fields cho revenue
 struct BookingRevenue {
 	int bookingId;
 	QString customerName;

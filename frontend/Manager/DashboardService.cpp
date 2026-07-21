@@ -6,8 +6,6 @@
 #include <QDebug>
 #include <string>
 
-//khi xử lý UI cho dashboard có làm việc với pointer nên có interuptions hay disconnections sẽ sinh ra undefined behavior nên sẽ sập
-//có lỗi phát sinh nên tạo helper function để check coi có connection ko, ko thì reinitialize connection để ko sập
 static QSqlDatabase getOpenDatabase() {
 	QSqlDatabase db = DatabaseManager::instance().database();
 	if (!db.isOpen()) {
@@ -17,8 +15,6 @@ static QSqlDatabase getOpenDatabase() {
 	}
 	return db;
 }
-
-//XUYÊN SUỐT FILE CÓ GỌI HÀM TRÊN ĐỂ TRÁNH LỖI Ở DASHBOARD =((
 
 int DashboardService::getTodayBookings() {
 	QSqlDatabase db = getOpenDatabase();
