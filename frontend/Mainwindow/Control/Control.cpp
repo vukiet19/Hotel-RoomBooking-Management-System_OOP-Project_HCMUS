@@ -1,3 +1,7 @@
+// Hàm này liên quan đến control lên UI( như button , chắc năng khi ấn nút,...)
+// Hàm này liên quan đến UI( nơi trình chiếu), booking.h( khi chọn add lên frontend),DerivedRooms(Nơi chọn Type room)
+// Checkoutpage(Page chọn checkout), Các hàm của Manager để link với database
+
 #include "Control.h"
 #include "../UI/UI.h"
 #include "../../backend/backend.h"
@@ -29,13 +33,15 @@
 
 MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(parent)
 {
+
+    // Gọi UI
     MainWindowUi::setupUi();
     initConnections();
 }
 
+// Hàm link kết nối
 void MainWindowController::initConnections()
 {
-    // FIX: Thay &MainWindow:: thành &MainWindowController:: vì đây là class Controller
     connect(button1, &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
     connect(button2, &QPushButton::clicked, this, &MainWindowController::handleLogin_2);
     connect(button3, &QPushButton::clicked, this, &MainWindowController::handleLogin_3);
@@ -50,15 +56,19 @@ void MainWindowController::initConnections()
     connect(buttonDashboard, &QPushButton::clicked, this, &MainWindowController::handleDashboardTab);
 }
 
+// Button booking
 void MainWindowController::handleLogin_1()
 {
     setActionBarVisible(true);
     stackedWidget->setCurrentIndex(0);
     setActiveButton(button1);
     Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+    // disconnect là ngắt kết nối chức năng hàm đó, để cho các hàm này không lập lại
     btnAdd->disconnect();
     connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::showAddBookingDialog);
 }
+
+// Button BookingServiceItems
 
 void MainWindowController::handleLogin_2()
 {
@@ -68,6 +78,8 @@ void MainWindowController::handleLogin_2()
     btnAdd->disconnect();
     Backend::loadTableData(tableBookingItems, "SELECT * FROM BookingServiceItems");
 }
+
+// Button Customer
 
 void MainWindowController::handleLogin_3()
 {
@@ -85,6 +97,8 @@ void MainWindowController::handleLogin_3()
     connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::showFilterCustomerDialog);
 }
 
+// Button Food
+
 void MainWindowController::handleLogin_4()
 {
     stackedWidget->setCurrentIndex(3);
@@ -93,6 +107,8 @@ void MainWindowController::handleLogin_4()
     Backend::loadTableData(tableFood, "SELECT * FROM FoodOptions");
     btnAdd->disconnect();
 }
+
+// Button Inventory
 
 void MainWindowController::handleLogin_5()
 {
@@ -103,6 +119,8 @@ void MainWindowController::handleLogin_5()
     btnAdd->disconnect();
 }
 
+// Button InventoryLog
+
 void MainWindowController::handleLogin_6()
 {
     stackedWidget->setCurrentIndex(5);
@@ -111,6 +129,8 @@ void MainWindowController::handleLogin_6()
     Backend::loadTableData(tableInventoryLog, "SELECT * FROM InventoryLog");
     btnAdd->disconnect();
 }
+
+// Button ListRooms
 
 void MainWindowController::handleLogin_7()
 {
@@ -128,6 +148,8 @@ void MainWindowController::handleLogin_7()
     connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteRoomDialog);
 }
 
+// Button RoomTypeCatalog
+
 void MainWindowController::handleLogin_8()
 {
     stackedWidget->setCurrentIndex(7);
@@ -136,6 +158,8 @@ void MainWindowController::handleLogin_8()
     Backend::loadTableData(tableRoomType, "SELECT * FROM RoomTypeCatalog");
     btnAdd->disconnect();
 }
+
+// Button ListServiceItems
 
 void MainWindowController::handleLogin_9()
 {
@@ -146,6 +170,8 @@ void MainWindowController::handleLogin_9()
     btnAdd->disconnect();
 }
 
+// Button Bills
+
 void MainWindowController::handleLogin_10()
 {
     stackedWidget->setCurrentIndex(9);
@@ -155,6 +181,7 @@ void MainWindowController::handleLogin_10()
     btnAdd->disconnect();
 }
 
+// Hàm add new customer
 void MainWindowController::AddNewCustomerClicked()
 {
     QDialog *addDialog = new QDialog(this);
@@ -186,6 +213,7 @@ void MainWindowController::AddNewCustomerClicked()
         "QLineEdit:hover { border: 2px solid #0284c7; }"
         "QLineEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }";
 
+    // Điền thông tin customer
     QLineEdit *txtName = new QLineEdit(addDialog);
     txtName->setPlaceholderText("Type your name...");
     txtName->setStyleSheet(inputStyle);
@@ -233,6 +261,7 @@ void MainWindowController::AddNewCustomerClicked()
 
     connect(btnCancel, &QPushButton::clicked, addDialog, &QDialog::reject);
 
+    // Hàm sử lý chức năng khi click
     connect(btnSave, &QPushButton::clicked, [=]()
             {
         QString name = txtName->text();
@@ -247,6 +276,8 @@ void MainWindowController::AddNewCustomerClicked()
             return;
         }
     
+
+        //Lưu thông tin khách hàng vào database
         CustomerRepository re;
         Customer a(name.toStdString(), phone.toStdString(), IDcard.toStdString());
         a.setPoint(point.toInt());
@@ -265,6 +296,7 @@ void MainWindowController::AddNewCustomerClicked()
     addDialog->deleteLater();
 }
 
+// Hàm này sẽ thể hiện nút mà đang hiện
 void MainWindowController::setActiveButton(QPushButton *clickedButton)
 {
     QList<QPushButton *> buttons = {
@@ -287,6 +319,7 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton)
     }
 }
 
+// Add booking (như add customer )
 void MainWindowController::showAddBookingDialog()
 {
     QDialog *addDialog = new QDialog(this);
@@ -383,6 +416,37 @@ void MainWindowController::showAddBookingDialog()
         QString phone = txtPhone->text();
         QString room = txtRoom->text();
         QString price = txtPrice->text();
+
+
+         if (id.toStdString().size() != 10)
+    {
+        QMessageBox::warning(this, "Input Error", "Error: ID Card must be 10 digits long.");
+        return;
+    }
+
+    for (char g : id.toStdString())
+    {
+        if (!std::isdigit(g))
+        {
+            QMessageBox::warning(this, "Input Error", "Error:ID Card must contain only numbers.");
+            return;
+        }
+    }
+
+     if (phone.toStdString().size() != 10)
+    {
+        QMessageBox::warning(this, "Input Error", "Error: Phone Number must be 10 digits long.");
+        return;
+    }
+
+    for (char g : phone.toStdString())
+    {
+        if (!std::isdigit(g))
+        {
+            QMessageBox::warning(this, "Input Error", "Error: Phone number must contain only numbers.");
+            return;
+        }
+    }
         
         QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
         QString checkOutDate = dateCheckOut->date().toString("yyyy-MM-dd");
@@ -409,7 +473,7 @@ void MainWindowController::showAddBookingDialog()
 
         BookingRepository r;
         BookingData t;
-        t.customerId = 100;
+        t.customerId = id;
         t.roomNumber = room; 
         t.checkInTime = checkInDate;
         t.checkOutTime = checkOutDate;
@@ -421,6 +485,8 @@ void MainWindowController::showAddBookingDialog()
     addDialog->exec();
     addDialog->deleteLater();
 }
+
+// Add room (như add customer )
 
 void MainWindowController::showAddRoomDialog()
 {
@@ -555,11 +621,14 @@ void MainWindowController::showAddRoomDialog()
     dialog->deleteLater();
 }
 
+// update customer
+
 void MainWindowController::showUpdateCustomerDialog()
 {
     handleLogin_3();
 }
 
+// Delete theo customer id
 void MainWindowController::showDeleteCustomerDialog()
 {
     QDialog *dialog = new QDialog(this);
@@ -640,6 +709,7 @@ void MainWindowController::showDeleteCustomerDialog()
     dialog->deleteLater();
 }
 
+// FIlter customer theo
 void MainWindowController::showFilterCustomerDialog()
 {
     QDialog *dialog = new QDialog(this);
@@ -758,6 +828,7 @@ void MainWindowController::showFilterCustomerDialog()
     dialog->deleteLater();
 }
 
+// Delete room , theo room number
 void MainWindowController::showDeleteRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
@@ -838,6 +909,7 @@ void MainWindowController::showDeleteRoomDialog()
     dialog->deleteLater();
 }
 
+// Update status room
 void MainWindowController::showUpdateRoomDialog()
 {
     QDialog *dialog = new QDialog(this);
@@ -881,18 +953,8 @@ void MainWindowController::showUpdateRoomDialog()
     cbStatus->addItems({"Available", "Reserved", "Occupied", "Maintenance"});
     cbStatus->setStyleSheet(inputStyle);
 
-    QLineEdit *txtPrice = new QLineEdit(dialog);
-    txtPrice->setPlaceholderText("New Base Price...");
-    txtPrice->setStyleSheet(inputStyle);
-
-    QLineEdit *txtPeople = new QLineEdit(dialog);
-    txtPeople->setPlaceholderText("New Capacity...");
-    txtPeople->setStyleSheet(inputStyle);
-
     form->addRow("Room Number:", txtNumber);
     form->addRow("New Status:", cbStatus);
-    form->addRow("New Base price:", txtPrice);
-    form->addRow("New Capacity:", txtPeople);
 
     layout->addLayout(form);
 
@@ -917,10 +979,6 @@ void MainWindowController::showUpdateRoomDialog()
 
     connect(btnSave, &QPushButton::clicked, dialog, [=]()
             {
-        if (txtNumber->text().isEmpty() || txtPrice->text().isEmpty() || txtPeople->text().isEmpty()) {
-            QMessageBox::warning(dialog, "Error", "Please fill up all information");
-            return;
-        }
 
         StandardRoom* updatedRoom = new StandardRoom();
         updatedRoom->setRoomNumber(txtNumber->text().toStdString());
@@ -942,8 +1000,6 @@ void MainWindowController::showUpdateRoomDialog()
         }
         
         updatedRoom->setStatus(statusEnum); 
-        updatedRoom->setBasePrice(txtPrice->text().toInt());
-        updatedRoom->setNumberPeople(txtPeople->text().toInt());
 
         RoomRepository repo;
         bool success = repo.update(updatedRoom);
@@ -961,6 +1017,7 @@ void MainWindowController::showUpdateRoomDialog()
     dialog->deleteLater();
 }
 
+// Hàm checkout
 void MainWindowController::handleCheckout()
 {
     setActionBarVisible(false);
@@ -976,6 +1033,7 @@ void MainWindowController::setActionBarVisible(bool visible)
     }
 }
 
+// Dashboard
 void MainWindowController::handleDashboardTab()
 {
     qDebug() << "[DEBUG] handleDashboardTab - Switched to Dashboard tab";

@@ -8,7 +8,7 @@
 // Truyen du lieu ve thong tin dat phong vao file hotel.db
 struct BookingData
 {
-	int customerId;
+	QString customerId;
 	QString roomNumber;
 	QString checkInTime;
 	QString checkOutTime;

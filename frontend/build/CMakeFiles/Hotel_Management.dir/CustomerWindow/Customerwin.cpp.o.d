@@ -1027,11 +1027,13 @@ CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qmessagebox.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qdialog.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qdialogbuttonbox.h \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlQuery \
-  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlRecord \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlrecord.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlglobal.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsql-config.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlexports.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlQuery \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqldatabase.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetaobject.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlError \

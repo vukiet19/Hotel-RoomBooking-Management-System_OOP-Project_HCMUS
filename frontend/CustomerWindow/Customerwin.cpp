@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
 #include "Booking/Booking.h"
@@ -26,12 +27,9 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
     setFixedSize(800, 600);
     setWindowTitle("Customer Information");
 
-    // --- LIGHT & AIRY GRADIENT BACKGROUND ---
-    // --- LIGHT & AIRY BACKGROUND + COLORFUL DATE CALENDAR TABLE ---
     setStyleSheet(
         "QWidget { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff); color: #1e293b; font-family: 'Segoe UI', Arial, sans-serif; }"
 
-        /* --- STYLE CHO BẢNG CHỌN NGÀY (DATE CALENDAR) --- */
         "QCalendarWidget QWidget { background-color: #ffffff; }"
         "QCalendarWidget QToolButton { "
         "   color: #4f46e5; font-weight: bold; font-size: 14px; background-color: #e0e7ff; border-radius: 6px; padding: 4px;"
@@ -40,25 +38,22 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
         "QCalendarWidget QMenu { background-color: white; color: #3730a3; }"
         "QCalendarWidget QSpinBox { background-color: #f0f9ff; color: #3730a3; border: 1px solid #bae6fd; border-radius: 4px; }"
 
-        /* --- BẢNG NGÀY THÁNG TRONG LỊCH --- */
         "QCalendarWidget QAbstractItemView:enabled { "
         "   color: #1e293b; background-color: #ffffff; "
-        "   selection-background-color: #38bdf8; " /* Chọn ngày sẽ có màu xanh sáng chói */
+        "   selection-background-color: #38bdf8; "
         "   selection-color: white; "
         "}"
         "QCalendarWidget QAbstractItemView:disabled { color: #cbd5e1; }");
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(50, 40, 50, 40); // Added breathing room around edges
+    layout->setContentsMargins(50, 40, 50, 40);
 
-    // Added an elegant title
     QLabel *titleLabel = new QLabel("Guest Registration", this);
     titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #3730a3; margin-bottom: 20px; background: transparent;"); // Transparent background for label
     layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     QFormLayout *form = new QFormLayout();
-    form->setSpacing(20); // Increased spacing for a cleaner look
+    form->setSpacing(20);
 
-    // --- ĐỒNG BỘ KHUNG VIỀN XANH DƯƠNG CHO FORM ---
     QString inputStyle =
         "QLineEdit, QDateEdit, QSpinBox {"
         "   background-color: #ffffff; "
@@ -73,6 +68,9 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
 
     // Style for the form labels
     QString labelStyle = "font-size: 15px; font-weight: 600; color: #475569; background: transparent;";
+
+    // CHỗ nhập thông tin khách hàng
+    //"-----------------------"
 
     txtName = new QLineEdit(this);
     txtName->setStyleSheet(inputStyle);
@@ -99,10 +97,11 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
     ID->setStyleSheet(inputStyle);
     ID->setPlaceholderText("Enter ID or Passport number");
 
-    // Adding styled labels to the form
+    //"-----------------------"
+
     QLabel *lblName = new QLabel("Your name:", this);
     lblName->setStyleSheet(labelStyle);
-    QLabel *lblID = new QLabel("Your ID:", this);
+    QLabel *lblID = new QLabel("Your ID Card:", this);
     lblID->setStyleSheet(labelStyle);
     QLabel *lblPhone = new QLabel("Phone number:", this);
     lblPhone->setStyleSheet(labelStyle);
@@ -136,13 +135,48 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent)
     connect(btnNext, &QPushButton::clicked, this, &CustomerInputWindow::onNextClicked);
 }
 
-// Hàm kiểm tra thông tin khách hàng
+// Hàm kiểm tra thông tin khách hàng ghi click
+
 void CustomerInputWindow::onNextClicked()
 {
+
+    // Kiểm tra name và phone được fill chưa
     if (txtName->text().isEmpty() || txtPhone->text().isEmpty())
     {
         QMessageBox::warning(this, "Warning", "Please input name and phone");
         return;
+    }
+
+    // Kiểm tra điều kiện id
+    if (ID->text().toStdString().size() != 10)
+    {
+        QMessageBox::warning(this, "Input Error", "Error: ID Card must be 10 digits long.");
+        return;
+    }
+
+    for (char g : ID->text().toStdString())
+    {
+        if (!std::isdigit(g))
+        {
+            QMessageBox::warning(this, "Input Error", "Error:ID Card must contain only numbers.");
+            return;
+        }
+    }
+
+    // Kiểm tra điều kiện phone
+    if (txtPhone->text().toStdString().size() != 10)
+    {
+        QMessageBox::warning(this, "Input Error", "Error: Phone Number must be 10 digits long.");
+        return;
+    }
+
+    for (char g : txtPhone->text().toStdString())
+    {
+        if (!std::isdigit(g))
+        {
+            QMessageBox::warning(this, "Input Error", "Error: Phone number must contain only numbers.");
+            return;
+        }
     }
 
     // Lấy dữ liệu
@@ -161,30 +195,30 @@ void CustomerInputWindow::onNextClicked()
     this->close();
 }
 
+// Hàm này là constructor của UI chọn phòng( nhận input là các thông tin customer)
 CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString date, QString dateout, int people, QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone), checkInDate(date), datecheckout(dateout), numPeople(people)
 {
-    setFixedSize(850, 650); // Made slightly larger to accommodate the beautiful table
+    setFixedSize(850, 650);
     setWindowTitle("Select a Room");
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(40, 40, 40, 40);
     layout->setSpacing(20);
 
-    // Added an elegant title
-    QLabel *titleLabel = new QLabel("Available Rooms", this);
+    QLabel *titleLabel = new QLabel("Rooms", this);
     titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #3730a3; margin-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif; background: transparent;");
     layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
     tableRoom = new QTableWidget(0, 5, this);
+    // Display những thông tin trên UI
     tableRoom->setHorizontalHeaderLabels({"Room ID", "Room Number", "Type Room", "Price", "Capacity"});
     tableRoom->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableRoom->setSelectionBehavior(QAbstractItemView::SelectRows);
     tableRoom->setSelectionMode(QAbstractItemView::SingleSelection);
-    tableRoom->verticalHeader()->setDefaultSectionSize(45); // Taller rows for readability
+    tableRoom->verticalHeader()->setDefaultSectionSize(45);
     tableRoom->setAlternatingRowColors(true);
 
-    // --- ĐỒNG BỘ TABLE VÀ BACKGROUND VỚI ADMIN THEME ---
     this->setStyleSheet(R"(
         QWidget { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff); color: #1e293b; }
         QLabel { background: transparent; }
@@ -250,7 +284,6 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString 
     btnBook = new QPushButton("Confirm Booking", this);
     btnBook->setCursor(Qt::PointingHandCursor);
 
-    // --- ĐỒNG BỘ NÚT VIBRANT GRADIENT ---
     btnBook->setStyleSheet(
         "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
         "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #4f46e5, stop:1 #7c3aed); }");
@@ -258,10 +291,11 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id, QString 
 
     connect(btnBook, &QPushButton::clicked, this, &CustomerWindow::onBookRoomClicked);
 
-    // load dữ liệu
+    // filter room
     loadFilteredRooms();
 }
 
+// Hàm này filter room ở cửa sổ cusyomer
 void CustomerWindow::loadFilteredRooms()
 {
     if (!DatabaseManager::instance().open())
@@ -273,16 +307,12 @@ void CustomerWindow::loadFilteredRooms()
     tableRoom->setRowCount(0);
     QSqlQuery query(DatabaseManager::instance().database());
 
+    // Điều kiện nếu status = là Avaliable và số người lớn hơn
     query.prepare("SELECT room_id, room_number, room_type, base_price, number_people "
                   "FROM ListRooms "
-                  "WHERE status = 0 "
-                  "  AND number_people >= ? "
-                  "  AND room_number NOT IN ("
-                  "      SELECT room_number FROM Bookings "
-                  "      WHERE check_in_date <= ? AND check_out_date >= ?"
-                  "  )");
-
-    query.addBindValue(this->numPeople);
+                  "WHERE status IN (0, 'Available') "
+                  "  AND number_people >= ?");
+    query.addBindValue(numPeople);
 
     if (!query.exec())
     {
@@ -312,59 +342,112 @@ void CustomerWindow::onBookRoomClicked()
         return;
     }
 
-    // 1. Lưu dữ liệu vào bảng
+    // Lấy roomid
     QString roomId = tableRoom->item(selectedRow, 0)->text();
-    QString roomTypeStr = tableRoom->item(selectedRow, 2)->text();
     double price = tableRoom->item(selectedRow, 3)->text().toDouble();
 
     QSqlDatabase db = DatabaseManager::instance().database();
+    qDebug() << db.databaseName() << '\n';
 
-    QSqlQuery query(db);
+    if (!db.isOpen())
+    {
+        QMessageBox::critical(this, "Database Error", "Database is not open!");
+        return;
+    }
 
-    Customer a(customerName.toStdString(), ID.toStdString(), customerPhone.toStdString());
+    db.transaction();
 
-    a.setIdroom(roomId.toStdString());
+    // Lưu biến để lưu thông tin customer
 
-    a.setIdroom(roomId.toStdString());
+    QString finalCustomerId = ID;
+    bool isExistingCustomer = false;
+    int currentPoints = 0;
+    QSqlQuery checkCustomer(db);
 
-    CustomerRepository t;
-    // Them customer
-    t.add(a);
+    // CUstomer repository
+    CustomerRepository customerRepo;
+    Customer newCustomer;
+
+    // Tạo query kiểm tra query có tồn tại trong database chưa( có rồi thì copy point)
+    QString sqlString = QString("SELECT id_customer, points FROM Customer WHERE id_customer = '%1'").arg(ID);
+
+    // Kiểm tra xem có tồn tại không
+    if (checkCustomer.next())
+    {
+        finalCustomerId = checkCustomer.value(":id_customer").toString();
+        currentPoints = checkCustomer.value("points").toInt();
+        isExistingCustomer = true;
+    }
+
+    newCustomer.setIdcard(finalCustomerId.toStdString());
+    newCustomer.setFullname(customerName.toStdString());
+    newCustomer.setPhone(customerPhone.toStdString());
+    newCustomer.setPoint(currentPoints);
+    newCustomer.setIdroom(roomId.toStdString());
+
+    // add vào database
+    if (!customerRepo.add(newCustomer))
+    {
+        db.rollback();
+        QMessageBox::critical(this, "Database Error", "Failed to create new customer via Repository!");
+        return;
+    }
+    currentPoints = 0;
 
     BookingData bookingData;
     BookingRepository sp;
 
-    bookingData.customerId = a.getId();
+    bookingData.customerId = finalCustomerId;
     bookingData.roomNumber = roomId;
     bookingData.checkInTime = checkInDate;
-    bookingData.checkOutTime = checkInDate;
-    bookingData.totalPrice = 1000000;
+    bookingData.checkOutTime = datecheckout;
+    // Khúc này lấy tiền theo type room
+    bookingData.totalPrice = (price > 0) ? price : 1000000;
 
-    // Them booking vao
-    sp.add(bookingData);
-
-    // Set status của list room là 1
-    query.prepare("UPDATE ListRooms SET status = 1 WHERE room_id = ?");
-    query.addBindValue(roomId);
-
-    if (!query.exec())
+    if (!sp.add(bookingData))
     {
-        qDebug() << "Lỗi Insert Booking:" << query.lastError().text();
+        db.rollback();
+        QMessageBox::critical(this, "Database Error", "Failed to create Booking record!");
+        return;
     }
-    else
-    {
-        qDebug() << "Booking successfully saved to database!";
 
-        // Added a beautiful success message for the user before closing
+    // update trạng thái phòng
+    QSqlQuery updateRoom(db);
+    updateRoom.prepare("UPDATE ListRooms SET status = 1 WHERE room_id = ?");
+    updateRoom.addBindValue(roomId);
+
+    if (!updateRoom.exec())
+    {
+        db.rollback();
+        QMessageBox::critical(this, "Database Error", "Failed to update Room status:\n" + updateRoom.lastError().text());
+        return;
+    }
+
+    // xác nhận booking
+    if (db.commit())
+    {
+        QString infoText = isExistingCustomer
+                               ? QString("Welcome back %1!\nYour booking is complete.")
+                                     .arg(customerName)
+                                     .arg(currentPoints)
+                               : QString("Thank you %1!\nBooking created successfully.\n")
+                                     .arg(customerName);
+
         QMessageBox msgBox(this);
         msgBox.setWindowTitle("Success");
-        msgBox.setText("Your room has been booked successfully!");
+        msgBox.setText(infoText);
         msgBox.setStyleSheet(
             "QMessageBox { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); } "
             "QLabel { color: #1e293b; font-size: 14px; background: transparent; } "
             "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; padding: 6px 20px; border-radius: 4px; border: none; font-weight: bold; }");
         msgBox.exec();
-    }
 
-    this->close();
+        this->close();
+    }
+    else
+    {
+        db.rollback();
+        QMessageBox::critical(this, "Database Error",
+                              "Transaction commit failed:\n" + db.lastError().text());
+    }
 }
