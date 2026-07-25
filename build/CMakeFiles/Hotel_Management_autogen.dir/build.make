@@ -53,7 +53,7 @@ RM = /Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/bin/cmake -
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz
+CMAKE_SOURCE_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build
@@ -83,6 +83,6 @@ CMakeFiles/Hotel_Management_autogen.dir/clean:
 .PHONY : CMakeFiles/Hotel_Management_autogen.dir/clean
 
 CMakeFiles/Hotel_Management_autogen.dir/depend:
-	cd /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management_autogen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management_autogen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Hotel_Management_autogen.dir/depend
 

@@ -2,11 +2,11 @@
 	"BUILD_DIR" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/Hotel_Management_autogen",
 	"CMAKE_BINARY_DIR" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build",
 	"CMAKE_CURRENT_BINARY_DIR" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build",
-	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend",
 	"CMAKE_EXECUTABLE" : "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/bin/cmake",
 	"CMAKE_LIST_FILES" : 
 	[
-		"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeLists.txt",
+		"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CMakeLists.txt",
 		"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/3.25.2/CMakeSystem.cmake",
 		"/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake",
 		"/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake",
@@ -415,159 +415,147 @@
 		"/opt/homebrew/opt/qt/lib/cmake/Qt6Widgets/Qt6QMacStylePluginAdditionalTargetInfo.cmake",
 		"/opt/homebrew/opt/qt/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessAliasTargets.cmake"
 	],
-	"CMAKE_SOURCE_DIR" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz",
+	"CMAKE_SOURCE_DIR" : "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend",
 	"DEP_FILE" : "",
 	"DEP_FILE_RULE_NAME" : "",
 	"HEADERS" : 
 	[
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/Booking.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.h",
 			"MU",
-			"2LVHDVNRXR/moc_Booking.cpp",
+			"YJ3R5EBCHP/moc_Checkoutpage.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingFactory.h",
-			"MU",
-			"2LVHDVNRXR/moc_BookingFactory.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingRepository.h",
-			"MU",
-			"2LVHDVNRXR/moc_BookingRepository.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingStatus.h",
-			"MU",
-			"2LVHDVNRXR/moc_BookingStatus.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingType.h",
-			"MU",
-			"2LVHDVNRXR/moc_BookingType.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/Customer.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.h",
 			"MU",
 			"LSYMCGT25G/moc_Customer.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/CustomerRepository.h",
-			"MU",
-			"LSYMCGT25G/moc_CustomerRepository.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/MembershipPolicy.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/MembershipPolicy.h",
 			"MU",
 			"LSYMCGT25G/moc_MembershipPolicy.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/MembershipTier.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.h",
 			"MU",
-			"LSYMCGT25G/moc_MembershipTier.cpp",
+			"ALPL7RR5MU/moc_Customerwin.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/moc_predefs.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.h",
 			"MU",
-			"DSDD2QZKJM/moc_moc_predefs.cpp",
+			"DBZLJR3XRS/moc_Login.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/BillingService.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.h",
+			"MU",
+			"VMI5B5UPTX/moc_Control.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.h",
+			"MU",
+			"SLQUN6OS33/moc_UI.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/BillingService.h",
 			"MU",
 			"BSZN444ZLF/moc_BillingService.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DashboardService.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.h",
 			"MU",
 			"BSZN444ZLF/moc_DashboardService.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DatabaseManager.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.h",
 			"MU",
 			"BSZN444ZLF/moc_DatabaseManager.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/Invoice.h",
-			"MU",
-			"BSZN444ZLF/moc_Invoice.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/InvoiceRepository.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/InvoiceRepository.h",
 			"MU",
 			"BSZN444ZLF/moc_InvoiceRepository.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Observer.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.h",
 			"MU",
 			"EWIEGA46WW/moc_Observer.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/DepositStatus.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.h",
 			"MU",
-			"4SMAVUGUGG/moc_DepositStatus.cpp",
+			"RSXGBB323P/moc_BookingRepository.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/DerivedRooms.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.h",
+			"MU",
+			"RSXGBB323P/moc_CustomerRepository.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/FoodRepository.h",
+			"MU",
+			"RSXGBB323P/moc_FoodRepository.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InventoryRepository.h",
+			"MU",
+			"RSXGBB323P/moc_InventoryRepository.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InvoiceRepository.h",
+			"MU",
+			"RSXGBB323P/moc_InvoiceRepository.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.h",
+			"MU",
+			"RSXGBB323P/moc_RoomRepository.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/ServiceItemRepository.h",
+			"MU",
+			"RSXGBB323P/moc_ServiceItemRepository.cpp",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.h",
 			"MU",
 			"4SMAVUGUGG/moc_DerivedRooms.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/Room.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.h",
 			"MU",
 			"4SMAVUGUGG/moc_Room.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/RoomRepository.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.h",
 			"MU",
-			"4SMAVUGUGG/moc_RoomRepository.cpp",
+			"4SMAVUGUGG/moc_RoomFactory.cpp",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/RoomStatus.h",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.h",
 			"MU",
-			"4SMAVUGUGG/moc_RoomStatus.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/TypeRoom.h",
-			"MU",
-			"4SMAVUGUGG/moc_TypeRoom.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceEnums.h",
-			"MU",
-			"QJ36PKLCSN/moc_ServiceEnums.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItem.h",
-			"MU",
-			"QJ36PKLCSN/moc_ServiceItem.cpp",
-			null
-		],
-		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItemRepository.h",
-			"MU",
-			"QJ36PKLCSN/moc_ServiceItemRepository.cpp",
+			"FVSNT77ZGO/moc_backend.cpp",
 			null
 		]
 	],
@@ -584,6 +572,7 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend",
 		"/opt/homebrew/opt/qt/lib/QtCore.framework/Headers",
 		"/opt/homebrew/opt/qt/lib/QtCore.framework",
 		"/opt/homebrew/opt/qt/share/qt/mkspecs/macx-clang",
@@ -632,97 +621,122 @@
 	"SOURCES" : 
 	[
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/Booking.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingFactory.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Booking/BookingRepository.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/MembershipPolicy.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/Customer.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/CustomerRepository.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Customer/MembershipPolicy.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Hotel_Management_autogen/mocs_compilation.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/BillingService.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/BillingService.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DashboardService.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/DatabaseManager.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/InvoiceRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Manager/InvoiceRepository.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Observer.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/DerivedRooms.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/Room.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/FoodRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Room/RoomRepository.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InventoryRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItem.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InvoiceRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/Service/ServiceItemRepository.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz/main.cpp",
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/ServiceItemRepository.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/main.cpp",
 			"MU",
 			null
 		]

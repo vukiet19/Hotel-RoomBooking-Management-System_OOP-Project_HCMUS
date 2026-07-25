@@ -1,4 +1,4 @@
-# Install script for directory: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz
+# Install script for directory: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

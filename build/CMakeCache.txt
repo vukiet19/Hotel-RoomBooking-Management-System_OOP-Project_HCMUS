@@ -267,7 +267,7 @@ Hotel_Management_BINARY_DIR:STATIC=/Users/sunix/Documents/Hotel-RoomBooking-Mana
 Hotel_Management_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-Hotel_Management_SOURCE_DIR:STATIC=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz
+Hotel_Management_SOURCE_DIR:STATIC=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend
 
 //Path to a program.
 MACDEPLOYQT_EXECUTABLE:FILEPATH=/opt/homebrew/opt/qt/bin/macdeployqt
@@ -409,7 +409,7 @@ CMAKE_GENERATOR_TOOLSET:INTERNAL=
 CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/duckz
+CMAKE_HOME_DIRECTORY:INTERNAL=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend
 //ADVANCED property for variable: CMAKE_INSTALL_BINDIR
 CMAKE_INSTALL_BINDIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_INSTALL_DATADIR
