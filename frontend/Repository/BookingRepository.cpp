@@ -31,5 +31,26 @@ bool BookingRepository::add(const BookingData &booking)
 		return false;
 	}
 
+	// Lấy ra id tự động tăng vừa tạo của Booking này
+	QVariant newBookingId = query.lastInsertId();
+
+	// Chèn một dòng dịch vụ/món ăn khởi tạo vào bảng BookingServiceItems
+	QSqlQuery serviceQuery(db);
+	serviceQuery.prepare("INSERT INTO BookingServiceItems (booking_id, item_id, quantity, customer_note, final_price) "
+						 "VALUES (:bId, :itemId, :qty, :note, :fPrice)");
+
+	serviceQuery.bindValue(":bId", newBookingId);
+	serviceQuery.bindValue(":itemId", "F001");			   // Mã món mặc định (hoặc truyền từ booking)
+	serviceQuery.bindValue(":qty", 1);					   // Số lượng mặc định
+	serviceQuery.bindValue(":note", "Initial Service");	   // Ghi chú mặc định
+	serviceQuery.bindValue(":fPrice", booking.totalPrice); // Giá ban đầu
+
+	if (!serviceQuery.exec())
+	{
+		qDebug() << "ERROR: Khong the ghi data BookingServiceItems!" << serviceQuery.lastError().text();
+		// Vẫn trả về true nếu cần, hoặc false nếu muốn bắt buộc phải ghi thành công cả 2 bảng
+		return false;
+	}
+
 	return true;
 }

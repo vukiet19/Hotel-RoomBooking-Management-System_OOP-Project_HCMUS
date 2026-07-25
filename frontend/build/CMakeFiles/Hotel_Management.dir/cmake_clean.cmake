@@ -18,6 +18,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o"
   "CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o.d"
+  "CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o"
+  "CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o"
   "CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o"
@@ -28,6 +30,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o"
   "CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o.d"
+  "CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o"
+  "CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o"
   "CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o"
@@ -46,7 +50,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o.d"
   "CMakeFiles/Hotel_Management.dir/main.cpp.o"
   "CMakeFiles/Hotel_Management.dir/main.cpp.o.d"
-  "Hotel_Management"
+  "Hotel_Management.app/Contents/MacOS/Hotel_Management"
   "Hotel_Management.pdb"
 )
 

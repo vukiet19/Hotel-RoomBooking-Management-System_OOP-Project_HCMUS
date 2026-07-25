@@ -1081,6 +1081,11 @@ CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtimezone.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdatetime.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcalendar.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlRecord \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlrecord.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QUuid \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/quuid.h \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/../../Repository/FoodRepository.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlQuery \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/../../Booking/Booking.h \

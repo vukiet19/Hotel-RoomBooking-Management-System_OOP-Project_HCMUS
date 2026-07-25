@@ -2,6 +2,7 @@
 
 #include <QVector>
 #include <QWidget>
+#include <QString>
 
 class QComboBox;
 class QLabel;

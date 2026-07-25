@@ -40,6 +40,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckCompilerFlag.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckFlagCommonConfig.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake"
+  "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/MacOSXBundleInfo.plist.in"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/MacroAddFileDependencies.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake"
   "/Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake"
@@ -344,6 +345,9 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/Hotel_Management_autogen.dir/AutogenInfo.json"
   ".qt/QtDeploySupport.cmake"
   ".qt/QtDeployTargets.cmake"
+  "Hotel_Management.app/Contents/MacOS"
+  "Hotel_Management.app/Contents/Info.plist"
+  "Hotel_Management.app/Contents/Info.plist"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

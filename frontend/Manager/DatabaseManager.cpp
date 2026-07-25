@@ -1,21 +1,28 @@
 #include "DatabaseManager.h"
 #include <QDir>
 #include <QFile>
+#include <QCoreApplication>
+#include <QSqlError>
+#include <QDebug>
 
 // Constructor chỉ chạy lần đầu tiên khi gọi hàm instance()
 DatabaseManager::DatabaseManager()
 {
+    // Sử dụng trực tiếp biến thành viên 'db' thay vì khai báo biến cục bộ 'QSqlDatabase db'
     db = QSqlDatabase::addDatabase("QSQLITE");
 
-    qDebug() << "Available drivers:" << QSqlDatabase::drivers();
-
-    QString appPath = QCoreApplication::applicationDirPath();
-
-    QString dbPath = appPath + "/Database/hotel.db";
-
-    qDebug() << dbPath << '\n';
+    QString dbPath = QCoreApplication::applicationDirPath() + "/Database/hotel.db";
 
     db.setDatabaseName(dbPath);
+
+    if (!db.open())
+    {
+        qDebug() << "ERROR: Khong the mo file hotel.db:" << db.lastError().text();
+    }
+    else
+    {
+        qDebug() << "Database connected successfully at:" << dbPath;
+    }
 }
 
 DatabaseManager &DatabaseManager::instance()
@@ -27,6 +34,11 @@ DatabaseManager &DatabaseManager::instance()
 
 bool DatabaseManager::open()
 {
+    if (db.isOpen())
+    {
+        return true;
+    }
+
     if (!db.open())
     {
         // .lastError: xem lỗi cuối cùng xảy ra tại db ; .text(): hiển thị lỗi đó dưới dạng văn bản
@@ -47,5 +59,9 @@ void DatabaseManager::close()
 
 QSqlDatabase DatabaseManager::database()
 {
+    if (!db.isOpen())
+    {
+        db.open();
+    }
     return db;
 }

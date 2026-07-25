@@ -35,4 +35,9 @@ private:
     void showUpdateCustomerDialog();
     void showUpdateRoomDialog();
     void showDeleteRoomDialog();
+
+    void AddNewFoodClick();
+    void UpdateFoodClick();
+    void DeleteFoodClick();
+    void FilterFoodClick();
 };

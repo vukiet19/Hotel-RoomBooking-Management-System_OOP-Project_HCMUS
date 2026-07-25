@@ -7,6 +7,7 @@
 #include "Room/TypeRoom.h"
 #include "Room/TypeRoom.h"
 #include "Room/Room.h"
+#include <QSqlRecord>
 #include "Room/DepositStatus.h"
 
 #include "Manager/DatabaseManager.h"
@@ -33,23 +34,36 @@ bool Backend::checkValidPassword(const std::string &g, const std::string &p)
 
 void Backend::loadTableData(QTableWidget *table, const QString &queryStr)
 {
+    QSqlQuery query(queryStr);
+
+    if (!query.exec())
+    {
+        qDebug() << "[ERROR] Load table failed:" << query.lastError().text();
+        return;
+    }
+
+    table->clear();
+    QSqlRecord rec = query.record();
+    int columnCount = rec.count();
+
+    table->setColumnCount(columnCount);
     table->setRowCount(0);
 
-    if (!DatabaseManager::instance().open())
-        return;
-
-    QSqlQuery query(DatabaseManager::instance().database());
-    if (query.exec(queryStr))
+    QStringList headers;
+    for (int i = 0; i < columnCount; ++i)
     {
-        int row = 0;
-        while (query.next())
+        headers << rec.fieldName(i);
+    }
+    table->setHorizontalHeaderLabels(headers);
+
+    int row = 0;
+    while (query.next())
+    {
+        table->insertRow(row);
+        for (int col = 0; col < columnCount; ++col)
         {
-            table->insertRow(row);
-            for (int col = 0; col < table->columnCount(); ++col)
-            {
-                table->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
-            }
-            row++;
+            table->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
         }
+        row++;
     }
 }

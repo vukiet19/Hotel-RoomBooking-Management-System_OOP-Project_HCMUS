@@ -973,6 +973,7 @@ CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.o:
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qsizepolicy.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qcursor.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qbitmap.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QString \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtmochelpers.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qtmocconstants.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/q20algorithm.h \
@@ -1015,5 +1016,4 @@ CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.o:
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdatetime.h \
   /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcalendar.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QSpinBox \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qspinbox.h \
-  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QString
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qspinbox.h

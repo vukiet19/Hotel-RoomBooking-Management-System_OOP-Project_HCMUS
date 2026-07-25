@@ -334,6 +334,30 @@ Mainwindow/UI/UI.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.s
 .PHONY : Mainwindow/UI/UI.cpp.s
 
+Manager/BillingService.o: Manager/BillingService.cpp.o
+.PHONY : Manager/BillingService.o
+
+# target to build an object file
+Manager/BillingService.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o
+.PHONY : Manager/BillingService.cpp.o
+
+Manager/BillingService.i: Manager/BillingService.cpp.i
+.PHONY : Manager/BillingService.i
+
+# target to preprocess a source file
+Manager/BillingService.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.i
+.PHONY : Manager/BillingService.cpp.i
+
+Manager/BillingService.s: Manager/BillingService.cpp.s
+.PHONY : Manager/BillingService.s
+
+# target to generate assembly for a file
+Manager/BillingService.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.s
+.PHONY : Manager/BillingService.cpp.s
+
 Manager/DashboardService.o: Manager/DashboardService.cpp.o
 .PHONY : Manager/DashboardService.o
 
@@ -453,6 +477,30 @@ Repository/CustomerRepository.s: Repository/CustomerRepository.cpp.s
 Repository/CustomerRepository.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.s
 .PHONY : Repository/CustomerRepository.cpp.s
+
+Repository/FoodRepository.o: Repository/FoodRepository.cpp.o
+.PHONY : Repository/FoodRepository.o
+
+# target to build an object file
+Repository/FoodRepository.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o
+.PHONY : Repository/FoodRepository.cpp.o
+
+Repository/FoodRepository.i: Repository/FoodRepository.cpp.i
+.PHONY : Repository/FoodRepository.i
+
+# target to preprocess a source file
+Repository/FoodRepository.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.i
+.PHONY : Repository/FoodRepository.cpp.i
+
+Repository/FoodRepository.s: Repository/FoodRepository.cpp.s
+.PHONY : Repository/FoodRepository.s
+
+# target to generate assembly for a file
+Repository/FoodRepository.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.s
+.PHONY : Repository/FoodRepository.cpp.s
 
 Repository/InventoryRepository.o: Repository/InventoryRepository.cpp.o
 .PHONY : Repository/InventoryRepository.o
@@ -704,6 +752,9 @@ help:
 	@echo "... Mainwindow/UI/UI.o"
 	@echo "... Mainwindow/UI/UI.i"
 	@echo "... Mainwindow/UI/UI.s"
+	@echo "... Manager/BillingService.o"
+	@echo "... Manager/BillingService.i"
+	@echo "... Manager/BillingService.s"
 	@echo "... Manager/DashboardService.o"
 	@echo "... Manager/DashboardService.i"
 	@echo "... Manager/DashboardService.s"
@@ -719,6 +770,9 @@ help:
 	@echo "... Repository/CustomerRepository.o"
 	@echo "... Repository/CustomerRepository.i"
 	@echo "... Repository/CustomerRepository.s"
+	@echo "... Repository/FoodRepository.o"
+	@echo "... Repository/FoodRepository.i"
+	@echo "... Repository/FoodRepository.s"
 	@echo "... Repository/InventoryRepository.o"
 	@echo "... Repository/InventoryRepository.i"
 	@echo "... Repository/InventoryRepository.s"

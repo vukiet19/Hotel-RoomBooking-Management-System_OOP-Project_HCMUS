@@ -142,6 +142,30 @@ Hotel_Management_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management_autogen.dir/build.make CMakeFiles/Hotel_Management_autogen.dir/build
 .PHONY : Hotel_Management_autogen/fast
 
+Checkout/Checkoutpage.o: Checkout/Checkoutpage.cpp.o
+.PHONY : Checkout/Checkoutpage.o
+
+# target to build an object file
+Checkout/Checkoutpage.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o
+.PHONY : Checkout/Checkoutpage.cpp.o
+
+Checkout/Checkoutpage.i: Checkout/Checkoutpage.cpp.i
+.PHONY : Checkout/Checkoutpage.i
+
+# target to preprocess a source file
+Checkout/Checkoutpage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.i
+.PHONY : Checkout/Checkoutpage.cpp.i
+
+Checkout/Checkoutpage.s: Checkout/Checkoutpage.cpp.s
+.PHONY : Checkout/Checkoutpage.s
+
+# target to generate assembly for a file
+Checkout/Checkoutpage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.s
+.PHONY : Checkout/Checkoutpage.cpp.s
+
 Customer/Customer.o: Customer/Customer.cpp.o
 .PHONY : Customer/Customer.o
 
@@ -190,29 +214,29 @@ Customer/MembershipPolicy.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.s
 .PHONY : Customer/MembershipPolicy.cpp.s
 
-Customerwin.o: Customerwin.cpp.o
-.PHONY : Customerwin.o
+CustomerWindow/Customerwin.o: CustomerWindow/Customerwin.cpp.o
+.PHONY : CustomerWindow/Customerwin.o
 
 # target to build an object file
-Customerwin.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Customerwin.cpp.o
-.PHONY : Customerwin.cpp.o
+CustomerWindow/Customerwin.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o
+.PHONY : CustomerWindow/Customerwin.cpp.o
 
-Customerwin.i: Customerwin.cpp.i
-.PHONY : Customerwin.i
+CustomerWindow/Customerwin.i: CustomerWindow/Customerwin.cpp.i
+.PHONY : CustomerWindow/Customerwin.i
 
 # target to preprocess a source file
-Customerwin.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Customerwin.cpp.i
-.PHONY : Customerwin.cpp.i
+CustomerWindow/Customerwin.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.i
+.PHONY : CustomerWindow/Customerwin.cpp.i
 
-Customerwin.s: Customerwin.cpp.s
-.PHONY : Customerwin.s
+CustomerWindow/Customerwin.s: CustomerWindow/Customerwin.cpp.s
+.PHONY : CustomerWindow/Customerwin.s
 
 # target to generate assembly for a file
-Customerwin.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Customerwin.cpp.s
-.PHONY : Customerwin.cpp.s
+CustomerWindow/Customerwin.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.s
+.PHONY : CustomerWindow/Customerwin.cpp.s
 
 Hotel_Management_autogen/mocs_compilation.o: Hotel_Management_autogen/mocs_compilation.cpp.o
 .PHONY : Hotel_Management_autogen/mocs_compilation.o
@@ -238,6 +262,126 @@ Hotel_Management_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.s
 .PHONY : Hotel_Management_autogen/mocs_compilation.cpp.s
 
+Login/Login.o: Login/Login.cpp.o
+.PHONY : Login/Login.o
+
+# target to build an object file
+Login/Login.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o
+.PHONY : Login/Login.cpp.o
+
+Login/Login.i: Login/Login.cpp.i
+.PHONY : Login/Login.i
+
+# target to preprocess a source file
+Login/Login.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Login/Login.cpp.i
+.PHONY : Login/Login.cpp.i
+
+Login/Login.s: Login/Login.cpp.s
+.PHONY : Login/Login.s
+
+# target to generate assembly for a file
+Login/Login.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Login/Login.cpp.s
+.PHONY : Login/Login.cpp.s
+
+Mainwindow/Control/Control.o: Mainwindow/Control/Control.cpp.o
+.PHONY : Mainwindow/Control/Control.o
+
+# target to build an object file
+Mainwindow/Control/Control.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o
+.PHONY : Mainwindow/Control/Control.cpp.o
+
+Mainwindow/Control/Control.i: Mainwindow/Control/Control.cpp.i
+.PHONY : Mainwindow/Control/Control.i
+
+# target to preprocess a source file
+Mainwindow/Control/Control.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.i
+.PHONY : Mainwindow/Control/Control.cpp.i
+
+Mainwindow/Control/Control.s: Mainwindow/Control/Control.cpp.s
+.PHONY : Mainwindow/Control/Control.s
+
+# target to generate assembly for a file
+Mainwindow/Control/Control.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.s
+.PHONY : Mainwindow/Control/Control.cpp.s
+
+Mainwindow/UI/UI.o: Mainwindow/UI/UI.cpp.o
+.PHONY : Mainwindow/UI/UI.o
+
+# target to build an object file
+Mainwindow/UI/UI.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o
+.PHONY : Mainwindow/UI/UI.cpp.o
+
+Mainwindow/UI/UI.i: Mainwindow/UI/UI.cpp.i
+.PHONY : Mainwindow/UI/UI.i
+
+# target to preprocess a source file
+Mainwindow/UI/UI.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.i
+.PHONY : Mainwindow/UI/UI.cpp.i
+
+Mainwindow/UI/UI.s: Mainwindow/UI/UI.cpp.s
+.PHONY : Mainwindow/UI/UI.s
+
+# target to generate assembly for a file
+Mainwindow/UI/UI.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.s
+.PHONY : Mainwindow/UI/UI.cpp.s
+
+Manager/BillingService.o: Manager/BillingService.cpp.o
+.PHONY : Manager/BillingService.o
+
+# target to build an object file
+Manager/BillingService.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o
+.PHONY : Manager/BillingService.cpp.o
+
+Manager/BillingService.i: Manager/BillingService.cpp.i
+.PHONY : Manager/BillingService.i
+
+# target to preprocess a source file
+Manager/BillingService.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.i
+.PHONY : Manager/BillingService.cpp.i
+
+Manager/BillingService.s: Manager/BillingService.cpp.s
+.PHONY : Manager/BillingService.s
+
+# target to generate assembly for a file
+Manager/BillingService.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.s
+.PHONY : Manager/BillingService.cpp.s
+
+Manager/DashboardService.o: Manager/DashboardService.cpp.o
+.PHONY : Manager/DashboardService.o
+
+# target to build an object file
+Manager/DashboardService.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o
+.PHONY : Manager/DashboardService.cpp.o
+
+Manager/DashboardService.i: Manager/DashboardService.cpp.i
+.PHONY : Manager/DashboardService.i
+
+# target to preprocess a source file
+Manager/DashboardService.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.i
+.PHONY : Manager/DashboardService.cpp.i
+
+Manager/DashboardService.s: Manager/DashboardService.cpp.s
+.PHONY : Manager/DashboardService.s
+
+# target to generate assembly for a file
+Manager/DashboardService.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.s
+.PHONY : Manager/DashboardService.cpp.s
+
 Manager/DatabaseManager.o: Manager/DatabaseManager.cpp.o
 .PHONY : Manager/DatabaseManager.o
 
@@ -261,6 +405,30 @@ Manager/DatabaseManager.s: Manager/DatabaseManager.cpp.s
 Manager/DatabaseManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.s
 .PHONY : Manager/DatabaseManager.cpp.s
+
+Manager/InvoiceRepository.o: Manager/InvoiceRepository.cpp.o
+.PHONY : Manager/InvoiceRepository.o
+
+# target to build an object file
+Manager/InvoiceRepository.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o
+.PHONY : Manager/InvoiceRepository.cpp.o
+
+Manager/InvoiceRepository.i: Manager/InvoiceRepository.cpp.i
+.PHONY : Manager/InvoiceRepository.i
+
+# target to preprocess a source file
+Manager/InvoiceRepository.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.i
+.PHONY : Manager/InvoiceRepository.cpp.i
+
+Manager/InvoiceRepository.s: Manager/InvoiceRepository.cpp.s
+.PHONY : Manager/InvoiceRepository.s
+
+# target to generate assembly for a file
+Manager/InvoiceRepository.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.s
+.PHONY : Manager/InvoiceRepository.cpp.s
 
 Observer.o: Observer.cpp.o
 .PHONY : Observer.o
@@ -333,6 +501,30 @@ Repository/CustomerRepository.s: Repository/CustomerRepository.cpp.s
 Repository/CustomerRepository.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.s
 .PHONY : Repository/CustomerRepository.cpp.s
+
+Repository/FoodRepository.o: Repository/FoodRepository.cpp.o
+.PHONY : Repository/FoodRepository.o
+
+# target to build an object file
+Repository/FoodRepository.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o
+.PHONY : Repository/FoodRepository.cpp.o
+
+Repository/FoodRepository.i: Repository/FoodRepository.cpp.i
+.PHONY : Repository/FoodRepository.i
+
+# target to preprocess a source file
+Repository/FoodRepository.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.i
+.PHONY : Repository/FoodRepository.cpp.i
+
+Repository/FoodRepository.s: Repository/FoodRepository.cpp.s
+.PHONY : Repository/FoodRepository.s
+
+# target to generate assembly for a file
+Repository/FoodRepository.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.s
+.PHONY : Repository/FoodRepository.cpp.s
 
 Repository/InventoryRepository.o: Repository/InventoryRepository.cpp.o
 .PHONY : Repository/InventoryRepository.o
@@ -502,53 +694,29 @@ Room/RoomFactory.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.s
 .PHONY : Room/RoomFactory.cpp.s
 
-backend.o: backend.cpp.o
-.PHONY : backend.o
+backend/backend.o: backend/backend.cpp.o
+.PHONY : backend/backend.o
 
 # target to build an object file
-backend.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/backend.cpp.o
-.PHONY : backend.cpp.o
+backend/backend.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o
+.PHONY : backend/backend.cpp.o
 
-backend.i: backend.cpp.i
-.PHONY : backend.i
-
-# target to preprocess a source file
-backend.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/backend.cpp.i
-.PHONY : backend.cpp.i
-
-backend.s: backend.cpp.s
-.PHONY : backend.s
-
-# target to generate assembly for a file
-backend.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/backend.cpp.s
-.PHONY : backend.cpp.s
-
-frontend.o: frontend.cpp.o
-.PHONY : frontend.o
-
-# target to build an object file
-frontend.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/frontend.cpp.o
-.PHONY : frontend.cpp.o
-
-frontend.i: frontend.cpp.i
-.PHONY : frontend.i
+backend/backend.i: backend/backend.cpp.i
+.PHONY : backend/backend.i
 
 # target to preprocess a source file
-frontend.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/frontend.cpp.i
-.PHONY : frontend.cpp.i
+backend/backend.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/backend/backend.cpp.i
+.PHONY : backend/backend.cpp.i
 
-frontend.s: frontend.cpp.s
-.PHONY : frontend.s
+backend/backend.s: backend/backend.cpp.s
+.PHONY : backend/backend.s
 
 # target to generate assembly for a file
-frontend.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/frontend.cpp.s
-.PHONY : frontend.cpp.s
+backend/backend.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/backend/backend.cpp.s
+.PHONY : backend/backend.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -584,21 +752,42 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Hotel_Management_autogen"
 	@echo "... Hotel_Management"
+	@echo "... Checkout/Checkoutpage.o"
+	@echo "... Checkout/Checkoutpage.i"
+	@echo "... Checkout/Checkoutpage.s"
 	@echo "... Customer/Customer.o"
 	@echo "... Customer/Customer.i"
 	@echo "... Customer/Customer.s"
 	@echo "... Customer/MembershipPolicy.o"
 	@echo "... Customer/MembershipPolicy.i"
 	@echo "... Customer/MembershipPolicy.s"
-	@echo "... Customerwin.o"
-	@echo "... Customerwin.i"
-	@echo "... Customerwin.s"
+	@echo "... CustomerWindow/Customerwin.o"
+	@echo "... CustomerWindow/Customerwin.i"
+	@echo "... CustomerWindow/Customerwin.s"
 	@echo "... Hotel_Management_autogen/mocs_compilation.o"
 	@echo "... Hotel_Management_autogen/mocs_compilation.i"
 	@echo "... Hotel_Management_autogen/mocs_compilation.s"
+	@echo "... Login/Login.o"
+	@echo "... Login/Login.i"
+	@echo "... Login/Login.s"
+	@echo "... Mainwindow/Control/Control.o"
+	@echo "... Mainwindow/Control/Control.i"
+	@echo "... Mainwindow/Control/Control.s"
+	@echo "... Mainwindow/UI/UI.o"
+	@echo "... Mainwindow/UI/UI.i"
+	@echo "... Mainwindow/UI/UI.s"
+	@echo "... Manager/BillingService.o"
+	@echo "... Manager/BillingService.i"
+	@echo "... Manager/BillingService.s"
+	@echo "... Manager/DashboardService.o"
+	@echo "... Manager/DashboardService.i"
+	@echo "... Manager/DashboardService.s"
 	@echo "... Manager/DatabaseManager.o"
 	@echo "... Manager/DatabaseManager.i"
 	@echo "... Manager/DatabaseManager.s"
+	@echo "... Manager/InvoiceRepository.o"
+	@echo "... Manager/InvoiceRepository.i"
+	@echo "... Manager/InvoiceRepository.s"
 	@echo "... Observer.o"
 	@echo "... Observer.i"
 	@echo "... Observer.s"
@@ -608,6 +797,9 @@ help:
 	@echo "... Repository/CustomerRepository.o"
 	@echo "... Repository/CustomerRepository.i"
 	@echo "... Repository/CustomerRepository.s"
+	@echo "... Repository/FoodRepository.o"
+	@echo "... Repository/FoodRepository.i"
+	@echo "... Repository/FoodRepository.s"
 	@echo "... Repository/InventoryRepository.o"
 	@echo "... Repository/InventoryRepository.i"
 	@echo "... Repository/InventoryRepository.s"
@@ -629,12 +821,9 @@ help:
 	@echo "... Room/RoomFactory.o"
 	@echo "... Room/RoomFactory.i"
 	@echo "... Room/RoomFactory.s"
-	@echo "... backend.o"
-	@echo "... backend.i"
-	@echo "... backend.s"
-	@echo "... frontend.o"
-	@echo "... frontend.i"
-	@echo "... frontend.s"
+	@echo "... backend/backend.o"
+	@echo "... backend/backend.i"
+	@echo "... backend/backend.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

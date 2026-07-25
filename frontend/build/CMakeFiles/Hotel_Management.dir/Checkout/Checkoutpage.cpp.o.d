@@ -972,6 +972,28 @@ CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qsizepolicy.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qcursor.h \
   /opt/homebrew/opt/qt/lib/QtGui.framework/Headers/qbitmap.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QString \
+  /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/../Manager/DatabaseManager.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlDatabase \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqldatabase.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlglobal.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsql-config.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qtsqlexports.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qmetaobject.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlError \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlerror.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QCoreApplication \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcoreapplication.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcoreevent.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qbasictimer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qabstracteventdispatcher.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qeventloop.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdeadlinetimer.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qnativeinterface.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcoreapplication_platform.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDebug \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlRecord \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlrecord.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QComboBox \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qcombobox.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qabstractitemdelegate.h \
@@ -1027,4 +1049,9 @@ CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o: \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qtablewidget.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/qtableview.h \
   /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QTableWidgetItem \
-  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QVBoxLayout
+  /opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers/QVBoxLayout \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlQuery \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlquery.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/QDate \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qdatetime.h \
+  /opt/homebrew/opt/qt/lib/QtCore.framework/Headers/qcalendar.h

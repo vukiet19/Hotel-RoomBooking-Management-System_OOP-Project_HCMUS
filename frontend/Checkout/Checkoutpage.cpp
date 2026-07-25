@@ -1,4 +1,6 @@
 #include "CheckoutPage.h"
+#include "../Manager/DatabaseManager.h"
+#include <QSqlRecord>
 
 #include <QComboBox>
 #include <QFormLayout>
@@ -12,6 +14,11 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
+
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDate>
+#include <QDebug>
 
 namespace
 {
@@ -32,7 +39,7 @@ CheckoutPage::CheckoutPage(QWidget *parent) : QWidget(parent)
 {
     setObjectName("checkoutPage");
     setupUi();
-    loadMockBookings();
+    loadMockBookings(); // Tải dữ liệu thực tế từ database
     populateBookingTable();
     clearBookingDetails();
 }
@@ -40,15 +47,10 @@ CheckoutPage::CheckoutPage(QWidget *parent) : QWidget(parent)
 void CheckoutPage::setupUi()
 {
     setStyleSheet(R"(
-        /* --- ĐỂ NỀN TRONG SUỐT ĐỂ ĂN THEO GRADIENT CỦA CONTENT AREA --- */
-        #checkoutPage {
-            background-color: transparent; 
-        }
-
-        /* --- GROUP BOX NỔI BẬT VỚI VIỀN XANH DƯƠNG --- */
+        #checkoutPage { background-color: transparent; }
         #checkoutPage QGroupBox {
             background-color: #ffffff;
-            color: #3730a3; /* Chữ màu Deep Indigo */
+            color: #3730a3;
             border: 2px solid #38bdf8;
             border-radius: 8px;
             margin-top: 15px;
@@ -56,7 +58,6 @@ void CheckoutPage::setupUi()
             font-weight: bold;
             font-size: 15px;
         }
-
         #checkoutPage QGroupBox::title {
             subcontrol-origin: margin;
             left: 12px;
@@ -65,16 +66,10 @@ void CheckoutPage::setupUi()
             background-color: #ffffff;
             border-radius: 4px;
         }
-
-        #checkoutPage QScrollArea {
-            background-color: transparent;
-            border: none;
-        }
-
-        /* --- BẢNG (TABLE) MÀU PASTEL & GRADIENT HEADER CHÓI LỌI --- */
+        #checkoutPage QScrollArea { background-color: transparent; border: none; }
         #checkoutPage QTableWidget {
             background-color: #ffffff;
-            alternate-background-color: #f5f3ff; /* Tím pastel xen kẽ */
+            alternate-background-color: #f5f3ff;
             border: 2px solid #a5b4fc;
             border-radius: 8px;
             gridline-color: #e0e7ff; 
@@ -84,16 +79,8 @@ void CheckoutPage::setupUi()
             selection-color: #ffffff;
             outline: none; 
         }
-
-        #checkoutPage QTableWidget::item {
-            padding: 5px; 
-        }
-
-        #checkoutPage QTableWidget::item:hover {
-            background-color: #e0e7ff; 
-            color: #312e81;
-        }
-
+        #checkoutPage QTableWidget::item { padding: 5px; }
+        #checkoutPage QTableWidget::item:hover { background-color: #e0e7ff; color: #312e81; }
         #checkoutPage QHeaderView::section:horizontal {
             background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #312e81, stop:1 #312e81); 
             color: #ffffff;
@@ -103,16 +90,8 @@ void CheckoutPage::setupUi()
             border: none;
             border-right: 1px solid #ffffff;
         }
-
-        #checkoutPage QHeaderView::section:horizontal:first {
-            border-top-left-radius: 8px; 
-        }
-
-        #checkoutPage QHeaderView::section:horizontal:last {
-            border-top-right-radius: 8px;
-            border-right: none;
-        }
-
+        #checkoutPage QHeaderView::section:horizontal:first { border-top-left-radius: 8px; }
+        #checkoutPage QHeaderView::section:horizontal:last { border-top-right-radius: 8px; border-right: none; }
         #checkoutPage QHeaderView::section:vertical {
             background-color: #f8fafc;
             color: #64748b;
@@ -121,13 +100,7 @@ void CheckoutPage::setupUi()
             border: none;
             border-right: 1px solid #bae6fd;
         }
-
-        #checkoutPage QTableCornerButton::section {
-            background-color: #38bdf8; 
-            border: none;
-        }
-
-        /* --- COMBOBOX & INPUT (ÉP NỀN TRẮNG, SÁNG SỦA CHO MAC) --- */
+        #checkoutPage QTableCornerButton::section { background-color: #38bdf8; border: none; }
         #checkoutPage QComboBox, #checkoutPage QLineEdit {
             background-color: #ffffff;
             border: 2px solid #38bdf8;
@@ -136,25 +109,10 @@ void CheckoutPage::setupUi()
             font-size: 14px;
             color: #312e81;
         }
-        
-        #checkoutPage QComboBox:hover, #checkoutPage QLineEdit:hover { 
-            border: 2px solid #6366f1; 
-        }
-        
-        #checkoutPage QComboBox:focus, #checkoutPage QLineEdit:focus { 
-            border: 2px solid #8b5cf6; 
-            background-color: #f0f9ff; 
-        }
-
-        #checkoutPage QComboBox::drop-down {
-            border: none;
-            width: 25px;
-        }
-        
-        #checkoutPage QComboBox::down-arrow {
-            image: none;
-        }
-        
+        #checkoutPage QComboBox:hover, #checkoutPage QLineEdit:hover { border: 2px solid #6366f1; }
+        #checkoutPage QComboBox:focus, #checkoutPage QLineEdit:focus { border: 2px solid #8b5cf6; background-color: #f0f9ff; }
+        #checkoutPage QComboBox::drop-down { border: none; width: 25px; }
+        #checkoutPage QComboBox::down-arrow { image: none; }
         #checkoutPage QComboBox QAbstractItemView, #checkoutPage QComboBox QListView {
             background-color: #ffffff;
             color: #312e81;
@@ -164,13 +122,7 @@ void CheckoutPage::setupUi()
             selection-color: #312e81;
             outline: none;
         }
-
-        /* --- LABELS THÔNG THƯỜNG --- */
-        #checkoutPage QLabel {
-            color: #3730a3;
-            font-weight: bold;
-            font-size: 14px;
-        }
+        #checkoutPage QLabel { color: #3730a3; font-weight: bold; font-size: 14px; }
     )");
 
     auto *rootLayout = new QVBoxLayout(this);
@@ -182,16 +134,13 @@ void CheckoutPage::setupUi()
     rootLayout->addWidget(title);
 
     auto *subtitle = new QLabel(
-        "Select a current booking to review the guest information and checkout amount.", this);
+        "Select an active booking to review guest info and calculate checkout total.", this);
     subtitle->setStyleSheet("color: #64748b; font-size: 13px;");
     rootLayout->addWidget(subtitle);
 
     auto *searchLayout = new QHBoxLayout();
     searchEdit = new QLineEdit(this);
     searchEdit->setPlaceholderText("Search by booking ID, customer name, phone or room...");
-    searchEdit->setStyleSheet(
-        "QLineEdit { background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; }"
-        "QLineEdit:focus { border: 2px solid #3b82f6; }");
 
     auto *searchButton = new QPushButton("Search", this);
     auto *clearButton = new QPushButton("Clear", this);
@@ -212,8 +161,6 @@ void CheckoutPage::setupUi()
     bookingTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     bookingTable->setAlternatingRowColors(true);
     bookingTable->verticalHeader()->setVisible(false);
-    bookingTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    bookingTable->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     bookingTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     bookingTable->setMinimumHeight(170);
     bookingTable->setMaximumHeight(220);
@@ -223,8 +170,6 @@ void CheckoutPage::setupUi()
     auto *detailsScroll = new QScrollArea(this);
     detailsScroll->setWidgetResizable(true);
     detailsScroll->setFrameShape(QFrame::NoFrame);
-    detailsScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    detailsScroll->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
     detailsContainer = new QWidget(detailsScroll);
     detailsContainer->setObjectName("checkoutDetailsContainer");
@@ -287,7 +232,6 @@ void CheckoutPage::setupUi()
     serviceTable->setHorizontalHeaderLabels({"Service", "Quantity", "Amount"});
     serviceTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     serviceTable->verticalHeader()->setVisible(false);
-    serviceTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     serviceTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     serviceTable->setMinimumHeight(100);
     serviceTable->setMaximumHeight(150);
@@ -324,6 +268,7 @@ void CheckoutPage::setupUi()
     connect(clearButton, &QPushButton::clicked, this, [this]()
             {
         searchEdit->clear();
+        loadMockBookings();
         populateBookingTable(); });
     connect(bookingTable, &QTableWidget::cellClicked, this,
             [this](int row, int)
@@ -334,56 +279,78 @@ void CheckoutPage::setupUi()
 
 void CheckoutPage::loadMockBookings()
 {
-    CheckoutBookingPreview first;
-    first.bookingId = "BK-1001";
-    first.customerName = "Nguyen Van An";
-    first.phone = "0901234567";
-    first.roomNumber = "203";
-    first.roomType = "Deluxe Room";
-    first.checkInDate = "2026-07-15";
-    first.expectedCheckOutDate = "2026-07-18";
-    first.nights = 3;
-    first.roomCharge = 1500000;
-    first.discount = 100000;
-    first.deposit = 500000;
-    first.services = {
-        {"Breakfast", 2, 100000},
-        {"Minibar", 1, 50000},
-    };
+    bookings.clear();
 
-    CheckoutBookingPreview second;
-    second.bookingId = "BK-1002";
-    second.customerName = "Tran Thi Binh";
-    second.phone = "0912345678";
-    second.roomNumber = "305";
-    second.roomType = "VIP Room";
-    second.checkInDate = "2026-07-16";
-    second.expectedCheckOutDate = "2026-07-20";
-    second.nights = 4;
-    second.roomCharge = 3200000;
-    second.discount = 0;
-    second.deposit = 1000000;
-    second.services = {
-        {"Airport transfer", 1, 300000},
-        {"Laundry", 3, 70000},
-    };
+    if (!DatabaseManager::instance().open())
+    {
+        qDebug() << "[ERROR] Database not open inside CheckoutPage!";
+        return;
+    }
 
-    CheckoutBookingPreview third;
-    third.bookingId = "BK-1003";
-    third.customerName = "Le Minh Cuong";
-    third.phone = "0987654321";
-    third.roomNumber = "401";
-    third.roomType = "Standard Room";
-    third.checkInDate = "2026-07-17";
-    third.expectedCheckOutDate = "2026-07-19";
-    third.nights = 2;
-    third.roomCharge = 1200000;
-    third.discount = 50000;
-    third.deposit = 300000;
+    QSqlQuery query(DatabaseManager::instance().database());
 
-    bookings = {first, second, third};
+    QString sql = R"(
+        SELECT b.id AS booking_id, 
+               b.customer_id, 
+               c.full_name, 
+               c.phone_number, 
+               b.room_number AS room_id, 
+               r.room_type, 
+               r.base_price, 
+               b.check_in_time AS check_in, 
+               b.check_out_time AS check_out
+        FROM Bookings b
+        LEFT JOIN Customer c ON b.customer_id = c.id_customer
+        LEFT JOIN ListRooms r ON b.room_number = r.room_id
+    )";
+
+    if (!query.exec(sql))
+    {
+        qDebug() << "[ERROR] Failed to load active bookings:" << query.lastError().text();
+        return;
+    }
+
+    while (query.next())
+    {
+        CheckoutBookingPreview b;
+        b.bookingId = query.value("booking_id").toString();
+        b.customerName = query.value("full_name").toString();
+        b.phone = query.value("phone_number").toString();
+        b.roomNumber = query.value("room_id").toString();
+        b.roomType = query.value("room_type").toString();
+        b.checkInDate = query.value("check_in").toString();
+        b.expectedCheckOutDate = query.value("check_out").toString();
+
+        QDate inDate = QDate::fromString(b.checkInDate, "yyyy-MM-dd");
+        QDate outDate = QDate::fromString(b.expectedCheckOutDate, "yyyy-MM-dd");
+        b.nights = qMax(1, static_cast<int>(inDate.daysTo(outDate)));
+
+        double basePrice = query.value("base_price").toDouble();
+        b.roomCharge = basePrice * b.nights;
+        b.discount = 0.0;
+        b.deposit = 0.0;
+
+        QSqlQuery serviceQuery(DatabaseManager::instance().database());
+        serviceQuery.prepare("SELECT item_name, quantity, price FROM BookingServiceItems WHERE booking_id = :bId");
+        serviceQuery.bindValue(":bId", b.bookingId);
+
+        if (serviceQuery.exec())
+        {
+            while (serviceQuery.next())
+            {
+                CheckoutServicePreview item;
+                item.name = serviceQuery.value("item_name").toString();
+                item.quantity = serviceQuery.value("quantity").toInt();
+                item.unitPrice = serviceQuery.value("price").toDouble();
+                b.services.append(item);
+            }
+        }
+
+        bookings.append(b);
+    }
+
+    qDebug() << "[SUCCESS] Loaded" << bookings.size() << "active bookings from database!";
 }
-
 void CheckoutPage::populateBookingTable(const QString &filter)
 {
     bookingTable->setRowCount(0);
@@ -502,19 +469,49 @@ void CheckoutPage::showConfirmDialog()
         return;
 
     const auto &booking = bookings.at(index);
+    const double finalTotal = totalCharge(booking);
+
     const QString message = QString(
                                 "Customer: %1\nRoom: %2\nTotal amount: %3\nPayment method: %4\n\n"
-                                "This is a UI prototype. No database will be changed.")
+                                "Confirm guest checkout and release room?")
                                 .arg(booking.customerName,
                                      booking.roomNumber,
-                                     formatMoney(totalCharge(booking)),
+                                     formatMoney(finalTotal),
                                      paymentMethodComboBox->currentText());
 
-    if (QMessageBox::question(this, "Confirm checkout", message,
+    if (QMessageBox::question(this, "Confirm Checkout", message,
                               QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
     {
-        QMessageBox::information(this, "Checkout preview",
-                                 "Checkout confirmation simulated successfully.\n"
-                                 "The booking data has not been saved.");
+        QSqlDatabase db = DatabaseManager::instance().database();
+        db.transaction();
+
+        // 1. Cập nhật trạng thái phòng về Trống (0)
+        QSqlQuery updateRoom(db);
+        updateRoom.prepare("UPDATE ListRooms SET Status = 0 WHERE room_id = :roomId");
+        updateRoom.bindValue(":roomId", booking.roomNumber);
+
+        // 2. Thêm hóa đơn vào bảng Bills
+        // QSqlQuery insertBill(db);
+        // insertBill.prepare("INSERT INTO Bills (booking_id, customer_name, total_amount, payment_method, date) "
+        //                   "VALUES (:bId, :cName, :amount, :method, :date)");
+        // insertBill.bindValue(":bId", booking.bookingId);
+        // insertBill.bindValue(":cName", booking.customerName);
+        // insertBill.bindValue(":amount", finalTotal);
+        // insertBill.bindValue(":method", paymentMethodComboBox->currentText());
+        // insertBill.bindValue(":date", QDate::currentDate().toString("yyyy-MM-dd"));
+
+        if (updateRoom.exec())
+        {
+            db.commit();
+            QMessageBox::information(this, "Checkout Success",
+                                     "Checkout processed successfully! Room status set to Available.");
+            loadMockBookings();
+            populateBookingTable();
+        }
+        else
+        {
+            db.rollback();
+            QMessageBox::critical(this, "Database Error", "Failed to process checkout in database!");
+        }
     }
 }

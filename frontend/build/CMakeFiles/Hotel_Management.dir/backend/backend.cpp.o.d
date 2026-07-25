@@ -1027,6 +1027,8 @@ CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o: \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/../CUSTOMER/MembershipPolicy.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/TypeRoom.h \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlRecord \
+  /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/qsqlrecord.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DepositStatus.h \
   /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.h \
   /opt/homebrew/opt/qt/lib/QtSql.framework/Headers/QSqlDatabase \
