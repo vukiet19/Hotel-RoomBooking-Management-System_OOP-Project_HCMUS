@@ -3,7 +3,10 @@
 #include "Repository/BookingRepository.h"
 #include "Repository/CustomerRepository.h"
 #include "Repository/RoomRepository.h"
+#include "Customer/Customer.h"
 #include "Room/Room.h"
+#include "Room/RoomStatus.h"
+#include "Room/TypeRoom.h"
 #include "Room/DerivedRooms.h"
 #include "Booking/Booking.h"
 #include "Booking/BookingFactory.h"
@@ -39,6 +42,42 @@ void printRoomStatus(const string &roomName, Room *r)
 	}
 }
 
+void testRoomBooking()
+{
+	// Khởi tạo customer
+	Customer a("Megumin", "1234567890", "1234567890");
+
+	a.display();
+
+	// Khởi tạo phòng
+	StandardRoom r1;
+
+	a.setIdroom(r1.getId());
+	cout << a.getIdRoom() << '\n';
+
+	// Setbaseprice
+	r1.setBasePrice(10000000);
+
+	// Kiểm tra tier hiện tại của khách hàng
+	cout << a.getTier() << '\n';
+
+	// Lúc sau hàm này sẽ là checkout, dùng để tính điểm.
+	r1.getBill(a);
+
+	cout << a.getPoint() << '\n';
+
+	cout << a.getTier() << '\n';
+
+	for (int i = 0; i < 10; i++)
+	{
+		r1.getBill(a);
+	}
+
+	cout << a.getPoint() << '\n';
+
+	cout << a.getTier() << '\n';
+}
+
 int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
@@ -57,6 +96,10 @@ int main(int argc, char *argv[])
 	{
 		qDebug() << "ERROR: Khong mo duoc Database!";
 	}
+
+	// Chạy thử demo test room booking của Room_booking_cus
+	std::cout << "\n--- DEMO TEST ROOM BOOKING ---" << std::endl;
+	testRoomBooking();
 
 	return 0;
 }

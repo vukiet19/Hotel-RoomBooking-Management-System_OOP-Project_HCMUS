@@ -11,7 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # 1. Updated to your macOS Homebrew Qt path
-set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt")
+set(CMAKE_PREFIX_PATH "/Users/son/Qt/6.11.1/macos")
 
 # 2. Added 'Widgets' to fix the QApplication error
 find_package(Qt6 COMPONENTS Core Sql Widgets REQUIRED)
@@ -27,7 +27,10 @@ file(GLOB_RECURSE SOURCES
     "main.cpp"
 )
 
-list(FILTER SOURCES EXCLUDE REGEX "^build/")
+list(FILTER SOURCES EXCLUDE REGEX "/build/")
+list(FILTER SOURCES EXCLUDE REGEX "/frontend/")
+list(FILTER SOURCES EXCLUDE REGEX "/duckz/")
+list(FILTER SOURCES EXCLUDE REGEX "DerivedRoom\\.cpp")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

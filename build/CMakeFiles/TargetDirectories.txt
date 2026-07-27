@@ -1,4 +1,5 @@
-/Users/sunix/Downloads/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS-duckz/build/CMakeFiles/Hotel_Management.dir
-/Users/sunix/Downloads/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS-duckz/build/CMakeFiles/edit_cache.dir
-/Users/sunix/Downloads/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS-duckz/build/CMakeFiles/rebuild_cache.dir
-/Users/sunix/Downloads/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS-duckz/build/CMakeFiles/Hotel_Management_autogen.dir
+/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/Hotel_Management.dir
+/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/edit_cache.dir
+/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/rebuild_cache.dir
+/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/Hotel_Management_autogen_timestamp_deps.dir
+/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/Hotel_Management_autogen.dir

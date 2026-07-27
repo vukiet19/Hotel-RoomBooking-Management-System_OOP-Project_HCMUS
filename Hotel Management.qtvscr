@@ -1,0 +1,429 @@
+<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" FontFamily="Segoe UI" FontSize="12">
+  <FlowDocument.Tag><![CDATA[{
+  "timestamp": "2026-06-22 15:44:47",
+  "files": {
+    "C:\\Users\\Duy\\OneDrive\\Desktop\\OOP (TH)\\Mid-term Project\\Hotel Management\\Hotel Management\\Hotel Management.vcxproj": {
+      "before": "7VltT+NGEL7PlfoD+s2yqEI+EAPhCBTHp15CadTwogsvXyqdNs4k2Z7ttXbXHLTXX9A/3bH3xXFI7ogoUCH4gOTd2dnZZ2eemdn888ObN/67mzhyroELypK2u9XYdB1IQjaiyaTtZnK8see+C77/zj/j7A8IpdOFMckieU74BKRou+8zGo1cB7Uk+DWVMv3J80Q4hZiIRkxDzgQby0bIYm8E1xCxFLgXi2G+zNve3Gy6qN1x/J6E+IizLHX6ZAhR29UbdlgyppOME4kGCiWM4otmnV4SRtkI2m4XhtnkyxVNmttmBa6pqAoKGd+rDuam5H/+WUTkmPE4KJT4nv1WEjig8Fi0/BvGfYAIiIBvmKelnsNAhd7N7s5DsUMVj4Lc10y7N24rGud71kOVw6IDoCvL24rTHkVsSKLSTS872k8uVYQFW63Gpu/dGdZe9RvcfmZ8pJwuX+l7ZkhLaHVHGR0Ff8F4r9lq7rc29nZ29jZ2xm9hg4Tj3Y3dt6Pm1v5+i4St7b+tqxZrtJoPjMkTEoNISQjBr0xCdEwSMoEYEul71Wm9BiNhxD4LFfkmHuy5NvNzfVUkV1MYU8KmQz9OGZeOPlrbXVu/7Gh+OSNyWv/92NJIJ00bmoEaKV6AcB1v0XVgWI5ozhhtt7a2XgnS+pe1dWN9vdZu12bIouYa9qksMXFQZZDz2xSCn9M0omFBTnOhWkxr6C4EFLv06ZATTkEEkmfge3fH9QJj4DljkQAZXG/tNMtQMqNauDMlnIQS+AAlLxKK7I26K6NLsUfQy+twVoGtQmNPB9wYw+s/Q+5qyiJACCacxKeppDH9s7hKfT1Lp58VeEvPTwf6y/FWZP2ng+2l+GpvNYKuErNaXMmShzcSkrzgRMKSWGjqfIkpttiokJ1NDZXFA2Q7GClKvt8Kw3GDKWDJ6q7EcpXkUNiESewuHkjkPE+aXcrn09VMtmlkKGby1gzXwg0VUqxjplpZT61uU1afhSTCfNQlkpj8YdPjvaB9CFBz6eAVKtu0LCk4CiZ6hWk5TMajXh5QJs4qvJaH/jHJ+2UbtHnHgdUuTYpSVknP0MZqla1xtU7UYXFKI9ADyGdXhCdIw/28Pw+K/1hsVgZVwYOig26/M4Xwk66Q7KcVOOOA/B+CEIyXtovgqnfS3D742D18f3F08LFzejI47R8e/Li+RL6edwqLNdmt8hodW3SShHCMJa82aX5U12re/Ln9Pk0+lRgMsuHgViDgASoQWBb6XjlktzyCBPApQlXzPbV93mbovZdOGyPsnqqdLAGazXkPvHUTN8XLRa3sXR50779kSZgftPCO/BToL/rQC6csYr1EcorJPjRipvdZMGEXWbdShaf9tALLfEN52cmrlynPfkQvm+lCnplZXjlF89gj3rbhlEounmfU1TKJ4YP/OaO8csn9vKtMYOgG1jNmnuSxKxnis7d6ZuSNME1NnbN4QUxoMiulvLvcpvzFoOQf/QPA8l2nZs+72lbrcaX6/cOqm+lczROi7XL1W+biltU+zwb/Ag==",
+      "after": "7VltU9s4EO7nm7nfcD4PNyEzRwyEFlocd45AKXMJLw2FL51hFEdJ3NqWT5Ypuev991u9xkpi2hwt7bTwAbC0Wq1Wj3aflZJfHj3yn98ksXONaR6RtOVuNNZdB6chGUTpqOUWbLi24z4Pfv7JP6XkLQ6Zs4+HqIjZOaIjzPKWu1dE8cB1QEsKX2PGsmeel4djnKC8kUQhJTkZskZIEm+Ar3FMMky9JO/zYd7m+nrTBe2O4x8xnBxSUmROB/Vx3HLVhG2SDqNRQREDA3MpDOKLep2jNIyLAW65+7hfjD5cRmlzU4+AMZaqQMj4nt3ITeE//mmM2JDQJBBKfM98SwlokP5YNPwjxr3CMUY5/oh5SuprGCi9d/Nk666+AxVfxHO3mfbJflvSON8zCJWABQAAlNnEAu1hTPoonsL0oq1wciFPWLCx3Vj3vblmhao/8eQ9oQMJOj7S93STklDqDotoEPyDhzvN7ebT7bWdra2dta3hY7yGwuGTtSePB82Np0+3Ubi9+a+Bqhij1LwihB2jBOcZCnHwkjAcd1GKRjjBKfM9u1uNgZMwIO9zefL1eTDrWufrulVkZo1n7KJ3dd1cB4jMrPGMdXMRVhw4XYOIH/yWW1tZNe31WqtVqzknr5xfD26inOWrVu+bv1iDyfhUq7vBymq3J9Qp3+1HFAIZoZP6G6PR98y/cnf5+Z5urwpRSUYoc5SalruyetFWcfAUsXH9TdeEu3aWNVSkbGSgKXcdbxFs7AVawaT+YWVVe1ksuBTUaq6OktYQfV7tSHc+yXDwR5bFUSiC6ExIEd1qb17nWMzSifoU0QjnAaMF9r35djVAG3hOSJxjFlxvbDWnR163KuH2GFEUMkx7IPk6jSDLgG6rlUsKwM763tqOGVxYPphzmxVu789xQwgDn81zl2MSY3DBiKLkJGNREv0ttlJtT2X3V3W8SSP35/TvB62Qne7Pbd8LVo+WC9B2YJ4fbFJCHTLK1UAS31zH81LorkhCM0MgFy1OAorwnjGIiwx4NySLknJIbbcHODsvLEwzd5xhNoR+iTnK0eJL6NdrkAdLzSCzt8OZUMs1231M2AtSpFDV7GGoAbDK8S23XeSMJIJL7LbjNkmyKMbWZn2cj1SzljMmocU5iwrcXZznQMociU2UhmDmy2g0dp1zfMNKJj9zQlLEAyclzIkJ5HnsTEnQ7/x/AfZdB/6IMi5BEyEs6jAYTDkniicNA1FPrrrMfCyme3DDcMqLRgPaACiyOIBCrnJgD1gAHrifKA1JT1CB3hhDuWn5ermDoV06f8yB3FBOeIEXzlK4EgNrFCC24OxjQ0CX1sMDgjqZHdizGDjaPmJIcyq9FcCI5o02YOUkVpulUP1J23AXx+qzJGrjmkHrvJVLu8Ta4B/RtaUw+IBYZkWcz4FYEf1/aMdqL1qu5ee0i/hdnQ464j4OKtgoFfW3lP7frER73CRN1QCh7RLRFDhPh98NBuI3FJBWo8yFINrb77THOHynqh7zaQROKc4oCSFpEjq1PQ8uj46bm7tX+wd7rw93r9onx72TzsHub6sV8nVegS7WZKbilAyuB3lK7kIZq0yabTXiXbgyjcD10jbJHMoVXHW/VAFlsuYb2pedKH03dWOv6PcmOdyhBmBDDtWi702bjBmHOMVwkyqL/CO5An69osyv7NZGmDnlbdjUx+WUD0bMdCxFZyuSy+z6l4POiyIN+UIFwPgqAHJq0Qu7jMeOUkYj4DmhFtNXIgs6zCCDTFmPmk8jUAUvCdTjB6BWIlF6tLL7PoG6IFXfDaQGJ8vC5iGy+ZWI+IYAoyObRULuBhkdlb7xuPYQ0e4NoNNMDBnSgKv0NAoVZh+eH+VzD22EWaY53+IBCYrSstTcQ5j9LiaUqIfY6lnhBsMUq/rhV5CZBaXurY8sTL7zGHXzNWipUp5eiVh1ZsX1XekNSRsrtVvU2dyDqFui+YsN8wAX/Ac="
+    }
+  }
+}]]></FlowDocument.Tag>
+  <Section Margin="0,24" TextAlignment="Center">
+    <Paragraph FontSize="24" FontWeight="Bold" Margin="12,0">
+      <LineBreak />
+      <Span Foreground="Gray">Qt Visual Studio Tools</Span>
+    </Paragraph>
+    <Paragraph FontSize="42" Margin="12,0" FontWeight="Bold">
+      <Span TextDecorations="Underline">Project Format Conversion</Span>
+    </Paragraph>
+    <Paragraph Margin="12,8" FontSize="18">
+      <Span>Report generated on 2026-06-22 15:44:47</Span>
+    </Paragraph>
+  </Section>
+  <Section>
+    <Paragraph FontSize="32" FontWeight="Bold" Margin="12,0">
+      <Span>Files</Span>
+    </Paragraph>
+    <Paragraph Margin="24,12,0,0">
+      <Span FontFamily="Consolas" FontSize="14" Background="WhiteSmoke"><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+      <LineBreak />
+      <Hyperlink NavigateUri="file://C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj?before">[Before]</Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj?after">[After]</Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj?diff&amp;before&amp;after">
+                        [Diff before/after]
+                    </Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj?diff&amp;before&amp;current">
+                        [Diff before/current]
+                    </Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj?diff&amp;after&amp;current">
+                        [Diff after/current]
+                    </Hyperlink>
+      <LineBreak />
+    </Paragraph>
+  </Section>
+  <Section>
+    <Paragraph FontSize="32" FontWeight="Bold" Margin="12,0">
+      <Span>Changes</Span>
+    </Paragraph>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Enabling multi-processor compilation]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Project format version]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Keyword>QtVS_v304</Keyword>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Fallback for QTMSBUILD environment variable]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Default Qt properties]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Import Project="$(QtMsBuild)\qt_defaults.props" Condition="Exists('$(QtMsBuild)\qt_defaults.props')" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt build settings]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Warn if Qt/MSBuild is not found]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') OR !Exists('$(QtMsBuild)\Qt.props')">]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  </Target>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt property sheet]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt targets]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\Duy\OneDrive\Desktop\OOP (TH)\Mid-term Project\Hotel Management\Hotel Management\Hotel Management.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+  </Section>
+  <Section>
+    <Paragraph />
+  </Section>
+</FlowDocument>
+<!--3/yRr4KeqcA+wBjzgGPtT52nsabAzsyfm50t3TzPSIw=-->
