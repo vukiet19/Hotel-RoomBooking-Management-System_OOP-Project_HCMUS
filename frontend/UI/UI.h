@@ -1,13 +1,20 @@
 #pragma once
 
 #include <QWidget>
-#include <QStackedWidget>
-#include <QTableWidget>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QLabel>
-#include "frontend/Checkout/CheckoutPage.h"
-#include <QString>
+
+#include "frontend/UI/ManagerWindow/Booking/BookingPage.h"
+#include "frontend/UI/ManagerWindow/Bill/BillPage.h"
+#include "frontend/UI/ManagerWindow/Checkout/CheckoutPage.h"
+#include "frontend/UI/ManagerWindow/Customer/CustomerPage.h"
+#include "frontend/UI/ManagerWindow/Dashboard/DashboardPage.h"
+#include "frontend/UI/ManagerWindow/Inventory/InventoryPage.h"
+#include "frontend/UI/ManagerWindow/Room/RoomPage.h"
+#include "frontend/UI/ManagerWindow/Service/ServicePage.h"
+
+class QStackedWidget;
+class QTableWidget;
+class QPushButton;
+class QLabel;
 
 class MainWindowUi : public QWidget
 {
@@ -15,13 +22,29 @@ public:
     MainWindowUi(QWidget *parent = nullptr);
 
 protected:
+    enum PageIndex
+    {
+        DashboardIndex,
+        BookingIndex,
+        CustomerIndex,
+        RoomIndex,
+        ServiceIndex,
+        InventoryIndex,
+        BillIndex,
+        CheckoutIndex
+    };
+
     void setupUi();
 
     QWidget *actionBar;
-    QPushButton *button1, *button2, *button3, *button4, *button5;
-    QPushButton *button6, *button7, *button8, *button9, *button10;
-    QPushButton *buttonCheckout;
     QPushButton *buttonDashboard;
+    QPushButton *buttonBooking;
+    QPushButton *buttonCustomer;
+    QPushButton *buttonRoom;
+    QPushButton *buttonService;
+    QPushButton *buttonInventory;
+    QPushButton *buttonBill;
+    QPushButton *buttonCheckout;
 
     QPushButton *btnAdd;
     QPushButton *btnUpdate;
@@ -29,7 +52,14 @@ protected:
     QPushButton *btnFilter;
 
     QStackedWidget *stackedWidget;
-    class CheckoutPage *checkoutPage;
+    BookingPage *bookingPage;
+    CustomerPage *customerPage;
+    RoomPage *roomPage;
+    ServicePage *servicePage;
+    InventoryPage *inventoryPage;
+    BillPage *billPage;
+    DashboardPage *dashboardPage;
+    CheckoutPage *checkoutPage;
 
     QTableWidget *tableBooking;
     QTableWidget *tableBookingItems;

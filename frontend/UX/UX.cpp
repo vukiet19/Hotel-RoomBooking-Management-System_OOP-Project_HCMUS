@@ -8,7 +8,7 @@
 #include "frontend/usercheck/backend.h"
 #include "backend/Repository/CustomerRepository.h"
 #include "backend/Repository/RoomRepository.h"
-#include "frontend/Checkout/CheckoutPage.h"
+#include "frontend/UI/ManagerWindow/Checkout/CheckoutPage.h"
 #include "backend/Manager/DatabaseManager.h"
 #include "backend/Manager/DashboardService.h"
 #include <QMessageBox>
@@ -34,6 +34,10 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QPushButton>
+#include <QStackedWidget>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 
 MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(parent)
 {
@@ -46,18 +50,23 @@ MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(paren
 // Hàm link kết nối
 void MainWindowController::initConnections()
 {
-    connect(button1, &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
-    connect(button2, &QPushButton::clicked, this, &MainWindowController::handleLogin_2);
-    connect(button3, &QPushButton::clicked, this, &MainWindowController::handleLogin_3);
-    connect(button4, &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
-    connect(button5, &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
-    connect(button6, &QPushButton::clicked, this, &MainWindowController::handleLogin_6);
-    connect(button7, &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
-    connect(button8, &QPushButton::clicked, this, &MainWindowController::handleLogin_8);
-    connect(button9, &QPushButton::clicked, this, &MainWindowController::handleLogin_9);
-    connect(button10, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
+    connect(buttonBooking, &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
+    connect(buttonCustomer, &QPushButton::clicked, this, &MainWindowController::handleLogin_3);
+    connect(buttonRoom, &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
+    connect(buttonService, &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
+    connect(buttonInventory, &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
+    connect(buttonBill, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
     connect(buttonCheckout, &QPushButton::clicked, this, &MainWindowController::handleCheckout);
     connect(buttonDashboard, &QPushButton::clicked, this, &MainWindowController::handleDashboardTab);
+
+    connect(bookingPage->bookingTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
+    connect(bookingPage->servicesTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_2);
+    connect(roomPage->roomTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
+    connect(roomPage->roomTypeTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_8);
+    connect(servicePage->foodTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
+    connect(servicePage->serviceTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_9);
+    connect(inventoryPage->inventoryTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
+    connect(inventoryPage->inventoryLogTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_6);
 
     connect(&QtHotelObserver::instance(), &QtHotelObserver::roomStatusChanged,
             this, [this](const QString &, int, const QString &)
@@ -78,8 +87,9 @@ void MainWindowController::initConnections()
 void MainWindowController::handleLogin_1()
 {
     setActionBarVisible(true);
-    stackedWidget->setCurrentIndex(0);
-    setActiveButton(button1);
+    stackedWidget->setCurrentIndex(BookingIndex);
+    bookingPage->setSection(0);
+    setActiveButton(buttonBooking);
     Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
     // disconnect là ngắt kết nối chức năng hàm đó, để cho các hàm này không lập lại
     btnAdd->disconnect();
@@ -93,9 +103,10 @@ void MainWindowController::handleLogin_1()
 
 void MainWindowController::handleLogin_2()
 {
-    stackedWidget->setCurrentIndex(1);
+    stackedWidget->setCurrentIndex(BookingIndex);
+    bookingPage->setSection(1);
     setActionBarVisible(true);
-    setActiveButton(button2);
+    setActiveButton(buttonBooking);
     btnAdd->disconnect();
     btnUpdate->disconnect();
     btnDelete->disconnect();
@@ -107,9 +118,9 @@ void MainWindowController::handleLogin_2()
 
 void MainWindowController::handleLogin_3()
 {
-    stackedWidget->setCurrentIndex(2);
+    stackedWidget->setCurrentIndex(CustomerIndex);
     setActionBarVisible(true);
-    setActiveButton(button3);
+    setActiveButton(buttonCustomer);
     Backend::loadTableData(tableCustomer, "SELECT * FROM Customer");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -125,9 +136,10 @@ void MainWindowController::handleLogin_3()
 
 void MainWindowController::handleLogin_4()
 {
-    stackedWidget->setCurrentIndex(3);
+    stackedWidget->setCurrentIndex(ServiceIndex);
+    servicePage->setSection(0);
     setActionBarVisible(true);
-    setActiveButton(button4);
+    setActiveButton(buttonService);
 
     Backend::loadTableData(tableFood, "SELECT * FROM FoodOptions");
 
@@ -146,9 +158,10 @@ void MainWindowController::handleLogin_4()
 
 void MainWindowController::handleLogin_5()
 {
-    stackedWidget->setCurrentIndex(4);
+    stackedWidget->setCurrentIndex(InventoryIndex);
+    inventoryPage->setSection(0);
     setActionBarVisible(true);
-    setActiveButton(button5);
+    setActiveButton(buttonInventory);
     Backend::loadTableData(tableInventory, "SELECT * FROM Inventory");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -160,9 +173,10 @@ void MainWindowController::handleLogin_5()
 
 void MainWindowController::handleLogin_6()
 {
-    stackedWidget->setCurrentIndex(5);
+    stackedWidget->setCurrentIndex(InventoryIndex);
+    inventoryPage->setSection(1);
     setActionBarVisible(true);
-    setActiveButton(button6);
+    setActiveButton(buttonInventory);
     Backend::loadTableData(tableInventoryLog, "SELECT * FROM InventoryLog");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -174,9 +188,10 @@ void MainWindowController::handleLogin_6()
 
 void MainWindowController::handleLogin_7()
 {
-    stackedWidget->setCurrentIndex(6);
+    stackedWidget->setCurrentIndex(RoomIndex);
+    roomPage->setSection(0);
     setActionBarVisible(true);
-    setActiveButton(button7);
+    setActiveButton(buttonRoom);
     Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
 
     btnAdd->disconnect();
@@ -193,9 +208,10 @@ void MainWindowController::handleLogin_7()
 
 void MainWindowController::handleLogin_8()
 {
-    stackedWidget->setCurrentIndex(7);
+    stackedWidget->setCurrentIndex(RoomIndex);
+    roomPage->setSection(1);
     setActionBarVisible(true);
-    setActiveButton(button8);
+    setActiveButton(buttonRoom);
     Backend::loadTableData(tableRoomType, "SELECT * FROM RoomTypeCatalog");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -207,9 +223,10 @@ void MainWindowController::handleLogin_8()
 
 void MainWindowController::handleLogin_9()
 {
-    stackedWidget->setCurrentIndex(8);
+    stackedWidget->setCurrentIndex(ServiceIndex);
+    servicePage->setSection(1);
     setActionBarVisible(true);
-    setActiveButton(button9);
+    setActiveButton(buttonService);
     Backend::loadTableData(tableService, "SELECT * FROM ListServiceItems");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -221,9 +238,9 @@ void MainWindowController::handleLogin_9()
 
 void MainWindowController::handleLogin_10()
 {
-    stackedWidget->setCurrentIndex(9);
+    stackedWidget->setCurrentIndex(BillIndex);
     setActionBarVisible(true);
-    setActiveButton(button10);
+    setActiveButton(buttonBill);
     Backend::loadTableData(tableBill, "SELECT * FROM Bills");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -350,8 +367,8 @@ void MainWindowController::AddNewCustomerClicked()
 void MainWindowController::setActiveButton(QPushButton *clickedButton)
 {
     QList<QPushButton *> buttons = {
-        button1, button2, button3, button4, button5,
-        button6, button7, button8, button9, button10, buttonCheckout, buttonDashboard};
+        buttonDashboard, buttonBooking, buttonCustomer, buttonRoom,
+        buttonService, buttonInventory, buttonBill, buttonCheckout};
 
     for (QPushButton *btn : buttons)
     {
@@ -1087,7 +1104,7 @@ void MainWindowController::setActionBarVisible(bool visible)
 void MainWindowController::handleDashboardTab()
 {
     qDebug() << "[DEBUG] handleDashboardTab - Switched to Dashboard tab";
-    stackedWidget->setCurrentIndex(10);
+    stackedWidget->setCurrentIndex(DashboardIndex);
     setActiveButton(buttonDashboard);
     btnAdd->disconnect();
     btnUpdate->disconnect();
