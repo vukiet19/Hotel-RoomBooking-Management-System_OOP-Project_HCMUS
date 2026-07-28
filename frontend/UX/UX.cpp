@@ -4,6 +4,7 @@
 
 #include "UX.h"
 #include "../UI/UI.h"
+#include "frontend/Observers/QtHotelObserver.h"
 #include "frontend/usercheck/backend.h"
 #include "backend/Repository/CustomerRepository.h"
 #include "backend/Repository/RoomRepository.h"
@@ -57,6 +58,20 @@ void MainWindowController::initConnections()
     connect(button10, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
     connect(buttonCheckout, &QPushButton::clicked, this, &MainWindowController::handleCheckout);
     connect(buttonDashboard, &QPushButton::clicked, this, &MainWindowController::handleDashboardTab);
+
+    connect(&QtHotelObserver::instance(), &QtHotelObserver::roomStatusChanged,
+            this, [this](const QString &, int, const QString &)
+            {
+                if (tableRoom)
+                    Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
+            });
+
+    connect(&QtHotelObserver::instance(), &QtHotelObserver::bookingStatusChanged,
+            this, [this](int, const QString &, const QString &, int, double, const QString &)
+            {
+                if (tableBooking)
+                    Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+            });
 }
 
 // Button booking
