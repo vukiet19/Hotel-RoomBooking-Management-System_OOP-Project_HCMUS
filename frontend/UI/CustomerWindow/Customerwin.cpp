@@ -397,7 +397,7 @@ void CustomerWindow::onBookRoomClicked()
     BookingData bookingData;
     BookingRepository sp;
 
-    bookingData.customerId = finalCustomerId;
+    bookingData.customerId = finalCustomerId.toInt();
     bookingData.roomNumber = roomId;
     bookingData.checkInTime = checkInDate;
     bookingData.checkOutTime = datecheckout;

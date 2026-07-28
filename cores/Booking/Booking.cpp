@@ -178,6 +178,11 @@ void StandardRoomBooking::checkIn()
     this->setStatus(BookingStatus::CHECKED_IN);
     this->room->setStatus(RoomStatus::Occupied);
     this->resolveDeposit();
+    if (this->id > 0)
+    {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }
 
 void StandardRoomBooking::checkOut()
@@ -188,6 +193,11 @@ void StandardRoomBooking::checkOut()
         this->room->setStatus(RoomStatus::Maintenance);
     }
     Booking::addDamagePenaltyItems();
+    if (this->id > 0)
+    {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }
 
 // Checkout -> maintenace
@@ -196,10 +206,20 @@ void StandardRoomBooking::checkOut()
 void WalkInTab::checkIn()
 {
     this->setStatus(BookingStatus::CHECKED_IN);
+    if (this->id > 0)
+    {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }
 
 void WalkInTab::checkOut()
 {
     this->setStatus(BookingStatus::CHECKED_OUT);
     Booking::addDamagePenaltyItems();
+    if (this->id > 0)
+    {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }

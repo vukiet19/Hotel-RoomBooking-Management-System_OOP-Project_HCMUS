@@ -523,7 +523,7 @@ void MainWindowController::showAddBookingDialog()
 
         BookingRepository r;
         BookingData t;
-        t.customerId = id;
+        t.customerId = id.toInt();
         t.roomNumber = room; 
         t.checkInTime = checkInDate;
         t.checkOutTime = checkOutDate;
