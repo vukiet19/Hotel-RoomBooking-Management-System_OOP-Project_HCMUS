@@ -29,7 +29,7 @@ static int roomIdToDatabaseId(const string &roomId)
 {
 	if (roomId.empty() || roomId[0] != 'R')
 		return 0;
-	try
+	try 	
 	{
 		return stoi(roomId.substr(1));
 	}

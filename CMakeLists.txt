@@ -24,3 +24,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Sql Qt6::Widgets)
 
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/backend/Database"
      DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
