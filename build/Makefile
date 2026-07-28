@@ -57,7 +57,7 @@ RM = /Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/bin/cmake -
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend
+CMAKE_SOURCE_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build
@@ -142,29 +142,29 @@ Hotel_Management_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management_autogen.dir/build.make CMakeFiles/Hotel_Management_autogen.dir/build
 .PHONY : Hotel_Management_autogen/fast
 
-Checkout/Checkoutpage.o: Checkout/Checkoutpage.cpp.o
-.PHONY : Checkout/Checkoutpage.o
+Checkout/CheckoutPage.o: Checkout/CheckoutPage.cpp.o
+.PHONY : Checkout/CheckoutPage.o
 
 # target to build an object file
-Checkout/Checkoutpage.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o
-.PHONY : Checkout/Checkoutpage.cpp.o
+Checkout/CheckoutPage.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o
+.PHONY : Checkout/CheckoutPage.cpp.o
 
-Checkout/Checkoutpage.i: Checkout/Checkoutpage.cpp.i
-.PHONY : Checkout/Checkoutpage.i
+Checkout/CheckoutPage.i: Checkout/CheckoutPage.cpp.i
+.PHONY : Checkout/CheckoutPage.i
 
 # target to preprocess a source file
-Checkout/Checkoutpage.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.i
-.PHONY : Checkout/Checkoutpage.cpp.i
+Checkout/CheckoutPage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.i
+.PHONY : Checkout/CheckoutPage.cpp.i
 
-Checkout/Checkoutpage.s: Checkout/Checkoutpage.cpp.s
-.PHONY : Checkout/Checkoutpage.s
+Checkout/CheckoutPage.s: Checkout/CheckoutPage.cpp.s
+.PHONY : Checkout/CheckoutPage.s
 
 # target to generate assembly for a file
-Checkout/Checkoutpage.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.s
-.PHONY : Checkout/Checkoutpage.cpp.s
+Checkout/CheckoutPage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.s
+.PHONY : Checkout/CheckoutPage.cpp.s
 
 Customer/Customer.o: Customer/Customer.cpp.o
 .PHONY : Customer/Customer.o
@@ -405,30 +405,6 @@ Manager/DatabaseManager.s: Manager/DatabaseManager.cpp.s
 Manager/DatabaseManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.s
 .PHONY : Manager/DatabaseManager.cpp.s
-
-Manager/InvoiceRepository.o: Manager/InvoiceRepository.cpp.o
-.PHONY : Manager/InvoiceRepository.o
-
-# target to build an object file
-Manager/InvoiceRepository.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o
-.PHONY : Manager/InvoiceRepository.cpp.o
-
-Manager/InvoiceRepository.i: Manager/InvoiceRepository.cpp.i
-.PHONY : Manager/InvoiceRepository.i
-
-# target to preprocess a source file
-Manager/InvoiceRepository.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.i
-.PHONY : Manager/InvoiceRepository.cpp.i
-
-Manager/InvoiceRepository.s: Manager/InvoiceRepository.cpp.s
-.PHONY : Manager/InvoiceRepository.s
-
-# target to generate assembly for a file
-Manager/InvoiceRepository.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hotel_Management.dir/build.make CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.s
-.PHONY : Manager/InvoiceRepository.cpp.s
 
 Observer.o: Observer.cpp.o
 .PHONY : Observer.o
@@ -752,9 +728,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Hotel_Management_autogen"
 	@echo "... Hotel_Management"
-	@echo "... Checkout/Checkoutpage.o"
-	@echo "... Checkout/Checkoutpage.i"
-	@echo "... Checkout/Checkoutpage.s"
+	@echo "... Checkout/CheckoutPage.o"
+	@echo "... Checkout/CheckoutPage.i"
+	@echo "... Checkout/CheckoutPage.s"
 	@echo "... Customer/Customer.o"
 	@echo "... Customer/Customer.i"
 	@echo "... Customer/Customer.s"
@@ -785,9 +761,6 @@ help:
 	@echo "... Manager/DatabaseManager.o"
 	@echo "... Manager/DatabaseManager.i"
 	@echo "... Manager/DatabaseManager.s"
-	@echo "... Manager/InvoiceRepository.o"
-	@echo "... Manager/InvoiceRepository.i"
-	@echo "... Manager/InvoiceRepository.s"
 	@echo "... Observer.o"
 	@echo "... Observer.i"
 	@echo "... Observer.s"

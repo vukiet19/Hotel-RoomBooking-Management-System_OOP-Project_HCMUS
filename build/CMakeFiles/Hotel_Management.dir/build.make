@@ -53,7 +53,7 @@ RM = /Users/sunix/miniconda3/lib/python3.13/site-packages/cmake/data/bin/cmake -
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend
+CMAKE_SOURCE_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build
@@ -83,346 +83,332 @@ CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.s:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.s"
 	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/Hotel_Management_autogen/mocs_compilation.cpp -o CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.s
 
-CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.cpp
-CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o -MF CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.cpp
+CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
+CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Checkout/CheckoutPage.cpp
+CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o -MF CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Checkout/CheckoutPage.cpp
 
-CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.cpp > CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.i
+CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.i"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Checkout/CheckoutPage.cpp > CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.i
 
-CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Checkout/Checkoutpage.cpp -o CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.s
+CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.s"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Checkout/CheckoutPage.cpp -o CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.cpp
+CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/Customer.cpp
 CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o -MF CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o -MF CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/Customer.cpp
 
 CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.cpp > CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/Customer.cpp > CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/Customer.cpp -o CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/Customer.cpp -o CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/MembershipPolicy.cpp
+CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/MembershipPolicy.cpp
 CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o -MF CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/MembershipPolicy.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o -MF CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/MembershipPolicy.cpp
 
 CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/MembershipPolicy.cpp > CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/MembershipPolicy.cpp > CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Customer/MembershipPolicy.cpp -o CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Customer/MembershipPolicy.cpp -o CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.s
 
 CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.cpp
+CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/CustomerWindow/Customerwin.cpp
 CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o -MF CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o.d -o CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o -MF CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o.d -o CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/CustomerWindow/Customerwin.cpp
 
 CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.cpp > CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/CustomerWindow/Customerwin.cpp > CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.i
 
 CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/CustomerWindow/Customerwin.cpp -o CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/CustomerWindow/Customerwin.cpp -o CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.cpp
+CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Login/Login.cpp
 CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o -MF CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o -MF CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Login/Login.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Login/Login.cpp
 
 CMakeFiles/Hotel_Management.dir/Login/Login.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Login/Login.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.cpp > CMakeFiles/Hotel_Management.dir/Login/Login.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Login/Login.cpp > CMakeFiles/Hotel_Management.dir/Login/Login.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Login/Login.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Login/Login.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Login/Login.cpp -o CMakeFiles/Hotel_Management.dir/Login/Login.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Login/Login.cpp -o CMakeFiles/Hotel_Management.dir/Login/Login.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.cpp
+CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/Control/Control.cpp
 CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o -MF CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o -MF CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/Control/Control.cpp
 
 CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.cpp > CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/Control/Control.cpp > CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/Control/Control.cpp -o CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/Control/Control.cpp -o CMakeFiles/Hotel_Management.dir/Mainwindow/Control/Control.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.cpp
+CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/UI/UI.cpp
 CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o -MF CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o -MF CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/UI/UI.cpp
 
 CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.cpp > CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/UI/UI.cpp > CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Mainwindow/UI/UI.cpp -o CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Mainwindow/UI/UI.cpp -o CMakeFiles/Hotel_Management.dir/Mainwindow/UI/UI.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/BillingService.cpp
+CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/BillingService.cpp
 CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o -MF CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/BillingService.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o -MF CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/BillingService.cpp
 
 CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/BillingService.cpp > CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/BillingService.cpp > CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/BillingService.cpp -o CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/BillingService.cpp -o CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.cpp
+CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DashboardService.cpp
 CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o -MF CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o -MF CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DashboardService.cpp
 
 CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.cpp > CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DashboardService.cpp > CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DashboardService.cpp -o CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DashboardService.cpp -o CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.cpp
+CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DatabaseManager.cpp
 CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o -MF CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o -MF CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DatabaseManager.cpp
 
 CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.cpp > CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DatabaseManager.cpp > CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/DatabaseManager.cpp -o CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.s
-
-CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/InvoiceRepository.cpp
-CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/InvoiceRepository.cpp
-
-CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/InvoiceRepository.cpp > CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.i
-
-CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Manager/InvoiceRepository.cpp -o CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Manager/DatabaseManager.cpp -o CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Observer.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Observer.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.cpp
+CMakeFiles/Hotel_Management.dir/Observer.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Observer.cpp
 CMakeFiles/Hotel_Management.dir/Observer.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Hotel_Management.dir/Observer.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Observer.cpp.o -MF CMakeFiles/Hotel_Management.dir/Observer.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Observer.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Hotel_Management.dir/Observer.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Observer.cpp.o -MF CMakeFiles/Hotel_Management.dir/Observer.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Observer.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Observer.cpp
 
 CMakeFiles/Hotel_Management.dir/Observer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Observer.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.cpp > CMakeFiles/Hotel_Management.dir/Observer.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Observer.cpp > CMakeFiles/Hotel_Management.dir/Observer.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Observer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Observer.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Observer.cpp -o CMakeFiles/Hotel_Management.dir/Observer.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Observer.cpp -o CMakeFiles/Hotel_Management.dir/Observer.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.cpp
+CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/BookingRepository.cpp
 CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/BookingRepository.cpp
 
 CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/BookingRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/BookingRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/BookingRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.cpp
+CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/CustomerRepository.cpp
 CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/CustomerRepository.cpp
 
 CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/CustomerRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/CustomerRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/CustomerRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/FoodRepository.cpp
+CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/FoodRepository.cpp
 CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/FoodRepository.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/FoodRepository.cpp
 
 CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/FoodRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/FoodRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/FoodRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/FoodRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/FoodRepository.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InventoryRepository.cpp
+CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InventoryRepository.cpp
 CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InventoryRepository.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InventoryRepository.cpp
 
 CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InventoryRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InventoryRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InventoryRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InventoryRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/InventoryRepository.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InvoiceRepository.cpp
+CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InvoiceRepository.cpp
 CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InvoiceRepository.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InvoiceRepository.cpp
 
 CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InvoiceRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InvoiceRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/InvoiceRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/InvoiceRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/InvoiceRepository.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.cpp
+CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/RoomRepository.cpp
 CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/RoomRepository.cpp
 
 CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/RoomRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/RoomRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/RoomRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/RoomRepository.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/ServiceItemRepository.cpp
+CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/ServiceItemRepository.cpp
 CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/ServiceItemRepository.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o -MF CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/ServiceItemRepository.cpp
 
 CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/ServiceItemRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/ServiceItemRepository.cpp > CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Repository/ServiceItemRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Repository/ServiceItemRepository.cpp -o CMakeFiles/Hotel_Management.dir/Repository/ServiceItemRepository.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.cpp
+CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/DerivedRooms.cpp
 CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o -MF CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o -MF CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/DerivedRooms.cpp
 
 CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.cpp > CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/DerivedRooms.cpp > CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/DerivedRooms.cpp -o CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/DerivedRooms.cpp -o CMakeFiles/Hotel_Management.dir/Room/DerivedRooms.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.cpp
+CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/Room.cpp
 CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o -MF CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o -MF CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Room/Room.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/Room.cpp
 
 CMakeFiles/Hotel_Management.dir/Room/Room.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Room/Room.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.cpp > CMakeFiles/Hotel_Management.dir/Room/Room.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/Room.cpp > CMakeFiles/Hotel_Management.dir/Room/Room.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Room/Room.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Room/Room.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/Room.cpp -o CMakeFiles/Hotel_Management.dir/Room/Room.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/Room.cpp -o CMakeFiles/Hotel_Management.dir/Room/Room.cpp.s
 
 CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.cpp
+CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomFactory.cpp
 CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o -MF CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o -MF CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o.d -o CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomFactory.cpp
 
 CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.cpp > CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomFactory.cpp > CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.i
 
 CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/Room/RoomFactory.cpp -o CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/Room/RoomFactory.cpp -o CMakeFiles/Hotel_Management.dir/Room/RoomFactory.cpp.s
 
 CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.cpp
+CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/backend/backend.cpp
 CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o -MF CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o.d -o CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o -MF CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o.d -o CMakeFiles/Hotel_Management.dir/backend/backend.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/backend/backend.cpp
 
 CMakeFiles/Hotel_Management.dir/backend/backend.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/backend/backend.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.cpp > CMakeFiles/Hotel_Management.dir/backend/backend.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/backend/backend.cpp > CMakeFiles/Hotel_Management.dir/backend/backend.cpp.i
 
 CMakeFiles/Hotel_Management.dir/backend/backend.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/backend/backend.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/backend/backend.cpp -o CMakeFiles/Hotel_Management.dir/backend/backend.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/backend/backend.cpp -o CMakeFiles/Hotel_Management.dir/backend/backend.cpp.s
 
 CMakeFiles/Hotel_Management.dir/main.cpp.o: CMakeFiles/Hotel_Management.dir/flags.make
-CMakeFiles/Hotel_Management.dir/main.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/main.cpp
+CMakeFiles/Hotel_Management.dir/main.cpp.o: /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/main.cpp
 CMakeFiles/Hotel_Management.dir/main.cpp.o: CMakeFiles/Hotel_Management.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/Hotel_Management.dir/main.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/main.cpp.o -MF CMakeFiles/Hotel_Management.dir/main.cpp.o.d -o CMakeFiles/Hotel_Management.dir/main.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/Hotel_Management.dir/main.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Hotel_Management.dir/main.cpp.o -MF CMakeFiles/Hotel_Management.dir/main.cpp.o.d -o CMakeFiles/Hotel_Management.dir/main.cpp.o -c /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/main.cpp
 
 CMakeFiles/Hotel_Management.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Hotel_Management.dir/main.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/main.cpp > CMakeFiles/Hotel_Management.dir/main.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/main.cpp > CMakeFiles/Hotel_Management.dir/main.cpp.i
 
 CMakeFiles/Hotel_Management.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Hotel_Management.dir/main.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend/main.cpp -o CMakeFiles/Hotel_Management.dir/main.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/main.cpp -o CMakeFiles/Hotel_Management.dir/main.cpp.s
 
 # Object files for target Hotel_Management
 Hotel_Management_OBJECTS = \
 "CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.o" \
-"CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o" \
+"CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o" \
@@ -432,7 +418,6 @@ Hotel_Management_OBJECTS = \
 "CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o" \
-"CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/Observer.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o" \
 "CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o" \
@@ -451,7 +436,7 @@ Hotel_Management_OBJECTS = \
 Hotel_Management_EXTERNAL_OBJECTS =
 
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Hotel_Management_autogen/mocs_compilation.cpp.o
-Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Checkout/Checkoutpage.cpp.o
+Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Checkout/CheckoutPage.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Customer/Customer.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Customer/MembershipPolicy.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/CustomerWindow/Customerwin.cpp.o
@@ -461,7 +446,6 @@ Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Managemen
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Manager/BillingService.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Manager/DashboardService.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Manager/DatabaseManager.cpp.o
-Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Manager/InvoiceRepository.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Observer.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Repository/BookingRepository.cpp.o
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/Repository/CustomerRepository.cpp.o
@@ -481,7 +465,7 @@ Hotel_Management.app/Contents/MacOS/Hotel_Management: /opt/homebrew/opt/qt/lib/Q
 Hotel_Management.app/Contents/MacOS/Hotel_Management: /opt/homebrew/opt/qt/lib/QtGui.framework/Versions/A/QtGui
 Hotel_Management.app/Contents/MacOS/Hotel_Management: /opt/homebrew/opt/qt/lib/QtCore.framework/Versions/A/QtCore
 Hotel_Management.app/Contents/MacOS/Hotel_Management: CMakeFiles/Hotel_Management.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX executable Hotel_Management.app/Contents/MacOS/Hotel_Management"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX executable Hotel_Management.app/Contents/MacOS/Hotel_Management"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Hotel_Management.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -493,6 +477,6 @@ CMakeFiles/Hotel_Management.dir/clean:
 .PHONY : CMakeFiles/Hotel_Management.dir/clean
 
 CMakeFiles/Hotel_Management.dir/depend:
-	cd /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/frontend /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build /Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Hotel_Management.dir/depend
 
