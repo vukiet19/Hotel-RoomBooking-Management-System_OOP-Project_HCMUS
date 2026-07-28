@@ -1,6 +1,6 @@
 #include "CheckoutPage.h"
-#include "../Manager/DatabaseManager.h"
-#include "../Observer.h"
+#include "Manager/DatabaseManager.h"
+#include "Observers/Observer.h"
 #include <QSqlRecord>
 
 #include <QComboBox>
@@ -43,6 +43,13 @@ CheckoutPage::CheckoutPage(QWidget *parent) : QWidget(parent)
     loadMockBookings(); // Tải dữ liệu thực tế từ database
     populateBookingTable();
     clearBookingDetails();
+}
+
+void CheckoutPage::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    loadMockBookings();
+    populateBookingTable();
 }
 
 void CheckoutPage::setupUi()

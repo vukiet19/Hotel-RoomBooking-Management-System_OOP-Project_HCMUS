@@ -1,2 +1,2 @@
-set(__QT_DEPLOY_TARGET_Hotel_Management_FILE /Users/son/Documents/OOB_PROJECT/build/Hotel_Management)
+set(__QT_DEPLOY_TARGET_Hotel_Management_FILE /Users/son/Documents/OOB_PROJECT/build/Hotel_Management.app/Contents/MacOS/Hotel_Management)
 set(__QT_DEPLOY_TARGET_Hotel_Management_TYPE EXECUTABLE)

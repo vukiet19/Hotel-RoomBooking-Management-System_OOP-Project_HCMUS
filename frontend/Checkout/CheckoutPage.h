@@ -40,6 +40,8 @@ class CheckoutPage : public QWidget
 public:
     explicit CheckoutPage(QWidget *parent = nullptr);
 
+    void showEvent(QShowEvent *event) override;
+
 private:
     void setupUi();
     void loadMockBookings();

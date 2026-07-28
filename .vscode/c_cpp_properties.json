@@ -1,42 +1,34 @@
 {
     "configurations": [
         {
-            "name": "Mac-Frontend",
+            "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/backend/**",
+                "${workspaceFolder}/cores/**",
+                "${workspaceFolder}/frontend/**",
                 "/Users/son/Qt/6.11.1/macos/include/**",
-                "/Users/son/Qt/6.11.1/macos/lib/**"
+                "/Users/son/Qt/6.11.1/macos/lib/QtCore.framework/Headers",
+                "/Users/son/Qt/6.11.1/macos/lib/QtGui.framework/Headers",
+                "/Users/son/Qt/6.11.1/macos/lib/QtWidgets.framework/Headers",
+                "/Users/son/Qt/6.11.1/macos/lib/QtSql.framework/Headers"
+            ],
+            "macFrameworkPath": [
+                "/Users/son/Qt/6.11.1/macos/lib",
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
             ],
             "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
+                "QT_CORE_LIB",
+                "QT_GUI_LIB",
+                "QT_WIDGETS_LIB",
+                "QT_SQL_LIB"
             ],
             "compilerPath": "/usr/bin/clang++",
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "macos-clang-arm64",
-            "compileCommands": "${workspaceFolder}/frontend/build/compile_commands.json",
-            "configurationProvider": "ms-vscode.cmake-tools"
-        },
-        {
-            "name": "Mac-Root",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "/Users/son/Qt/6.11.1/macos/include/**",
-                "/Users/son/Qt/6.11.1/macos/lib/**"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
-            "compilerPath": "/usr/bin/clang++",
-            "cStandard": "c17",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "macos-clang-arm64",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }
     ],
     "version": 4

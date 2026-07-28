@@ -1,43 +1,70 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Hotel_Management)
+project(Hotel_Management LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# 1. Updated to your macOS Homebrew Qt path
-set(CMAKE_PREFIX_PATH "/Users/son/Qt/6.11.1/macos")
+# 1. Auto-detect Qt installation on macOS & Windows
+if(APPLE AND NOT CMAKE_PREFIX_PATH)
+    if(EXISTS "/Users/son/Qt/6.11.1/macos")
+        set(CMAKE_PREFIX_PATH "/Users/son/Qt/6.11.1/macos")
+    elseif(EXISTS "/opt/homebrew/opt/qt")
+        set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt") # Mac Apple Silicon
+    elseif(EXISTS "/usr/local/opt/qt")
+        set(CMAKE_PREFIX_PATH "/usr/local/opt/qt")   # Mac Intel
+    endif()
+endif()
 
-# 2. Added 'Widgets' to fix the QApplication error
-find_package(Qt6 COMPONENTS Core Sql Widgets REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Core Sql Widgets)
 
-file(GLOB_RECURSE SOURCES 
-    "Customer/*.cpp"
-    "Booking/*.cpp"
-    "Room/*.cpp"
-    "Manager/*.cpp"
-    "Service/*.cpp"
-    "Repository/*.cpp"
-    "Observer.cpp"
+# 2. Gather source files
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+    "backend/*.cpp"
+    "cores/*.cpp"
+    "frontend/*.cpp"
     "main.cpp"
 )
 
-list(FILTER SOURCES EXCLUDE REGEX "/build/")
-list(FILTER SOURCES EXCLUDE REGEX "/frontend/")
-list(FILTER SOURCES EXCLUDE REGEX "/duckz/")
-list(FILTER SOURCES EXCLUDE REGEX "DerivedRoom\\.cpp")
+# Exclude build and autogen directories if nested inside source tree
+list(FILTER SOURCES EXCLUDE REGEX "build/")
+list(FILTER SOURCES EXCLUDE REGEX "_autogen/")
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+# 3. Define Executable
+if(APPLE)
+    add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SOURCES})
+else()
+    add_executable(${PROJECT_NAME} ${SOURCES})
+endif()
 
-# 3. Linked Qt6::Widgets to your executable
+# 4. Include directories & Link Qt libraries
+target_include_directories(${PROJECT_NAME} PRIVATE 
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/backend"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cores"
+    "${CMAKE_CURRENT_SOURCE_DIR}/frontend"
+)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Sql Qt6::Widgets)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Database 
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+# 5. Copy Database and Assets to build output
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/backend/Database"
+     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 
-
+if(APPLE)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/backend/Database"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/Database"
+    )
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
+    )
+endif()

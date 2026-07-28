@@ -1,1 +1,0 @@
-# Hotel-Room    Booking-Management-System_OOP-Project_HCMUS

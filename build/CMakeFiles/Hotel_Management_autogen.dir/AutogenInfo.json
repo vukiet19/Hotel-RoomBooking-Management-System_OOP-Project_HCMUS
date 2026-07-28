@@ -10,34 +10,19 @@
 		"/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/4.3.3/CMakeSystem.cmake",
 		"/opt/homebrew/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake",
 		"/opt/homebrew/share/cmake/Modules/Platform/Darwin-Initialize.cmake",
-		"/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/4.3.3/CMakeCCompiler.cmake",
 		"/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/4.3.3/CMakeCXXCompiler.cmake",
 		"/opt/homebrew/share/cmake/Modules/CMakeSystemSpecificInformation.cmake",
 		"/opt/homebrew/share/cmake/Modules/CMakeGenericSystem.cmake",
 		"/opt/homebrew/share/cmake/Modules/CMakeInitializeConfigs.cmake",
 		"/opt/homebrew/share/cmake/Modules/Platform/Darwin.cmake",
 		"/opt/homebrew/share/cmake/Modules/Platform/UnixPaths.cmake",
-		"/opt/homebrew/share/cmake/Modules/CMakeCInformation.cmake",
-		"/opt/homebrew/share/cmake/Modules/CMakeLanguageInformation.cmake",
-		"/opt/homebrew/share/cmake/Modules/Compiler/AppleClang-C.cmake",
-		"/opt/homebrew/share/cmake/Modules/Compiler/Clang.cmake",
-		"/opt/homebrew/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
-		"/opt/homebrew/share/cmake/Modules/Compiler/GNU.cmake",
-		"/opt/homebrew/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
-		"/opt/homebrew/share/cmake/Modules/Platform/Apple-AppleClang-C.cmake",
-		"/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang-C.cmake",
-		"/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang.cmake",
-		"/opt/homebrew/share/cmake/Modules/CMakeCommonLanguageInclude.cmake",
-		"/opt/homebrew/share/cmake/Modules/Internal/CMakeCLinkerInformation.cmake",
-		"/opt/homebrew/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake",
-		"/opt/homebrew/share/cmake/Modules/Linker/AppleClang-C.cmake",
-		"/opt/homebrew/share/cmake/Modules/Linker/AppleClang.cmake",
-		"/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang-C.cmake",
-		"/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang.cmake",
 		"/opt/homebrew/share/cmake/Modules/CMakeCXXInformation.cmake",
 		"/opt/homebrew/share/cmake/Modules/CMakeLanguageInformation.cmake",
 		"/opt/homebrew/share/cmake/Modules/Compiler/AppleClang-CXX.cmake",
 		"/opt/homebrew/share/cmake/Modules/Compiler/Clang.cmake",
+		"/opt/homebrew/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
+		"/opt/homebrew/share/cmake/Modules/Compiler/GNU.cmake",
+		"/opt/homebrew/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
 		"/opt/homebrew/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake",
 		"/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang-CXX.cmake",
 		"/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang.cmake",
@@ -107,9 +92,8 @@
 		"/Users/son/Qt/6.11.1/macos/lib/cmake/Qt6/Qt6Dependencies.cmake",
 		"/opt/homebrew/share/cmake/Modules/FindThreads.cmake",
 		"/opt/homebrew/share/cmake/Modules/CheckLibraryExists.cmake",
-		"/opt/homebrew/share/cmake/Modules/CheckIncludeFile.cmake",
-		"/opt/homebrew/share/cmake/Modules/CheckCSourceCompiles.cmake",
-		"/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake",
+		"/opt/homebrew/share/cmake/Modules/CheckIncludeFileCXX.cmake",
+		"/opt/homebrew/share/cmake/Modules/CheckCXXSourceCompiles.cmake",
 		"/opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake",
 		"/opt/homebrew/share/cmake/Modules/FindPackageMessage.cmake",
 		"/Users/son/Qt/6.11.1/macos/lib/cmake/Qt6Core/Qt6CoreConfigVersion.cmake",
@@ -386,123 +370,165 @@
 	"HEADERS" : 
 	[
 		[
-			"/Users/son/Documents/OOB_PROJECT/Booking/Booking.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Manager/BillingService.h",
 			"MU",
-			"2LVHDVNRXR/moc_Booking.cpp",
+			"CGJUAUC72T/moc_BillingService.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Booking/BookingFactory.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Manager/DashboardService.h",
 			"MU",
-			"2LVHDVNRXR/moc_BookingFactory.cpp",
+			"CGJUAUC72T/moc_DashboardService.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Customer/Customer.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Manager/DatabaseManager.h",
 			"MU",
-			"LSYMCGT25G/moc_Customer.cpp",
+			"CGJUAUC72T/moc_DatabaseManager.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Customer/MembershipPolicy.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/BookingRepository.h",
 			"MU",
-			"LSYMCGT25G/moc_MembershipPolicy.cpp",
+			"EV2GHTIW4S/moc_BookingRepository.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Manager/BillingService.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/CustomerRepository.h",
 			"MU",
-			"BSZN444ZLF/moc_BillingService.cpp",
+			"EV2GHTIW4S/moc_CustomerRepository.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Manager/DashboardService.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/FoodRepository.h",
 			"MU",
-			"BSZN444ZLF/moc_DashboardService.cpp",
+			"EV2GHTIW4S/moc_FoodRepository.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Manager/DatabaseManager.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/InventoryRepository.h",
 			"MU",
-			"BSZN444ZLF/moc_DatabaseManager.cpp",
+			"EV2GHTIW4S/moc_InventoryRepository.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Observer.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/InvoiceRepository.h",
 			"MU",
-			"EWIEGA46WW/moc_Observer.cpp",
+			"EV2GHTIW4S/moc_InvoiceRepository.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/BookingRepository.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/RoomRepository.h",
 			"MU",
-			"RSXGBB323P/moc_BookingRepository.cpp",
+			"EV2GHTIW4S/moc_RoomRepository.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/CustomerRepository.h",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/ServiceItemRepository.h",
 			"MU",
-			"RSXGBB323P/moc_CustomerRepository.cpp",
+			"EV2GHTIW4S/moc_ServiceItemRepository.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/InventoryRepository.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Booking/Booking.h",
 			"MU",
-			"RSXGBB323P/moc_InventoryRepository.cpp",
+			"INKAZNARCT/moc_Booking.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/InvoiceRepository.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Booking/BookingFactory.h",
 			"MU",
-			"RSXGBB323P/moc_InvoiceRepository.cpp",
+			"INKAZNARCT/moc_BookingFactory.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/RoomRepository.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Customer/Customer.h",
 			"MU",
-			"RSXGBB323P/moc_RoomRepository.cpp",
+			"7YIVLF6SXZ/moc_Customer.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/ServiceItemRepository.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Customer/MembershipPolicy.h",
 			"MU",
-			"RSXGBB323P/moc_ServiceItemRepository.cpp",
+			"7YIVLF6SXZ/moc_MembershipPolicy.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Room/DerivedRooms.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Room/DerivedRooms.h",
 			"MU",
-			"4SMAVUGUGG/moc_DerivedRooms.cpp",
+			"XEJIWMKMIO/moc_DerivedRooms.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Room/Room.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Room/Room.h",
 			"MU",
-			"4SMAVUGUGG/moc_Room.cpp",
+			"XEJIWMKMIO/moc_Room.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Room/RoomFactory.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Room/RoomFactory.h",
 			"MU",
-			"4SMAVUGUGG/moc_RoomFactory.cpp",
+			"XEJIWMKMIO/moc_RoomFactory.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Service/InventoryService.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Service/InventoryService.h",
 			"MU",
-			"QJ36PKLCSN/moc_InventoryService.cpp",
+			"IW223ZGT7G/moc_InventoryService.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Service/ServiceItem.h",
+			"/Users/son/Documents/OOB_PROJECT/cores/Service/ServiceItem.h",
 			"MU",
-			"QJ36PKLCSN/moc_ServiceItem.cpp",
+			"IW223ZGT7G/moc_ServiceItem.cpp",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Service/ServiceItemRepository.h",
+			"/Users/son/Documents/OOB_PROJECT/frontend/Checkout/Checkoutpage.h",
 			"MU",
-			"QJ36PKLCSN/moc_ServiceItemRepository.cpp",
+			"AKZT4MUND2/moc_Checkoutpage.cpp",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/Observers/Observer.h",
+			"MU",
+			"OWLS25ZDVQ/moc_Observer.cpp",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/Observers/QtHotelObserver.h",
+			"MU",
+			"OWLS25ZDVQ/moc_QtHotelObserver.cpp",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/UI/CustomerWindow/Customerwin.h",
+			"MU",
+			"DGNXV2LJB5/moc_Customerwin.cpp",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/UI/Login/Login.h",
+			"MU",
+			"UD53SYKBB6/moc_Login.cpp",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/UI/UI.h",
+			"MU",
+			"OJ4CLYI6A5/moc_UI.cpp",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/UX/UX.h",
+			"MU",
+			"DQUA7YKOLH/moc_UX.cpp",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/usercheck/backend.h",
+			"MU",
+			"G5XAOKMG2X/moc_backend.cpp",
 			null
 		]
 	],
@@ -519,6 +545,10 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"/Users/son/Documents/OOB_PROJECT",
+		"/Users/son/Documents/OOB_PROJECT/backend",
+		"/Users/son/Documents/OOB_PROJECT/cores",
+		"/Users/son/Documents/OOB_PROJECT/frontend",
 		"/Users/son/Qt/6.11.1/macos/lib/QtCore.framework/Headers",
 		"/Users/son/Qt/6.11.1/macos/lib/QtCore.framework",
 		"/Users/son/Qt/6.11.1/macos/mkspecs/macx-clang",
@@ -567,80 +597,126 @@
 	"SETTINGS_FILE" : "/Users/son/Documents/OOB_PROJECT/build/CMakeFiles/Hotel_Management_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "/Users/son/Documents/OOB_PROJECT/Booking/Booking.cpp", "MU", null ],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Booking/BookingFactory.cpp",
-			"MU",
-			null
-		],
-		[ "/Users/son/Documents/OOB_PROJECT/Customer/Customer.cpp", "MU", null ],
-		[
-			"/Users/son/Documents/OOB_PROJECT/Customer/MembershipPolicy.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Manager/BillingService.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Manager/BillingService.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Manager/DashboardService.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Manager/DashboardService.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Manager/DatabaseManager.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Manager/DatabaseManager.cpp",
-			"MU",
-			null
-		],
-		[ "/Users/son/Documents/OOB_PROJECT/Observer.cpp", "MU", null ],
-		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/BookingRepository.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/BookingRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/CustomerRepository.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/CustomerRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/InventoryRepository.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/FoodRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/InvoiceRepository.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/InventoryRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/RoomRepository.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/InvoiceRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Repository/ServiceItemRepository.cpp",
-			"MU",
-			null
-		],
-		[ "/Users/son/Documents/OOB_PROJECT/Room/DerivedRooms.cpp", "MU", null ],
-		[ "/Users/son/Documents/OOB_PROJECT/Room/Room.cpp", "MU", null ],
-		[ "/Users/son/Documents/OOB_PROJECT/Room/RoomFactory.cpp", "MU", null ],
-		[ "/Users/son/Documents/OOB_PROJECT/Room/obsever.cpp", "MU", null ],
-		[
-			"/Users/son/Documents/OOB_PROJECT/Service/InventoryService.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/RoomRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Service/ServiceItem.cpp",
+			"/Users/son/Documents/OOB_PROJECT/backend/Repository/ServiceItemRepository.cpp",
 			"MU",
 			null
 		],
 		[
-			"/Users/son/Documents/OOB_PROJECT/Service/ServiceItemRepository.cpp",
+			"/Users/son/Documents/OOB_PROJECT/cores/Booking/Booking.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/cores/Booking/BookingFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/cores/Customer/Customer.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/cores/Customer/MembershipPolicy.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/cores/Room/DerivedRooms.cpp",
+			"MU",
+			null
+		],
+		[ "/Users/son/Documents/OOB_PROJECT/cores/Room/Room.cpp", "MU", null ],
+		[
+			"/Users/son/Documents/OOB_PROJECT/cores/Room/RoomFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/cores/Service/InventoryService.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/cores/Service/ServiceItem.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/Checkout/Checkoutpage.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/Observers/Observer.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/Observers/QtHotelObserver.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/UI/CustomerWindow/Customerwin.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/UI/Login/Login.cpp",
+			"MU",
+			null
+		],
+		[ "/Users/son/Documents/OOB_PROJECT/frontend/UI/UI.cpp", "MU", null ],
+		[ "/Users/son/Documents/OOB_PROJECT/frontend/UX/UX.cpp", "MU", null ],
+		[
+			"/Users/son/Documents/OOB_PROJECT/frontend/usercheck/backend.cpp",
 			"MU",
 			null
 		],

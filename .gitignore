@@ -1,14 +1,35 @@
-# Ignore build directories and visual studio project caches
-duckz/
+# macOS
+.DS_Store
+
+# Build output and CMake cache
 build/
-frontend/build/
-frontend/CMakeFiles/
-frontend/CMakeCache.txt
-frontend/Makefile
-frontend/cmake_install.cmake
-frontend/compile_commands.json
-frontend/Hotel_Management_autogen/
-a.out
-*.o
-*.dylib
-*.app
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+Makefile
+
+# Qt generated files
+.qt/
+*_autogen/
+
+# Visual Studio build output and user files
+.vs/
+x64/
+Debug/
+Release/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.obj
+*.pdb
+*.ilk
+*.exe
+
+# VS Code workspace settings
+.vscode/
+
+# Agent configuration rules
+.agents/
