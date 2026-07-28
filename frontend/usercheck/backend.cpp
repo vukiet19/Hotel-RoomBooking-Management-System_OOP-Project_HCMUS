@@ -2,18 +2,17 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QSqlQuery>
-#include "Room/RoomFactory.h"
-#include "Room/DerivedRooms.h"
-#include "Room/TypeRoom.h"
-#include "Room/TypeRoom.h"
-#include "Room/Room.h"
+#include "cores/Room/RoomFactory.h"
+#include "cores/Room/DerivedRooms.h"
+#include "cores/Room/TypeRoom.h"
+#include "cores/Room/Room.h"
 #include <QSqlRecord>
-#include "Room/DepositStatus.h"
+#include "cores/Room/DepositStatus.h"
 
-#include "Manager/DatabaseManager.h"
-#include "Repository/CustomerRepository.h"
-#include "Customer/Customer.h"
-#include "Repository/RoomRepository.h"
+#include "backend/Manager/DatabaseManager.h"
+#include "backend/Repository/CustomerRepository.h"
+#include "cores/Customer/Customer.h"
+#include "backend/Repository/RoomRepository.h"
 
 bool Backend::checkValidUsername(const std::string &g)
 {

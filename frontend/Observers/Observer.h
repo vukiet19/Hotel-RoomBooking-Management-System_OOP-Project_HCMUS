@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include "Booking/BookingStatus.h"
-#include "Room/RoomStatus.h"
+#include "cores/Booking/BookingStatus.h"
+#include "cores/Room/RoomStatus.h"
 using namespace std;
 // TÓM TẮT:
 // CÓ MANAGER ĐỂ QUẢN LÝ CÁC EVENT ĐƯỢC NOTIFY VÀ CHECK COI CÓ OBSERVER NÀO ĐẢM NHẬN

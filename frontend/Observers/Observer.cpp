@@ -4,8 +4,8 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include "Room/RoomStatus.h"
-#include "Booking/BookingStatus.h"
+#include "cores/Room/RoomStatus.h"
+#include "cores/Booking/BookingStatus.h"
 #include "Observer.h"
 using namespace std;
 HotelEventManager::HotelEventManager()

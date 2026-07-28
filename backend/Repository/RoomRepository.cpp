@@ -1,10 +1,10 @@
 // File RoomRepository ~ Trạm trung chuyển: kết nối giữa database và back-end.
 
-#include "../Repository/RoomRepository.h"
+#include "RoomRepository.h"
 #include "../Manager/DatabaseManager.h"
-#include "../Room/Room.h"
-#include "../Room/DerivedRooms.h"
-#include "../Room/Typeroom.h"
+#include "cores/Room/Room.h"
+#include "cores/Room/DerivedRooms.h"
+#include "cores/Room/TypeRoom.h"
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QDebug>

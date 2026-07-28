@@ -4,9 +4,9 @@
 #pragma once
 
 #include "RoomStatus.h"
-#include "Typeroom.h"
-#include "../Observer.h"
-#include "../CUSTOMER/Customer.h"
+#include "TypeRoom.h"
+#include "frontend/Observers/Observer.h"
+#include "cores/Customer/Customer.h"
 #include <iostream>
 #include <string>
 

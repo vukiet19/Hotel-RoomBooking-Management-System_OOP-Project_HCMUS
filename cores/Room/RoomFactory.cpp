@@ -2,14 +2,14 @@
 // The function returns a QVector of Room objects that match the criteria.
 #include "RoomFactory.h"
 #include "Room.h"
-#include "Typeroom.h"
+#include "TypeRoom.h"
 #include "DerivedRooms.h"
 #include <QVector>
 #include <QString>
 #include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include "../Manager/DatabaseManager.h"
+#include "backend/Manager/DatabaseManager.h"
 
 // This function checks for available rooms based on the provided filter criteria.
 QVector<Room*> RoomFactory::checkAvailableRooms(const RoomFilter& filter) {

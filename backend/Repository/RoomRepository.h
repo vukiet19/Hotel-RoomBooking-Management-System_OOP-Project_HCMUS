@@ -5,7 +5,7 @@
 // 2. CÓ THÊM HÀM TÌM THÔNG TIN GIÁ PHÒNG DỰA VÀO LOẠI PHÒNG
 
 #pragma once
-#include "../Room/Room.h"
+#include "cores/Room/Room.h"
 #include <QString>
 #include <vector>
 #include <string>

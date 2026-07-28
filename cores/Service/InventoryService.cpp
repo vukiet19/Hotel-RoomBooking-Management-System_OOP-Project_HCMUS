@@ -1,5 +1,5 @@
 #include "InventoryService.h"
-#include "../Manager/DatabaseManager.h"
+#include "backend/Manager/DatabaseManager.h"
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QDateTime>

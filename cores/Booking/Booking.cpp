@@ -131,6 +131,17 @@ DepositStatus StandardRoomBooking::getDepositStatus() const
 
 // REFUND
 
+StandardRoomBooking::StandardRoomBooking(Customer *c, Room *r, QDateTime in,
+                                         QDateTime out, double depositAmount)
+    : Booking(c), room(r), checkInTime(in), checkOutTime(out), depositAmount(depositAmount)
+{
+    if (this->depositAmount > 0.00)
+    {
+        this->depositStatus = DepositStatus::HELD;
+        this->room->setStatus(RoomStatus::Reserved);
+    }
+}
+
 void StandardRoomBooking::cancelBooking()
 {
     if (this->room->getStatus() == RoomStatus::Reserved)
@@ -167,11 +178,6 @@ void StandardRoomBooking::checkIn()
     this->setStatus(BookingStatus::CHECKED_IN);
     this->room->setStatus(RoomStatus::Occupied);
     this->resolveDeposit();
-    if (this->id > 0)
-    {
-        BookingRepository repo;
-        repo.update(this);
-    }
 }
 
 void StandardRoomBooking::checkOut()
@@ -182,11 +188,6 @@ void StandardRoomBooking::checkOut()
         this->room->setStatus(RoomStatus::Maintenance);
     }
     Booking::addDamagePenaltyItems();
-    if (this->id > 0)
-    {
-        BookingRepository repo;
-        repo.update(this);
-    }
 }
 
 // Checkout -> maintenace
@@ -195,20 +196,10 @@ void StandardRoomBooking::checkOut()
 void WalkInTab::checkIn()
 {
     this->setStatus(BookingStatus::CHECKED_IN);
-    if (this->id > 0)
-    {
-        BookingRepository repo;
-        repo.update(this);
-    }
 }
 
 void WalkInTab::checkOut()
 {
     this->setStatus(BookingStatus::CHECKED_OUT);
     Booking::addDamagePenaltyItems();
-    if (this->id > 0)
-    {
-        BookingRepository repo;
-        repo.update(this);
-    }
 }

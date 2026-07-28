@@ -1,12 +1,12 @@
 #pragma once
 
-// #include "../Service/ServiceItem.h"
-#include "../Repository/BookingRepository.h"
+#include "cores/Service/ServiceItem.h"
+#include "backend/Repository/BookingRepository.h"
 #include "BookingStatus.h"
-#include "../Customer/Customer.h"
-#include "../Room/Room.h"
-#include "../Room/TypeRoom.h"
-#include "../Room/DepositStatus.h"
+#include "cores/Customer/Customer.h"
+#include "cores/Room/Room.h"
+#include "cores/Room/TypeRoom.h"
+#include "cores/Room/DepositStatus.h"
 #include "BookingStatus.h"
 
 #include <QDateTime>
@@ -22,7 +22,7 @@ protected:
     int id;
     Customer *customer;
     BookingStatus status;
-    // vector<unique_ptr<ServiceItem>> serviceItems;
+    vector<unique_ptr<ServiceItem>> serviceItems;
     double totalPrice = 0.0;
 
     // thêm setStatus để ôm event cho dễ

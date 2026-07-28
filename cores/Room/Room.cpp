@@ -2,7 +2,7 @@
 //
 
 #include "Room.h"
-#include "../Observer.h"
+#include "frontend/Observers/Observer.h"
 #include <QDateTime>
 #include <string>
 
