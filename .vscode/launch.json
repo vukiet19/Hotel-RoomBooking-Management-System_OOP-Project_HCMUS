@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Hotel_Management (LLDB)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Hotel_Management",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "visualizerFile": "/Users/sunix/Library/Application Support/Antigravity IDE/User/workspaceStorage/8b8ab93ca6fe47e7eedc73977b23871b/tonka3000.qtvsctools/qt.natvis.xml"
+    }
+  ]
+}

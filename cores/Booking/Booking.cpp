@@ -202,4 +202,9 @@ void WalkInTab::checkOut()
 {
     this->setStatus(BookingStatus::CHECKED_OUT);
     Booking::addDamagePenaltyItems();
+    if (this->id > 0)
+    {
+        BookingRepository repo;
+        repo.update(this);
+    }
 }

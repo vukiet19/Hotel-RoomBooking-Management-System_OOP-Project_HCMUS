@@ -1,50 +1,78 @@
 #pragma once
 
 #include <QWidget>
-#include <QStackedWidget>
-#include <QTableWidget>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QLabel>
-#include "frontend/Checkout/CheckoutPage.h"
-#include <QString>
 
-class MainWindowUi : public QWidget
-{
+#include "frontend/UI/ManagerWindow/Bill/BillPage.h"
+#include "frontend/UI/ManagerWindow/Booking/BookingPage.h"
+#include "frontend/UI/ManagerWindow/Checkout/CheckoutPage.h"
+#include "frontend/UI/ManagerWindow/Customer/CustomerPage.h"
+#include "frontend/UI/ManagerWindow/Dashboard/DashboardPage.h"
+#include "frontend/UI/ManagerWindow/Inventory/InventoryPage.h"
+#include "frontend/UI/ManagerWindow/Room/RoomPage.h"
+#include "frontend/UI/ManagerWindow/Service/ServicePage.h"
+
+class QStackedWidget;
+class QTableWidget;
+class QPushButton;
+class QLabel;
+
+class MainWindowUi : public QWidget {
 public:
-    MainWindowUi(QWidget *parent = nullptr);
+  MainWindowUi(QWidget *parent = nullptr);
 
 protected:
-    void setupUi();
+  enum PageIndex {
+    DashboardIndex,
+    BookingIndex,
+    CustomerIndex,
+    RoomIndex,
+    ServiceIndex,
+    InventoryIndex,
+    BillIndex,
+    CheckoutIndex
+  };
 
-    QWidget *actionBar;
-    QPushButton *button1, *button2, *button3, *button4, *button5;
-    QPushButton *button6, *button7, *button8, *button9, *button10;
-    QPushButton *buttonCheckout;
-    QPushButton *buttonDashboard;
+  void setupUi();
 
-    QPushButton *btnAdd;
-    QPushButton *btnUpdate;
-    QPushButton *btnDelete;
-    QPushButton *btnFilter;
+  QWidget *actionBar;
+  QPushButton *buttonDashboard;
+  QPushButton *buttonBooking;
+  QPushButton *buttonCustomer;
+  QPushButton *buttonRoom;
+  QPushButton *buttonService;
+  QPushButton *buttonInventory;
+  QPushButton *buttonBill;
+  QPushButton *buttonCheckout;
 
-    QStackedWidget *stackedWidget;
-    class CheckoutPage *checkoutPage;
+  QPushButton *btnAdd;
+  QPushButton *btnUpdate;
+  QPushButton *btnDelete;
+  QPushButton *btnFilter;
 
-    QTableWidget *tableBooking;
-    QTableWidget *tableBookingItems;
-    QTableWidget *tableCustomer;
-    QTableWidget *tableFood;
-    QTableWidget *tableInventory;
-    QTableWidget *tableInventoryLog;
-    QTableWidget *tableRoom;
-    QTableWidget *tableRoomType;
-    QTableWidget *tableService;
-    QTableWidget *tableBill;
-    QTableWidget *tableDashboard;
+  QStackedWidget *stackedWidget;
+  BookingPage *bookingPage;
+  CustomerPage *customerPage;
+  RoomPage *roomPage;
+  ServicePage *servicePage;
+  InventoryPage *inventoryPage;
+  BillPage *billPage;
+  DashboardPage *dashboardPage;
+  CheckoutPage *checkoutPage;
 
-    QLabel *lblTodayBookings;
-    QLabel *lblDailyRevenue;
-    QLabel *lblMonthlyRevenue;
-    QLabel *lblYearlyRevenue;
+  QTableWidget *tableBooking;
+  QTableWidget *tableBookingItems;
+  QTableWidget *tableCustomer;
+  QTableWidget *tableFood;
+  QTableWidget *tableInventory;
+  QTableWidget *tableInventoryLog;
+  QTableWidget *tableRoom;
+  QTableWidget *tableRoomType;
+  QTableWidget *tableService;
+  QTableWidget *tableBill;
+  QTableWidget *tableDashboard;
+
+  QLabel *lblTodayBookings;
+  QLabel *lblDailyRevenue;
+  QLabel *lblMonthlyRevenue;
+  QLabel *lblYearlyRevenue;
 };
