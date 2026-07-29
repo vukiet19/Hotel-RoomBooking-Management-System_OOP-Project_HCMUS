@@ -1,5 +1,0 @@
-/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management.dir
-/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/edit_cache.dir
-/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/rebuild_cache.dir
-/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management_autogen_timestamp_deps.dir
-/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/CMakeFiles/Hotel_Management_autogen.dir
