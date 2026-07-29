@@ -24,9 +24,9 @@ public:
 
     double getDiscountRate(MembershipTier tier);
 
-    MembershipTier getTier();
+    MembershipTier getTier() const;
 
-    int getPoint();
+    int getPoint() const;
 
     void setDiscount(double rate, MembershipTier tier);
 

@@ -26,16 +26,18 @@ void Booking::setStatus(BookingStatus status)
 
 StandardRoomBooking::~StandardRoomBooking()
 {
-    if (this->room->getStatus() == RoomStatus::Occupied)
-    {
-        // LƯU THÔNG TIN KHÁCH HÀNG VÀO DATABASE
-    }
+    if (this->room) { //chắc chắn rằng room không phải nullptr
+        if (this->room->getStatus() == RoomStatus::Occupied)
+        {
+            // LƯU THÔNG TIN KHÁCH HÀNG VÀO DATABASE
+        }
 
-    // không set khi chưa maintenance xong vì có thể phòng dơ chẳng hạn
-    if (this->room->getStatus() == RoomStatus::Occupied ||
-        this->room->getStatus() == RoomStatus::Reserved)
-    {
-        this->room->setStatus(RoomStatus::Available);
+        // không set khi chưa maintenance xong vì có thể phòng dơ chẳng hạn
+        if (this->room->getStatus() == RoomStatus::Occupied ||
+            this->room->getStatus() == RoomStatus::Reserved)
+        {
+            this->room->setStatus(RoomStatus::Available);
+        }
     }
 }
 
@@ -67,6 +69,7 @@ BookingStatus Booking::getBookingStatus() const
 //        serviceItems.push_back(std::move(serviceItem));
 //    }
 //}
+
 
 void Booking::addDamagePenaltyItems()
 {
@@ -135,10 +138,12 @@ StandardRoomBooking::StandardRoomBooking(Customer *c, Room *r, QDateTime in,
                                          QDateTime out, double depositAmount)
     : Booking(c), room(r), checkInTime(in), checkOutTime(out), depositAmount(depositAmount)
 {
+    //>0 nghĩa là mình đang giữ tiền cọc của khách
     if (this->depositAmount > 0.00)
     {
         this->depositStatus = DepositStatus::HELD;
-        this->room->setStatus(RoomStatus::Reserved);
+        if (this->room) //chắc chắn rằng room không phải nullptr
+            this->room->setStatus(RoomStatus::Reserved);
     }
 }
 
@@ -188,7 +193,7 @@ void StandardRoomBooking::checkIn()
 void StandardRoomBooking::checkOut()
 {
     this->setStatus(BookingStatus::CHECKED_OUT);
-    if (this->room)
+    if (this->room) //chắc chắn rằng room không phải nullptr
     {
         this->room->setStatus(RoomStatus::Maintenance);
     }

@@ -12,8 +12,8 @@
 #include "backend/Manager/DatabaseManager.h"
 
 // This function checks for available rooms based on the provided filter criteria.
-QVector<Room*> RoomFactory::checkAvailableRooms(const RoomFilter& filter) {
-	QVector<Room*> availableRoom;
+vector<unique_ptr<Room>> RoomFactory::checkAvailableRooms(const RoomFilter& filter) {
+	vector<unique_ptr<Room>> availableRoom;
 	QSqlDatabase db = DatabaseManager::instance().database();
 	QSqlQuery query(db);
 
@@ -39,16 +39,24 @@ QVector<Room*> RoomFactory::checkAvailableRooms(const RoomFilter& filter) {
 
 	if (query.exec()) {
 		while (query.next()) {
-			if (query.value("room_type").toString() == "StandardRoom") {
-				availableRoom.append(new StandardRoom(query.value("room_number").toString().toStdString()));
+			QString roomType = query.value("room_type").toString();
+			std::string roomNum = query.value("room_number").toString().toStdString();
+
+			// Khởi tạo thông minh bằng std::make_unique và đẩy vào bằng std::move
+			if (roomType == "StandardRoom" || roomType == "Standard") {
+				availableRoom.push_back(std::make_unique<StandardRoom>(roomNum));
 			}
-			else if (query.value("room_type").toString() == "VIPRoom") {
-				availableRoom.append(new VipRoom(query.value("room_number").toString().toStdString()));
+			else if (roomType == "VIPRoom" || roomType == "VIP") {
+				availableRoom.push_back(std::make_unique<VipRoom>(roomNum));
 			}
-			else if (query.value("room_type").toString() == "PresidentialSuite") {
-				availableRoom.append(new PresiRoom(query.value("room_number").toString().toStdString()));
+			else if (roomType == "PresidentialSuite" || roomType == "Presidential") {
+				availableRoom.push_back(std::make_unique<PresiRoom>(roomNum));
 			}
 		}
 	}
+	else {
+		qDebug() << "ERROR: checkAvailableRooms failed!" << query.lastError().text();
+	}
+
 	return availableRoom;
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "cores/Service/ServiceItem.h"
 #include "backend/Repository/BookingRepository.h"
 #include "BookingStatus.h"
@@ -8,7 +7,6 @@
 #include "cores/Room/TypeRoom.h"
 #include "cores/Room/DepositStatus.h"
 #include "BookingStatus.h"
-
 #include <QDateTime>
 #include <vector>
 

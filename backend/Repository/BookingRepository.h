@@ -49,14 +49,14 @@ public:
 
 	// Reconstructs booking from DB. Note: caller manages the lifecycle of the returned pointer.
 	// lấy 1 booking cụ thể từ database
-	Booking *getById(int bookingId, Customer *customer, Room *room);
+	unique_ptr<Booking> getById(int bookingId, Customer *customer, Room *room);
 
 	// mình sẽ load lại UI dựa vào vector<Booking*> mới được trả về này(getAll và filter)
 	// Trả về tất cả booking, caller quản lý bộ nhớ
-	vector<Booking *> getAll(const vector<Customer *> &customers, const vector<Room *> &rooms);
+	vector<unique_ptr<Booking>> getAll(const vector<Customer *> &customers, const vector<Room *> &rooms);
 
 	// Lọc booking dựa trên các điều kiện trong filter
-	vector<Booking *> getFiltered(const BookingFilter &filter, const vector<Customer *> &customers, const vector<Room *> &rooms);
+	vector<unique_ptr<Booking>> getFiltered(const BookingFilter &filter, const vector<Customer *> &customers, const vector<Room *> &rooms);
 
 private:
 	// kiểm tra schema (cột trong database)

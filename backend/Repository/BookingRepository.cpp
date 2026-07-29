@@ -7,6 +7,7 @@
 #include <QtSql/QSqlError>
 #include <QDebug>
 #include <QVariant>
+#include <map>
 
 // hàm để chuyển đổi kiểu enum class sang dạng database string hiểu đc
 static QString statusToString(BookingStatus status)
@@ -24,7 +25,7 @@ static QString statusToString(BookingStatus status)
 	}
 }
 
-static BookingStatus stringToStatus(const QString &str)
+static BookingStatus stringToStatus(const QString& str)
 {
 	if (str == "CHECKED_IN")
 		return BookingStatus::CHECKED_IN;
@@ -37,24 +38,31 @@ static QString depositStatusToString(DepositStatus status)
 {
 	switch (status)
 	{
-	case DepositStatus::NONE:
-		return "NONE";
-	case DepositStatus::HELD:
+	case DepositStatus::HELD:     
 		return "HELD";
-	case DepositStatus::RETURNED:
+	case DepositStatus::RETURNED: 
 		return "RETURNED";
-	default:
+	case DepositStatus::PENDING:  //thêm case này
+		return "PENDING";  
+	case DepositStatus::NONE:     
+		return "NONE";
+	default:                      
 		return "NONE";
 	}
 }
 
-static DepositStatus stringToDepositStatus(const QString &str)
+static DepositStatus stringToDepositStatus(const QString& statusStr)
 {
-	if (str == "HELD")
+	QString upperStr = statusStr.toUpper().trimmed();
+
+	if (upperStr == "HELD")      
 		return DepositStatus::HELD;
-	if (str == "RETURNED")
+	if (upperStr == "RETURNED")  
 		return DepositStatus::RETURNED;
-	return DepositStatus::NONE;
+	if (upperStr == "PENDING")   
+		return DepositStatus::PENDING; //sau merge thiếu case này
+
+	return DepositStatus::NONE; // Mặc định là "NONE" hoặc chuỗi rác
 }
 
 // hàm khởi tạo kết nối đến database và kiểm tra schema
@@ -130,13 +138,13 @@ void BookingRepository::verifySchema()
 }
 
 // add các thông tin booking cũ không dùng đến nữa
-bool BookingRepository::add(const BookingData &booking)
+bool BookingRepository::add(const BookingData& booking)
 {
 	QSqlDatabase db = DatabaseManager::instance().database();
 	QSqlQuery query(db);
 
 	query.prepare("INSERT INTO Bookings (customer_id, room_number, check_in_time, check_out_time, total_price, booking_type, status, deposit_amount, deposit_status) "
-				  "VALUES (:customer_id, :room_number, :check_in, :check_out, :totalPrice, 'STANDARD', 'UNCONFIRMED', 0.0, 'NONE')");
+		"VALUES (:customer_id, :room_number, :check_in, :check_out, :totalPrice, 'STANDARD', 'UNCONFIRMED', 0.0, 'NONE')");
 
 	query.bindValue(":customer_id", booking.customerId);
 	query.bindValue(":room_number", booking.roomNumber);
@@ -154,7 +162,7 @@ bool BookingRepository::add(const BookingData &booking)
 }
 
 // thêm các booking mới
-int BookingRepository::add(Booking *booking)
+int BookingRepository::add(Booking* booking)
 {
 	if (!booking)
 		return -1;
@@ -163,13 +171,13 @@ int BookingRepository::add(Booking *booking)
 	QSqlQuery query(db);
 
 	query.prepare("INSERT INTO Bookings (customer_id, room_number, check_in_time, check_out_time, total_price, booking_type, status, deposit_amount, deposit_status) "
-				  "VALUES (:customer_id, :room_number, :check_in, :check_out, :total_price, :booking_type, :status, :deposit_amount, :deposit_status)");
+		"VALUES (:customer_id, :room_number, :check_in, :check_out, :total_price, :booking_type, :status, :deposit_amount, :deposit_status)");
 
 	int customerId = booking->customer ? booking->customer->getId() : 0;
 	query.bindValue(":customer_id", customerId);
 
 	// sử dụng dynamic cast để check phân biệt standardRoomBooking vs Walk-in tab
-	StandardRoomBooking *srb = dynamic_cast<StandardRoomBooking *>(booking);
+	StandardRoomBooking* srb = dynamic_cast<StandardRoomBooking*>(booking);
 	if (srb != nullptr)
 	{
 		query.bindValue(":room_number", srb->getRoom() ? QString::fromStdString(srb->getRoom()->getId()) : "");
@@ -182,6 +190,7 @@ int BookingRepository::add(Booking *booking)
 	else
 	{
 		WalkInTab *wit = dynamic_cast<WalkInTab *>(booking);
+		//đổi thành QMetaType do Qt 6 báo QVariant bị bỏ trong Qt 6
 		query.bindValue(":room_number", QVariant(QMetaType(QMetaType::QString))); // NULL
 		if (wit != nullptr)
 		{
@@ -211,7 +220,7 @@ int BookingRepository::add(Booking *booking)
 	// lý do là vì mỗi lần thêm hay xoá thì id của booking vào database sẽ dược database generate nên mình đổi lại id phụ thuộc vào database
 
 	// Đồng bộ dữ liệu serviceItems
-	for (const auto &item : booking->serviceItems)
+	for (const auto& item : booking->serviceItems)
 	{
 		addServiceItemToBooking(newId, item->getId(), item->getQuantity(), item->getUnitPrice(), item->getNote());
 	}
@@ -221,7 +230,7 @@ int BookingRepository::add(Booking *booking)
 
 // cập nhật lại Booking trong database mỗi khi có sự thay đổi
 // aka gọi hàm này nếu Booking* có thay đổi (vd: status ...)
-bool BookingRepository::update(Booking *booking)
+bool BookingRepository::update(Booking* booking)
 {
 	if (!booking)
 		return false;
@@ -230,16 +239,16 @@ bool BookingRepository::update(Booking *booking)
 	QSqlQuery query(db);
 
 	query.prepare("UPDATE Bookings SET customer_id = :customer_id, room_number = :room_number, "
-				  "check_in_time = :check_in, check_out_time = :check_out, total_price = :total_price, "
-				  "status = :status, deposit_amount = :deposit_amount, deposit_status = :deposit_status "
-				  "WHERE id = :id");
+		"check_in_time = :check_in, check_out_time = :check_out, total_price = :total_price, "
+		"status = :status, deposit_amount = :deposit_amount, deposit_status = :deposit_status "
+		"WHERE id = :id");
 
 	query.bindValue(":id", booking->getId());
 
 	int customerId = booking->customer ? booking->customer->getId() : 0;
 	query.bindValue(":customer_id", customerId);
 
-	StandardRoomBooking *srb = dynamic_cast<StandardRoomBooking *>(booking);
+	StandardRoomBooking* srb = dynamic_cast<StandardRoomBooking*>(booking);
 	if (srb != nullptr)
 	{
 		query.bindValue(":room_number", srb->getRoom() ? QString::fromStdString(srb->getRoom()->getId()) : "");
@@ -284,7 +293,7 @@ bool BookingRepository::update(Booking *booking)
 		return false;
 	}
 
-	for (const auto &item : booking->serviceItems)
+	for (const auto& item : booking->serviceItems)
 	{
 		if (!addServiceItemToBooking(booking->getId(), item->getId(), item->getQuantity(), item->getUnitPrice(), item->getNote()))
 		{
@@ -318,13 +327,14 @@ bool BookingRepository::remove(int bookingId)
 
 // lấy 1 booking cụ thể từ database
 // Tái tạo lại Booking từ database và caller sẽ tự quản lý cái ô nhớ Booking* này
-Booking *BookingRepository::getById(int bookingId, Customer *customer, Room *room)
+// sửa kiểu trả về thành unique pointer phòng khi quên delete
+unique_ptr<Booking> BookingRepository::getById(int bookingId, Customer* customer, Room* room)
 {
 	QSqlDatabase db = DatabaseManager::instance().database();
 	QSqlQuery query(db);
 
 	query.prepare("SELECT customer_id, room_number, check_in_time, check_out_time, total_price, booking_type, status, deposit_amount, deposit_status "
-				  "FROM Bookings WHERE id = :id");
+		"FROM Bookings WHERE id = :id");
 	query.bindValue(":id", bookingId);
 
 	if (!query.exec() || !query.next())
@@ -340,20 +350,20 @@ Booking *BookingRepository::getById(int bookingId, Customer *customer, Room *roo
 	QDateTime checkInVal = QDateTime::fromString(query.value("check_in_time").toString(), Qt::ISODate);
 	QDateTime checkOutVal = QDateTime::fromString(query.value("check_out_time").toString(), Qt::ISODate);
 
-	Booking *booking = nullptr;
+	unique_ptr<Booking> booking = nullptr;
 
 	if (typeStr == "STANDARD")
 	{
 		double depositAmount = query.value("deposit_amount").toDouble();
 		QString depStatusStr = query.value("deposit_status").toString();
 
-		StandardRoomBooking *srb = new StandardRoomBooking(customer, room, checkInVal, checkOutVal, depositAmount);
+		auto srb = std::make_unique<StandardRoomBooking>(customer, room, checkInVal, checkOutVal, depositAmount);
 		srb->depositStatus = stringToDepositStatus(depStatusStr);
-		booking = srb;
+		booking = std::move(srb);
 	}
 	else
 	{
-		booking = new WalkInTab(customer, checkInVal);
+		booking = std::make_unique<WalkInTab>(customer, checkInVal);
 	}
 
 	if (booking)
@@ -365,9 +375,9 @@ Booking *BookingRepository::getById(int bookingId, Customer *customer, Room *roo
 		// Tải service item từ database vào Booking
 		QSqlQuery itemQuery(db);
 		itemQuery.prepare("SELECT b.item_id, b.quantity, b.customer_note, b.final_price, s.item_name, s.category "
-						  "FROM BookingServiceItems b "
-						  "JOIN ServiceCatalog s ON b.item_id = s.item_id "
-						  "WHERE b.booking_id = :booking_id");
+			"FROM BookingServiceItems b "
+			"JOIN ServiceCatalog s ON b.item_id = s.item_id "
+			"WHERE b.booking_id = :booking_id");
 		itemQuery.bindValue(":booking_id", bookingId);
 
 		if (itemQuery.exec())
@@ -414,89 +424,35 @@ Booking *BookingRepository::getById(int bookingId, Customer *customer, Room *roo
 	return booking;
 }
 
-vector<Booking *> BookingRepository::getAll(const vector<Customer *> &customers, const vector<Room *> &rooms)
+//sửa kiểu trả về thành unique pointer phòng khi quên delete
+//sửa logic hàm getAll nếu filter không có điều kiện gì sẽ lấy hết bằng cách gọi getFiltered
+vector<unique_ptr<Booking>> BookingRepository::getAll(const vector<Customer*>& customers, const vector<Room*>& rooms)
 {
-	vector<Booking *> list;
-	QSqlDatabase db = DatabaseManager::instance().database();
-	QSqlQuery query(db);
-
-	if (!query.exec("SELECT id, customer_id, room_number FROM Bookings"))
-	{
-		qDebug() << "ERROR: Failed to fetch all Booking IDs!" << query.lastError().text();
-		return list;
-	}
-
-	vector<tuple<int, int, string>> records;
-	while (query.next())
-	{
-		records.push_back({query.value("id").toInt(),
-						   query.value("customer_id").toInt(),
-						   query.value("room_number").toString().toStdString()});
-	}
-
-	for (const auto &rec : records)
-	{
-		int id = std::get<0>(rec);
-		int custId = std::get<1>(rec);
-		string rmNum = std::get<2>(rec);
-
-		Customer *matchedCust = nullptr;
-		for (auto *c : customers)
-		{
-			if (c && c->getId() == custId)
-			{
-				matchedCust = c;
-				break;
-			}
-		}
-
-		Room *matchedRoom = nullptr;
-		for (auto *r : rooms)
-		{
-			if (r && r->getId() == rmNum)
-			{
-				matchedRoom = r;
-				break;
-			}
-		}
-
-		Booking *booking = getById(id, matchedCust, matchedRoom);
-		if (booking)
-		{
-			list.push_back(booking);
-		}
-	}
-
-	return list;
+	BookingFilter emptyFilter; // Không có điều kiện lọc = Lấy tất cả
+	return getFiltered(emptyFilter, customers, rooms);
 }
 
-// method để lọc dựa trên điều kiện (loại filter, vector chứa customer và room)
-vector<Booking *> BookingRepository::getFiltered(const BookingFilter &filter, const vector<Customer *> &customers, const vector<Room *> &rooms)
+/* 
+- method để lọc dựa trên điều kiện(loại filter, vector chứa customer và room)
+- sửa kiểu trả về thành unique pointer phòng khi quên delete
+- sửa logic hàm getFiltered để tối ưu hơn 1 chút */
+vector<unique_ptr<Booking>> BookingRepository::getFiltered(const BookingFilter& filter, const vector<Customer*>& customers, const vector<Room*>& rooms)
 {
-
-	vector<Booking *> list;
+	vector<unique_ptr<Booking>> list;
 	QSqlDatabase db = DatabaseManager::instance().database();
 
-	QString sql = "SELECT id, customer_id, room_number FROM Bookings";
+	//lấy toàn bộ thông tin
+	QString sql = "SELECT id, customer_id, room_number, check_in_time, check_out_time, "
+		"total_price, booking_type, status, deposit_amount, deposit_status FROM Bookings";
+	
+	//vector chứa các điều kiện
 	vector<QString> conditions;
 
 	// AI kiểm tra thì kêu đổi từ các if riêng lẻ r làm như dưới thì gắn vào vector conditions để ko lỗi hoặc hacking(SQL injection)
-	if (filter.customerId != -1)
-	{
-		conditions.push_back("customer_id = :customer_id");
-	}
-	if (!filter.roomNumber.empty())
-	{
-		conditions.push_back("room_number = :room_number");
-	}
-	if (!filter.status.empty())
-	{
-		conditions.push_back("status = :status");
-	}
-	if (!filter.bookingType.empty())
-	{
-		conditions.push_back("booking_type = :booking_type");
-	}
+	if (filter.customerId != -1) conditions.push_back("customer_id = :customer_id");
+	if (!filter.roomNumber.empty()) conditions.push_back("room_number = :room_number");
+	if (!filter.status.empty()) conditions.push_back("status = :status");
+	if (!filter.bookingType.empty()) conditions.push_back("booking_type = :booking_type");
 
 	if (!conditions.empty())
 	{
@@ -507,8 +463,7 @@ vector<Booking *> BookingRepository::getFiltered(const BookingFilter &filter, co
 		}
 	}
 
-	// nếu lọc bằng customerId
-	// sql(Qstring khai báo trên thành)
+	// nếu lọc bằng customerId sql(Qstring khai báo trên thành)
 	//  : SELECT id, customer_id, room_number FROM Bookings WHERE customer_id = :customer_id
 	//  nếu còn tiếp thì sẽ thêm AND và thêm điều kiện tiếp
 
@@ -538,60 +493,121 @@ vector<Booking *> BookingRepository::getFiltered(const BookingFilter &filter, co
 		return list;
 	}
 
-	vector<tuple<int, int, string>> records;
+	QStringList bookingIds; // Dùng để gom ID truyền vào mệnh đề IN
+	std::map<int, Booking*> bookingMap; // Dùng map để truy xuất nhanh Booking O(1) khi ráp ServiceItem vào
+	
 	while (query.next())
 	{
-		records.push_back({query.value("id").toInt(),
-						   query.value("customer_id").toInt(),
-						   // Qvariant -> Qstring -> std::string
-						   query.value("room_number").toString().toStdString()});
-	}
+		int id = query.value("id").toInt();
+		int custId = query.value("customer_id").toInt();
+		string rmNum = query.value("room_number").toString().toStdString();
 
-	for (const auto &rec : records)
-	{
+		QString typeStr = query.value("booking_type").toString();
+		QString statusStr = query.value("status").toString();
+		double totalPrice = query.value("total_price").toDouble();
+		QDateTime checkInVal = QDateTime::fromString(query.value("check_in_time").toString(), Qt::ISODate);
+		QDateTime checkOutVal = QDateTime::fromString(query.value("check_out_time").toString(), Qt::ISODate);
 
-		// syntax của tuple vẫn để namespace std:: để sợ conflict vs get khác
-		int id = std::get<0>(rec);
-		int custId = std::get<1>(rec);
-		string rmNum = std::get<2>(rec);
-
-		Customer *matchedCust = nullptr;
-		for (auto *c : customers)
-		{
-			if (c && c->getId() == custId)
-			{
-				matchedCust = c;
-				break;
-			}
+		// Ánh xạ Customer và Room
+		Customer* matchedCust = nullptr;
+		for (auto* c : customers) { 
+			if (c && c->getId() == custId) { 
+				matchedCust = c; break; 
+			} 
 		}
 
-		Room *matchedRoom = nullptr;
-		for (auto *r : rooms)
-		{
-			if (r && r->getId() == rmNum)
-			{
-				matchedRoom = r;
-				break;
-			}
+		Room* matchedRoom = nullptr;
+		for (auto* r : rooms) { 
+			if (r && r->getId() == rmNum) { 
+				matchedRoom = r; 
+				break; 
+			} 
 		}
 
-		Booking *booking = getById(id, matchedCust, matchedRoom);
+		// Khởi tạo Booking trực tiếp (Không dùng getById)
+		unique_ptr<Booking> booking;
+		if (typeStr == "STANDARD")
+		{
+			double depositAmount = query.value("deposit_amount").toDouble();
+			QString depStatusStr = query.value("deposit_status").toString();
+
+			auto srb = make_unique<StandardRoomBooking>(matchedCust, matchedRoom, checkInVal, checkOutVal, depositAmount);
+			srb->depositStatus = stringToDepositStatus(depStatusStr);
+			booking = std::move(srb);
+		}
+		else
+		{
+			booking = make_unique<WalkInTab>(matchedCust, checkInVal);
+		}
+
 		if (booking)
 		{
-			list.push_back(booking);
+			booking->id = id;
+			booking->status = stringToStatus(statusStr);
+			booking->totalPrice = totalPrice;
+
+			bookingIds.append(QString::number(id));
+			// hàm get lấy và trả về trỏ thô (Booking*) nằm trong unique_ptr vào map để tí nữa nạp ServiceItem
+			// con trỏ này được lưu trong map<int, Booking*> với key là id, tìm bằng cách ánh xạ id với con trỏ (địa chỉ)
+			bookingMap[id] = booking.get();
+			list.push_back(std::move(booking));
 		}
 	}
 
+	if (bookingIds.isEmpty()) 
+		return list; //không có id nào thì trả về list
+
+	//dùng join để nối 2 bảng bằng cột item_id (foreign key)
+	//arg(bookingIds.join(",") sẽ lấy ra toàn bộ bookingId ngăn cách nhau bằng dấu ",". VD: 101, 102,...
+	// IN (%1) có thể hiểu gần giống là: WHERE b.booking_id = 101 OR b.booking_id = 102 OR b.booking_id = 103
+	QString itemSql = QString("SELECT b.booking_id, b.item_id, b.quantity, b.customer_note, b.final_price, s.item_name, s.category "
+		"FROM BookingServiceItems b "
+		"JOIN ServiceCatalog s ON b.item_id = s.item_id "
+		"WHERE b.booking_id IN (%1)").arg(bookingIds.join(","));
+
+	QSqlQuery itemQuery(db);
+	if (itemQuery.exec())
+	{
+		while (itemQuery.next())
+		{
+			int bId = itemQuery.value("booking_id").toInt();
+			string itemId = itemQuery.value("item_id").toString().toStdString();
+			int qty = itemQuery.value("quantity").toInt();
+			string note = itemQuery.value("customer_note").toString().toStdString();
+			double finalPrice = itemQuery.value("final_price").toDouble();
+			string name = itemQuery.value("item_name").toString().toStdString();
+			string category = itemQuery.value("category").toString().toStdString();
+
+			unique_ptr<ServiceItem> item;
+			if (category == "Food") 
+				item = ServiceItemFactory::createServiceItem(ServiceType::FoodOrderItem, itemId, name, finalPrice, qty, note);
+			else if (category == "Minibar") 
+				item = ServiceItemFactory::createServiceItem(ServiceType::MinibarItem, itemId, name, finalPrice, qty, note);
+			else if (category == "Furniture") 
+				item = ServiceItemFactory::createServiceItem(ServiceType::FurnitureItem, itemId, name, finalPrice, qty, note);
+			else if (category == "Damage") 
+				item = ServiceItemFactory::createServiceItem(ServiceType::DamagePenaltyItem, itemId, name, finalPrice, qty, note);
+			else item = make_unique<ServiceItem>(itemId, name, finalPrice, qty, note);
+
+			if (item)
+			{
+				// Tìm lại Booking tương ứng cực nhanh O(1) qua Map và nhét Item vào
+				if (bookingMap.find(bId) != bookingMap.end()) {
+					bookingMap[bId]->serviceItems.push_back(std::move(item));
+				}
+			}
+		}
+	}
 	return list;
 }
 
-bool BookingRepository::addServiceItemToBooking(int bookingId, const string &itemId, int quantity, double finalPrice, const string &note)
+bool BookingRepository::addServiceItemToBooking(int bookingId, const string& itemId, int quantity, double finalPrice, const string& note)
 {
 	QSqlDatabase db = DatabaseManager::instance().database();
 	QSqlQuery query(db);
 
 	query.prepare("INSERT INTO BookingServiceItems (booking_id, item_id, quantity, customer_note, final_price) "
-				  "VALUES (:booking_id, :item_id, :quantity, :customer_note, :final_price)");
+		"VALUES (:booking_id, :item_id, :quantity, :customer_note, :final_price)");
 
 	query.bindValue(":booking_id", bookingId);
 	query.bindValue(":item_id", QString::fromStdString(itemId));

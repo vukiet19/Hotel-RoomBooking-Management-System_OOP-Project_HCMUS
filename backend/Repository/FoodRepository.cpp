@@ -125,7 +125,7 @@ QVector<Food> FoodRepository::filter(double minPrice, double maxPrice)
 
     while (query.next())
     {
-        Food f;
+        Food f{};
         f.id = query.value("option_id").toString();
         f.name = query.value("option_name").toString();
         f.category = query.value("parent_item_id").toString();

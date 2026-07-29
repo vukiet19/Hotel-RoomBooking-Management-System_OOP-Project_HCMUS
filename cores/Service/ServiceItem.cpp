@@ -89,23 +89,29 @@ void ServiceItem::setQuantity(int newQuantity) {
     this->quantity = newQuantity;
 }
 
-void ServiceItem::changeStatus(ServiceStatus newStatus) {
-    if (newStatus == ServiceStatus::Pending) {
-        this->status = newStatus;
-    }
-
-    // O status Billed coi nhu da xong, khong the chinh sua trang thai
-    if (this->status == ServiceStatus::Billed) {
-        // thong bao loi tren UI
+//sửa logic code 1 chút
+//VD: có khách gọi 1 service, mọi thứ đã xong xuôi và khác đã thanh toán, Service status chuyển thành Billed
+//nhưng vì lý do gì đó, có người lại gọi hàm changeStatus(ServiceStatus::Pending)
+//lúc này Status thành Pending luôn, gây lỗi.
+void ServiceItem::changeStatus(ServiceStatus newStatus)
+{
+    if (this->status == ServiceStatus::Billed || this->status == ServiceStatus::Cancelled)
+    {
+        qDebug() << "WARNING: Không thể thay đổi trạng thái của vật tư/dịch vụ đã thanh toán hoặc đã hủy!";
         return;
     }
-
-    // Da Cancelled roi thi khong the chinh sua trang thai
-    if (this->status == ServiceStatus::Cancelled) {
-        // thong bao loi tren UI
-        return;
+    if (newStatus == ServiceStatus::Pending)
+    {
+        this->status = ServiceStatus::Pending;
     }
-    this->status = newStatus;
+    else if (newStatus == ServiceStatus::Billed)
+    {
+        this->status = ServiceStatus::Billed;
+    }
+    else if (newStatus == ServiceStatus::Cancelled)
+    {
+        this->status = ServiceStatus::Cancelled;
+    }
 }
 
 void ServiceItem::setNote(string note) {

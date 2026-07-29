@@ -1,6 +1,5 @@
 #include "backend/Manager/DatabaseManager.h"
 #include "frontend/UI/Login/Login.h"
-
 #include <QApplication>
 #include <QDebug>
 
@@ -11,6 +10,7 @@ int main(int argc, char *argv[])
     if (!DatabaseManager::instance().open())
     {
         qDebug() << "ERROR: Khong mo duoc Database!";
+        return -1;
     }
 
     LoginWindow loginWindow;

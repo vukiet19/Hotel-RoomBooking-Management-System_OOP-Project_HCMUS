@@ -6,24 +6,44 @@
 #include <QDebug>
 
 // Constructor chỉ chạy lần đầu tiên khi gọi hàm instance()
-DatabaseManager::DatabaseManager()
-{
-    // Sử dụng trực tiếp biến thành viên 'db' thay vì khai báo biến cục bộ 'QSqlDatabase db'
+DatabaseManager::DatabaseManager() {
     db = QSqlDatabase::addDatabase("QSQLITE");
 
-    QString dbPath = QCoreApplication::applicationDirPath() + "/Database/hotel.db";
+    QString exePath = QCoreApplication::applicationDirPath();
 
-    db.setDatabaseName(dbPath);
+    QStringList searchPaths = {
+        exePath + "/../../backend/Database/hotel.db",      
+        exePath + "/../../../backend/Database/hotel.db",
+        exePath + "/../backend/Database/hotel.db",
+        exePath + "/backend/Database/hotel.db",
 
-    if (!db.open())
-    {
-        qDebug() << "ERROR: Khong the mo file hotel.db:" << db.lastError().text();
+        // Các đường dẫn dự phòng khác
+        exePath + "/Database/hotel.db",
+        exePath + "/../Database/hotel.db",
+        exePath + "/../../Database/hotel.db",
+        exePath + "/hotel.db"
+    };
+
+    QString dbPath = "";
+    bool dbFound = false;
+
+    for (const QString& path : searchPaths) {
+        if (QFile::exists(path)) {
+            dbPath = QDir::cleanPath(path);
+            dbFound = true;
+            qDebug() << "SUCCESS: DA TIM THAY DATABASE TAI:" << dbPath;
+            break;
+        }
     }
-    else
-    {
-        qDebug() << "Database connected successfully at:" << dbPath;
+
+    if (!dbFound) {
+        qDebug() << "ERROR: KHONG TIM THAY hotel.db! File exe dang chay tai:" << exePath;
+    }
+    else {
+        db.setDatabaseName(dbPath);
     }
 }
+
 
 DatabaseManager &DatabaseManager::instance()
 {
@@ -49,12 +69,28 @@ bool DatabaseManager::open()
         return true;
 }
 
+DatabaseManager::~DatabaseManager()
+{
+    // Destructor should avoid calling Qt internals during static teardown.
+    // Prefer explicit shutdown() to be called while QCoreApplication is still alive.
+}
+
 void DatabaseManager::close()
 {
-    if (db.isOpen())
-    {
+    // If Qt core is already turn down, avoid calling into QSqlDatabase/driver.
+    if (!QCoreApplication::instance())
+        return;
+
+    if (db.isOpen()){
         db.close();
     }
+
+    // Remove the connection properly: release the QSqlDatabase handle first,
+    // then call removeDatabase with the connection name.
+    QString conn = db.connectionName();
+    db = QSqlDatabase();
+    if (!conn.isEmpty())
+        QSqlDatabase::removeDatabase(conn);
 }
 
 QSqlDatabase DatabaseManager::database()

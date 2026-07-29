@@ -1,6 +1,5 @@
 // Hàm này chứa định nghĩa class và hàm của room
 // Các file liên quan Typeroom.h( Dùng để chứa các kiểu phòng),observer.h(Observer pattern), Customer.h(Chủ yếu xài cho việc demo hàm getBill())
-
 #pragma once
 
 #include "RoomStatus.h"
@@ -9,14 +8,13 @@
 #include "cores/Customer/Customer.h"
 #include <iostream>
 #include <string>
-
-#include <string>
 #include <vector>
 
 using namespace std;
 
 class Room
 {
+    friend class RoomRepository;
     // protected co y nghia la ham con truy cap dc
 protected:
     string id;
@@ -28,8 +26,12 @@ protected:
     friend class RoomRepository;
 
 public:
-    static int nextid;
     // ham khoi tao
+    static int nextid;
+    
+    //tạo hàm này để tìm nextId lớn nhất từng được khởi tạo để không bị khởi tạo trùng
+    //vì biến static nextid này nằm trên RAM, mỗi lần tắt chương trình bật lại thì nextid reset về 0 gây trùng
+    static void seedNextId(int maxId);
 
     Room();
     Room(string roomNumber);

@@ -5,7 +5,6 @@
 #include "frontend/Observers/Observer.h"
 #include <QDateTime>
 #include <string>
-
 using namespace std;
 // biến static lưu id
 int Room::nextid = 0;
@@ -18,7 +17,7 @@ Room::Room()
 
     // id có cấu trúc là "R" + 0000 -> 9999
 
-    int zerosNeeded = 4 - tmp.size();
+    int zerosNeeded = 4 - static_cast<int>(tmp.size());
     for (int i = 0; i < zerosNeeded; i++)
     {
         this->id += '0';
@@ -45,7 +44,7 @@ Room::Room(string roomNumber)
     this->id = "R";
     string tmp = to_string(nextid);
 
-    int zerosNeeded = 4 - tmp.size();
+    int zerosNeeded = 4 - static_cast<int>(tmp.size());
     for (int i = 0; i < zerosNeeded; i++)
     {
         this->id += '0';
@@ -122,6 +121,11 @@ string Room::getId() const
 //     this->basePrice = basePrice;
 // }
 
+void Room::setBasePrice(int basePrice)
+{
+    this->basePrice = basePrice;
+}
+
 void Room::setNumberPeople(int number_people)
 {
     this->number_people = number_people;
@@ -129,7 +133,6 @@ void Room::setNumberPeople(int number_people)
 
 int Room::getNumberPeople() const { return number_people; }
 
-void Room::setBasePrice(int price)
-{
-    basePrice = price;
+void Room::seedNextId(int maxId) {
+    nextid = maxId + 1;
 }

@@ -8,7 +8,6 @@
 #include "cores/Room/Room.h"
 #include <QSqlRecord>
 #include "cores/Room/DepositStatus.h"
-
 #include "backend/Manager/DatabaseManager.h"
 #include "backend/Repository/CustomerRepository.h"
 #include "cores/Customer/Customer.h"

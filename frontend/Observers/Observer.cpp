@@ -1,6 +1,5 @@
 // Hàm này dùng cho observer( nếu có trạng thái đó thfi sẽ báo)
 //  Hàm này có liên quan đến Room.h và được thông báo qua hàm notify() của room.h
-
 #include <string>
 #include <iostream>
 #include <algorithm>

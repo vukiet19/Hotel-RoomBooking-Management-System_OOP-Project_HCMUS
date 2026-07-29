@@ -1,6 +1,5 @@
 // Hàm này dùng để chứa các phương thức của class MembershipPolicy,gồm các getter,setter,constrcutor
 // Các hàm liên quan:MembershipPolicy.h(chứa các định nghĩa của class MembershipPolicy)  và file customer( Vì customer là kế thừa từ MembershipPolicy)
-
 #include "MembershipPolicy.h"
 #include <iostream>
 // Constructor default, khi khởi tạo
@@ -45,7 +44,7 @@ void MembershipPolicy::setPoint(int point)
         tier = Platinum;
 }
 // getter
-MembershipTier MembershipPolicy::getTier() { return tier; }
+MembershipTier MembershipPolicy::getTier() const { return tier; }
 
 double MembershipPolicy::getDiscountRate(MembershipTier tier)
 {
@@ -74,7 +73,7 @@ void MembershipPolicy::setTier(MembershipTier tier)
 }
 
 // getter
-int MembershipPolicy::getPoint()
+ int MembershipPolicy::getPoint() const
 {
     return point;
 }

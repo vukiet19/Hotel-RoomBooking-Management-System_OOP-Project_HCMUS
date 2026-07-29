@@ -131,7 +131,7 @@ double DashboardService::getRevenue(std::string type)
 
 // bởi vì bookingRevenue không thể hiện một object một trường riêng mà chỉ thể hiện các góc cạnh của các class khác thôi
 // nên sẽ không trả về ptr và populate lên UI cx dễ nếu như có sử dụng thông số trực tiếp trên này sẽ thay đổi sau
-std::vector<BookingRevenue> DashboardService::getBookingRevenues(const QString &startDate, const QString &endDate)
+std::vector<BookingRevenue> DashboardService::getBookingRevenues(const QString& startDate, const QString& endDate)
 {
 	std::vector<BookingRevenue> results;
 	QSqlDatabase db = getOpenDatabase();
@@ -146,11 +146,10 @@ std::vector<BookingRevenue> DashboardService::getBookingRevenues(const QString &
 	if (endBound.length() == 10)
 		endBound += "T23:59:59";
 
-	query.prepare("SELECT b.id, COALESCE(NULLIF(c.full_name, ''), 'Guest #' || b.customer_id), b.total_price, b.check_in_time "
-				  "FROM Bookings b "
-				  "LEFT JOIN Customer c ON b.customer_id = c.id OR CAST(b.customer_id AS TEXT) = c.id_customer OR b.customer_id = c.rowid "
-				  "WHERE b.check_in_time >= :startDate AND b.check_in_time <= :endDate "
-				  "ORDER BY b.check_in_time DESC, b.id DESC");
+	query.prepare("SELECT b.id, c.full_name, b.total_price, b.check_in_time "
+		"FROM Bookings b "
+		"LEFT JOIN Customer c ON b.customer_id = c.id_customer "
+		"WHERE b.check_in_time >= :startDate AND b.check_in_time <= :endDate");
 	query.bindValue(":startDate", startBound);
 	query.bindValue(":endDate", endBound);
 
@@ -161,10 +160,6 @@ std::vector<BookingRevenue> DashboardService::getBookingRevenues(const QString &
 			BookingRevenue record;
 			record.bookingId = query.value(0).toInt();
 			record.customerName = query.value(1).toString();
-			if (record.customerName.isEmpty())
-			{
-				record.customerName = "Guest #" + QString::number(query.value(0).toInt());
-			}
 			record.revenue = query.value(2).toDouble();
 			record.checkIn = query.value(3).toString();
 			results.push_back(record);

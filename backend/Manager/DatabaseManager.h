@@ -26,5 +26,6 @@ public:
 
 	// getter db
 	QSqlDatabase database();
+	~DatabaseManager();
 };
 

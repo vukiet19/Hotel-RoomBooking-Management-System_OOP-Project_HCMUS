@@ -19,7 +19,7 @@ public:
 class VipRoom : public Room
 {
 public:
-    VipRoom();
+    VipRoom() {}
     VipRoom(string roomNum);
 
     RoomType getType() const override;
@@ -30,7 +30,7 @@ public:
 class PresiRoom : public Room
 {
 public:
-    PresiRoom();
+    PresiRoom() {}
 
     PresiRoom(string roomNum);
 
