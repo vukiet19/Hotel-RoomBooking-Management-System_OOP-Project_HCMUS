@@ -3,7 +3,7 @@
 // Checkoutpage(Page chọn checkout), Các hàm của Manager để link với database
 
 #include "UX.h"
-#include "../UI/UI.h"
+#include "../UI.h"
 #include "frontend/Observers/QtHotelObserver.h"
 #include "frontend/usercheck/backend.h"
 #include "backend/Repository/CustomerRepository.h"

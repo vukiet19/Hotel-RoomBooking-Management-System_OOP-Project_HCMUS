@@ -2,12 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C/C++ Runner: Debug Session",
+      "name": "Debug Hotel_Management (LLDB)",
       "type": "lldb",
       "request": "launch",
+      "program": "${workspaceFolder}/build/Hotel_Management",
       "args": [],
-      "cwd": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS",
-      "program": "/Users/sunix/Documents/Hotel-RoomBooking-Management-System_OOP-Project_HCMUS/build/Debug/outDebug"
+      "cwd": "${workspaceFolder}",
+      "visualizerFile": "/Users/sunix/Library/Application Support/Antigravity IDE/User/workspaceStorage/8b8ab93ca6fe47e7eedc73977b23871b/tonka3000.qtvsctools/qt.natvis.xml"
     }
   ]
 }

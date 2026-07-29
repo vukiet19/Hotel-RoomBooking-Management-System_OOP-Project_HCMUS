@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../UI/UI.h"
+#include "../UI.h"
 #include <QString>
 
 class MainWindowController : public MainWindowUi
