@@ -3,8 +3,7 @@
 // Checkoutpage(Page chọn checkout), Các hàm của Manager để link với database
 
 #include "UX.h"
-#include "../UI.h"
-#include "frontend/Observers/QtHotelObserver.h"
+#include "../UI/UI.h"
 #include "frontend/usercheck/backend.h"
 #include "backend/Repository/CustomerRepository.h"
 #include "backend/Repository/RoomRepository.h"
@@ -34,10 +33,10 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QHeaderView>
-#include <QPushButton>
-#include <QStackedWidget>
-#include <QTableWidget>
-#include <QTableWidgetItem>
+#include <QTimer>
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
+#include "Observers/QtHotelObserver.h"
 
 MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(parent)
 {
@@ -50,46 +49,32 @@ MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(paren
 // Hàm link kết nối
 void MainWindowController::initConnections()
 {
-    connect(buttonBooking, &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
-    connect(buttonCustomer, &QPushButton::clicked, this, &MainWindowController::handleLogin_3);
-    connect(buttonRoom, &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
-    connect(buttonService, &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
-    connect(buttonInventory, &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
-    connect(buttonBill, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
+    connect(button1, &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
+    connect(button2, &QPushButton::clicked, this, &MainWindowController::handleLogin_2);
+    connect(button3, &QPushButton::clicked, this, &MainWindowController::handleLogin_3);
+    connect(button4, &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
+    connect(button5, &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
+    connect(button6, &QPushButton::clicked, this, &MainWindowController::handleLogin_6);
+    connect(button7, &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
+    connect(button8, &QPushButton::clicked, this, &MainWindowController::handleLogin_8);
+    connect(button9, &QPushButton::clicked, this, &MainWindowController::handleLogin_9);
+    connect(button10, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
     connect(buttonCheckout, &QPushButton::clicked, this, &MainWindowController::handleCheckout);
     connect(buttonDashboard, &QPushButton::clicked, this, &MainWindowController::handleDashboardTab);
 
-    connect(bookingPage->bookingTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
-    connect(bookingPage->servicesTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_2);
-    connect(roomPage->roomTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
-    connect(roomPage->roomTypeTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_8);
-    connect(servicePage->foodTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
-    connect(servicePage->serviceTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_9);
-    connect(inventoryPage->inventoryTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
-    connect(inventoryPage->inventoryLogTabButton(), &QPushButton::clicked, this, &MainWindowController::handleLogin_6);
-
+    // Connect Observer events to Qt UI slots
     connect(&QtHotelObserver::instance(), &QtHotelObserver::roomStatusChanged,
-            this, [this](const QString &, int, const QString &)
-            {
-                if (tableRoom)
-                    Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
-            });
-
+            this, &MainWindowController::onRoomStatusObserved);
     connect(&QtHotelObserver::instance(), &QtHotelObserver::bookingStatusChanged,
-            this, [this](int, const QString &, const QString &, int, double, const QString &)
-            {
-                if (tableBooking)
-                    Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
-            });
+            this, &MainWindowController::onBookingStatusObserved);
 }
 
 // Button booking
 void MainWindowController::handleLogin_1()
 {
     setActionBarVisible(true);
-    stackedWidget->setCurrentIndex(BookingIndex);
-    bookingPage->setSection(0);
-    setActiveButton(buttonBooking);
+    stackedWidget->setCurrentIndex(0);
+    setActiveButton(button1);
     Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
     // disconnect là ngắt kết nối chức năng hàm đó, để cho các hàm này không lập lại
     btnAdd->disconnect();
@@ -97,16 +82,16 @@ void MainWindowController::handleLogin_1()
     btnDelete->disconnect();
     btnFilter->disconnect();
     connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::showAddBookingDialog);
+    connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::showFilterBookingDialog);
 }
 
 // Button BookingServiceItems
 
 void MainWindowController::handleLogin_2()
 {
-    stackedWidget->setCurrentIndex(BookingIndex);
-    bookingPage->setSection(1);
+    stackedWidget->setCurrentIndex(1);
     setActionBarVisible(true);
-    setActiveButton(buttonBooking);
+    setActiveButton(button2);
     btnAdd->disconnect();
     btnUpdate->disconnect();
     btnDelete->disconnect();
@@ -118,9 +103,9 @@ void MainWindowController::handleLogin_2()
 
 void MainWindowController::handleLogin_3()
 {
-    stackedWidget->setCurrentIndex(CustomerIndex);
+    stackedWidget->setCurrentIndex(2);
     setActionBarVisible(true);
-    setActiveButton(buttonCustomer);
+    setActiveButton(button3);
     Backend::loadTableData(tableCustomer, "SELECT * FROM Customer");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -136,10 +121,9 @@ void MainWindowController::handleLogin_3()
 
 void MainWindowController::handleLogin_4()
 {
-    stackedWidget->setCurrentIndex(ServiceIndex);
-    servicePage->setSection(0);
+    stackedWidget->setCurrentIndex(3);
     setActionBarVisible(true);
-    setActiveButton(buttonService);
+    setActiveButton(button4);
 
     Backend::loadTableData(tableFood, "SELECT * FROM FoodOptions");
 
@@ -158,10 +142,9 @@ void MainWindowController::handleLogin_4()
 
 void MainWindowController::handleLogin_5()
 {
-    stackedWidget->setCurrentIndex(InventoryIndex);
-    inventoryPage->setSection(0);
+    stackedWidget->setCurrentIndex(4);
     setActionBarVisible(true);
-    setActiveButton(buttonInventory);
+    setActiveButton(button5);
     Backend::loadTableData(tableInventory, "SELECT * FROM Inventory");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -173,10 +156,9 @@ void MainWindowController::handleLogin_5()
 
 void MainWindowController::handleLogin_6()
 {
-    stackedWidget->setCurrentIndex(InventoryIndex);
-    inventoryPage->setSection(1);
+    stackedWidget->setCurrentIndex(5);
     setActionBarVisible(true);
-    setActiveButton(buttonInventory);
+    setActiveButton(button6);
     Backend::loadTableData(tableInventoryLog, "SELECT * FROM InventoryLog");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -188,10 +170,9 @@ void MainWindowController::handleLogin_6()
 
 void MainWindowController::handleLogin_7()
 {
-    stackedWidget->setCurrentIndex(RoomIndex);
-    roomPage->setSection(0);
+    stackedWidget->setCurrentIndex(6);
     setActionBarVisible(true);
-    setActiveButton(buttonRoom);
+    setActiveButton(button7);
     Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
 
     btnAdd->disconnect();
@@ -208,10 +189,9 @@ void MainWindowController::handleLogin_7()
 
 void MainWindowController::handleLogin_8()
 {
-    stackedWidget->setCurrentIndex(RoomIndex);
-    roomPage->setSection(1);
+    stackedWidget->setCurrentIndex(7);
     setActionBarVisible(true);
-    setActiveButton(buttonRoom);
+    setActiveButton(button8);
     Backend::loadTableData(tableRoomType, "SELECT * FROM RoomTypeCatalog");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -223,10 +203,9 @@ void MainWindowController::handleLogin_8()
 
 void MainWindowController::handleLogin_9()
 {
-    stackedWidget->setCurrentIndex(ServiceIndex);
-    servicePage->setSection(1);
+    stackedWidget->setCurrentIndex(8);
     setActionBarVisible(true);
-    setActiveButton(buttonService);
+    setActiveButton(button9);
     Backend::loadTableData(tableService, "SELECT * FROM ListServiceItems");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -238,9 +217,9 @@ void MainWindowController::handleLogin_9()
 
 void MainWindowController::handleLogin_10()
 {
-    stackedWidget->setCurrentIndex(BillIndex);
+    stackedWidget->setCurrentIndex(9);
     setActionBarVisible(true);
-    setActiveButton(buttonBill);
+    setActiveButton(button10);
     Backend::loadTableData(tableBill, "SELECT * FROM Bills");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -367,8 +346,8 @@ void MainWindowController::AddNewCustomerClicked()
 void MainWindowController::setActiveButton(QPushButton *clickedButton)
 {
     QList<QPushButton *> buttons = {
-        buttonDashboard, buttonBooking, buttonCustomer, buttonRoom,
-        buttonService, buttonInventory, buttonBill, buttonCheckout};
+        button1, button2, button3, button4, button5,
+        button6, button7, button8, button9, button10, buttonCheckout, buttonDashboard};
 
     for (QPushButton *btn : buttons)
     {
@@ -387,6 +366,117 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton)
 }
 
 // Add booking (như add customer )
+
+void MainWindowController::showFilterBookingDialog(){
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Filter Bookings");
+    dialog->setFixedSize(420, 380);
+
+    dialog->setStyleSheet(
+        "QDialog { background-color: #ffffff; }"
+        "QLabel { color: #1e293b; font-weight: bold; font-size: 13px; }"
+        "QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; background-color: #ffffff; }"
+    );
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    layout->setContentsMargins(20, 20, 20, 20);
+
+    QFormLayout *form = new QFormLayout();
+    form->setSpacing(12);
+
+    QString inputStyle = "QLineEdit { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px; }";
+
+    QLineEdit *txtCustomerId = new QLineEdit(dialog);
+    txtCustomerId->setPlaceholderText("All Customer IDs");
+    txtCustomerId->setStyleSheet(inputStyle);
+
+    QLineEdit *txtRoomNumber = new QLineEdit(dialog);
+    txtRoomNumber->setPlaceholderText("e.g. 101, 102");
+    txtRoomNumber->setStyleSheet(inputStyle);
+
+    QComboBox *cbStatus = new QComboBox(dialog);
+    cbStatus->addItems({"All", "UNCONFIRMED", "CONFIRMED", "CHECKED_IN", "CHECKED_OUT"});
+
+    QComboBox *cbBookingType = new QComboBox(dialog);
+    cbBookingType->addItems({"All", "STANDARD", "WALK_IN"});
+
+    QLineEdit *txtStartDate = new QLineEdit(dialog);
+    txtStartDate->setPlaceholderText("YYYY-MM-DD");
+    txtStartDate->setText("2026-01-01");
+    txtStartDate->setStyleSheet(inputStyle);
+
+    QLineEdit *txtEndDate = new QLineEdit(dialog);
+    txtEndDate->setPlaceholderText("YYYY-MM-DD");
+    txtEndDate->setText("2026-12-31");
+    txtEndDate->setStyleSheet(inputStyle);
+
+    form->addRow("Customer ID:", txtCustomerId);
+    form->addRow("Room Number:", txtRoomNumber);
+    form->addRow("Status:", cbStatus);
+    form->addRow("Booking Type:", cbBookingType);
+    form->addRow("Start Date:", txtStartDate);
+    form->addRow("End Date:", txtEndDate);
+    layout->addLayout(form);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *btnApply = new QPushButton("Apply Filter", dialog);
+    QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+    btnApply->setStyleSheet("background-color: #3b82f6; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+    btnCancel->setStyleSheet("background-color: #94a3b8; color: white; border-radius: 6px; padding: 10px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnApply);
+    layout->addLayout(buttonLayout);
+
+    connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+    connect(btnApply, &QPushButton::clicked, [=](){
+        QString custIdStr = txtCustomerId->text().trimmed();
+        QString roomStr = txtRoomNumber->text().trimmed();
+        QString statusStr = cbStatus->currentText();
+        QString typeStr = cbBookingType->currentText();
+        QString startStr = txtStartDate->text().trimmed();
+        QString endStr = txtEndDate->text().trimmed();
+
+        QString queryStr = "SELECT * FROM Bookings WHERE 1=1";
+
+        if (!custIdStr.isEmpty())
+        {
+            queryStr += QString(" AND customer_id = %1").arg(custIdStr.toInt());
+        }
+        if (!roomStr.isEmpty())
+        {
+            queryStr += QString(" AND room_number LIKE '%%1%'").arg(roomStr);
+        }
+        if (statusStr != "All")
+        {
+            queryStr += QString(" AND status = '%1'").arg(statusStr);
+        }
+        if (typeStr != "All")
+        {
+            queryStr += QString(" AND booking_type = '%1'").arg(typeStr);
+        }
+        if (!startStr.isEmpty())
+        {
+            queryStr += QString(" AND check_in_time >= '%1 00:00:00'").arg(startStr);
+        }
+        if (!endStr.isEmpty())
+        {
+            queryStr += QString(" AND check_in_time <= '%1 23:59:59'").arg(endStr);
+        }
+
+        queryStr += " ORDER BY check_in_time DESC, id DESC";
+
+        Backend::loadTableData(tableBooking, queryStr);
+
+        QMessageBox::information(dialog, "Filter Results", "Booking filter applied successfully!");
+        dialog->accept();
+    });
+
+    dialog->exec();
+    dialog->deleteLater();
+}
+
 void MainWindowController::showAddBookingDialog()
 {
     QDialog *addDialog = new QDialog(this);
@@ -523,11 +613,26 @@ void MainWindowController::showAddBookingDialog()
             return; 
         }
 
+        double doublePrice = price.toDouble() > 0 ? price.toDouble() : 1000000.0;
+
         CustomerRepository re;
         Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
+        // Try adding customer profile if new; if ID card already exists, preserve existing customer record
         re.add(a);
 
         QSqlDatabase db = DatabaseManager::instance().database();
+
+        // Fetch real integer primary key of customer from Customer table
+        int realCustomerId = 0;
+        QSqlQuery custQuery(db);
+        custQuery.prepare("SELECT id FROM Customer WHERE id_customer = :id_cust");
+        custQuery.bindValue(":id_cust", id);
+        if (custQuery.exec() && custQuery.next()) {
+            realCustomerId = custQuery.value(0).toInt();
+        } else {
+            realCustomerId = id.toInt();
+        }
+
         QSqlQuery query(db);
 
         query.prepare("UPDATE ListRooms SET Status = 1 WHERE room_id = ?");
@@ -540,11 +645,45 @@ void MainWindowController::showAddBookingDialog()
 
         BookingRepository r;
         BookingData t;
-        t.customerId = id.toInt();
+        t.customerId = realCustomerId;
         t.roomNumber = room; 
         t.checkInTime = checkInDate;
         t.checkOutTime = checkOutDate;
-        r.add(t);
+        t.totalPrice = doublePrice;
+        bool addSuccess = r.add(t);
+
+        if (addSuccess)
+        {
+            // 1. Refresh Table Views directly
+            if (tableBooking) {
+                Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+            }
+            if (tableRoom) {
+                Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
+            }
+
+            // 2. Notify Observer Engine so Dashboard KPI cards & table update in real time!
+            HotelEventManager::instance().notifyRoomStatus(RoomEvent{
+                room.toStdString(),
+                RoomStatus::Occupied,
+                QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()
+            });
+
+            QSqlQuery lastIdQuery(db);
+            int newBookingId = 0;
+            if (lastIdQuery.exec("SELECT MAX(id) FROM Bookings") && lastIdQuery.next()) {
+                newBookingId = lastIdQuery.value(0).toInt();
+            }
+
+            HotelEventManager::instance().notifyBookingStatus(BookingEvent{
+                newBookingId,
+                customer.toStdString(),
+                room.toStdString(),
+                BookingStatus::CONFIRMED,
+                doublePrice,
+                QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()
+            });
+        }
 
         QMessageBox::information(addDialog, "Success", "Booking created and room status updated successfully!");
         addDialog->accept(); });
@@ -1098,14 +1237,28 @@ void MainWindowController::setActionBarVisible(bool visible)
     {
         actionBar->setVisible(visible);
     }
+    if (visible)
+    {
+        btnAdd->show();
+        btnUpdate->show();
+        btnDelete->show();
+        btnFilter->show();
+    }
 }
 
 // Dashboard
 void MainWindowController::handleDashboardTab()
 {
     qDebug() << "[DEBUG] handleDashboardTab - Switched to Dashboard tab";
-    stackedWidget->setCurrentIndex(DashboardIndex);
+    stackedWidget->setCurrentIndex(10);
+    setActionBarVisible(true);
     setActiveButton(buttonDashboard);
+
+    btnAdd->hide();
+    btnUpdate->hide();
+    btnDelete->hide();
+    btnFilter->show();
+
     btnAdd->disconnect();
     btnUpdate->disconnect();
     btnDelete->disconnect();
@@ -1638,4 +1791,108 @@ void MainWindowController::FilterFoodClick()
 
     filterDialog->exec();
     filterDialog->deleteLater();
+}
+
+void MainWindowController::showToastNotification(const QString &title, const QString &message)
+{
+    QWidget *toast = new QWidget(this);
+    toast->setAttribute(Qt::WA_DeleteOnClose);
+    toast->setStyleSheet(
+        "background-color: #1e1b4b; "
+        "color: #ffffff; "
+        "border: 2px solid #6366f1; "
+        "border-radius: 10px; "
+        "padding: 10px;"
+    );
+
+    QVBoxLayout *layout = new QVBoxLayout(toast);
+    layout->setContentsMargins(12, 10, 12, 10);
+    layout->setSpacing(4);
+
+    QLabel *lblTitle = new QLabel(QString("🔔  %1").arg(title), toast);
+    lblTitle->setStyleSheet("font-weight: bold; font-size: 14px; color: #818cf8;");
+    layout->addWidget(lblTitle);
+
+    QLabel *lblMsg = new QLabel(message, toast);
+    lblMsg->setStyleSheet("font-size: 13px; color: #f1f5f9;");
+    layout->addWidget(lblMsg);
+
+    toast->adjustSize();
+
+    int x = this->width() - toast->width() - 25;
+    int y = this->height() - toast->height() - 25;
+    toast->move(x, y);
+    toast->show();
+
+    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(toast);
+    toast->setGraphicsEffect(effect);
+
+    QTimer::singleShot(3000, [toast, effect]() {
+        QPropertyAnimation *anim = new QPropertyAnimation(effect, "opacity", toast);
+        anim->setDuration(500);
+        anim->setStartValue(1.0);
+        anim->setEndValue(0.0);
+        QObject::connect(anim, &QPropertyAnimation::finished, toast, &QWidget::close);
+        anim->start(QAbstractAnimation::DeleteWhenStopped);
+    });
+}
+
+void MainWindowController::onRoomStatusObserved(const QString &roomId, int newStatusInt, const QString &timestamp)
+{
+    QString statusStr;
+    switch (static_cast<RoomStatus>(newStatusInt))
+    {
+    case RoomStatus::Available: statusStr = "Available"; break;
+    case RoomStatus::Reserved: statusStr = "Reserved"; break;
+    case RoomStatus::Occupied: statusStr = "Occupied"; break;
+    case RoomStatus::Maintenance: statusStr = "Maintenance"; break;
+    }
+
+    showToastNotification("Room Event Observed", QString("Room %1 is now: %2").arg(roomId, statusStr));
+
+    if (tableRoom) {
+        Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
+    }
+}
+
+void MainWindowController::onBookingStatusObserved(int bookingId, const QString &customerName, const QString &roomNumber, int newStatusInt, double totalPrice, const QString &timestamp)
+{
+    QString statusStr;
+    switch (static_cast<BookingStatus>(newStatusInt))
+    {
+    case BookingStatus::UNCONFIRMED: statusStr = "UNCONFIRMED"; break;
+    case BookingStatus::CONFIRMED: statusStr = "CONFIRMED"; break;
+    case BookingStatus::CHECKED_IN: statusStr = "CHECKED_IN"; break;
+    case BookingStatus::CHECKED_OUT: statusStr = "CHECKED_OUT"; break;
+    }
+
+    showToastNotification("Booking Event Observed",
+        QString("Booking #%1 (%2, Room %3) status: %4")
+            .arg(bookingId).arg(customerName).arg(roomNumber).arg(statusStr));
+
+    if (tableDashboard)
+    {
+        tableDashboard->insertRow(0); // Top-Down Row 0
+        tableDashboard->setItem(0, 0, new QTableWidgetItem(QString::number(bookingId)));
+        tableDashboard->setItem(0, 1, new QTableWidgetItem(customerName));
+        tableDashboard->setItem(0, 2, new QTableWidgetItem(QString::number(totalPrice, 'f', 2)));
+        tableDashboard->setItem(0, 3, new QTableWidgetItem(timestamp));
+
+        tableDashboard->selectRow(0);
+    }
+
+    DashboardService ds;
+    int todayBookings = ds.getTodayBookings();
+    double dailyRevenue = ds.getRevenue("day");
+    double monthlyRevenue = ds.getRevenue("month");
+    double yearlyRevenue = ds.getRevenue("year");
+
+    if (lblTodayBookings) lblTodayBookings->setText(QString::number(todayBookings));
+    if (lblDailyRevenue) lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2) + " VND");
+    if (lblMonthlyRevenue) lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2) + " VND");
+    if (lblYearlyRevenue) lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
+
+    if (tableBooking) {
+        Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+    }
 }

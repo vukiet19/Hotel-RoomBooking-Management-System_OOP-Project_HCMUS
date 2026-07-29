@@ -161,8 +161,7 @@ std::vector<BookingRevenue> DashboardService::getBookingRevenues(const QString &
 			BookingRevenue record;
 			record.bookingId = query.value(0).toInt();
 			record.customerName = query.value(1).toString();
-			if (record.customerName.isEmpty())
-			{
+			if (record.customerName.isEmpty()) {
 				record.customerName = "Guest #" + QString::number(query.value(0).toInt());
 			}
 			record.revenue = query.value(2).toDouble();
