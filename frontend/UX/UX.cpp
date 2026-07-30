@@ -49,16 +49,16 @@ MainWindowController::MainWindowController(QWidget *parent) : MainWindowUi(paren
 // Hàm link kết nối
 void MainWindowController::initConnections()
 {
-    connect(button1, &QPushButton::clicked, this, &MainWindowController::handleLogin_1);
-    connect(button2, &QPushButton::clicked, this, &MainWindowController::handleLogin_2);
-    connect(button3, &QPushButton::clicked, this, &MainWindowController::handleLogin_3);
-    connect(button4, &QPushButton::clicked, this, &MainWindowController::handleLogin_4);
-    connect(button5, &QPushButton::clicked, this, &MainWindowController::handleLogin_5);
-    connect(button6, &QPushButton::clicked, this, &MainWindowController::handleLogin_6);
-    connect(button7, &QPushButton::clicked, this, &MainWindowController::handleLogin_7);
-    connect(button8, &QPushButton::clicked, this, &MainWindowController::handleLogin_8);
-    connect(button9, &QPushButton::clicked, this, &MainWindowController::handleLogin_9);
-    connect(button10, &QPushButton::clicked, this, &MainWindowController::handleLogin_10);
+    connect(btnNavBooking, &QPushButton::clicked, this, &MainWindowController::showBookingTab);
+    connect(btnNavBookingServices, &QPushButton::clicked, this, &MainWindowController::showBookingServicesTab);
+    connect(btnNavCustomer, &QPushButton::clicked, this, &MainWindowController::showCustomerTab);
+    connect(btnNavFood, &QPushButton::clicked, this, &MainWindowController::showFoodTab);
+    connect(btnNavInventory, &QPushButton::clicked, this, &MainWindowController::showInventoryTab);
+    connect(btnNavInventoryLog, &QPushButton::clicked, this, &MainWindowController::showInventoryLogTab);
+    connect(btnNavRoom, &QPushButton::clicked, this, &MainWindowController::showRoomTab);
+    connect(btnNavRoomType, &QPushButton::clicked, this, &MainWindowController::showRoomTypeTab);
+    connect(btnNavService, &QPushButton::clicked, this, &MainWindowController::showServiceTab);
+    connect(btnNavBill, &QPushButton::clicked, this, &MainWindowController::showBillTab);
     connect(buttonCheckout, &QPushButton::clicked, this, &MainWindowController::handleCheckout);
     connect(buttonDashboard, &QPushButton::clicked, this, &MainWindowController::handleDashboardTab);
 
@@ -70,13 +70,12 @@ void MainWindowController::initConnections()
 }
 
 // Button booking
-void MainWindowController::handleLogin_1()
+void MainWindowController::showBookingTab()
 {
     setActionBarVisible(true);
     stackedWidget->setCurrentIndex(0);
-    setActiveButton(button1);
-    Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
-    // disconnect là ngắt kết nối chức năng hàm đó, để cho các hàm này không lập lại
+    setActiveButton(btnNavBooking);
+    Backend::loadTableData(tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS 'Check-Out', total_price AS 'Total Price ($)' FROM Bookings");
     btnAdd->disconnect();
     btnUpdate->disconnect();
     btnDelete->disconnect();
@@ -85,13 +84,11 @@ void MainWindowController::handleLogin_1()
     connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::showFilterBookingDialog);
 }
 
-// Button BookingServiceItems
-
-void MainWindowController::handleLogin_2()
+void MainWindowController::showBookingServicesTab()
 {
     stackedWidget->setCurrentIndex(1);
     setActionBarVisible(true);
-    setActiveButton(button2);
+    setActiveButton(btnNavBookingServices);
     btnAdd->disconnect();
     btnUpdate->disconnect();
     btnDelete->disconnect();
@@ -99,31 +96,27 @@ void MainWindowController::handleLogin_2()
     Backend::loadTableData(tableBookingItems, "SELECT * FROM BookingServiceItems");
 }
 
-// Button Customer
-
-void MainWindowController::handleLogin_3()
+void MainWindowController::showCustomerTab()
 {
     stackedWidget->setCurrentIndex(2);
     setActionBarVisible(true);
-    setActiveButton(button3);
+    setActiveButton(btnNavCustomer);
     Backend::loadTableData(tableCustomer, "SELECT * FROM Customer");
     btnAdd->disconnect();
     btnUpdate->disconnect();
     btnDelete->disconnect();
     btnFilter->disconnect();
-    connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::AddNewCustomerClicked);
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::showAddCustomerDialog);
     connect(btnUpdate, &QPushButton::clicked, this, &MainWindowController::showUpdateCustomerDialog);
     connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteCustomerDialog);
     connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::showFilterCustomerDialog);
 }
 
-// Button Food
-
-void MainWindowController::handleLogin_4()
+void MainWindowController::showFoodTab()
 {
     stackedWidget->setCurrentIndex(3);
     setActionBarVisible(true);
-    setActiveButton(button4);
+    setActiveButton(btnNavFood);
 
     Backend::loadTableData(tableFood, "SELECT * FROM FoodOptions");
 
@@ -132,19 +125,17 @@ void MainWindowController::handleLogin_4()
     btnDelete->disconnect();
     btnFilter->disconnect();
 
-    connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::AddNewFoodClick);
-    connect(btnUpdate, &QPushButton::clicked, this, &MainWindowController::UpdateFoodClick);
-    connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::DeleteFoodClick);
-    connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::FilterFoodClick);
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindowController::showAddFoodDialog);
+    connect(btnUpdate, &QPushButton::clicked, this, &MainWindowController::showUpdateFoodDialog);
+    connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteFoodDialog);
+    connect(btnFilter, &QPushButton::clicked, this, &MainWindowController::showFilterFoodDialog);
 }
 
-// Button Inventory
-
-void MainWindowController::handleLogin_5()
+void MainWindowController::showInventoryTab()
 {
     stackedWidget->setCurrentIndex(4);
     setActionBarVisible(true);
-    setActiveButton(button5);
+    setActiveButton(btnNavInventory);
     Backend::loadTableData(tableInventory, "SELECT * FROM Inventory");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -152,13 +143,11 @@ void MainWindowController::handleLogin_5()
     btnFilter->disconnect();
 }
 
-// Button InventoryLog
-
-void MainWindowController::handleLogin_6()
+void MainWindowController::showInventoryLogTab()
 {
     stackedWidget->setCurrentIndex(5);
     setActionBarVisible(true);
-    setActiveButton(button6);
+    setActiveButton(btnNavInventoryLog);
     Backend::loadTableData(tableInventoryLog, "SELECT * FROM InventoryLog");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -166,13 +155,11 @@ void MainWindowController::handleLogin_6()
     btnFilter->disconnect();
 }
 
-// Button ListRooms
-
-void MainWindowController::handleLogin_7()
+void MainWindowController::showRoomTab()
 {
     stackedWidget->setCurrentIndex(6);
     setActionBarVisible(true);
-    setActiveButton(button7);
+    setActiveButton(btnNavRoom);
     Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
 
     btnAdd->disconnect();
@@ -185,13 +172,11 @@ void MainWindowController::handleLogin_7()
     connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteRoomDialog);
 }
 
-// Button RoomTypeCatalog
-
-void MainWindowController::handleLogin_8()
+void MainWindowController::showRoomTypeTab()
 {
     stackedWidget->setCurrentIndex(7);
     setActionBarVisible(true);
-    setActiveButton(button8);
+    setActiveButton(btnNavRoomType);
     Backend::loadTableData(tableRoomType, "SELECT * FROM RoomTypeCatalog");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -199,13 +184,11 @@ void MainWindowController::handleLogin_8()
     btnFilter->disconnect();
 }
 
-// Button ListServiceItems
-
-void MainWindowController::handleLogin_9()
+void MainWindowController::showServiceTab()
 {
     stackedWidget->setCurrentIndex(8);
     setActionBarVisible(true);
-    setActiveButton(button9);
+    setActiveButton(btnNavService);
     Backend::loadTableData(tableService, "SELECT * FROM ListServiceItems");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -213,13 +196,11 @@ void MainWindowController::handleLogin_9()
     btnFilter->disconnect();
 }
 
-// Button Bills
-
-void MainWindowController::handleLogin_10()
+void MainWindowController::showBillTab()
 {
     stackedWidget->setCurrentIndex(9);
     setActionBarVisible(true);
-    setActiveButton(button10);
+    setActiveButton(btnNavBill);
     Backend::loadTableData(tableBill, "SELECT * FROM Bills");
     btnAdd->disconnect();
     btnUpdate->disconnect();
@@ -227,8 +208,7 @@ void MainWindowController::handleLogin_10()
     btnFilter->disconnect();
 }
 
-// Hàm add new customer
-void MainWindowController::AddNewCustomerClicked()
+void MainWindowController::showAddCustomerDialog()
 {
     QDialog *addDialog = new QDialog(this);
     addDialog->setStyleSheet(
@@ -333,7 +313,7 @@ void MainWindowController::AddNewCustomerClicked()
         if (success) {
             QMessageBox::information(addDialog, "Successfully", "Successfully add new customer");
             addDialog->accept();
-            handleLogin_3();
+            showCustomerTab();
         } else {
             QMessageBox::critical(addDialog, "Error", "Can not save into database");
         } });
@@ -346,8 +326,8 @@ void MainWindowController::AddNewCustomerClicked()
 void MainWindowController::setActiveButton(QPushButton *clickedButton)
 {
     QList<QPushButton *> buttons = {
-        button1, button2, button3, button4, button5,
-        button6, button7, button8, button9, button10, buttonCheckout, buttonDashboard};
+        btnNavBooking, btnNavBookingServices, btnNavCustomer, btnNavFood, btnNavInventory,
+        btnNavInventoryLog, btnNavRoom, btnNavRoomType, btnNavService, btnNavBill, buttonCheckout, buttonDashboard};
 
     for (QPushButton *btn : buttons)
     {
@@ -438,7 +418,7 @@ void MainWindowController::showFilterBookingDialog(){
         QString startStr = txtStartDate->text().trimmed();
         QString endStr = txtEndDate->text().trimmed();
 
-        QString queryStr = "SELECT * FROM Bookings WHERE 1=1";
+        QString queryStr = "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS 'Check-Out', total_price AS 'Total Price ($)' FROM Bookings WHERE 1=1";
 
         if (!custIdStr.isEmpty())
         {
@@ -656,7 +636,7 @@ void MainWindowController::showAddBookingDialog()
         {
             // 1. Refresh Table Views directly
             if (tableBooking) {
-                Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+                Backend::loadTableData(tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS 'Check-Out', total_price AS 'Total Price ($)' FROM Bookings");
             }
             if (tableRoom) {
                 Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
@@ -818,7 +798,7 @@ void MainWindowController::showAddRoomDialog()
         if (success) {
             QMessageBox::information(dialog, "Successfully", "Successfully add new room");
             dialog->accept();
-            handleLogin_7(); 
+            showRoomTab(); 
         } else {
             QMessageBox::critical(dialog, "Error", "Can save into room id");
         } });
@@ -831,7 +811,7 @@ void MainWindowController::showAddRoomDialog()
 
 void MainWindowController::showUpdateCustomerDialog()
 {
-    handleLogin_3();
+    showCustomerTab();
 }
 
 // Delete theo customer id
@@ -906,7 +886,7 @@ void MainWindowController::showDeleteCustomerDialog()
         if (success) {
             QMessageBox::information(dialog, "Success", "Customer deleted successfully!");
             dialog->accept();
-            handleLogin_3();
+            showCustomerTab();
         } else {
             QMessageBox::critical(dialog, "Error", "Cannot delete customer. It may not exist.");
         } });
@@ -1106,7 +1086,7 @@ void MainWindowController::showDeleteRoomDialog()
         if (success) {
             QMessageBox::information(dialog, "Success", "Room deleted successfully!");
             dialog->accept();
-            handleLogin_7(); 
+            showRoomTab(); 
         } else {
             QMessageBox::critical(dialog, "Error", "Cannot delete room. It may not exist or is currently booked.");
         } });
@@ -1214,7 +1194,7 @@ void MainWindowController::showUpdateRoomDialog()
         if (success) {
             QMessageBox::information(dialog, "Successfully", "Successfully updated the room");
             dialog->accept();
-            handleLogin_7();
+            showRoomTab();
         } else {
             QMessageBox::critical(dialog, "Error", "Cannot update room. It may not exist.");
         } });
@@ -1390,7 +1370,7 @@ void MainWindowController::showFilterDashboardDialog()
 
 // Hàm add food
 
-void MainWindowController::AddNewFoodClick()
+void MainWindowController::showAddFoodDialog()
 {
     QDialog *addDialog = new QDialog(this);
     addDialog->setStyleSheet(
@@ -1495,8 +1475,7 @@ void MainWindowController::AddNewFoodClick()
         if (repo.add()) {
             QMessageBox::information(addDialog, "Success", "Successfully added new Food!");
             addDialog->accept();
-            
-            handleLogin_4(); 
+            showFoodTab(); 
         } else {
             QMessageBox::critical(addDialog, "Database Error", "Failed to save food into database!");
         } });
@@ -1505,7 +1484,8 @@ void MainWindowController::AddNewFoodClick()
     addDialog->deleteLater();
 }
 
-void MainWindowController::UpdateFoodClick()
+
+void MainWindowController::showUpdateFoodDialog()
 {
     QDialog *updateDialog = new QDialog(this);
     updateDialog->setStyleSheet(
@@ -1593,7 +1573,7 @@ void MainWindowController::UpdateFoodClick()
         if (repo.update(bookingId, foodId, category)) {
             QMessageBox::information(updateDialog, "Success", "Food details updated successfully!");
             updateDialog->accept();
-            handleLogin_4(); 
+            showFoodTab(); 
         } else {
             QMessageBox::critical(updateDialog, "Error", "Failed to update food. Please check Booking ID and Food ID.");
         } });
@@ -1602,7 +1582,7 @@ void MainWindowController::UpdateFoodClick()
     updateDialog->deleteLater();
 }
 
-void MainWindowController::DeleteFoodClick()
+void MainWindowController::showDeleteFoodDialog()
 {
     QDialog *deleteDialog = new QDialog(this);
     deleteDialog->setStyleSheet(
@@ -1681,7 +1661,7 @@ void MainWindowController::DeleteFoodClick()
             if (repo.delete_f(targetId)) {
                 QMessageBox::information(deleteDialog, "Success", "Food deleted successfully!");
                 deleteDialog->accept();
-                handleLogin_4(); // Call function to refresh food table UI
+                showFoodTab(); // Call function to refresh food table UI
             } else {
                 QMessageBox::critical(deleteDialog, "Error", "Failed to delete food. Please check Food ID.");
             }
@@ -1691,7 +1671,7 @@ void MainWindowController::DeleteFoodClick()
     deleteDialog->deleteLater();
 }
 
-void MainWindowController::FilterFoodClick()
+void MainWindowController::showFilterFoodDialog()
 {
     QDialog *filterDialog = new QDialog(this);
     filterDialog->setStyleSheet(
@@ -1893,6 +1873,6 @@ void MainWindowController::onBookingStatusObserved(int bookingId, const QString 
     if (lblYearlyRevenue) lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
 
     if (tableBooking) {
-        Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+        Backend::loadTableData(tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS 'Check-Out', total_price AS 'Total Price ($)' FROM Bookings");
     }
 }

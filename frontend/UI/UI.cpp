@@ -32,21 +32,22 @@ void MainWindowUi::setupUi()
     sidebarLayout->setContentsMargins(15, 30, 0, 30);
     sidebarLayout->setSpacing(8);
 
-    button1 = new QPushButton("Booking", sidebar);
-    button2 = new QPushButton("Booking Services", sidebar);
-    button3 = new QPushButton("Customer", sidebar);
-    button4 = new QPushButton("Food Options", sidebar);
-    button5 = new QPushButton("Inventory", sidebar);
-    button6 = new QPushButton("Inventory Log", sidebar);
-    button7 = new QPushButton("Room", sidebar);
-    button8 = new QPushButton("Room Type", sidebar);
-    button9 = new QPushButton("Service", sidebar);
-    button10 = new QPushButton("Bill", sidebar);
+    btnNavBooking = new QPushButton("Booking", sidebar);
+    btnNavBookingServices = new QPushButton("Booking Services", sidebar);
+    btnNavCustomer = new QPushButton("Customer", sidebar);
+    btnNavFood = new QPushButton("Food Options", sidebar);
+    btnNavInventory = new QPushButton("Inventory", sidebar);
+    btnNavInventoryLog = new QPushButton("Inventory Log", sidebar);
+    btnNavRoom = new QPushButton("Room", sidebar);
+    btnNavRoomType = new QPushButton("Room Type", sidebar);
+    btnNavService = new QPushButton("Service", sidebar);
+    btnNavBill = new QPushButton("Bill", sidebar);
     buttonCheckout = new QPushButton("Checkout", sidebar);
     buttonDashboard = new QPushButton("Dashboard", sidebar);
 
-    QList<QPushButton *> buttons = {buttonDashboard, button1, button2, button3, button4, button5,
-                                    button6, button7, button8, button9, button10, buttonCheckout};
+    QList<QPushButton *> buttons = {buttonDashboard, btnNavBooking, btnNavBookingServices, btnNavCustomer, btnNavFood, btnNavInventory,
+                                    btnNavInventoryLog, btnNavRoom, btnNavRoomType, btnNavService, btnNavBill, buttonCheckout};
+
 
     for (QPushButton *btn : buttons)
     {

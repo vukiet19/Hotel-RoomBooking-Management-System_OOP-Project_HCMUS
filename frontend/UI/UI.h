@@ -18,10 +18,11 @@ protected:
     void setupUi();
 
     QWidget *actionBar;
-    QPushButton *button1, *button2, *button3, *button4, *button5;
-    QPushButton *button6, *button7, *button8, *button9, *button10;
+    QPushButton *btnNavBooking, *btnNavBookingServices, *btnNavCustomer, *btnNavFood, *btnNavInventory;
+    QPushButton *btnNavInventoryLog, *btnNavRoom, *btnNavRoomType, *btnNavService, *btnNavBill;
     QPushButton *buttonCheckout;
     QPushButton *buttonDashboard;
+
 
     QPushButton *btnAdd;
     QPushButton *btnUpdate;
