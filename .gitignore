@@ -30,3 +30,9 @@ Release/
 
 # VS Code workspace settings
 .vscode/
+
+# Agent configuration rules
+.agents/
+
+*.user
+

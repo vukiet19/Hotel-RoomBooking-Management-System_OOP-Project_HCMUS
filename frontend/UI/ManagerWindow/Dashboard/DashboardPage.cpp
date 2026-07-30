@@ -1,5 +1,4 @@
 #include "DashboardPage.h"
-
 #include <QHeaderView>
 #include <QHBoxLayout>
 #include <QLabel>

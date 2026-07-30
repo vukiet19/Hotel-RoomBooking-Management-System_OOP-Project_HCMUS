@@ -28,10 +28,6 @@ protected:
 public:
     // ham khoi tao
     static int nextid;
-    
-    //tạo hàm này để tìm nextId lớn nhất từng được khởi tạo để không bị khởi tạo trùng
-    //vì biến static nextid này nằm trên RAM, mỗi lần tắt chương trình bật lại thì nextid reset về 0 gây trùng
-    static void seedNextId(int maxId);
 
     Room();
     Room(string roomNumber);
@@ -62,8 +58,12 @@ public:
     void setNumberPeople(int number_people);
 
     int getNumberPeople() const;
+    
     // getId
     string getId() const;
+
+    // setId
+    void setId(string id);
 
     // void getBill(Customer &a) const;
 

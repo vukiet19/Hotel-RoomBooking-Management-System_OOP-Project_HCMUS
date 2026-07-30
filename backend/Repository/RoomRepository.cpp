@@ -13,9 +13,12 @@
 // Helper: Chuyển đổi mã ID dạng số (SQLite INTEGER) sang dạng mã phòng string C++ (ví dụ: 1 -> "R0001")
 static string databaseIdToRoomId(int dbId)
 {
+	if (dbId <= 0) return "R0000";
+
 	string tmp = to_string(dbId);
 	string roomId = "R";
-	int zerosNeeded = 4 - tmp.size();
+	int zerosNeeded = 4 - static_cast<int>(tmp.size());
+
 	for (int i = 0; i < zerosNeeded; i++)
 	{
 		roomId += '0';

@@ -1,5 +1,4 @@
 // Hàm này dùng để viết các hàm đã được định nghĩa trước từ room.h
-//
 
 #include "Room.h"
 #include "frontend/Observers/Observer.h"
@@ -10,7 +9,7 @@ using namespace std;
 int Room::nextid = 0;
 
 // contructor default
-Room::Room()
+Room::Room() : basePrice(0), number_people(0), status(RoomStatus::Available)
 {
     this->id = "R";
     string tmp = to_string(nextid);
@@ -108,6 +107,10 @@ string Room::getId() const
     return id;
 }
 
+void Room::setId(string id) {
+    this->id = id;
+}
+
 // void Room::getBill(Customer &a)
 //{
 //     int room_baseprice = getBasePrice();
@@ -133,6 +136,3 @@ void Room::setNumberPeople(int number_people)
 
 int Room::getNumberPeople() const { return number_people; }
 
-void Room::seedNextId(int maxId) {
-    nextid = maxId + 1;
-}

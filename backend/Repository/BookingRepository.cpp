@@ -38,15 +38,15 @@ static QString depositStatusToString(DepositStatus status)
 {
 	switch (status)
 	{
-	case DepositStatus::HELD:     
+	case DepositStatus::HELD:
 		return "HELD";
-	case DepositStatus::RETURNED: 
+	case DepositStatus::RETURNED:
 		return "RETURNED";
 	case DepositStatus::PENDING:  //thêm case này
-		return "PENDING";  
-	case DepositStatus::NONE:     
+		return "PENDING";
+	case DepositStatus::NONE:
 		return "NONE";
-	default:                      
+	default:
 		return "NONE";
 	}
 }
@@ -55,11 +55,11 @@ static DepositStatus stringToDepositStatus(const QString& statusStr)
 {
 	QString upperStr = statusStr.toUpper().trimmed();
 
-	if (upperStr == "HELD")      
+	if (upperStr == "HELD")
 		return DepositStatus::HELD;
-	if (upperStr == "RETURNED")  
+	if (upperStr == "RETURNED")
 		return DepositStatus::RETURNED;
-	if (upperStr == "PENDING")   
+	if (upperStr == "PENDING")
 		return DepositStatus::PENDING; //sau merge thiếu case này
 
 	return DepositStatus::NONE; // Mặc định là "NONE" hoặc chuỗi rác
@@ -189,7 +189,7 @@ int BookingRepository::add(Booking* booking)
 	}
 	else
 	{
-		WalkInTab *wit = dynamic_cast<WalkInTab *>(booking);
+		WalkInTab* wit = dynamic_cast<WalkInTab*>(booking);
 		//đổi thành QMetaType do Qt 6 báo QVariant bị bỏ trong Qt 6
 		query.bindValue(":room_number", QVariant(QMetaType(QMetaType::QString))); // NULL
 		if (wit != nullptr)
@@ -259,7 +259,7 @@ bool BookingRepository::update(Booking* booking)
 	}
 	else
 	{
-		WalkInTab *wit = dynamic_cast<WalkInTab *>(booking);
+		WalkInTab* wit = dynamic_cast<WalkInTab*>(booking);
 		query.bindValue(":room_number", QVariant(QMetaType(QMetaType::QString)));
 		if (wit != nullptr)
 		{
@@ -432,7 +432,7 @@ vector<unique_ptr<Booking>> BookingRepository::getAll(const vector<Customer*>& c
 	return getFiltered(emptyFilter, customers, rooms);
 }
 
-/* 
+/*
 - method để lọc dựa trên điều kiện(loại filter, vector chứa customer và room)
 - sửa kiểu trả về thành unique pointer phòng khi quên delete
 - sửa logic hàm getFiltered để tối ưu hơn 1 chút */
@@ -444,7 +444,7 @@ vector<unique_ptr<Booking>> BookingRepository::getFiltered(const BookingFilter& 
 	//lấy toàn bộ thông tin
 	QString sql = "SELECT id, customer_id, room_number, check_in_time, check_out_time, "
 		"total_price, booking_type, status, deposit_amount, deposit_status FROM Bookings";
-	
+
 	//vector chứa các điều kiện
 	vector<QString> conditions;
 
@@ -495,7 +495,7 @@ vector<unique_ptr<Booking>> BookingRepository::getFiltered(const BookingFilter& 
 
 	QStringList bookingIds; // Dùng để gom ID truyền vào mệnh đề IN
 	std::map<int, Booking*> bookingMap; // Dùng map để truy xuất nhanh Booking O(1) khi ráp ServiceItem vào
-	
+
 	while (query.next())
 	{
 		int id = query.value("id").toInt();
@@ -510,18 +510,18 @@ vector<unique_ptr<Booking>> BookingRepository::getFiltered(const BookingFilter& 
 
 		// Ánh xạ Customer và Room
 		Customer* matchedCust = nullptr;
-		for (auto* c : customers) { 
-			if (c && c->getId() == custId) { 
-				matchedCust = c; break; 
-			} 
+		for (auto* c : customers) {
+			if (c && c->getId() == custId) {
+				matchedCust = c; break;
+			}
 		}
 
 		Room* matchedRoom = nullptr;
-		for (auto* r : rooms) { 
-			if (r && r->getId() == rmNum) { 
-				matchedRoom = r; 
-				break; 
-			} 
+		for (auto* r : rooms) {
+			if (r && r->getId() == rmNum) {
+				matchedRoom = r;
+				break;
+			}
 		}
 
 		// Khởi tạo Booking trực tiếp (Không dùng getById)
@@ -554,7 +554,7 @@ vector<unique_ptr<Booking>> BookingRepository::getFiltered(const BookingFilter& 
 		}
 	}
 
-	if (bookingIds.isEmpty()) 
+	if (bookingIds.isEmpty())
 		return list; //không có id nào thì trả về list
 
 	//dùng join để nối 2 bảng bằng cột item_id (foreign key)
@@ -579,13 +579,13 @@ vector<unique_ptr<Booking>> BookingRepository::getFiltered(const BookingFilter& 
 			string category = itemQuery.value("category").toString().toStdString();
 
 			unique_ptr<ServiceItem> item;
-			if (category == "Food") 
+			if (category == "Food")
 				item = ServiceItemFactory::createServiceItem(ServiceType::FoodOrderItem, itemId, name, finalPrice, qty, note);
-			else if (category == "Minibar") 
+			else if (category == "Minibar")
 				item = ServiceItemFactory::createServiceItem(ServiceType::MinibarItem, itemId, name, finalPrice, qty, note);
-			else if (category == "Furniture") 
+			else if (category == "Furniture")
 				item = ServiceItemFactory::createServiceItem(ServiceType::FurnitureItem, itemId, name, finalPrice, qty, note);
-			else if (category == "Damage") 
+			else if (category == "Damage")
 				item = ServiceItemFactory::createServiceItem(ServiceType::DamagePenaltyItem, itemId, name, finalPrice, qty, note);
 			else item = make_unique<ServiceItem>(itemId, name, finalPrice, qty, note);
 
