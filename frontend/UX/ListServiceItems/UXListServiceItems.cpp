@@ -13,13 +13,12 @@ void MainWindowController::showServiceTab()
     setActiveButton(buttonService);
     QString serviceQuery = R"(
     SELECT 
-        item_id AS "ID",
+        item_id AS "Service ID",
         item_name AS "Service Name",
         category AS "Category",
-        amount AS "Amount",
-        unit_price AS "Price",
-        minimum_amount_required AS "Min Req"
-    FROM ListServiceItems
+        base_price AS "Price",
+        vip_free_status AS "VIP Free"
+    FROM ServiceCatalog
 )";
 
     Backend::loadTableData(tableService, serviceQuery);

@@ -62,8 +62,19 @@ void MainWindowController::showRoomTab() {
     connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteRoomDialog);
 
     connect(btnFilter, &QPushButton::clicked, this, [=]() {
-        Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms ORDER BY room_type, room_number");
-        });
+        QString roomQuery = R"(
+            SELECT 
+                room_id AS "Room ID",
+                room_number AS "Room Number",
+                room_type AS "Type",
+                status AS "Status",
+                base_price AS "Price",
+                number_people AS "Number People"
+            FROM ListRooms
+            ORDER BY room_type, room_number
+        )";
+        Backend::loadTableData(tableRoom, roomQuery);
+    });
 }
 
 void MainWindowController::showAddRoomDialog() {

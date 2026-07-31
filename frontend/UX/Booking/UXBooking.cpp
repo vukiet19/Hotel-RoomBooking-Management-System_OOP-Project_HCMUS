@@ -349,7 +349,9 @@ void MainWindowController::showDeleteBookingDialog() {
                         "ID', room_number AS 'Room Number', check_in_time AS "
                         "'Check-In', check_out_time AS 'Check-Out', "
                         "total_price AS 'Total Price ($)' FROM Bookings");
-      Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
+      Backend::loadTableData(
+          tableRoom,
+          "SELECT room_id AS 'Room ID', room_number AS 'Room Number', room_type AS 'Type', status AS 'Status', base_price AS 'Price', number_people AS 'Number People' FROM ListRooms");
     } else {
       QMessageBox::critical(
           dialog, "Error",
@@ -444,27 +446,40 @@ void MainWindowController::showFilterBookingDialog() {
   QHBoxLayout *buttonLayout = new QHBoxLayout();
   buttonLayout->setContentsMargins(0, 15, 0, 0);
   QPushButton *btnApply = new QPushButton("Apply Filter", dialog);
+  QPushButton *btnReset = new QPushButton("Reset", dialog);
   QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
   btnApply->setStyleSheet(
       "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; "
+      "stop:0 #10b981, stop:1 #059669); color: white; border: none; "
       "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: "
       "bold; }"
       "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #4f46e5, stop:1 #7c3aed); }");
+      "stop:0 #059669, stop:1 #047857); }");
+  btnReset->setStyleSheet(
+      "QPushButton { background-color: #cbd5e1; color: #475569; border: none; "
+      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
+      "QPushButton:hover { background-color: #94a3b8; color: #1e293b; }");
   btnCancel->setStyleSheet(
-      "background-color: #cbd5e1; color: #475569; border: none; border-radius: "
+      "background-color: #e2e8f0; color: #64748b; border: none; border-radius: "
       "8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
 
   btnApply->setCursor(Qt::PointingHandCursor);
+  btnReset->setCursor(Qt::PointingHandCursor);
   btnCancel->setCursor(Qt::PointingHandCursor);
 
   buttonLayout->addWidget(btnCancel);
+  buttonLayout->addWidget(btnReset);
   buttonLayout->addWidget(btnApply);
   layout->addLayout(buttonLayout);
 
   connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+  connect(btnReset, &QPushButton::clicked, [=]() {
+    Backend::loadTableData(
+        tableBooking,
+        "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS 'Check-Out', total_price AS 'Total Price ($)' FROM Bookings");
+    dialog->accept();
+  });
   connect(btnApply, &QPushButton::clicked, [=]() {
     QString custIdStr = txtCustomerId->text().trimmed();
     QString roomStr = txtRoomNumber->text().trimmed();

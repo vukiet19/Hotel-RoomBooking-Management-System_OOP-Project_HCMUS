@@ -36,3 +36,8 @@ Release/
 
 *.user
 
+CMakeLists.txt
+
+build
+
+.cache
