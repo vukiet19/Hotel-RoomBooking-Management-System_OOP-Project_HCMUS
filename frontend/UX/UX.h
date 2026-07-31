@@ -37,6 +37,8 @@ private:
 
     void showAddBookingDialog();
     void showFilterBookingDialog();
+    void showUpdateBookingDialog();
+    void showDeleteBookingDialog();
 
     void showAddRoomDialog();
 

@@ -1,17 +1,59 @@
 #include "DatabaseManager.h"
 #include <QDir>
 #include <QFile>
+#include <QFileInfo>
+#include <QDateTime>
 #include <QCoreApplication>
 #include <QSqlError>
 #include <QDebug>
 
+void DatabaseManager::syncDatabases()
+{
+    QString projDbPath = QDir::currentPath() + "/backend/Database/hotel.db";
+    QString appDbPath = QCoreApplication::applicationDirPath() + "/Database/hotel.db";
+
+    if (QFile::exists(projDbPath) && QFile::exists(appDbPath) && projDbPath != appDbPath)
+    {
+        QFileInfo projInfo(projDbPath);
+        QFileInfo appInfo(appDbPath);
+
+        if (appInfo.lastModified() > projInfo.lastModified())
+        {
+            QFile::remove(projDbPath);
+            if (QFile::copy(appDbPath, projDbPath))
+            {
+                qDebug() << "[DatabaseManager] Synced newer runtime DB -> source DB";
+            }
+        }
+        else if (projInfo.lastModified() > appInfo.lastModified())
+        {
+            QFile::remove(appDbPath);
+            if (QFile::copy(projDbPath, appDbPath))
+            {
+                qDebug() << "[DatabaseManager] Synced source DB -> runtime DB";
+            }
+        }
+    }
+}
+
 // Constructor chỉ chạy lần đầu tiên khi gọi hàm instance()
 DatabaseManager::DatabaseManager()
 {
-    // Sử dụng trực tiếp biến thành viên 'db' thay vì khai báo biến cục bộ 'QSqlDatabase db'
+    syncDatabases();
+
     db = QSqlDatabase::addDatabase("QSQLITE");
 
-    QString dbPath = QCoreApplication::applicationDirPath() + "/Database/hotel.db";
+    QString projDbPath = QDir::currentPath() + "/backend/Database/hotel.db";
+    QString dbPath;
+
+    if (QFile::exists(projDbPath))
+    {
+        dbPath = projDbPath;
+    }
+    else
+    {
+        dbPath = QCoreApplication::applicationDirPath() + "/Database/hotel.db";
+    }
 
     db.setDatabaseName(dbPath);
 
@@ -25,11 +67,15 @@ DatabaseManager::DatabaseManager()
     }
 }
 
+DatabaseManager::~DatabaseManager()
+{
+    close();
+}
+
 DatabaseManager &DatabaseManager::instance()
 {
-    // Biến tĩnh do chỉ có 1 manager duy nhất
     static DatabaseManager manager;
-    return manager; // trả về địa chỉ tới manager gốc
+    return manager;
 }
 
 bool DatabaseManager::open()
@@ -41,7 +87,6 @@ bool DatabaseManager::open()
 
     if (!db.open())
     {
-        // .lastError: xem lỗi cuối cùng xảy ra tại db ; .text(): hiển thị lỗi đó dưới dạng văn bản
         qDebug() << "ERROR: Khong the mo file hotel.db" << db.lastError().text();
         return false;
     }
@@ -55,6 +100,7 @@ void DatabaseManager::close()
     {
         db.close();
     }
+    syncDatabases();
 }
 
 QSqlDatabase DatabaseManager::database()

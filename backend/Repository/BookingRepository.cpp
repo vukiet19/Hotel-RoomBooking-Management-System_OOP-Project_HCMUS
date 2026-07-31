@@ -2,6 +2,7 @@
 #include "Booking/Booking.h"
 #include "Customer/Customer.h"
 #include "Room/Room.h"
+#include "Room/DerivedRooms.h"
 #include "ServiceItemRepository.h"
 #include "Service/ServiceItem.h"
 #include <QtSql/QSqlError>
@@ -293,6 +294,27 @@ bool BookingRepository::update(Booking *booking)
 	}
 
 	return true;
+}
+
+bool BookingRepository::updateBooking(int bookingId, int customerId, const QString &roomNumber, const QDateTime &checkIn, const QDateTime &checkOut, double totalPrice, const QString &statusStr)
+{
+	Customer *cust = new Customer();
+	cust->setId(customerId);
+
+	StandardRoom *room = new StandardRoom(roomNumber.toStdString());
+
+	StandardRoomBooking *srb = new StandardRoomBooking(cust, room, checkIn, checkOut, 0.0);
+	srb->id = bookingId;
+	srb->status = stringToStatus(statusStr);
+	srb->setTotalPrice(totalPrice);
+
+	bool res = update(srb);
+
+	delete srb;
+	delete cust;
+	delete room;
+
+	return res;
 }
 
 // thường sẽ không remove trừ khi khách 1 lần qua đường

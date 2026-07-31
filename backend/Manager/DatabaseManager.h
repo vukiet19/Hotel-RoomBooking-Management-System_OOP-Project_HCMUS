@@ -21,10 +21,14 @@ public:
 	// reference &: tra ve bien goc trong bo nho (khong copy du lieu)
 	static DatabaseManager& instance();
 	
+	static void syncDatabases();
+
 	bool open();
 	void close();
 
 	// getter db
 	QSqlDatabase database();
+	~DatabaseManager();
 };
+
 
