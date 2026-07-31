@@ -1,6 +1,7 @@
 #include "backend.h"
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QHeaderView>
 #include <QSqlQuery>
 #include "cores/Room/RoomFactory.h"
 #include "cores/Room/DerivedRooms.h"

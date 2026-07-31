@@ -4,6 +4,7 @@
 #include "../Manager/DatabaseManager.h"
 #include <QtSql/QSqlQuery>
 #include <QString>
+#include <QDateTime>
 #include <vector>
 #include <string>
 
@@ -22,6 +23,7 @@ struct BookingData
 	QString checkInTime;
 	QString checkOutTime;
 	double totalPrice;
+	QString depositStatus = "NONE";
 };
 
 // Filter options for Booking search
@@ -44,6 +46,7 @@ public:
 
 	int add(Booking *booking);																								// thêm data mới (chủ yếu dùng hàm này)
 	bool update(Booking *booking);																							// cập nhật lại booking
+	bool updateBooking(int bookingId, int customerId, const QString &roomNumber, const QDateTime &checkIn, const QDateTime &checkOut, double totalPrice, const QString &depositStatusStr = "NONE", const QString &statusStr = "");
 	bool remove(int bookingId);																								// xoá booking
 	bool addServiceItemToBooking(int bookingId, const string &itemId, int quantity, double finalPrice, const string &note); // thêm serviceItem vào booking
 
