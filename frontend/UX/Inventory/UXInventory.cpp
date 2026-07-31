@@ -5,7 +5,7 @@
 #include <QStackedWidget>
 
 // Section 5: Inventory Handler
-void MainWindowController::handleLogin_5()
+void MainWindowController::showInventoryTab()
 {
     stackedWidget->setCurrentIndex(InventoryIndex);
     inventoryPage->setSection(0);

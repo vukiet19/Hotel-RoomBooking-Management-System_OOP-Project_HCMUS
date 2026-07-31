@@ -31,38 +31,38 @@ MainWindowController::MainWindowController(QWidget *parent)
 // Hàm link kết nối
 void MainWindowController::initConnections() {
   connect(buttonBooking, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_1);
+          &MainWindowController::showBookingTab);
   connect(buttonCustomer, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_3);
+          &MainWindowController::showCustomerTab);
   connect(buttonRoom, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_7);
+          &MainWindowController::showRoomTab);
   connect(buttonService, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_4);
+          &MainWindowController::showFoodTab);
   connect(buttonInventory, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_5);
+          &MainWindowController::showInventoryTab);
   connect(buttonBill, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_10);
+          &MainWindowController::showBillTab);
   connect(buttonCheckout, &QPushButton::clicked, this,
           &MainWindowController::handleCheckout);
   connect(buttonDashboard, &QPushButton::clicked, this,
           &MainWindowController::handleDashboardTab);
 
   connect(bookingPage->bookingTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_1);
+          &MainWindowController::showBookingTab);
   connect(bookingPage->servicesTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_2);
+          &MainWindowController::showBookingServicesTab);
   connect(roomPage->roomTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_7);
+          &MainWindowController::showRoomTab);
   connect(roomPage->roomTypeTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_8);
+          &MainWindowController::showRoomTypeTab);
   connect(servicePage->foodTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_4);
+          &MainWindowController::showFoodTab);
   connect(servicePage->serviceTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_9);
+          &MainWindowController::showServiceTab);
   connect(inventoryPage->inventoryTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_5);
+          &MainWindowController::showInventoryTab);
   connect(inventoryPage->inventoryLogTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_6);
+          &MainWindowController::showInventoryLogTab);
 
   // Connect Observer events to Qt UI slots
   connect(&QtHotelObserver::instance(), &QtHotelObserver::roomStatusChanged,
@@ -304,7 +304,7 @@ void MainWindowController::onRoomStatusObserved(const QString &roomId,
                         QString("Room %1 is now: %2").arg(roomId, statusStr));
 
   if (tableRoom) {
-      QString queryStr = R"(
+    QString queryStr = R"(
             SELECT 
                 room_id AS "Room ID",
                 room_number AS "Room Number",
@@ -314,7 +314,7 @@ void MainWindowController::onRoomStatusObserved(const QString &roomId,
                 number_people AS "Number People"
             FROM ListRooms
         )";
-      Backend::loadTableData(tableRoom, queryStr);
+    Backend::loadTableData(tableRoom, queryStr);
   }
 }
 

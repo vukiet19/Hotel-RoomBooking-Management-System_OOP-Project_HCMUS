@@ -5,7 +5,7 @@
 #include <QStackedWidget>
 
 // Section 9: List Service Items Handler
-void MainWindowController::handleLogin_9()
+void MainWindowController::showServiceTab()
 {
     stackedWidget->setCurrentIndex(ServiceIndex);
     servicePage->setSection(1);

@@ -5,7 +5,7 @@
 #include <QStackedWidget>
 
 // Section 2: Booking Service Items Handler
-void MainWindowController::handleLogin_2()
+void MainWindowController::showBookingServicesTab()
 {
     stackedWidget->setCurrentIndex(BookingIndex);
     bookingPage->setSection(1);

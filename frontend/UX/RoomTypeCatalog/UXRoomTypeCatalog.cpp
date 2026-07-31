@@ -5,7 +5,7 @@
 #include <QStackedWidget>
 
 // Section 8: Room Type Catalog Handler
-void MainWindowController::handleLogin_8()
+void MainWindowController::showRoomTypeTab()
 {
     stackedWidget->setCurrentIndex(RoomIndex);
     roomPage->setSection(1);

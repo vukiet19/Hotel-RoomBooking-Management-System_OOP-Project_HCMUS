@@ -16,7 +16,7 @@
 #include <QVBoxLayout>
 
 // Section 4: Food Options Handler
-void MainWindowController::handleLogin_4() {
+void MainWindowController::showFoodTab() {
   stackedWidget->setCurrentIndex(ServiceIndex);
   servicePage->setSection(0);
   setActionBarVisible(true);
@@ -44,16 +44,16 @@ void MainWindowController::handleLogin_4() {
   btnFilter->disconnect();
 
   connect(btnAdd, &QPushButton::clicked, this,
-          &MainWindowController::AddNewFoodClick);
+          &MainWindowController::showAddFoodDialog);
   connect(btnUpdate, &QPushButton::clicked, this,
-          &MainWindowController::UpdateFoodClick);
+          &MainWindowController::showUpdateFoodDialog);
   connect(btnDelete, &QPushButton::clicked, this,
-          &MainWindowController::DeleteFoodClick);
+          &MainWindowController::showDeleteFoodDialog);
   connect(btnFilter, &QPushButton::clicked, this,
-          &MainWindowController::FilterFoodClick);
+          &MainWindowController::showFilterFoodDialog);
 }
 
-void MainWindowController::AddNewFoodClick() {
+void MainWindowController::showAddFoodDialog() {
   QDialog *addDialog = new QDialog(this);
   addDialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
@@ -144,7 +144,7 @@ void MainWindowController::AddNewFoodClick() {
       QMessageBox::information(addDialog, "Success",
                                "Added new food item successfully!");
       addDialog->accept();
-      handleLogin_4();
+      showFoodTab();
     } else {
       QMessageBox::critical(addDialog, "Error", "Cannot save to database!");
     }
@@ -154,7 +154,7 @@ void MainWindowController::AddNewFoodClick() {
   addDialog->deleteLater();
 }
 
-void MainWindowController::UpdateFoodClick() {
+void MainWindowController::showUpdateFoodDialog() {
   int currentRow = tableFood->currentRow();
   if (currentRow < 0) {
     QMessageBox::warning(this, "Select Food Item",
@@ -214,7 +214,7 @@ void MainWindowController::UpdateFoodClick() {
       QMessageBox::information(updateDialog, "Success",
                                "Food item updated successfully!");
       updateDialog->accept();
-      handleLogin_4();
+      showFoodTab();
     } else {
       QMessageBox::critical(updateDialog, "Error",
                             "Failed to update food item!");
@@ -225,7 +225,7 @@ void MainWindowController::UpdateFoodClick() {
   updateDialog->deleteLater();
 }
 
-void MainWindowController::DeleteFoodClick() {
+void MainWindowController::showDeleteFoodDialog() {
   int currentRow = tableFood->currentRow();
   if (currentRow < 0) {
     QMessageBox::warning(this, "Select Food Item",
@@ -245,7 +245,7 @@ void MainWindowController::DeleteFoodClick() {
     if (repo.delete_f(foodId)) {
       QMessageBox::information(this, "Deleted",
                                "Food option deleted successfully!");
-      handleLogin_4();
+      showFoodTab();
     } else {
       QMessageBox::critical(this, "Error",
                             "Failed to delete food option from database.");
@@ -253,7 +253,7 @@ void MainWindowController::DeleteFoodClick() {
   }
 }
 
-void MainWindowController::FilterFoodClick() {
+void MainWindowController::showFilterFoodDialog() {
   QDialog *filterDialog = new QDialog(this);
   filterDialog->setWindowTitle("Filter Food Options");
   filterDialog->setFixedSize(380, 240);

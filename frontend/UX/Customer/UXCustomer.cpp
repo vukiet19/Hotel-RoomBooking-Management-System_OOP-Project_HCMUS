@@ -15,7 +15,7 @@
 #include <QVBoxLayout>
 
 // Section 3: Customer Handler
-void MainWindowController::handleLogin_3() {
+void MainWindowController::showCustomerTab() {
   stackedWidget->setCurrentIndex(CustomerIndex);
   setActionBarVisible(true);
   setActiveButton(buttonCustomer);
