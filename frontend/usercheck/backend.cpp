@@ -12,7 +12,8 @@
 #include "backend/Manager/DatabaseManager.h"
 #include "backend/Repository/CustomerRepository.h"
 #include "cores/Customer/Customer.h"
-#include "backend/Repository/RoomRepository.h"
+#include <QColor>
+#include <QFont>
 
 bool Backend::checkValidUsername(const std::string &g)
 {
@@ -41,19 +42,52 @@ void Backend::loadTableData(QTableWidget *table, const QString &queryStr)
         return;
     }
 
-    table->clear();
     QSqlRecord rec = query.record();
     int columnCount = rec.count();
 
+    // Preserve existing horizontal header labels if column count matches and headers are non-empty
+    QStringList existingHeaders;
+    if (table->columnCount() == columnCount)
+    {
+        for (int i = 0; i < columnCount; ++i)
+        {
+            QTableWidgetItem *hItem = table->horizontalHeaderItem(i);
+            if (hItem && !hItem->text().isEmpty())
+            {
+                existingHeaders << hItem->text();
+            }
+        }
+    }
+
+    table->clearContents();
     table->setColumnCount(columnCount);
     table->setRowCount(0);
 
-    QStringList headers;
+    // Check if query record provides explicit custom header aliases
+    bool hasQueryAliases = false;
     for (int i = 0; i < columnCount; ++i)
     {
-        headers << rec.fieldName(i);
+        QString fname = rec.fieldName(i);
+        if (fname.contains(' ') || fname != fname.toLower())
+        {
+            hasQueryAliases = true;
+            break;
+        }
     }
-    table->setHorizontalHeaderLabels(headers);
+
+    if (hasQueryAliases || existingHeaders.size() != columnCount)
+    {
+        QStringList headers;
+        for (int i = 0; i < columnCount; ++i)
+        {
+            headers << rec.fieldName(i);
+        }
+        table->setHorizontalHeaderLabels(headers);
+    }
+    else
+    {
+        table->setHorizontalHeaderLabels(existingHeaders);
+    }
 
     int row = 0;
     while (query.next())
@@ -61,7 +95,19 @@ void Backend::loadTableData(QTableWidget *table, const QString &queryStr)
         table->insertRow(row);
         for (int col = 0; col < columnCount; ++col)
         {
-            table->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
+            QString valStr = query.value(col).toString();
+            QTableWidgetItem *item = new QTableWidgetItem(valStr);
+
+            if (valStr.contains("Available", Qt::CaseInsensitive) || valStr == "0")
+            {
+                item->setForeground(QColor("#16a34a")); // Emerald green
+                item->setBackground(QColor("#f0fdf4")); // Soft green highlight background
+                QFont font = item->font();
+                font.setBold(true);
+                item->setFont(font);
+            }
+
+            table->setItem(row, col, item);
         }
         row++;
     }

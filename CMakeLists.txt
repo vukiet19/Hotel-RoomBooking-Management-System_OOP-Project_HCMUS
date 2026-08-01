@@ -16,7 +16,7 @@ if(APPLE AND NOT CMAKE_PREFIX_PATH)
     elseif(EXISTS "/opt/homebrew/opt/qt")
         set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt") # Mac Apple Silicon
     elseif(EXISTS "/usr/local/opt/qt")
-        set(CMAKE_PREFIX_PATH "/usr/local/opt/qt")   # Mac Intel
+        set(CMAKE_PREFIX_PATH "/usr/local/opt/qt") # Mac Intel
     endif()
 endif()
 
@@ -42,7 +42,7 @@ else()
 endif()
 
 # 4. Include directories & Link Qt libraries
-target_include_directories(${PROJECT_NAME} PRIVATE 
+target_include_directories(${PROJECT_NAME} PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/backend"
     "${CMAKE_CURRENT_SOURCE_DIR}/cores"
@@ -52,9 +52,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Sql Qt6::Widgets)
 
 # 5. Copy Database and Assets to build output
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/backend/Database"
-     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/assets"
-     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 
 if(APPLE)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

@@ -29,7 +29,7 @@ static Room* createRoomInstance(const QString& typeStr) {
 }
 
 // Section 7: List Rooms Handler
-void MainWindowController::handleLogin_7() {
+void MainWindowController::showRoomTab() {
     stackedWidget->setCurrentIndex(RoomIndex);
     roomPage->setSection(0);
     setActionBarVisible(true);
@@ -62,8 +62,19 @@ void MainWindowController::handleLogin_7() {
     connect(btnDelete, &QPushButton::clicked, this, &MainWindowController::showDeleteRoomDialog);
 
     connect(btnFilter, &QPushButton::clicked, this, [=]() {
-        Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms ORDER BY room_type, room_number");
-        });
+        QString roomQuery = R"(
+            SELECT 
+                room_id AS "Room ID",
+                room_number AS "Room Number",
+                room_type AS "Type",
+                status AS "Status",
+                base_price AS "Price",
+                number_people AS "Number People"
+            FROM ListRooms
+            ORDER BY room_type, room_number
+        )";
+        Backend::loadTableData(tableRoom, roomQuery);
+    });
 }
 
 void MainWindowController::showAddRoomDialog() {
@@ -184,7 +195,7 @@ void MainWindowController::showAddRoomDialog() {
         if (success) {
             QMessageBox::information(dialog, "Success", "Add room successfully!");
             dialog->accept();
-            handleLogin_7();
+            showRoomTab();
         }
         else {
             QMessageBox::critical(dialog, "Error", "Can not save in database");
@@ -310,7 +321,7 @@ void MainWindowController::showUpdateRoomDialog() {
         if (success) {
             QMessageBox::information(updateDialog, "Success", "Room updated successfully!");
             updateDialog->accept();
-            handleLogin_7();
+            showRoomTab();
         }
         else {
             QMessageBox::critical(updateDialog, "Error", "Failed to update room in database.");
@@ -341,7 +352,7 @@ void MainWindowController::showDeleteRoomDialog() {
         // Thực thi xóa theo room_id hoặc room_number tùy theo thiết kế của Repo
         if (repo.remove(roomId.toStdString()) || repo.remove(roomNum.toStdString())) {
             QMessageBox::information(this, "Deleted", "Room deleted successfully!");
-            handleLogin_7();
+            showRoomTab();
         }
         else {
             QMessageBox::critical(this, "Error", "Failed to delete room from database.");

@@ -12,7 +12,7 @@
 #include <QMessageBox>
 
 // Section 6: Inventory Log Handler
-void MainWindowController::handleLogin_6()
+void MainWindowController::showInventoryLogTab()
 {
     stackedWidget->setCurrentIndex(InventoryIndex);
     inventoryPage->setSection(1);

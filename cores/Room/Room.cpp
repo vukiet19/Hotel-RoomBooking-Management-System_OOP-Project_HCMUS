@@ -1,8 +1,9 @@
-// Hàm này dùng để viết các hàm đã được định nghĩa trước từ room.h
-
 #include "Room.h"
+#include "backend/Manager/DatabaseManager.h"
 #include "frontend/Observers/Observer.h"
 #include <QDateTime>
+#include <QtSql/QSqlQuery>
+#include <QVariant>
 #include <string>
 using namespace std;
 // biến static lưu id
@@ -70,6 +71,47 @@ Room::~Room() = default;
 // getBasePrice
 int Room::getBasePrice() const
 {
+    if (basePrice > 0)
+        return basePrice;
+
+    QSqlDatabase db = DatabaseManager::instance().database();
+    if (!db.isOpen()) {
+        DatabaseManager::instance().open();
+    }
+
+    QSqlQuery query(db);
+
+    if (!roomNumber.empty() || !id.empty()) {
+        QString rm = QString::fromStdString(!roomNumber.empty() ? roomNumber : id);
+        query.prepare("SELECT R.base_price FROM ListRooms L "
+                      "JOIN RoomTypeCatalog R ON L.room_type = R.room_type "
+                      "WHERE L.room_number = :rm OR L.room_id = :rm");
+        query.bindValue(":rm", rm);
+        if (query.exec() && query.next() && !query.value(0).isNull() && query.value(0).toInt() > 0) {
+            return query.value(0).toInt();
+        }
+    }
+
+    QString typeStr;
+    switch (getType()) {
+    case RoomType::Standard:
+        typeStr = "Standard";
+        break;
+    case RoomType::VIP:
+        typeStr = "VIP";
+        break;
+    case RoomType::Presidential:
+        typeStr = "Presidential";
+        break;
+    }
+
+    query.prepare("SELECT base_price FROM RoomTypeCatalog WHERE room_type = :type OR room_type = :upperType");
+    query.bindValue(":type", typeStr);
+    query.bindValue(":upperType", typeStr.toUpper());
+    if (query.exec() && query.next() && !query.value(0).isNull()) {
+        return query.value(0).toInt();
+    }
+
     return basePrice;
 }
 

@@ -215,7 +215,7 @@ void CustomerInputWindow::onNextClicked() {
 // Hàm này là constructor của UI chọn phòng( nhận input là các thông tin
 // customer)
 CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
-                               QString date, QString dateout, int people, bool isMem
+                               QString date, QString dateout, int people, bool isMem,
                                QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone),
       checkInDate(date), datecheckout(dateout), numPeople(people) {
@@ -336,7 +336,7 @@ void CustomerWindow::loadFilteredRooms() {
   query.prepare(
       "SELECT room_id, room_number, room_type, base_price, number_people "
       "FROM ListRooms "
-      "WHERE status IN (0, 'Available') "
+      "WHERE status IN ('AVAILABLE', 'Available') "
       "  AND number_people >= ?");
   query.addBindValue(numPeople);
 

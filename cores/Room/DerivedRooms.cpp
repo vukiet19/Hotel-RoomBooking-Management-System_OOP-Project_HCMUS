@@ -2,6 +2,7 @@
 // Liên quan đến room.h( vì đây là class con của class cha room)
 
 #include "DerivedRooms.h"
+
 // Phòng Standard
 StandardRoom::StandardRoom()
 {
@@ -20,7 +21,7 @@ RoomType StandardRoom::getType() const
 // Hàm getBasePrice()
 int StandardRoom::getBasePrice() const
 {
-    return basePrice;
+    return Room::getBasePrice();
 }
 
 // Phòng vip
@@ -36,8 +37,7 @@ RoomType VipRoom::getType() const
 
 int VipRoom::getBasePrice() const
 {
-
-    return basePrice;
+    return Room::getBasePrice();
 }
 
 // Phòng Presi
@@ -53,5 +53,5 @@ RoomType PresiRoom::getType() const
 
 int PresiRoom::getBasePrice() const
 {
-    return basePrice;
+    return Room::getBasePrice();
 }

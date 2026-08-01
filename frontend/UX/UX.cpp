@@ -31,38 +31,38 @@ MainWindowController::MainWindowController(QWidget *parent)
 // Hàm link kết nối
 void MainWindowController::initConnections() {
   connect(buttonBooking, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_1);
+          &MainWindowController::showBookingTab);
   connect(buttonCustomer, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_3);
+          &MainWindowController::showCustomerTab);
   connect(buttonRoom, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_7);
+          &MainWindowController::showRoomTab);
   connect(buttonService, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_4);
+          &MainWindowController::showFoodTab);
   connect(buttonInventory, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_5);
+          &MainWindowController::showInventoryTab);
   connect(buttonBill, &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_10);
+          &MainWindowController::showBillTab);
   connect(buttonCheckout, &QPushButton::clicked, this,
           &MainWindowController::handleCheckout);
   connect(buttonDashboard, &QPushButton::clicked, this,
           &MainWindowController::handleDashboardTab);
 
   connect(bookingPage->bookingTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_1);
+          &MainWindowController::showBookingTab);
   connect(bookingPage->servicesTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_2);
+          &MainWindowController::showBookingServicesTab);
   connect(roomPage->roomTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_7);
+          &MainWindowController::showRoomTab);
   connect(roomPage->roomTypeTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_8);
-  connect(servicePage->foodTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_4);
-  connect(servicePage->serviceTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_9);
+          &MainWindowController::showRoomTypeTab);
+  connect(servicePage->serviceCatalogTabButton(), &QPushButton::clicked, this,
+          &MainWindowController::showServiceTab);
+  connect(servicePage->foodOptionsTabButton(), &QPushButton::clicked, this,
+          &MainWindowController::showFoodTab);
   connect(inventoryPage->inventoryTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_5);
+          &MainWindowController::showInventoryTab);
   connect(inventoryPage->inventoryLogTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::handleLogin_6);
+          &MainWindowController::showInventoryLogTab);
 
   // Connect Observer events to Qt UI slots
   connect(&QtHotelObserver::instance(), &QtHotelObserver::roomStatusChanged,
@@ -86,6 +86,10 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton) {
 
     btn->style()->unpolish(btn);
     btn->style()->polish(btn);
+  }
+
+  if (btnAddToBooking && clickedButton != buttonService) {
+    btnAddToBooking->setVisible(false);
   }
 }
 
@@ -304,7 +308,7 @@ void MainWindowController::onRoomStatusObserved(const QString &roomId,
                         QString("Room %1 is now: %2").arg(roomId, statusStr));
 
   if (tableRoom) {
-      QString queryStr = R"(
+    QString queryStr = R"(
             SELECT 
                 room_id AS "Room ID",
                 room_number AS "Room Number",
@@ -314,7 +318,7 @@ void MainWindowController::onRoomStatusObserved(const QString &roomId,
                 number_people AS "Number People"
             FROM ListRooms
         )";
-      Backend::loadTableData(tableRoom, queryStr);
+    Backend::loadTableData(tableRoom, queryStr);
   }
 }
 
@@ -373,6 +377,10 @@ void MainWindowController::onBookingStatusObserved(
     lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
 
   if (tableBooking) {
-    Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
+    Backend::loadTableData(
+        tableBooking,
+        "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number "
+        "AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS "
+        "'Check-Out', total_price AS 'Total Price ($)' FROM Bookings");
   }
 }

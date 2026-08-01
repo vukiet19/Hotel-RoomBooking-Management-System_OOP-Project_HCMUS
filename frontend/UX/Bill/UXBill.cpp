@@ -5,7 +5,7 @@
 #include <QStackedWidget>
 
 // Section 10: Bills Handler
-void MainWindowController::handleLogin_10() {
+void MainWindowController::showBillTab() {
   stackedWidget->setCurrentIndex(BillIndex);
   setActionBarVisible(true);
   setActiveButton(buttonBill);

@@ -23,33 +23,47 @@ private:
   void setActiveButton(QPushButton *clickedButton);
   void setActionBarVisible(bool visible);
 
-  void handleLogin_1();
-  void handleLogin_2();
-  void handleLogin_3();
-  void handleLogin_4();
-  void handleLogin_5();
-  void handleLogin_6();
-  void handleLogin_7();
-  void handleLogin_8();
-  void handleLogin_9();
-  void handleLogin_10();
+  void showBookingTab();
+  void showBookingServicesTab();
+  void showFilterBookingServicesDialog();
+  void showCustomerTab();
+  void showFoodTab();
+  void showInventoryTab();
+  void showInventoryLogTab();
+  void showRoomTab();
+  void showRoomTypeTab();
+  void showServiceTab();
+  void showBillTab();
   void handleCheckout();
 
   void showFilterDashboardDialog();
 
   void showAddBookingDialog();
   void showFilterBookingDialog();
+  void showUpdateBookingDialog();
+  void showDeleteBookingDialog();
 
   void showAddRoomDialog();
 
   void showFilterCustomerDialog();
   void showDeleteCustomerDialog();
-  void AddNewCustomerClicked();
+  void showAddCustomerDialog();
   void showUpdateCustomerDialog();
 
   void showUpdateRoomDialog();
   void showDeleteRoomDialog();
 
+  void showAddFoodDialog();
+  void showUpdateFoodDialog();
+  void showDeleteFoodDialog();
+  void showFilterFoodDialog();
+  void showAddFoodToBookingDialog();
+
+  void showAddServiceDialog();
+  void showAddServiceToBookingDialog();
+  void showUpdateServiceDialog();
+  void showDeleteServiceDialog();
+  void showFilterServiceDialog();
   void AddNewFoodClick();
   void UpdateFoodClick();
   void DeleteFoodClick();

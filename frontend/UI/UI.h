@@ -47,6 +47,7 @@ protected:
   QPushButton *btnAdd;
   QPushButton *btnUpdate;
   QPushButton *btnDelete;
+  QPushButton *btnAddToBooking;
   QPushButton *btnFilter;
 
   QStackedWidget *stackedWidget;

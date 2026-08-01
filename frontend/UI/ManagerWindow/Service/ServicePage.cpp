@@ -6,16 +6,16 @@
 ServicePage::ServicePage(QWidget *parent)
     : QWidget(parent),
       sections(new SplitTablePage(
-          "Food Options", {"Food ID", "Category", "Name", "Price"},
-          "Service", {"Service ID", "Name", "Category", "Price"}, this))
+          "Service Catalog", {"Service ID", "Name", "Category", "Price", "VIP Free"},
+          "Food Options", {"Option ID", "Parent Service ID", "Name", "Extra Price"}, this))
 {
     auto *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(sections);
 }
 
-QTableWidget *ServicePage::foodTable() const { return sections->firstTable(); }
-QTableWidget *ServicePage::serviceTable() const { return sections->secondTable(); }
-QPushButton *ServicePage::foodTabButton() const { return sections->firstButton(); }
-QPushButton *ServicePage::serviceTabButton() const { return sections->secondButton(); }
+QTableWidget *ServicePage::serviceCatalogTable() const { return sections->firstTable(); }
+QTableWidget *ServicePage::foodOptionsTable() const { return sections->secondTable(); }
+QPushButton *ServicePage::serviceCatalogTabButton() const { return sections->firstButton(); }
+QPushButton *ServicePage::foodOptionsTabButton() const { return sections->secondButton(); }
 void ServicePage::setSection(int section) { sections->setCurrentSection(section); }

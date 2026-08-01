@@ -53,8 +53,10 @@ void MainWindowUi::setupUi() {
   btnAdd = new QPushButton("Add", actionBar);
   btnUpdate = new QPushButton("Update", actionBar);
   btnDelete = new QPushButton("Delete", actionBar);
+  btnAddToBooking = new QPushButton("Add to Booking", actionBar);
   btnFilter = new QPushButton("Filter", actionBar);
-  for (auto *button : {btnAdd, btnUpdate, btnDelete, btnFilter})
+  btnAddToBooking->setVisible(false);
+  for (auto *button : {btnAdd, btnUpdate, btnDelete, btnAddToBooking, btnFilter})
     actionBarLayout->addWidget(button);
   actionBarLayout->addStretch();
 
@@ -82,8 +84,8 @@ void MainWindowUi::setupUi() {
   tableCustomer = customerPage->table();
   tableRoom = roomPage->roomTable();
   tableRoomType = roomPage->roomTypeTable();
-  tableFood = servicePage->foodTable();
-  tableService = servicePage->serviceTable();
+  tableFood = servicePage->foodOptionsTable();
+  tableService = servicePage->serviceCatalogTable();
   tableInventory = inventoryPage->inventoryTable();
   tableInventoryLog = inventoryPage->inventoryLogTable();
   tableBill = billPage->table();
@@ -106,6 +108,8 @@ void MainWindowUi::setupUi() {
         #sidebar QPushButton[active="true"] { background-color: #0a7ed0; color: #ffffff; font-weight: bold; }
         #actionBar QPushButton { background-color: #ffffff; color: #3730a3; border: 2px solid #a5b4fc; border-radius: 18px; padding: 8px 20px; font-size: 14px; font-weight: 600; }
         #actionBar QPushButton:hover { background-color: #eef2ff; }
+        #actionBar QPushButton:last-child { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #10b981, stop:1 #059669); color: white; border: none; }
+        #actionBar QPushButton:last-child:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #059669, stop:1 #047857); }
         QTableWidget { background-color: #ffffff; alternate-background-color: #f5f3ff; border: 2px solid #bae6fd; border-radius: 8px; gridline-color: #dbeafe; color: #1e293b; selection-background-color: #6366f1; selection-color: #ffffff; }
         QHeaderView::section { background-color: #3730a3; color: #ffffff; font-weight: bold; padding: 10px; border: none; }
     )");
