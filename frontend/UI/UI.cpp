@@ -53,8 +53,10 @@ void MainWindowUi::setupUi() {
   btnAdd = new QPushButton("Add", actionBar);
   btnUpdate = new QPushButton("Update", actionBar);
   btnDelete = new QPushButton("Delete", actionBar);
+  btnAddToBooking = new QPushButton("Add to Booking", actionBar);
   btnFilter = new QPushButton("Filter", actionBar);
-  for (auto *button : {btnAdd, btnUpdate, btnDelete, btnFilter})
+  btnAddToBooking->setVisible(false);
+  for (auto *button : {btnAdd, btnUpdate, btnDelete, btnAddToBooking, btnFilter})
     actionBarLayout->addWidget(button);
   actionBarLayout->addStretch();
 
@@ -82,8 +84,8 @@ void MainWindowUi::setupUi() {
   tableCustomer = customerPage->table();
   tableRoom = roomPage->roomTable();
   tableRoomType = roomPage->roomTypeTable();
-  tableFood = servicePage->foodTable();
-  tableService = servicePage->serviceTable();
+  tableFood = servicePage->foodOptionsTable();
+  tableService = servicePage->serviceCatalogTable();
   tableInventory = inventoryPage->inventoryTable();
   tableInventoryLog = inventoryPage->inventoryLogTable();
   tableBill = billPage->table();

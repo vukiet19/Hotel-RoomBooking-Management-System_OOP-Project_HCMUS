@@ -61,6 +61,11 @@ public:
     // lọc các dịch vụ trong menu ServiceCatalog theo id, tên, loại, giá và trạng thái miễn phí VIP
     vector<ServiceCatalogData> getFilteredCatalogItems(const ServiceCatalogFilter& filter);
 
+    bool addCatalogItem(const ServiceCatalogData& item);
+    bool updateCatalogItem(const ServiceCatalogData& item);
+    bool removeCatalogItem(const string& itemId);
+    bool isCatalogItemInUse(const string& itemId);
+
     // ghi một serviceItem được dùng vào bảng BookingServiceItem trong db
     int addBookingServiceItem(const BookingServiceItemData& item);
     

@@ -25,6 +25,7 @@ private:
 
   void showBookingTab();
   void showBookingServicesTab();
+  void showFilterBookingServicesDialog();
   void showCustomerTab();
   void showFoodTab();
   void showInventoryTab();
@@ -56,4 +57,10 @@ private:
   void showUpdateFoodDialog();
   void showDeleteFoodDialog();
   void showFilterFoodDialog();
+
+  void showAddServiceDialog();
+  void showAddServiceToBookingDialog();
+  void showUpdateServiceDialog();
+  void showDeleteServiceDialog();
+  void showFilterServiceDialog();
 };

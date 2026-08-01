@@ -18,9 +18,10 @@
 // Section 4: Food Options Handler
 void MainWindowController::showFoodTab() {
   stackedWidget->setCurrentIndex(ServiceIndex);
-  servicePage->setSection(0);
+  servicePage->setSection(1);
   setActionBarVisible(true);
   setActiveButton(buttonService);
+  btnAddToBooking->setVisible(false);
 
   QString foodOptionsQuery = R"(
     SELECT 

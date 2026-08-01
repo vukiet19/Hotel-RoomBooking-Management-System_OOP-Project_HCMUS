@@ -11,10 +11,10 @@ class ServicePage : public QWidget
 public:
     explicit ServicePage(QWidget *parent = nullptr);
 
-    QTableWidget *foodTable() const;
-    QTableWidget *serviceTable() const;
-    QPushButton *foodTabButton() const;
-    QPushButton *serviceTabButton() const;
+    QTableWidget *serviceCatalogTable() const;
+    QTableWidget *foodOptionsTable() const;
+    QPushButton *serviceCatalogTabButton() const;
+    QPushButton *foodOptionsTabButton() const;
     void setSection(int section);
 
 private:
