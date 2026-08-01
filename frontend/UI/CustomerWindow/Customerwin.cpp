@@ -329,7 +329,7 @@ void CustomerWindow::loadFilteredRooms() {
   query.prepare(
       "SELECT room_id, room_number, room_type, base_price, number_people "
       "FROM ListRooms "
-      "WHERE status IN (0, 'Available') "
+      "WHERE status IN ('AVAILABLE', 'Available') "
       "  AND number_people >= ?");
   query.addBindValue(numPeople);
 

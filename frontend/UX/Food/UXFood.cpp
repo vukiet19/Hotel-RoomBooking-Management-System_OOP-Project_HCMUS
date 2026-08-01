@@ -223,7 +223,7 @@ void MainWindowController::showUpdateFoodDialog() {
 
   formLayout->addRow("Food ID:", txtId);
   formLayout->addRow("Food Name:", txtName);
-  formLayout->addRow("Category:", txtCategory);
+  formLayout->addRow("Father ID:", txtCategory);
   formLayout->addRow("Booking ID:", txtBookingId);
   formLayout->addRow("Quantity:", txtQuantity);
 
