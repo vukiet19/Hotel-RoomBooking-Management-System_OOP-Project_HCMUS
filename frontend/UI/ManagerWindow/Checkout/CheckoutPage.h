@@ -1,39 +1,14 @@
 #pragma once
 
-#include <QVector>
+#include "backend/Manager/CheckoutService.h"
+
 #include <QWidget>
-#include <QString>
 
 class QComboBox;
 class QLabel;
 class QLineEdit;
 class QPushButton;
 class QTableWidget;
-
-struct CheckoutServicePreview
-{
-    QString name;
-    int quantity = 0;
-    double unitPrice = 0.0;
-};
-
-struct CheckoutBookingPreview
-{
-    QString bookingId;
-    QString customerId;
-    int customerType;
-    QString customerName;
-    QString phone;
-    QString roomNumber;
-    QString roomType;
-    QString checkInDate;
-    QString expectedCheckOutDate;
-    int nights = 0;
-    double roomCharge = 0.0;
-    double discount = 0.0;
-    double deposit = 0.0;
-    QVector<CheckoutServicePreview> services;
-};
 
 class CheckoutPage : public QWidget
 {
@@ -46,14 +21,11 @@ public:
 
 private:
     void setupUi();
-    void loadMockBookings();
+    void loadBookings();
     void populateBookingTable(const QString &filter = QString());
     void showBookingDetails(int row);
     void clearBookingDetails();
     void showConfirmDialog();
-
-    double serviceCharge(const CheckoutBookingPreview &booking) const;
-    double totalCharge(const CheckoutBookingPreview &booking) const;
 
     QVector<CheckoutBookingPreview> bookings;
 

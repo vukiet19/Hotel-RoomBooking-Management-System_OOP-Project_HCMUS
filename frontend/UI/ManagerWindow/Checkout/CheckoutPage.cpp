@@ -1,6 +1,4 @@
 #include "CheckoutPage.h"
-#include "backend/Manager/DatabaseManager.h"
-#include <QSqlRecord>
 
 #include <QComboBox>
 #include <QFormLayout>
@@ -15,9 +13,6 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDate>
 #include <QDebug>
 
 namespace
@@ -39,7 +34,7 @@ CheckoutPage::CheckoutPage(QWidget *parent) : QWidget(parent)
 {
     setObjectName("checkoutPage");
     setupUi();
-    loadMockBookings(); // Tải dữ liệu thực tế từ database
+    loadBookings();
     populateBookingTable();
     clearBookingDetails();
 }
@@ -47,7 +42,7 @@ CheckoutPage::CheckoutPage(QWidget *parent) : QWidget(parent)
 void CheckoutPage::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
-    loadMockBookings();
+    loadBookings();
     populateBookingTable();
 }
 
@@ -275,7 +270,7 @@ void CheckoutPage::setupUi()
     connect(clearButton, &QPushButton::clicked, this, [this]()
             {
         searchEdit->clear();
-        loadMockBookings();
+        loadBookings();
         populateBookingTable(); });
     connect(bookingTable, &QTableWidget::cellClicked, this,
             [this](int row, int)
@@ -284,83 +279,13 @@ void CheckoutPage::setupUi()
             &CheckoutPage::showConfirmDialog);
 }
 
-void CheckoutPage::loadMockBookings()
+void CheckoutPage::loadBookings()
 {
-    bookings.clear();
-
-    if (!DatabaseManager::instance().open())
-    {
-        qDebug() << "[ERROR] Database not open inside CheckoutPage!";
-        return;
-    }
-
-    QSqlQuery query(DatabaseManager::instance().database());
-
-    QString sql = R"(
-        SELECT b.id AS booking_id, 
-            b.customer_id, 
-            c.id_customer AS real_customer_id, 
-            c.Type AS customer_type, 
-            c.full_name, 
-            c.phone_number, 
-            b.room_number AS room_id, 
-            r.room_type, 
-            r.base_price, 
-            b.check_in_time AS check_in, 
-            b.check_out_time AS check_out
-        FROM Bookings b
-        LEFT JOIN Customer c ON b.customer_id = c.id_customer OR CAST(b.customer_id AS TEXT) = c.id_customer
-        LEFT JOIN ListRooms r ON b.room_number = r.room_id
-    )";
-
-    if (!query.exec(sql))
-    {
-        qDebug() << "[ERROR] Failed to load active bookings:" << query.lastError().text();
-        return;
-    }
-
-    while (query.next())
-    {
-        CheckoutBookingPreview b;
-        b.bookingId = query.value("booking_id").toString();
-        b.customerId = query.value("real_customer_id").toString(); 
-        b.customerType = query.value("customer_type").toInt();
-        b.customerName = query.value("full_name").toString();
-        b.phone = query.value("phone_number").toString();
-        b.roomNumber = query.value("room_id").toString();
-        b.roomType = query.value("room_type").toString();
-        b.checkInDate = query.value("check_in").toString();
-        b.expectedCheckOutDate = query.value("check_out").toString();
-
-        QDate inDate = QDate::fromString(b.checkInDate, "yyyy-MM-dd");
-        QDate outDate = QDate::fromString(b.expectedCheckOutDate, "yyyy-MM-dd");
-        b.nights = qMax(1, static_cast<int>(inDate.daysTo(outDate)));
-
-        double basePrice = query.value("base_price").toDouble();
-        b.roomCharge = basePrice * b.nights;
-        b.discount = 0.0;
-        b.deposit = 0.0;
-
-        QSqlQuery serviceQuery(DatabaseManager::instance().database());
-        serviceQuery.prepare("SELECT item_name, quantity, price FROM BookingServiceItems WHERE booking_id = :bId");
-        serviceQuery.bindValue(":bId", b.bookingId);
-
-        if (serviceQuery.exec())
-        {
-            while (serviceQuery.next())
-            {
-                CheckoutServicePreview item;
-                item.name = serviceQuery.value("item_name").toString();
-                item.quantity = serviceQuery.value("quantity").toInt();
-                item.unitPrice = serviceQuery.value("price").toDouble();
-                b.services.append(item);
-            }
-        }
-
-        bookings.append(b);
-    }
-
-    qDebug() << "[SUCCESS] Loaded" << bookings.size() << "active bookings from database!";
+    QString errorMessage;
+    CheckoutService checkoutService;
+    bookings = checkoutService.getActiveBookings(&errorMessage);
+    if (!errorMessage.isEmpty())
+        qDebug() << "[ERROR] Failed to load checkout bookings:" << errorMessage;
 }
 void CheckoutPage::populateBookingTable(const QString &filter)
 {
@@ -372,7 +297,7 @@ void CheckoutPage::populateBookingTable(const QString &filter)
     {
         const auto &booking = bookings.at(index);
         const QString searchable = QString("%1 %2 %3 %4")
-                                       .arg(booking.bookingId,
+                                       .arg(QString::number(booking.bookingId),
                                             booking.customerName,
                                             booking.phone,
                                             booking.roomNumber)
@@ -383,7 +308,8 @@ void CheckoutPage::populateBookingTable(const QString &filter)
         const int row = bookingTable->rowCount();
         bookingTable->insertRow(row);
 
-        auto *bookingIdItem = new QTableWidgetItem(booking.bookingId);
+        auto *bookingIdItem =
+            new QTableWidgetItem(QString::number(booking.bookingId));
         bookingIdItem->setData(Qt::UserRole, index);
         bookingTable->setItem(row, 0, bookingIdItem);
         bookingTable->setItem(row, 1, new QTableWidgetItem(booking.customerName));
@@ -408,7 +334,7 @@ void CheckoutPage::showBookingDetails(int row)
     const auto &booking = bookings.at(index);
     detailsContainer->setEnabled(true);
 
-    bookingIdLabel->setText(booking.bookingId);
+    bookingIdLabel->setText(QString::number(booking.bookingId));
     customerNameLabel->setText(booking.customerName);
     phoneLabel->setText(booking.phone);
     roomLabel->setText(booking.roomNumber);
@@ -429,10 +355,10 @@ void CheckoutPage::showBookingDetails(int row)
     }
 
     roomChargeLabel->setText(formatMoney(booking.roomCharge));
-    serviceChargeLabel->setText(formatMoney(serviceCharge(booking)));
+    serviceChargeLabel->setText(formatMoney(booking.serviceCharge));
     discountLabel->setText(formatMoney(booking.discount));
     depositLabel->setText(formatMoney(booking.deposit));
-    totalLabel->setText(formatMoney(totalCharge(booking)));
+    totalLabel->setText(formatMoney(booking.totalAmount));
 }
 
 void CheckoutPage::clearBookingDetails()
@@ -454,21 +380,6 @@ void CheckoutPage::clearBookingDetails()
     totalLabel->setText("-");
 }
 
-double CheckoutPage::serviceCharge(const CheckoutBookingPreview &booking) const
-{
-    double total = 0.0;
-    for (const auto &service : booking.services)
-        total += service.quantity * service.unitPrice;
-    return total;
-}
-
-double CheckoutPage::totalCharge(const CheckoutBookingPreview &booking) const
-{
-    const double total = booking.roomCharge + serviceCharge(booking) -
-                         booking.discount - booking.deposit;
-    return qMax(0.0, total);
-}
-
 void CheckoutPage::showConfirmDialog()
 {
     if (!bookingTable->currentItem())
@@ -480,7 +391,7 @@ void CheckoutPage::showConfirmDialog()
         return;
 
     const auto &booking = bookings.at(index);
-    const double finalTotal = totalCharge(booking);
+    const double finalTotal = booking.totalAmount;
 
     const QString message = QString(
                                 "Customer: %1\nRoom: %2\nTotal amount: %3\nPayment method: %4\n\n"
@@ -491,7 +402,27 @@ void CheckoutPage::showConfirmDialog()
                                      paymentMethodComboBox->currentText());
 
     if (QMessageBox::question(this, "Confirm Checkout", message,
-                              QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+                              QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        return;
+
+    CheckoutService checkoutService;
+    const CheckoutResult result = checkoutService.checkout(
+        booking.bookingId, paymentMethodComboBox->currentText());
+    if (!result.success)
+    {
+        QMessageBox::critical(this, "Checkout failed", result.errorMessage);
+        return;
+    }
+
+    QMessageBox::information(
+        this, "Checkout Success",
+        QString("Checkout processed successfully. Bill #%1 was created and room %2 is now available.")
+            .arg(result.billId)
+            .arg(result.booking.roomNumber));
+    loadBookings();
+    populateBookingTable(searchEdit->text());
+
+#if 0 // Replaced by CheckoutService transaction above.
     {
         QSqlDatabase db = DatabaseManager::instance().database();
         db.transaction();
@@ -543,4 +474,5 @@ void CheckoutPage::showConfirmDialog()
             QMessageBox::critical(this, "Database Error", "Failed to process checkout in database!");
         }
     }
+#endif
 }
