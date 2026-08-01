@@ -181,6 +181,80 @@ vector<ServiceCatalogData> ServiceItemRepository::getFilteredCatalogItems(const 
     return items;
 }
 
+bool ServiceItemRepository::addCatalogItem(const ServiceCatalogData& item) {
+    if (item.id.empty() || item.name.empty() || item.category.empty() || item.basePrice < 0.0) {
+        return false;
+    }
+
+    QSqlQuery query(DatabaseManager::instance().database());
+    query.prepare(
+        "INSERT INTO ServiceCatalog (item_id, item_name, category, base_price, vip_free_status) "
+        "VALUES (:item_id, :item_name, :category, :base_price, :vip_free_status)");
+    query.bindValue(":item_id", QString::fromStdString(item.id));
+    query.bindValue(":item_name", QString::fromStdString(item.name));
+    query.bindValue(":category", QString::fromStdString(item.category));
+    query.bindValue(":base_price", item.basePrice);
+    query.bindValue(":vip_free_status", item.vipFreeStatus ? 1 : 0);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Khong the them ServiceCatalog item!" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool ServiceItemRepository::updateCatalogItem(const ServiceCatalogData& item) {
+    if (item.id.empty() || item.name.empty() || item.category.empty() || item.basePrice < 0.0) {
+        return false;
+    }
+
+    QSqlQuery query(DatabaseManager::instance().database());
+    query.prepare(
+        "UPDATE ServiceCatalog "
+        "SET item_name = :item_name, category = :category, base_price = :base_price, "
+        "vip_free_status = :vip_free_status "
+        "WHERE item_id = :item_id");
+    query.bindValue(":item_id", QString::fromStdString(item.id));
+    query.bindValue(":item_name", QString::fromStdString(item.name));
+    query.bindValue(":category", QString::fromStdString(item.category));
+    query.bindValue(":base_price", item.basePrice);
+    query.bindValue(":vip_free_status", item.vipFreeStatus ? 1 : 0);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Khong the cap nhat ServiceCatalog item!" << query.lastError().text();
+        return false;
+    }
+    return query.numRowsAffected() > 0;
+}
+
+bool ServiceItemRepository::isCatalogItemInUse(const string& itemId) {
+    QSqlQuery query(DatabaseManager::instance().database());
+    query.prepare("SELECT 1 FROM BookingServiceItems WHERE item_id = :item_id LIMIT 1");
+    query.bindValue(":item_id", QString::fromStdString(itemId));
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Khong the kiem tra ServiceCatalog item!" << query.lastError().text();
+        return true;
+    }
+    return query.next();
+}
+
+bool ServiceItemRepository::removeCatalogItem(const string& itemId) {
+    if (itemId.empty() || isCatalogItemInUse(itemId)) {
+        return false;
+    }
+
+    QSqlQuery query(DatabaseManager::instance().database());
+    query.prepare("DELETE FROM ServiceCatalog WHERE item_id = :item_id");
+    query.bindValue(":item_id", QString::fromStdString(itemId));
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Khong the xoa ServiceCatalog item!" << query.lastError().text();
+        return false;
+    }
+    return query.numRowsAffected() > 0;
+}
+
 
 /*
 Hàm này là để ghi thông tin dịch vụ được khách hàng chọn vào booking của họ

@@ -55,10 +55,10 @@ void MainWindowController::initConnections() {
           &MainWindowController::showRoomTab);
   connect(roomPage->roomTypeTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showRoomTypeTab);
-  connect(servicePage->foodTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::showFoodTab);
-  connect(servicePage->serviceTabButton(), &QPushButton::clicked, this,
+  connect(servicePage->serviceCatalogTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showServiceTab);
+  connect(servicePage->foodOptionsTabButton(), &QPushButton::clicked, this,
+          &MainWindowController::showFoodTab);
   connect(inventoryPage->inventoryTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showInventoryTab);
   connect(inventoryPage->inventoryLogTabButton(), &QPushButton::clicked, this,

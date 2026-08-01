@@ -56,4 +56,9 @@ private:
   void showUpdateFoodDialog();
   void showDeleteFoodDialog();
   void showFilterFoodDialog();
+
+  void showAddServiceDialog();
+  void showUpdateServiceDialog();
+  void showDeleteServiceDialog();
+  void showFilterServiceDialog();
 };

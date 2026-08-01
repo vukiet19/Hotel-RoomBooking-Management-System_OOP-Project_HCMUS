@@ -82,8 +82,8 @@ void MainWindowUi::setupUi() {
   tableCustomer = customerPage->table();
   tableRoom = roomPage->roomTable();
   tableRoomType = roomPage->roomTypeTable();
-  tableFood = servicePage->foodTable();
-  tableService = servicePage->serviceTable();
+  tableFood = servicePage->foodOptionsTable();
+  tableService = servicePage->serviceCatalogTable();
   tableInventory = inventoryPage->inventoryTable();
   tableInventoryLog = inventoryPage->inventoryLogTable();
   tableBill = billPage->table();
