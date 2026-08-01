@@ -25,6 +25,7 @@ private:
 
   void showBookingTab();
   void showBookingServicesTab();
+  void showFilterBookingServicesDialog();
   void showCustomerTab();
   void showFoodTab();
   void showInventoryTab();
