@@ -39,8 +39,6 @@ private:
 
   void showAddBookingDialog();
   void showFilterBookingDialog();
-  void showUpdateBookingDialog();
-  void showDeleteBookingDialog();
 
   void showAddRoomDialog();
 
@@ -56,4 +54,12 @@ private:
   void UpdateFoodClick();
   void DeleteFoodClick();
   void FilterFoodClick();
+
+  // Inventory
+  void AddInventoryClick();
+  void UpdateInventoryClick();
+  void DeleteInventoryClick();
+  void FilterInventoryClick();
+
+  void FilterInventoryLogClick();
 };

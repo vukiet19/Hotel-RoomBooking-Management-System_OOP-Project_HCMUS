@@ -128,6 +128,12 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   form->addRow(lblCheckOut, datecheckout);
   form->addRow(lblPeople, spinPeople);
 
+  // Checkbox chọn tích điểm hay không
+  chkMembership = new QCheckBox("Register for Membership (Accumulate Points)", this);
+  chkMembership->setStyleSheet("color: #475569; font-weight: bold; font-size: 14px;");
+  chkMembership->setChecked(false); 
+  form->addRow("", chkMembership);
+
   layout->addLayout(form);
 
   layout->addStretch(); // Pushes the button to the bottom nicely
@@ -195,10 +201,11 @@ void CustomerInputWindow::onNextClicked() {
   QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
   QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd");
   int people = spinPeople->value();
+  bool isMem = chkMembership->isChecked();
 
   // Mở Window tìm phòng và truyền dữ liệu sang
   CustomerWindow *roomWindow =
-      new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people);
+      new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people, isMem);
   roomWindow->show();
 
   // Đóng Window
@@ -208,7 +215,7 @@ void CustomerInputWindow::onNextClicked() {
 // Hàm này là constructor của UI chọn phòng( nhận input là các thông tin
 // customer)
 CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
-                               QString date, QString dateout, int people,
+                               QString date, QString dateout, int people, bool isMem
                                QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone),
       checkInDate(date), datecheckout(dateout), numPeople(people) {
@@ -402,6 +409,10 @@ void CustomerWindow::onBookRoomClicked() {
   newCustomer.setPhone(customerPhone.toStdString());
   newCustomer.setPoint(currentPoints);
   newCustomer.setIdroom(roomId.toStdString());
+
+  // Set tier cho Customer
+  MembershipTier selectedTier = this->isMembership ? MembershipTier::Unknown : MembershipTier::Temporary;
+  newCustomer.setTier(selectedTier);
 
   // add vào database
   if (!customerRepo.add(newCustomer)) {

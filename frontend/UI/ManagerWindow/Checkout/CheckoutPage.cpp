@@ -298,16 +298,18 @@ void CheckoutPage::loadMockBookings()
 
     QString sql = R"(
         SELECT b.id AS booking_id, 
-               b.customer_id, 
-               c.full_name, 
-               c.phone_number, 
-               b.room_number AS room_id, 
-               r.room_type, 
-               r.base_price, 
-               b.check_in_time AS check_in, 
-               b.check_out_time AS check_out
+            b.customer_id, 
+            c.id_customer AS real_customer_id, 
+            c.Type AS customer_type, 
+            c.full_name, 
+            c.phone_number, 
+            b.room_number AS room_id, 
+            r.room_type, 
+            r.base_price, 
+            b.check_in_time AS check_in, 
+            b.check_out_time AS check_out
         FROM Bookings b
-        LEFT JOIN Customer c ON b.customer_id = c.id_customer
+        LEFT JOIN Customer c ON b.customer_id = c.id_customer OR CAST(b.customer_id AS TEXT) = c.id_customer
         LEFT JOIN ListRooms r ON b.room_number = r.room_id
     )";
 
@@ -321,6 +323,8 @@ void CheckoutPage::loadMockBookings()
     {
         CheckoutBookingPreview b;
         b.bookingId = query.value("booking_id").toString();
+        b.customerId = query.value("real_customer_id").toString(); 
+        b.customerType = query.value("customer_type").toInt();
         b.customerName = query.value("full_name").toString();
         b.phone = query.value("phone_number").toString();
         b.roomNumber = query.value("room_id").toString();
@@ -509,6 +513,24 @@ void CheckoutPage::showConfirmDialog()
 
         if (updateRoom.exec())
         {
+            // Xóa khách vãng lai
+            if (booking.customerType == -1) // -1 là Temporary
+            {
+                // 1. Chuyển Bookings sang khách mặc định (ID = 0)
+                QSqlQuery updateBooking(db);
+                updateBooking.prepare("UPDATE Bookings SET customer_id = 0 WHERE id = :bId");
+                updateBooking.bindValue(":bId", booking.bookingId);
+                updateBooking.exec();
+
+                // 2. Xóa vĩnh viễn Customer khỏi DB
+                QSqlQuery deleteCustomer(db);
+                deleteCustomer.prepare("DELETE FROM Customer WHERE id_customer = :cId");
+                deleteCustomer.bindValue(":cId", booking.customerId);
+                deleteCustomer.exec();
+                
+                qDebug() << "[INFO] Đã xóa khách vãng lai và set booking về 0 thành công!";
+            }
+
             db.commit();
             QMessageBox::information(this, "Checkout Success",
                                      "Checkout processed successfully! Room status set to Available.");

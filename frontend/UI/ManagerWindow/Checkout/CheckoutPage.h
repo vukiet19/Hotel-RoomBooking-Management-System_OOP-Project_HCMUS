@@ -20,6 +20,8 @@ struct CheckoutServicePreview
 struct CheckoutBookingPreview
 {
     QString bookingId;
+    QString customerId;
+    int customerType;
     QString customerName;
     QString phone;
     QString roomNumber;

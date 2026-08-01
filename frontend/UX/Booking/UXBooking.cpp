@@ -21,6 +21,7 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
+#include <QCheckBox>
 
 // Section 1: Bookings Handler
 void MainWindowController::handleLogin_1() {
@@ -28,12 +29,7 @@ void MainWindowController::handleLogin_1() {
   stackedWidget->setCurrentIndex(BookingIndex);
   bookingPage->setSection(0);
   setActiveButton(buttonBooking);
-  QString bookingQuery =
-      "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', "
-      "check_in_time AS 'Check-In', check_out_time AS 'Check-Out', status AS 'Status', "
-      "deposit_status AS 'Deposit Status', total_price AS 'Total Price ($)' FROM Bookings";
-
-  Backend::loadTableData(tableBooking, bookingQuery);
+  Backend::loadTableData(tableBooking, "SELECT * FROM Bookings");
   btnAdd->setVisible(true);
   btnUpdate->setVisible(true);
   btnDelete->setVisible(true);
@@ -44,10 +40,6 @@ void MainWindowController::handleLogin_1() {
   btnFilter->disconnect();
   connect(btnAdd, &QPushButton::clicked, this,
           &MainWindowController::showAddBookingDialog);
-  connect(btnUpdate, &QPushButton::clicked, this,
-          &MainWindowController::showUpdateBookingDialog);
-  connect(btnDelete, &QPushButton::clicked, this,
-          &MainWindowController::showDeleteBookingDialog);
   connect(btnFilter, &QPushButton::clicked, this,
           &MainWindowController::showFilterBookingDialog);
 }
@@ -55,47 +47,22 @@ void MainWindowController::handleLogin_1() {
 void MainWindowController::showFilterBookingDialog() {
   QDialog *dialog = new QDialog(this);
   dialog->setWindowTitle("Filter Bookings");
-  dialog->setFixedSize(450, 520);
+  dialog->setFixedSize(420, 380);
 
   dialog->setStyleSheet(
-      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
-      "#f0f9ff, stop:1 #ffffff); }"
-      "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
+      "QDialog { background-color: #ffffff; }"
+      "QLabel { color: #1e293b; font-weight: bold; font-size: 13px; }"
+      "QComboBox { border: 1px solid #cbd5e1; border-radius: 4px; padding: "
+      "6px; background-color: #ffffff; }");
 
   QVBoxLayout *layout = new QVBoxLayout(dialog);
-  layout->setContentsMargins(30, 30, 30, 30);
-
-  QLabel *titleLabel = new QLabel("Filter Bookings", dialog);
-  titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: "
-                            "#3730a3; margin-bottom: 15px;");
-  layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+  layout->setContentsMargins(20, 20, 20, 20);
 
   QFormLayout *form = new QFormLayout();
   form->setSpacing(12);
 
-  QString inputStyle =
-      "QLineEdit, QComboBox {"
-      "   background-color: #ffffff; "
-      "   border: 2px solid #38bdf8; "
-      "   border-radius: 8px; "
-      "   padding: 8px; "
-      "   font-size: 14px; "
-      "   color: #0f172a; "
-      "}"
-      "QLineEdit:hover, QComboBox:hover { border: 2px solid #0284c7; }"
-      "QLineEdit:focus, QComboBox:focus { border: 2px solid #0369a1; "
-      "background-color: #f0f9ff; }"
-      "QComboBox::drop-down { border: none; width: 25px; }"
-      "QComboBox::down-arrow { image: none; }"
-      "QComboBox QAbstractItemView, QComboBox QListView {"
-      "   background-color: #ffffff; "
-      "   color: #0f172a; "
-      "   border: 2px solid #38bdf8; "
-      "   border-radius: 6px; "
-      "   selection-background-color: #f0f9ff; "
-      "   selection-color: #0369a1; "
-      "   outline: none;"
-      "}";
+  QString inputStyle = "QLineEdit { border: 1px solid #cbd5e1; border-radius: "
+                       "4px; padding: 6px; }";
 
   QLineEdit *txtCustomerId = new QLineEdit(dialog);
   txtCustomerId->setPlaceholderText("All Customer IDs");
@@ -108,11 +75,9 @@ void MainWindowController::showFilterBookingDialog() {
   QComboBox *cbStatus = new QComboBox(dialog);
   cbStatus->addItems(
       {"All", "UNCONFIRMED", "CONFIRMED", "CHECKED_IN", "CHECKED_OUT"});
-  cbStatus->setStyleSheet(inputStyle);
 
   QComboBox *cbBookingType = new QComboBox(dialog);
   cbBookingType->addItems({"All", "STANDARD", "WALK_IN"});
-  cbBookingType->setStyleSheet(inputStyle);
 
   QLineEdit *txtStartDate = new QLineEdit(dialog);
   txtStartDate->setPlaceholderText("YYYY-MM-DD");
@@ -124,37 +89,24 @@ void MainWindowController::showFilterBookingDialog() {
   txtEndDate->setText("2026-12-31");
   txtEndDate->setStyleSheet(inputStyle);
 
-  QComboBox *cbDepositStatus = new QComboBox(dialog);
-  cbDepositStatus->addItems({"All", "NONE", "HELD", "RETURNED"});
-  cbDepositStatus->setStyleSheet(inputStyle);
-
   form->addRow("Customer ID:", txtCustomerId);
   form->addRow("Room Number:", txtRoomNumber);
   form->addRow("Status:", cbStatus);
-  form->addRow("Deposit Status:", cbDepositStatus);
   form->addRow("Booking Type:", cbBookingType);
   form->addRow("Start Date:", txtStartDate);
   form->addRow("End Date:", txtEndDate);
   layout->addLayout(form);
 
   QHBoxLayout *buttonLayout = new QHBoxLayout();
-  buttonLayout->setContentsMargins(0, 15, 0, 0);
   QPushButton *btnApply = new QPushButton("Apply Filter", dialog);
   QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
   btnApply->setStyleSheet(
-      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; "
-      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: "
-      "bold; }"
-      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #4f46e5, stop:1 #7c3aed); }");
+      "background-color: #3b82f6; color: white; border-radius: 6px; padding: "
+      "10px; font-weight: bold;");
   btnCancel->setStyleSheet(
-      "background-color: #cbd5e1; color: #475569; border: none; border-radius: "
-      "8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
-
-  btnApply->setCursor(Qt::PointingHandCursor);
-  btnCancel->setCursor(Qt::PointingHandCursor);
+      "background-color: #94a3b8; color: white; border-radius: 6px; padding: "
+      "10px; font-weight: bold;");
 
   buttonLayout->addWidget(btnCancel);
   buttonLayout->addWidget(btnApply);
@@ -165,16 +117,11 @@ void MainWindowController::showFilterBookingDialog() {
     QString custIdStr = txtCustomerId->text().trimmed();
     QString roomStr = txtRoomNumber->text().trimmed();
     QString statusStr = cbStatus->currentText();
-    QString depositStatusStr = cbDepositStatus->currentText();
     QString typeStr = cbBookingType->currentText();
     QString startStr = txtStartDate->text().trimmed();
     QString endStr = txtEndDate->text().trimmed();
 
-    QString queryStr =
-        "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
-        "room_number AS 'Room Number', check_in_time AS 'Check-In', "
-        "check_out_time AS 'Check-Out', status AS 'Status', deposit_status "
-        "AS 'Deposit Status', total_price AS 'Total Price ($)' FROM Bookings WHERE 1=1";
+    QString queryStr = "SELECT * FROM Bookings WHERE 1=1";
 
     if (!custIdStr.isEmpty()) {
       queryStr += QString(" AND customer_id = %1").arg(custIdStr.toInt());
@@ -184,9 +131,6 @@ void MainWindowController::showFilterBookingDialog() {
     }
     if (statusStr != "All") {
       queryStr += QString(" AND status = '%1'").arg(statusStr);
-    }
-    if (depositStatusStr != "All") {
-      queryStr += QString(" AND deposit_status = '%1'").arg(depositStatusStr);
     }
     if (typeStr != "All") {
       queryStr += QString(" AND booking_type = '%1'").arg(typeStr);
@@ -214,7 +158,7 @@ void MainWindowController::showFilterBookingDialog() {
 void MainWindowController::showAddBookingDialog() {
   QDialog *addDialog = new QDialog(this);
   addDialog->setWindowTitle("Add Booking");
-  addDialog->setFixedSize(450, 560);
+  addDialog->setFixedSize(450, 500);
 
   addDialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
@@ -233,7 +177,7 @@ void MainWindowController::showAddBookingDialog() {
   formLayout->setSpacing(15);
 
   QString inputStyle =
-      "QLineEdit, QComboBox, QDateEdit {"
+      "QLineEdit, QDateEdit {"
       "   background-color: #ffffff; "
       "   border: 2px solid #38bdf8; "
       "   border-radius: 8px; "
@@ -241,20 +185,9 @@ void MainWindowController::showAddBookingDialog() {
       "   font-size: 14px; "
       "   color: #0f172a; "
       "}"
-      "QLineEdit:hover, QComboBox:hover, QDateEdit:hover { border: 2px solid #0284c7; }"
-      "QLineEdit:focus, QComboBox:focus, QDateEdit:focus { border: 2px solid #0369a1; "
-      "background-color: #f0f9ff; }"
-      "QComboBox::drop-down { border: none; width: 25px; }"
-      "QComboBox::down-arrow { image: none; }"
-      "QComboBox QAbstractItemView, QComboBox QListView {"
-      "   background-color: #ffffff; "
-      "   color: #0f172a; "
-      "   border: 2px solid #38bdf8; "
-      "   border-radius: 6px; "
-      "   selection-background-color: #f0f9ff; "
-      "   selection-color: #0369a1; "
-      "   outline: none;"
-      "}";
+      "QLineEdit:hover, QDateEdit:hover { border: 2px solid #0284c7; }"
+      "QLineEdit:focus, QDateEdit:focus { border: 2px solid #0369a1; "
+      "background-color: #f0f9ff; }";
 
   QLineEdit *txtId = new QLineEdit(addDialog);
   txtId->setPlaceholderText("Customer ID ...");
@@ -281,18 +214,19 @@ void MainWindowController::showAddBookingDialog() {
   dateCheckOut->setCalendarPopup(true);
   dateCheckOut->setStyleSheet(inputStyle);
 
-  QComboBox *cbDepositStatus = new QComboBox(addDialog);
-  cbDepositStatus->addItems({"NONE", "HELD", "RETURNED"});
-  cbDepositStatus->setStyleSheet(inputStyle);
-
   formLayout->addRow(new QLabel("Customer ID:", addDialog), txtId);
   formLayout->addRow(new QLabel("Customer Name:", addDialog), txtCustomer);
   formLayout->addRow(new QLabel("Phone Number:", addDialog), txtPhone);
   formLayout->addRow(new QLabel("Room ID:", addDialog), txtRoom);
   formLayout->addRow(new QLabel("Check-In:", addDialog), dateCheckIn);
   formLayout->addRow(new QLabel("Check-Out:", addDialog), dateCheckOut);
-  formLayout->addRow(new QLabel("Deposit Status:", addDialog), cbDepositStatus);
 
+  // Tích điểm Membership
+  QCheckBox *chkMembership = new QCheckBox("Register Membership (Accumulate Points)", addDialog);
+  chkMembership->setStyleSheet("color: #0f172a; font-weight: bold; font-size: 13px;");
+  chkMembership->setChecked(false); // Mặc định là không tích điểm (Khách vãng lai)
+  formLayout->addRow("", chkMembership);
+  
   mainLayout->addLayout(formLayout);
 
   QHBoxLayout *buttonLayout = new QHBoxLayout();
@@ -383,6 +317,8 @@ void MainWindowController::showAddBookingDialog() {
     }
     if (doublePrice <= 0.0)
       doublePrice = 1000000.0;
+    
+    MembershipTier selectedTier = chkMembership->isChecked() ? MembershipTier::Unknown : MembershipTier::Temporary;
 
     CustomerRepository re;
     Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
@@ -417,7 +353,6 @@ void MainWindowController::showAddBookingDialog() {
     t.checkInTime = checkInDate;
     t.checkOutTime = checkOutDate;
     t.totalPrice = doublePrice;
-    t.depositStatus = cbDepositStatus->currentText();
     bool addSuccess = r.add(t);
 
     if (addSuccess) {
@@ -446,316 +381,4 @@ void MainWindowController::showAddBookingDialog() {
 
   addDialog->exec();
   addDialog->deleteLater();
-}
-
-void MainWindowController::showUpdateBookingDialog() {
-  QDialog *dialog = new QDialog(this);
-  dialog->setWindowTitle("Update Booking");
-  dialog->setFixedSize(450, 560);
-
-  dialog->setStyleSheet(
-      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
-      "#f0f9ff, stop:1 #ffffff); }"
-      "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
-
-  QVBoxLayout *mainLayout = new QVBoxLayout(dialog);
-  mainLayout->setContentsMargins(30, 30, 30, 30);
-
-  QLabel *titleLabel = new QLabel("Update Booking Details", dialog);
-  titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: "
-                            "#3730a3; margin-bottom: 15px;");
-  mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
-
-  QFormLayout *formLayout = new QFormLayout();
-  formLayout->setSpacing(12);
-
-  QString inputStyle =
-      "QLineEdit, QComboBox, QDateEdit {"
-      "   background-color: #ffffff; "
-      "   border: 2px solid #38bdf8; "
-      "   border-radius: 8px; "
-      "   padding: 8px; "
-      "   font-size: 14px; "
-      "   color: #0f172a; "
-      "}"
-      "QLineEdit:hover, QComboBox:hover, QDateEdit:hover { border: 2px solid "
-      "#0284c7; }"
-      "QLineEdit:focus, QComboBox:focus, QDateEdit:focus { border: 2px solid "
-      "#0369a1; background-color: #f0f9ff; }"
-      "QComboBox::drop-down { border: none; width: 25px; }"
-      "QComboBox::down-arrow { image: none; }"
-      "QComboBox QAbstractItemView, QComboBox QListView {"
-      "   background-color: #ffffff; "
-      "   color: #0f172a; "
-      "   border: 2px solid #38bdf8; "
-      "   border-radius: 6px; "
-      "   selection-background-color: #f0f9ff; "
-      "   selection-color: #0369a1; "
-      "   outline: none;"
-      "}";
-
-  QLineEdit *txtBookingId = new QLineEdit(dialog);
-  txtBookingId->setPlaceholderText("Booking ID (Required)...");
-  txtBookingId->setStyleSheet(inputStyle);
-
-  QLineEdit *txtCustomerId = new QLineEdit(dialog);
-  txtCustomerId->setPlaceholderText("Customer ID...");
-  txtCustomerId->setStyleSheet(inputStyle);
-
-  QLineEdit *txtRoomNumber = new QLineEdit(dialog);
-  txtRoomNumber->setPlaceholderText("Room Number...");
-  txtRoomNumber->setStyleSheet(inputStyle);
-
-  QDateEdit *dateCheckIn = new QDateEdit(QDate::currentDate(), dialog);
-  dateCheckIn->setCalendarPopup(true);
-  dateCheckIn->setStyleSheet(inputStyle);
-
-  QDateEdit *dateCheckOut =
-      new QDateEdit(QDate::currentDate().addDays(1), dialog);
-  dateCheckOut->setCalendarPopup(true);
-  dateCheckOut->setStyleSheet(inputStyle);
-
-  QLineEdit *txtPrice = new QLineEdit(dialog);
-  txtPrice->setPlaceholderText("Total Price ($)...");
-  txtPrice->setStyleSheet(inputStyle);
-
-  QComboBox *cbDepositStatus = new QComboBox(dialog);
-  cbDepositStatus->addItems({"NONE", "HELD", "RETURNED"});
-  cbDepositStatus->setStyleSheet(inputStyle);
-
-  if (tableBooking && tableBooking->currentRow() >= 0) {
-    int row = tableBooking->currentRow();
-    if (tableBooking->item(row, 0))
-      txtBookingId->setText(tableBooking->item(row, 0)->text());
-    if (tableBooking->item(row, 1))
-      txtCustomerId->setText(tableBooking->item(row, 1)->text());
-    if (tableBooking->item(row, 2))
-      txtRoomNumber->setText(tableBooking->item(row, 2)->text());
-    if (tableBooking->item(row, 3)) {
-      QDate inD = QDate::fromString(
-          tableBooking->item(row, 3)->text().left(10), "yyyy-MM-dd");
-      if (inD.isValid())
-        dateCheckIn->setDate(inD);
-    }
-    if (tableBooking->item(row, 4)) {
-      QDate outD = QDate::fromString(
-          tableBooking->item(row, 4)->text().left(10), "yyyy-MM-dd");
-      if (outD.isValid())
-        dateCheckOut->setDate(outD);
-    }
-    if (tableBooking->item(row, 6)) {
-      int idx = cbDepositStatus->findText(tableBooking->item(row, 6)->text());
-      if (idx >= 0)
-        cbDepositStatus->setCurrentIndex(idx);
-    }
-    if (tableBooking->item(row, 7)) {
-      txtPrice->setText(tableBooking->item(row, 7)->text());
-    }
-  }
-
-  formLayout->addRow("Booking ID:", txtBookingId);
-  formLayout->addRow("Customer ID:", txtCustomerId);
-  formLayout->addRow("Room Number:", txtRoomNumber);
-  formLayout->addRow("Check-In:", dateCheckIn);
-  formLayout->addRow("Check-Out:", dateCheckOut);
-  formLayout->addRow("Deposit Status:", cbDepositStatus);
-  formLayout->addRow("Total Price:", txtPrice);
-
-  mainLayout->addLayout(formLayout);
-
-  QHBoxLayout *buttonLayout = new QHBoxLayout();
-  buttonLayout->setContentsMargins(0, 15, 0, 0);
-  QPushButton *btnSave = new QPushButton("Save Update", dialog);
-  QPushButton *btnCancel = new QPushButton("Cancel", dialog);
-
-  btnSave->setStyleSheet(
-      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; "
-      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: "
-      "bold; }"
-      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #4f46e5, stop:1 #7c3aed); }");
-  btnCancel->setStyleSheet(
-      "background-color: #cbd5e1; color: #475569; border: none; border-radius: "
-      "8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
-
-  btnSave->setCursor(Qt::PointingHandCursor);
-  btnCancel->setCursor(Qt::PointingHandCursor);
-
-  buttonLayout->addWidget(btnCancel);
-  buttonLayout->addWidget(btnSave);
-  mainLayout->addLayout(buttonLayout);
-
-  connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
-
-  connect(btnSave, &QPushButton::clicked, [=]() {
-    QString bIdStr = txtBookingId->text().trimmed();
-    if (bIdStr.isEmpty()) {
-      QMessageBox::warning(dialog, "Input Error",
-                           "Booking ID is required to update a booking.");
-      return;
-    }
-
-    bool okId = false;
-    int bookingId = bIdStr.toInt(&okId);
-    if (!okId || bookingId <= 0) {
-      QMessageBox::warning(dialog, "Input Error",
-                           "Booking ID must be a positive integer.");
-      return;
-    }
-
-    QString customerIdStr = txtCustomerId->text().trimmed();
-    QString roomNumberStr = txtRoomNumber->text().trimmed();
-    QString priceStr = txtPrice->text().trimmed();
-    QString checkInStr =
-        dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
-    QString checkOutStr =
-        dateCheckOut->date().toString("yyyy-MM-dd") + " 12:00:00";
-    QString depositStatusStr = cbDepositStatus->currentText();
-
-    double priceVal = priceStr.toDouble();
-
-    QDateTime inDT = QDateTime::fromString(checkInStr, "yyyy-MM-dd hh:mm:ss");
-    QDateTime outDT = QDateTime::fromString(checkOutStr, "yyyy-MM-dd hh:mm:ss");
-
-    BookingRepository repo;
-    bool success = repo.updateBooking(bookingId, customerIdStr.toInt(),
-                                      roomNumberStr, inDT, outDT, priceVal,
-                                      depositStatusStr);
-
-    if (success) {
-      QMessageBox::information(dialog, "Success",
-                               "Booking updated successfully!");
-      QString queryStr =
-          "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
-          "room_number AS 'Room Number', check_in_time AS 'Check-In', "
-          "check_out_time AS 'Check-Out', status AS 'Status', deposit_status "
-          "AS 'Deposit Status', total_price AS 'Total Price ($)' FROM Bookings";
-      Backend::loadTableData(tableBooking, queryStr);
-      dialog->accept();
-    } else {
-      QMessageBox::critical(
-          dialog, "Error",
-          "Failed to update Booking. Please verify the Booking ID exists.");
-    }
-  });
-
-  dialog->exec();
-  dialog->deleteLater();
-}
-
-void MainWindowController::showDeleteBookingDialog() {
-  QDialog *dialog = new QDialog(this);
-  dialog->setWindowTitle("Delete Booking");
-  dialog->setFixedSize(380, 220);
-
-  dialog->setStyleSheet(
-      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
-      "#f0f9ff, stop:1 #ffffff); }"
-      "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
-
-  QVBoxLayout *layout = new QVBoxLayout(dialog);
-  layout->setContentsMargins(30, 20, 30, 20);
-
-  QLabel *titleLabel = new QLabel("Remove Booking", dialog);
-  titleLabel->setStyleSheet(
-      "font-size: 18px; font-weight: bold; color: #e11d48; margin-bottom: "
-      "10px;");
-  layout->addWidget(titleLabel, 0, Qt::AlignCenter);
-
-  QFormLayout *form = new QFormLayout();
-
-  QString inputStyle =
-      "QLineEdit {"
-      "   background-color: #ffffff; "
-      "   border: 2px solid #38bdf8; "
-      "   border-radius: 8px; "
-      "   padding: 10px; "
-      "   font-size: 14px; "
-      "   color: #0f172a; "
-      "}"
-      "QLineEdit:hover { border: 2px solid #0284c7; }"
-      "QLineEdit:focus { border: 2px solid #0369a1; background-color: "
-      "#f0f9ff; }";
-
-  QLineEdit *txtId = new QLineEdit(dialog);
-  txtId->setPlaceholderText("Enter Booking ID...");
-  txtId->setStyleSheet(inputStyle);
-
-  if (tableBooking && tableBooking->currentRow() >= 0) {
-    int row = tableBooking->currentRow();
-    if (tableBooking->item(row, 0)) {
-      txtId->setText(tableBooking->item(row, 0)->text());
-    }
-  }
-
-  form->addRow("Booking ID:", txtId);
-  layout->addLayout(form);
-
-  QHBoxLayout *buttonLayout = new QHBoxLayout();
-  buttonLayout->setContentsMargins(0, 15, 0, 0);
-  QPushButton *btnDelete = new QPushButton("Delete", dialog);
-  QPushButton *btnCancel = new QPushButton("Cancel", dialog);
-
-  btnDelete->setStyleSheet(
-      "background-color: #e11d48; color: white; border: none; border-radius: "
-      "8px; padding: 10px 0; font-size: 14px; font-weight: bold;");
-  btnCancel->setStyleSheet(
-      "background-color: #cbd5e1; color: #475569; border: none; border-radius: "
-      "8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
-
-  btnDelete->setCursor(Qt::PointingHandCursor);
-  btnCancel->setCursor(Qt::PointingHandCursor);
-
-  buttonLayout->addWidget(btnCancel);
-  buttonLayout->addWidget(btnDelete);
-  layout->addLayout(buttonLayout);
-
-  connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
-
-  connect(btnDelete, &QPushButton::clicked, dialog, [=]() {
-    QString idStr = txtId->text().trimmed();
-    if (idStr.isEmpty()) {
-      QMessageBox::warning(dialog, "Error", "Please enter a Booking ID!");
-      return;
-    }
-
-    bool ok = false;
-    int bookingId = idStr.toInt(&ok);
-    if (!ok || bookingId <= 0) {
-      QMessageBox::warning(dialog, "Error",
-                           "Booking ID must be a valid integer!");
-      return;
-    }
-
-    QMessageBox::StandardButton reply = QMessageBox::question(
-        dialog, "Confirm",
-        QString("Are you sure you want to delete Booking ID %1?").arg(bookingId),
-        QMessageBox::Yes | QMessageBox::No);
-    if (reply == QMessageBox::No)
-      return;
-
-    BookingRepository repo;
-    bool success = repo.remove(bookingId);
-
-    if (success) {
-      QMessageBox::information(dialog, "Success",
-                               "Booking deleted successfully!");
-      dialog->accept();
-      QString queryStr =
-          "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
-          "room_number AS 'Room Number', check_in_time AS 'Check-In', "
-          "check_out_time AS 'Check-Out', status AS 'Status', deposit_status "
-          "AS 'Deposit Status', total_price AS 'Total Price ($)' FROM Bookings";
-      Backend::loadTableData(tableBooking, queryStr);
-      Backend::loadTableData(tableRoom, "SELECT * FROM ListRooms");
-    } else {
-      QMessageBox::critical(
-          dialog, "Error",
-          "Cannot delete booking. It may not exist in the database.");
-    }
-  });
-
-  dialog->exec();
-  dialog->deleteLater();
 }
