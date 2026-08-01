@@ -263,7 +263,8 @@ void MainWindowController::showUpdateFoodDialog() {
     }
 
     QSqlQuery query(DatabaseManager::instance().database());
-    query.prepare("UPDATE FoodOptions SET parent_item_id = :cat, option_name = :name, extra_price = :price WHERE option_id = :id");
+    query.prepare("UPDATE FoodOptions SET parent_item_id = :cat, option_name = "
+                  ":name, extra_price = :price WHERE option_id = :id");
     query.bindValue(":cat", category);
     query.bindValue(":name", name);
     query.bindValue(":price", price);
@@ -335,23 +336,24 @@ void MainWindowController::showAddFoodToBookingDialog() {
 
   QLineEdit *txtName = new QLineEdit(currentName, dialog);
   txtName->setReadOnly(true);
-  txtName->setStyleSheet(inputStyle + "QLineEdit { background-color: #e2e8f0; }");
+  txtName->setStyleSheet(inputStyle +
+                         "QLineEdit { background-color: #e2e8f0; }");
 
   QLineEdit *txtPrice = new QLineEdit(currentPrice, dialog);
   txtPrice->setReadOnly(true);
-  txtPrice->setStyleSheet(inputStyle + "QLineEdit { background-color: #e2e8f0; }");
+  txtPrice->setStyleSheet(inputStyle +
+                          "QLineEdit { background-color: #e2e8f0; }");
 
   QComboBox *cbBookingId = new QComboBox(dialog);
   cbBookingId->setEditable(true);
-  cbBookingId->setStyleSheet(
-      "QComboBox {"
-      "   background-color: #ffffff; "
-      "   border: 2px solid #38bdf8; "
-      "   border-radius: 8px; "
-      "   padding: 8px; "
-      "   font-size: 14px; "
-      "   color: #0f172a; "
-      "}");
+  cbBookingId->setStyleSheet("QComboBox {"
+                             "   background-color: #ffffff; "
+                             "   border: 2px solid #38bdf8; "
+                             "   border-radius: 8px; "
+                             "   padding: 8px; "
+                             "   font-size: 14px; "
+                             "   color: #0f172a; "
+                             "}");
 
   QSqlQuery bQuery(DatabaseManager::instance().database());
   if (bQuery.exec("SELECT id, room_number, status FROM Bookings "
