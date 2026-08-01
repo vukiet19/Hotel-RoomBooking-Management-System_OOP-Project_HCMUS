@@ -83,6 +83,10 @@ bool CheckoutService::ensureSchema(QString *errorMessage) {
                             errorMessage);
 }
 
+bool CheckoutService::prepareSchema(QString *errorMessage) {
+  return ensureSchema(errorMessage);
+}
+
 std::optional<CheckoutBookingPreview> CheckoutService::loadBooking(
     int bookingId, bool activeOnly, QString *errorMessage) {
   QSqlDatabase db = DatabaseManager::instance().database();

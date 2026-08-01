@@ -38,6 +38,7 @@ struct CheckoutResult {
 
 class CheckoutService {
 public:
+  bool prepareSchema(QString *errorMessage = nullptr);
   QVector<CheckoutBookingPreview> getActiveBookings(QString *errorMessage = nullptr);
   CheckoutResult checkout(int bookingId, const QString &paymentMethod);
 

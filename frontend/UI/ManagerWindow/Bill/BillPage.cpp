@@ -4,7 +4,12 @@
 #include <QVBoxLayout>
 
 BillPage::BillPage(QWidget *parent)
-    : QWidget(parent), content(new TablePage({"Bill ID", "Booking ID", "Total Amount"}, this))
+    : QWidget(parent),
+      content(new TablePage({"Bill ID", "Booking ID", "Customer", "Room",
+                             "Room Charge", "Service Charge", "Discount",
+                             "Deposit", "Total Amount", "Payment Method",
+                             "Checkout Time"},
+                            this))
 {
     auto *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);

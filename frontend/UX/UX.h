@@ -34,6 +34,7 @@ private:
   void showRoomTypeTab();
   void showServiceTab();
   void showBillTab();
+  void showFilterBillDialog();
   void handleCheckout();
 
   void showFilterDashboardDialog();
