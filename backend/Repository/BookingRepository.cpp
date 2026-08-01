@@ -5,6 +5,8 @@
 #include "Room/Room.h"
 #include "Service/ServiceItem.h"
 #include "ServiceItemRepository.h"
+#include "frontend/Observers/Observer.h"
+#include <QDateTime>
 #include <QDebug>
 #include <QVariant>
 #include <QtSql/QSqlError>
@@ -405,6 +407,15 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
 bool BookingRepository::remove(int bookingId) {
   QSqlDatabase db = DatabaseManager::instance().database();
 
+  // Find associated room number before deleting
+  QString roomNumber;
+  QSqlQuery findRoomQuery(db);
+  findRoomQuery.prepare("SELECT room_number FROM Bookings WHERE id = :id");
+  findRoomQuery.bindValue(":id", bookingId);
+  if (findRoomQuery.exec() && findRoomQuery.next()) {
+    roomNumber = findRoomQuery.value(0).toString();
+  }
+
   ServiceItemRepository serviceRepo;
   serviceRepo.removeItemsByBookingId(bookingId);
 
@@ -417,6 +428,20 @@ bool BookingRepository::remove(int bookingId) {
     qDebug() << "ERROR: Failed to remove Booking!" << query.lastError().text();
     return false;
   }
+
+  // Set room status back to Available
+  if (!roomNumber.isEmpty()) {
+    QSqlQuery updateRoomQuery(db);
+    updateRoomQuery.prepare("UPDATE ListRooms SET status = 'Available' WHERE "
+                            "room_id = :rm OR room_number = :rm");
+    updateRoomQuery.bindValue(":rm", roomNumber);
+    updateRoomQuery.exec();
+
+    HotelEventManager::instance().notifyRoomStatus(RoomEvent{
+        roomNumber.toStdString(), RoomStatus::Available,
+        QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()});
+  }
+
   return true;
 }
 

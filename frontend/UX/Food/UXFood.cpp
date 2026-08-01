@@ -1,3 +1,4 @@
+#include "backend/Manager/DatabaseManager.h"
 #include "backend/Repository/FoodRepository.h"
 #include "frontend/UI/UI.h"
 #include "frontend/UX/UX.h"
@@ -10,6 +11,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QSqlQuery>
 #include <QStackedWidget>
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -21,7 +23,6 @@ void MainWindowController::showFoodTab() {
   servicePage->setSection(1);
   setActionBarVisible(true);
   setActiveButton(buttonService);
-  btnAddToBooking->setVisible(false);
 
   QString foodOptionsQuery = R"(
     SELECT 
@@ -38,11 +39,13 @@ void MainWindowController::showFoodTab() {
   btnUpdate->setVisible(true);
   btnDelete->setVisible(true);
   btnFilter->setVisible(true);
+  btnAddToBooking->setVisible(true);
 
   btnAdd->disconnect();
   btnUpdate->disconnect();
   btnDelete->disconnect();
   btnFilter->disconnect();
+  btnAddToBooking->disconnect();
 
   connect(btnAdd, &QPushButton::clicked, this,
           &MainWindowController::showAddFoodDialog);
@@ -52,6 +55,8 @@ void MainWindowController::showFoodTab() {
           &MainWindowController::showDeleteFoodDialog);
   connect(btnFilter, &QPushButton::clicked, this,
           &MainWindowController::showFilterFoodDialog);
+  connect(btnAddToBooking, &QPushButton::clicked, this,
+          &MainWindowController::showAddFoodToBookingDialog);
 }
 
 void MainWindowController::showAddFoodDialog() {
@@ -169,7 +174,7 @@ void MainWindowController::showUpdateFoodDialog() {
   QString currentPrice = tableFood->item(currentRow, 3)->text();
 
   QDialog *updateDialog = new QDialog(this);
-  updateDialog->setWindowTitle("Update Food Details");
+  updateDialog->setWindowTitle("Update Food Info");
   updateDialog->setFixedSize(420, 480);
 
   updateDialog->setStyleSheet(
@@ -180,7 +185,7 @@ void MainWindowController::showUpdateFoodDialog() {
   QVBoxLayout *mainLayout = new QVBoxLayout(updateDialog);
   mainLayout->setContentsMargins(30, 30, 30, 30);
 
-  QLabel *titleLabel = new QLabel("Update Food Option", updateDialog);
+  QLabel *titleLabel = new QLabel("Update Food Info", updateDialog);
   titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: "
                             "#3730a3; margin-bottom: 15px;");
   mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
@@ -204,35 +209,25 @@ void MainWindowController::showUpdateFoodDialog() {
   txtId->setReadOnly(true);
   txtId->setStyleSheet(inputStyle + "QLineEdit { background-color: #e2e8f0; }");
 
-  QLineEdit *txtName = new QLineEdit(currentName, updateDialog);
-  txtName->setReadOnly(true);
-  txtName->setStyleSheet(inputStyle +
-                         "QLineEdit { background-color: #e2e8f0; }");
-
   QLineEdit *txtCategory = new QLineEdit(currentCategory, updateDialog);
-  txtCategory->setReadOnly(true);
-  txtCategory->setStyleSheet(inputStyle +
-                             "QLineEdit { background-color: #e2e8f0; }");
+  txtCategory->setStyleSheet(inputStyle);
 
-  QLineEdit *txtBookingId = new QLineEdit(updateDialog);
-  txtBookingId->setPlaceholderText("Booking ID...");
-  txtBookingId->setStyleSheet(inputStyle);
+  QLineEdit *txtName = new QLineEdit(currentName, updateDialog);
+  txtName->setStyleSheet(inputStyle);
 
-  QLineEdit *txtQuantity = new QLineEdit("1", updateDialog);
-  txtQuantity->setPlaceholderText("Quantity (e.g. 1, 2)...");
-  txtQuantity->setStyleSheet(inputStyle);
+  QLineEdit *txtPrice = new QLineEdit(currentPrice, updateDialog);
+  txtPrice->setStyleSheet(inputStyle);
 
   formLayout->addRow("Food ID:", txtId);
+  formLayout->addRow("Parent ID:", txtCategory);
   formLayout->addRow("Food Name:", txtName);
-  formLayout->addRow("Father ID:", txtCategory);
-  formLayout->addRow("Booking ID:", txtBookingId);
-  formLayout->addRow("Quantity:", txtQuantity);
+  formLayout->addRow("Extra Price ($):", txtPrice);
 
   mainLayout->addLayout(formLayout);
 
   QHBoxLayout *buttonLayout = new QHBoxLayout();
   buttonLayout->setContentsMargins(0, 15, 0, 0);
-  QPushButton *btnSave = new QPushButton("Update", updateDialog);
+  QPushButton *btnSave = new QPushButton("Save Changes", updateDialog);
   QPushButton *btnCancel = new QPushButton("Cancel", updateDialog);
 
   btnSave->setStyleSheet(
@@ -257,38 +252,200 @@ void MainWindowController::showUpdateFoodDialog() {
 
   connect(btnSave, &QPushButton::clicked, [=]() {
     QString foodId = txtId->text().trimmed();
-    QString bookingId = txtBookingId->text().trimmed();
-    QString quantityStr = txtQuantity->text().trimmed();
+    QString category = txtCategory->text().trimmed();
+    QString name = txtName->text().trimmed();
+    double price = txtPrice->text().trimmed().toDouble();
 
-    if (bookingId.isEmpty()) {
+    if (name.isEmpty() || price <= 0.0) {
       QMessageBox::warning(updateDialog, "Error",
-                           "Please enter a valid Booking ID!");
+                           "Please enter valid Food Name and Extra Price!");
       return;
     }
 
-    bool okQty = false;
-    int qtyVal = quantityStr.toInt(&okQty);
-    if (!okQty || qtyVal < 0) {
-      QMessageBox::warning(updateDialog, "Error",
-                           "Quantity must be a valid number (e.g. 1, 2, 3)!");
-      return;
-    }
+    QSqlQuery query(DatabaseManager::instance().database());
+    query.prepare("UPDATE FoodOptions SET parent_item_id = :cat, option_name = :name, extra_price = :price WHERE option_id = :id");
+    query.bindValue(":cat", category);
+    query.bindValue(":name", name);
+    query.bindValue(":price", price);
+    query.bindValue(":id", foodId);
 
-    FoodRepository repo;
-    if (repo.update(bookingId, foodId, quantityStr)) {
+    if (query.exec()) {
       QMessageBox::information(updateDialog, "Success",
-                               "Food item updated successfully!");
+                               "Food information updated successfully!");
       updateDialog->accept();
       showFoodTab();
     } else {
-      QMessageBox::critical(
-          updateDialog, "Error",
-          "Failed to update food item! Please check if Booking ID exists.");
+      QMessageBox::critical(updateDialog, "Error",
+                            "Failed to update food information in database!");
     }
   });
 
   updateDialog->exec();
   updateDialog->deleteLater();
+}
+
+void MainWindowController::showAddFoodToBookingDialog() {
+  int currentRow = tableFood->currentRow();
+  if (currentRow < 0) {
+    QMessageBox::warning(this, "Select Food Item",
+                         "Please select a food item row to add to a booking!");
+    return;
+  }
+
+  QString currentId = tableFood->item(currentRow, 0)->text();
+  QString currentCategory = tableFood->item(currentRow, 1)->text();
+  QString currentName = tableFood->item(currentRow, 2)->text();
+  QString currentPrice = tableFood->item(currentRow, 3)->text();
+
+  QDialog *dialog = new QDialog(this);
+  dialog->setWindowTitle("Add Food to Booking");
+  dialog->setFixedSize(450, 480);
+
+  dialog->setStyleSheet(
+      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
+      "#f0f9ff, stop:1 #ffffff); }"
+      "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
+
+  QVBoxLayout *mainLayout = new QVBoxLayout(dialog);
+  mainLayout->setContentsMargins(30, 30, 30, 30);
+
+  QLabel *titleLabel = new QLabel("Add Food to Booking", dialog);
+  titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: "
+                            "#3730a3; margin-bottom: 15px;");
+  mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+  QFormLayout *formLayout = new QFormLayout();
+  formLayout->setSpacing(12);
+
+  QString inputStyle = "QLineEdit {"
+                       "   background-color: #ffffff; "
+                       "   border: 2px solid #38bdf8; "
+                       "   border-radius: 8px; "
+                       "   padding: 10px; "
+                       "   font-size: 14px; "
+                       "   color: #0f172a; "
+                       "}"
+                       "QLineEdit:hover { border: 2px solid #0284c7; }"
+                       "QLineEdit:focus { border: 2px solid #0369a1; "
+                       "background-color: #f0f9ff; }";
+
+  QLineEdit *txtId = new QLineEdit(currentId, dialog);
+  txtId->setReadOnly(true);
+  txtId->setStyleSheet(inputStyle + "QLineEdit { background-color: #e2e8f0; }");
+
+  QLineEdit *txtName = new QLineEdit(currentName, dialog);
+  txtName->setReadOnly(true);
+  txtName->setStyleSheet(inputStyle + "QLineEdit { background-color: #e2e8f0; }");
+
+  QLineEdit *txtPrice = new QLineEdit(currentPrice, dialog);
+  txtPrice->setReadOnly(true);
+  txtPrice->setStyleSheet(inputStyle + "QLineEdit { background-color: #e2e8f0; }");
+
+  QComboBox *cbBookingId = new QComboBox(dialog);
+  cbBookingId->setEditable(true);
+  cbBookingId->setStyleSheet(
+      "QComboBox {"
+      "   background-color: #ffffff; "
+      "   border: 2px solid #38bdf8; "
+      "   border-radius: 8px; "
+      "   padding: 8px; "
+      "   font-size: 14px; "
+      "   color: #0f172a; "
+      "}");
+
+  QSqlQuery bQuery(DatabaseManager::instance().database());
+  if (bQuery.exec("SELECT id, room_number, status FROM Bookings "
+                  "WHERE status IS NULL OR status <> 'CHECKED_OUT' "
+                  "ORDER BY id DESC")) {
+    while (bQuery.next()) {
+      int bId = bQuery.value("id").toInt();
+      QString rm = bQuery.value("room_number").toString();
+      QString st = bQuery.value("status").toString();
+      cbBookingId->addItem(
+          QString("Booking #%1 — Room %2 (%3)")
+              .arg(bId)
+              .arg(rm.isEmpty() ? "-" : rm, st.isEmpty() ? "UNCONFIRMED" : st),
+          bId);
+    }
+  }
+
+  QLineEdit *txtQuantity = new QLineEdit("1", dialog);
+  txtQuantity->setPlaceholderText("Quantity (e.g. 1, 2)...");
+  txtQuantity->setStyleSheet(inputStyle);
+
+  formLayout->addRow("Food ID:", txtId);
+  formLayout->addRow("Food Name:", txtName);
+  formLayout->addRow("Price ($):", txtPrice);
+  formLayout->addRow("Select Booking:", cbBookingId);
+  formLayout->addRow("Quantity:", txtQuantity);
+
+  mainLayout->addLayout(formLayout);
+
+  QHBoxLayout *buttonLayout = new QHBoxLayout();
+  buttonLayout->setContentsMargins(0, 15, 0, 0);
+  QPushButton *btnSave = new QPushButton("Add to Booking", dialog);
+  QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+  btnSave->setStyleSheet(
+      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; "
+      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: "
+      "bold; }"
+      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #4f46e5, stop:1 #7c3aed); }");
+  btnCancel->setStyleSheet(
+      "background-color: #cbd5e1; color: #475569; border: none; border-radius: "
+      "8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+
+  btnSave->setCursor(Qt::PointingHandCursor);
+  btnCancel->setCursor(Qt::PointingHandCursor);
+
+  buttonLayout->addWidget(btnCancel);
+  buttonLayout->addWidget(btnSave);
+  mainLayout->addLayout(buttonLayout);
+
+  connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+
+  connect(btnSave, &QPushButton::clicked, [=]() {
+    QString foodId = txtId->text().trimmed();
+    QString bookingId = "";
+    if (cbBookingId->currentData().isValid()) {
+      bookingId = cbBookingId->currentData().toString();
+    } else {
+      bookingId = cbBookingId->currentText().trimmed();
+    }
+
+    if (bookingId.isEmpty()) {
+      QMessageBox::warning(dialog, "Error",
+                           "Please select or enter a valid Booking ID!");
+      return;
+    }
+
+    bool okQty = false;
+    int qtyVal = txtQuantity->text().trimmed().toInt(&okQty);
+    if (!okQty || qtyVal <= 0) {
+      QMessageBox::warning(dialog, "Error",
+                           "Quantity must be a valid positive number!");
+      return;
+    }
+
+    FoodRepository repo;
+    if (repo.update(bookingId, foodId, txtQuantity->text().trimmed())) {
+      QMessageBox::information(
+          dialog, "Success",
+          QString("Food item '%1' added to Booking #%2 successfully!")
+              .arg(currentName, bookingId));
+      dialog->accept();
+      showFoodTab();
+    } else {
+      QMessageBox::critical(
+          dialog, "Error",
+          "Failed to add food to booking! Please verify Booking ID.");
+    }
+  });
+
+  dialog->exec();
+  dialog->deleteLater();
 }
 
 void MainWindowController::showDeleteFoodDialog() {

@@ -12,14 +12,23 @@ DatabaseManager::DatabaseManager() {
   QString exePath = QCoreApplication::applicationDirPath();
 
   QStringList searchPaths = {
-      exePath + "/../../backend/Database/hotel.db",
+      // Relative to executable path (supports macOS bundle & standard build
+      // dirs)
+      exePath + "/../../../../backend/Database/hotel.db",
       exePath + "/../../../backend/Database/hotel.db",
+      exePath + "/../../backend/Database/hotel.db",
       exePath + "/../backend/Database/hotel.db",
       exePath + "/backend/Database/hotel.db",
 
-      // Các đường dẫn dự phòng khác
-      exePath + "/Database/hotel.db", exePath + "/../Database/hotel.db",
-      exePath + "/../../Database/hotel.db", exePath + "/hotel.db"};
+      exePath + "/../../../../Database/hotel.db",
+      exePath + "/../../../Database/hotel.db",
+      exePath + "/../../Database/hotel.db", exePath + "/../Database/hotel.db",
+      exePath + "/Database/hotel.db", exePath + "/hotel.db",
+
+      // Fallback relative to current working directory
+      QDir::currentPath() + "/backend/Database/hotel.db",
+      QDir::currentPath() + "/Database/hotel.db",
+      QDir::currentPath() + "/hotel.db"};
 
   QString dbPath = "";
   bool dbFound = false;
@@ -28,6 +37,7 @@ DatabaseManager::DatabaseManager() {
     if (QFile::exists(path)) {
       dbPath = QDir::cleanPath(path);
       dbFound = true;
+
       qDebug() << "SUCCESS: DA TIM THAY DATABASE TAI:" << dbPath;
       break;
     }

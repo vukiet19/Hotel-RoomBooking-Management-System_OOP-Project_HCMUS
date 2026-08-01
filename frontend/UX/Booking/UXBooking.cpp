@@ -235,12 +235,12 @@ void MainWindowController::showUpdateBookingDialog() {
       QMessageBox::information(dialog, "Success",
                                "Booking updated successfully!");
       Backend::loadTableData(
-          tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
-                        "ID', room_number AS 'Room Number', check_in_time AS "
-                        "'Check-In', check_out_time AS 'Check-Out', status AS"
-                        "'Status' total_price AS 'Total Price ($)' FROM Bookings"
-                        "ORDER BY check_in_time DESC, id DESC"
-                      );
+          tableBooking,
+          "SELECT id AS 'Booking ID', customer_id AS 'Customer "
+          "ID', room_number AS 'Room Number', check_in_time AS "
+          "'Check-In', check_out_time AS 'Check-Out', status AS"
+          "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+          "ORDER BY check_in_time DESC, id DESC");
       dialog->accept();
     } else {
       QMessageBox::critical(
@@ -351,15 +351,17 @@ void MainWindowController::showDeleteBookingDialog() {
                                "Booking deleted successfully!");
       dialog->accept();
       Backend::loadTableData(
-          tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
-                        "ID', room_number AS 'Room Number', check_in_time AS "
-                        "'Check-In', check_out_time AS 'Check-Out', status AS"
-                        "'Status' total_price AS 'Total Price ($)' FROM Bookings"
-                        "ORDER BY check_in_time DESC, id DESC"
-                      );
+          tableBooking,
+          "SELECT id AS 'Booking ID', customer_id AS 'Customer "
+          "ID', room_number AS 'Room Number', check_in_time AS "
+          "'Check-In', check_out_time AS 'Check-Out', status AS"
+          "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+          "ORDER BY check_in_time DESC, id DESC");
       Backend::loadTableData(
           tableRoom,
-          "SELECT room_id AS 'Room ID', room_number AS 'Room Number', room_type AS 'Type', status AS 'Status', base_price AS 'Price', number_people AS 'Number People' FROM ListRooms");
+          "SELECT room_id AS 'Room ID', room_number AS 'Room Number', "
+          "room_type AS 'Type', status AS 'Status', base_price AS 'Price', "
+          "number_people AS 'Number People' FROM ListRooms");
     } else {
       QMessageBox::critical(
           dialog, "Error",
@@ -466,7 +468,8 @@ void MainWindowController::showFilterBookingDialog() {
       "stop:0 #059669, stop:1 #047857); }");
   btnReset->setStyleSheet(
       "QPushButton { background-color: #cbd5e1; color: #475569; border: none; "
-      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
+      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: "
+      "bold; }"
       "QPushButton:hover { background-color: #94a3b8; color: #1e293b; }");
   btnCancel->setStyleSheet(
       "background-color: #e2e8f0; color: #64748b; border: none; border-radius: "
@@ -484,12 +487,11 @@ void MainWindowController::showFilterBookingDialog() {
   connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
   connect(btnReset, &QPushButton::clicked, [=]() {
     Backend::loadTableData(
-                  tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
-                        "ID', room_number AS 'Room Number', check_in_time AS "
-                        "'Check-In', check_out_time AS 'Check-Out', status AS"
-                        "'Status' total_price AS 'Total Price ($)' FROM Bookings"
-                        "ORDER BY check_in_time DESC, id DESC"
-                      );
+        tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
+                      "ID', room_number AS 'Room Number', check_in_time AS "
+                      "'Check-In', check_out_time AS 'Check-Out', status AS"
+                      "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+                      "ORDER BY check_in_time DESC, id DESC");
     dialog->accept();
   });
   connect(btnApply, &QPushButton::clicked, [=]() {
@@ -500,12 +502,12 @@ void MainWindowController::showFilterBookingDialog() {
     QString startStr = txtStartDate->text().trimmed();
     QString endStr = txtEndDate->text().trimmed();
 
-  QString queryStr =
-      "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
-      "room_number AS 'Room Number', check_in_time AS 'Check-in', "
-      "check_out_time AS 'Check-out', status AS 'Status', "
-      "total_price AS 'Total Price' "
-      "FROM Bookings WHERE 1=1";
+    QString queryStr =
+        "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
+        "room_number AS 'Room Number', check_in_time AS 'Check-in', "
+        "check_out_time AS 'Check-out', status AS 'Status', "
+        "total_price AS 'Total Price' "
+        "FROM Bookings WHERE 1=1";
 
     if (!custIdStr.isEmpty()) {
       queryStr += QString(" AND customer_id = %1").arg(custIdStr.toInt());
@@ -756,18 +758,17 @@ void MainWindowController::showAddBookingDialog() {
     }
 
     QSqlQuery updateRoom(db);
-    updateRoom.prepare(
-        "UPDATE ListRooms "
-        "SET status = 'Occupied' "
-        "WHERE room_id = :rm OR room_number = :rm");
+    updateRoom.prepare("UPDATE ListRooms "
+                       "SET status = 'Occupied' "
+                       "WHERE room_id = :rm OR room_number = :rm");
     updateRoom.bindValue(":rm", room);
 
     if (!updateRoom.exec()) {
       db.rollback();
-      QMessageBox::critical(
-          addDialog, "Database Error",
-          "Booking was cancelled because the room status could not be updated:\n" +
-              updateRoom.lastError().text());
+      QMessageBox::critical(addDialog, "Database Error",
+                            "Booking was cancelled because the room status "
+                            "could not be updated:\n" +
+                                updateRoom.lastError().text());
       return;
     }
 
