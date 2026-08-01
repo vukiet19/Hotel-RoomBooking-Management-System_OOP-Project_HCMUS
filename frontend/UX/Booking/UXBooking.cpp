@@ -733,49 +733,73 @@ void MainWindowController::showAddBookingDialog() {
       realCustomerId = id.toInt();
     }
 
-    QSqlQuery query(db);
-    query.prepare("UPDATE ListRooms SET status = 'Occupied' WHERE room_id = "
-                  ":rm OR room_number = :rm");
-    query.bindValue(":rm", room);
-
-    if (!query.exec()) {
+    if (!db.transaction()) {
       QMessageBox::critical(addDialog, "Database Error",
-                            "Failed to update Room status:\n" +
-                                query.lastError().text());
+                            "Cannot start booking transaction.");
       return;
     }
 
-    BookingRepository r;
-    BookingData t;
-    t.customerId = realCustomerId;
-    t.roomNumber = room;
-    t.checkInTime = checkInDate;
-    t.checkOutTime = checkOutDate;
-    t.totalPrice = doublePrice;
-    bool addSuccess = r.add(t);
+    BookingRepository bookingRepository;
+    BookingData bookingData;
+    bookingData.customerId = realCustomerId;
+    bookingData.roomNumber = room;
+    bookingData.checkInTime = checkInDate;
+    bookingData.checkOutTime = checkOutDate;
+    bookingData.totalPrice = doublePrice;
 
-    if (addSuccess) {
-      HotelEventManager::instance().notifyRoomStatus(RoomEvent{
-          room.toStdString(), RoomStatus::Occupied,
-          QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()});
-
-      QSqlQuery lastIdQuery(db);
-      int newBookingId = 0;
-      if (lastIdQuery.exec("SELECT MAX(id) FROM Bookings") &&
-          lastIdQuery.next()) {
-        newBookingId = lastIdQuery.value(0).toInt();
-      }
-
-      HotelEventManager::instance().notifyBookingStatus(BookingEvent{
-          newBookingId, customer.toStdString(), room.toStdString(),
-          BookingStatus::CONFIRMED, doublePrice,
-          QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()});
+    if (!bookingRepository.add(bookingData)) {
+      db.rollback();
+      QMessageBox::critical(
+          addDialog, "Booking Error",
+          "Cannot create booking. The room may no longer be available.");
+      return;
     }
+
+    QSqlQuery updateRoom(db);
+    updateRoom.prepare(
+        "UPDATE ListRooms "
+        "SET status = 'Occupied' "
+        "WHERE room_id = :rm OR room_number = :rm");
+    updateRoom.bindValue(":rm", room);
+
+    if (!updateRoom.exec()) {
+      db.rollback();
+      QMessageBox::critical(
+          addDialog, "Database Error",
+          "Booking was cancelled because the room status could not be updated:\n" +
+              updateRoom.lastError().text());
+      return;
+    }
+
+    if (!db.commit()) {
+      db.rollback();
+      QMessageBox::critical(addDialog, "Database Error",
+                            "Cannot save the booking transaction.");
+      return;
+    }
+
+    QSqlQuery lastIdQuery(db);
+    int newBookingId = 0;
+    if (lastIdQuery.exec("SELECT MAX(id) FROM Bookings") &&
+        lastIdQuery.next()) {
+      newBookingId = lastIdQuery.value(0).toInt();
+    }
+
+    HotelEventManager::instance().notifyRoomStatus(RoomEvent{
+        room.toStdString(), RoomStatus::Occupied,
+        QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()});
+
+    HotelEventManager::instance().notifyBookingStatus(BookingEvent{
+        newBookingId, customer.toStdString(), room.toStdString(),
+        BookingStatus::CONFIRMED, doublePrice,
+        QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()});
 
     QMessageBox::information(
         addDialog, "Success",
         "Booking created and room status updated successfully!");
+
     addDialog->accept();
+    showBookingTab();
   });
 
   addDialog->exec();
