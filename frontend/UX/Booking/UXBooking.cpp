@@ -29,15 +29,16 @@ void MainWindowController::showBookingTab() {
   bookingPage->setSection(0);
   setActiveButton(buttonBooking);
   QString bookingQuery = R"(
-    SELECT 
-        booking_id AS "Booking ID",
-        customer_name AS "Customer Name",
-        room_number AS "Room Number",
-        check_in AS "Check In",
-        check_out AS "Check Out",
-        status AS "Status",
-        total_price AS "Total Price"
-    FROM Bookings
+  SELECT
+    id AS "Booking ID",
+    customer_id AS "Customer ID",
+    room_number AS "Room Number",
+    check_in_time AS "Check-in",
+    check_out_time AS "Check-out",
+    status AS "Status",
+    total_price AS "Total Price"
+  FROM Bookings
+  ORDER BY check_in_time DESC, id DESC;
 )";
 
   Backend::loadTableData(tableBooking, bookingQuery);
@@ -154,7 +155,10 @@ void MainWindowController::showUpdateBookingDialog() {
         dateCheckOut->setDate(outD);
     }
     if (tableBooking->item(row, 5))
-      txtPrice->setText(tableBooking->item(row, 5)->text());
+      cbStatus->setCurrentText(tableBooking->item(row, 5)->text());
+
+    if (tableBooking->item(row, 6))
+      txtPrice->setText(tableBooking->item(row, 6)->text());
   }
 
   formLayout->addRow("Booking ID:", txtBookingId);
@@ -233,8 +237,10 @@ void MainWindowController::showUpdateBookingDialog() {
       Backend::loadTableData(
           tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
                         "ID', room_number AS 'Room Number', check_in_time AS "
-                        "'Check-In', check_out_time AS 'Check-Out', "
-                        "total_price AS 'Total Price ($)' FROM Bookings");
+                        "'Check-In', check_out_time AS 'Check-Out', status AS"
+                        "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+                        "ORDER BY check_in_time DESC, id DESC"
+                      );
       dialog->accept();
     } else {
       QMessageBox::critical(
@@ -347,8 +353,10 @@ void MainWindowController::showDeleteBookingDialog() {
       Backend::loadTableData(
           tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
                         "ID', room_number AS 'Room Number', check_in_time AS "
-                        "'Check-In', check_out_time AS 'Check-Out', "
-                        "total_price AS 'Total Price ($)' FROM Bookings");
+                        "'Check-In', check_out_time AS 'Check-Out', status AS"
+                        "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+                        "ORDER BY check_in_time DESC, id DESC"
+                      );
       Backend::loadTableData(
           tableRoom,
           "SELECT room_id AS 'Room ID', room_number AS 'Room Number', room_type AS 'Type', status AS 'Status', base_price AS 'Price', number_people AS 'Number People' FROM ListRooms");
@@ -476,8 +484,12 @@ void MainWindowController::showFilterBookingDialog() {
   connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
   connect(btnReset, &QPushButton::clicked, [=]() {
     Backend::loadTableData(
-        tableBooking,
-        "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS 'Check-Out', total_price AS 'Total Price ($)' FROM Bookings");
+                  tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
+                        "ID', room_number AS 'Room Number', check_in_time AS "
+                        "'Check-In', check_out_time AS 'Check-Out', status AS"
+                        "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+                        "ORDER BY check_in_time DESC, id DESC"
+                      );
     dialog->accept();
   });
   connect(btnApply, &QPushButton::clicked, [=]() {
@@ -488,10 +500,12 @@ void MainWindowController::showFilterBookingDialog() {
     QString startStr = txtStartDate->text().trimmed();
     QString endStr = txtEndDate->text().trimmed();
 
-    QString queryStr =
-        "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number "
-        "AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS "
-        "'Check-Out', total_price AS 'Total Price ($)' FROM Bookings WHERE 1=1";
+  QString queryStr =
+      "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
+      "room_number AS 'Room Number', check_in_time AS 'Check-in', "
+      "check_out_time AS 'Check-out', status AS 'Status', "
+      "total_price AS 'Total Price' "
+      "FROM Bookings WHERE 1=1";
 
     if (!custIdStr.isEmpty()) {
       queryStr += QString(" AND customer_id = %1").arg(custIdStr.toInt());

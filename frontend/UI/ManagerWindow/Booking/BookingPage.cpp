@@ -6,7 +6,7 @@
 BookingPage::BookingPage(QWidget *parent)
     : QWidget(parent),
       sections(new SplitTablePage(
-          "Booking", {"Booking ID", "Customer ID", "Room Number", "Check-in", "Check-out", "Total Price"},
+          "Booking", {"Booking ID", "Customer ID", "Room Number", "Check-in", "Check-out", "Status", "Total Price"},
           "Booking Services", {"ID", "Booking ID", "Item ID", "Quantity", "Customer Note", "Final Price"}, this))
 {
     auto *layout = new QVBoxLayout(this);
