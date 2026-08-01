@@ -59,6 +59,7 @@ private:
   void showFilterFoodDialog();
 
   void showAddServiceDialog();
+  void showAddServiceToBookingDialog();
   void showUpdateServiceDialog();
   void showDeleteServiceDialog();
   void showFilterServiceDialog();

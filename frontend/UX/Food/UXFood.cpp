@@ -21,6 +21,7 @@ void MainWindowController::showFoodTab() {
   servicePage->setSection(1);
   setActionBarVisible(true);
   setActiveButton(buttonService);
+  btnAddToBooking->setVisible(false);
 
   QString foodOptionsQuery = R"(
     SELECT 

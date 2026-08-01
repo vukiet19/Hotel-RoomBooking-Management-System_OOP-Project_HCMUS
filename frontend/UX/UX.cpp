@@ -87,6 +87,10 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton) {
     btn->style()->unpolish(btn);
     btn->style()->polish(btn);
   }
+
+  if (btnAddToBooking && clickedButton != buttonService) {
+    btnAddToBooking->setVisible(false);
+  }
 }
 
 void MainWindowController::setActionBarVisible(bool visible) {

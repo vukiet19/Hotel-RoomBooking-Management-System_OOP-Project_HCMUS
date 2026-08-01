@@ -1,3 +1,5 @@
+#include "backend/Manager/DatabaseManager.h"
+#include "backend/Repository/BookingRepository.h"
 #include "backend/Repository/ServiceItemRepository.h"
 #include "frontend/UI/UI.h"
 #include "frontend/UX/UX.h"
@@ -12,6 +14,8 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QStackedWidget>
+#include <QSpinBox>
+#include <QtSql/QSqlQuery>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
@@ -108,6 +112,38 @@ bool readNonNegativePrice(QLineEdit *input, double &price, QWidget *parent,
   return true;
 }
 
+bool loadActiveBookings(QComboBox *comboBox) {
+  QSqlQuery query(DatabaseManager::instance().database());
+  if (!query.exec("SELECT id, room_number, status FROM Bookings "
+                  "WHERE status IS NULL OR status <> 'CHECKED_OUT' "
+                  "ORDER BY id DESC")) {
+    return false;
+  }
+
+  while (query.next()) {
+    const int bookingId = query.value("id").toInt();
+    const QString roomNumber = query.value("room_number").toString();
+    const QString status = query.value("status").toString();
+    comboBox->addItem(
+        QString("Booking #%1 — Room %2 (%3)")
+            .arg(bookingId)
+            .arg(roomNumber.isEmpty() ? "-" : roomNumber,
+                 status.isEmpty() ? "UNCONFIRMED" : status),
+        bookingId);
+  }
+  return comboBox->count() > 0;
+}
+
+bool isBookingActive(int bookingId) {
+  QSqlQuery query(DatabaseManager::instance().database());
+  query.prepare("SELECT status FROM Bookings WHERE id = :booking_id");
+  query.bindValue(":booking_id", bookingId);
+  if (!query.exec() || !query.next()) {
+    return false;
+  }
+  return query.value("status").toString() != "CHECKED_OUT";
+}
+
 } // namespace
 
 void MainWindowController::showServiceTab() {
@@ -122,10 +158,12 @@ void MainWindowController::showServiceTab() {
   btnAdd->setVisible(true);
   btnUpdate->setVisible(true);
   btnDelete->setVisible(true);
+  btnAddToBooking->setVisible(true);
   btnFilter->setVisible(true);
   btnAdd->disconnect();
   btnUpdate->disconnect();
   btnDelete->disconnect();
+  btnAddToBooking->disconnect();
   btnFilter->disconnect();
 
   connect(btnAdd, &QPushButton::clicked, this,
@@ -134,8 +172,118 @@ void MainWindowController::showServiceTab() {
           &MainWindowController::showUpdateServiceDialog);
   connect(btnDelete, &QPushButton::clicked, this,
           &MainWindowController::showDeleteServiceDialog);
+  connect(btnAddToBooking, &QPushButton::clicked, this,
+          &MainWindowController::showAddServiceToBookingDialog);
   connect(btnFilter, &QPushButton::clicked, this,
           &MainWindowController::showFilterServiceDialog);
+}
+
+void MainWindowController::showAddServiceToBookingDialog() {
+  if (!tableService || tableService->currentRow() < 0 ||
+      !tableService->item(tableService->currentRow(), 0)) {
+    QMessageBox::warning(this, "Select service",
+                         "Select a Service Catalog row before adding it to a booking.");
+    return;
+  }
+
+  const QString serviceId = tableService->item(tableService->currentRow(), 0)->text();
+  ServiceItemRepository serviceRepository;
+  const auto service = serviceRepository.findCatalogItemById(serviceId.toStdString());
+  if (!service) {
+    QMessageBox::warning(this, "Service not found",
+                         "The selected service no longer exists in the catalog.");
+    showServiceTab();
+    return;
+  }
+
+  QDialog dialog(this);
+  dialog.setWindowTitle("Add Service to Booking");
+  dialog.setFixedSize(560, 560);
+  dialog.setStyleSheet(dialogStyle());
+
+  auto *layout = new QVBoxLayout(&dialog);
+  layout->setContentsMargins(30, 30, 30, 30);
+  addDialogHeading(layout, &dialog, "Add Service to Booking");
+  auto *form = new QFormLayout();
+  form->setSpacing(15);
+
+  auto *id = new QLineEdit(QString::fromStdString(service->id), &dialog);
+  auto *name = new QLineEdit(QString::fromStdString(service->name), &dialog);
+  auto *price = new QLineEdit(QString::number(service->basePrice, 'f', 2), &dialog);
+  auto *booking = new QComboBox(&dialog);
+  auto *quantity = new QSpinBox(&dialog);
+  auto *note = new QLineEdit(&dialog);
+
+  for (auto *input : {id, name, price, note})
+    input->setStyleSheet(inputStyle());
+  booking->setStyleSheet(inputStyle());
+  quantity->setStyleSheet(inputStyle());
+  id->setReadOnly(true);
+  name->setReadOnly(true);
+  price->setReadOnly(true);
+  id->setStyleSheet(inputStyle() +
+                    "QLineEdit { background-color: #e2e8f0; color: #475569; }");
+  name->setStyleSheet(inputStyle() +
+                      "QLineEdit { background-color: #e2e8f0; color: #475569; }");
+  price->setStyleSheet(inputStyle() +
+                       "QLineEdit { background-color: #e2e8f0; color: #475569; }");
+  quantity->setRange(1, 9999);
+  quantity->setValue(1);
+  note->setPlaceholderText("Optional customer note");
+
+  if (!loadActiveBookings(booking)) {
+    QMessageBox::information(this, "No active bookings",
+                             "There is no active booking available for this service.");
+    return;
+  }
+
+  form->addRow("Service ID:", id);
+  form->addRow("Service name:", name);
+  form->addRow("Final unit price:", price);
+  form->addRow("Booking:", booking);
+  form->addRow("Quantity:", quantity);
+  form->addRow("Customer note:", note);
+  layout->addLayout(form);
+
+  auto *buttons = new QHBoxLayout();
+  buttons->setContentsMargins(0, 15, 0, 0);
+  auto *cancel = new QPushButton("Cancel", &dialog);
+  auto *save = new QPushButton("Add to Booking", &dialog);
+  cancel->setStyleSheet(secondaryButtonStyle());
+  save->setStyleSheet(primaryButtonStyle());
+  cancel->setCursor(Qt::PointingHandCursor);
+  save->setCursor(Qt::PointingHandCursor);
+  buttons->addWidget(cancel);
+  buttons->addWidget(save);
+  layout->addLayout(buttons);
+
+  connect(cancel, &QPushButton::clicked, &dialog, &QDialog::reject);
+  connect(save, &QPushButton::clicked, &dialog,
+          [this, &dialog, service, booking, quantity, note] {
+            const int bookingId = booking->currentData().toInt();
+            if (bookingId <= 0 || !isBookingActive(bookingId)) {
+              QMessageBox::warning(&dialog, "Booking unavailable",
+                                   "This booking no longer exists or has already checked out.");
+              return;
+            }
+
+            BookingRepository bookingRepository;
+            const bool added = bookingRepository.addServiceItemToBooking(
+                bookingId, service->id, quantity->value(), service->basePrice,
+                note->text().trimmed().toStdString());
+            if (!added) {
+              QMessageBox::critical(&dialog, "Cannot add service",
+                                   "The service could not be added to the selected booking.");
+              return;
+            }
+
+            QMessageBox::information(&dialog, "Success",
+                                     "Service added to the booking successfully.");
+            dialog.accept();
+            showBookingServicesTab();
+          });
+
+  dialog.exec();
 }
 
 void MainWindowController::showAddServiceDialog() {
