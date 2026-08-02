@@ -14,7 +14,9 @@ TablePage::TablePage(const QStringList &headers, QWidget *parent)
     layout->setContentsMargins(0, 0, 0, 0);
 
     tableWidget->setHorizontalHeaderLabels(headers);
-    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    tableWidget->horizontalHeader()->setMinimumSectionSize(110);
+    tableWidget->horizontalHeader()->setStretchLastSection(true);
     tableWidget->verticalHeader()->setDefaultSectionSize(45);
     tableWidget->setAlternatingRowColors(true);
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);

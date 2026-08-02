@@ -221,7 +221,7 @@ void MainWindowController::showUpdateFoodDialog() {
   formLayout->addRow("Food ID:", txtId);
   formLayout->addRow("Parent ID:", txtCategory);
   formLayout->addRow("Food Name:", txtName);
-  formLayout->addRow("Extra Price ($):", txtPrice);
+  formLayout->addRow("Extra Price (VND):", txtPrice);
 
   mainLayout->addLayout(formLayout);
 
@@ -377,7 +377,7 @@ void MainWindowController::showAddFoodToBookingDialog() {
 
   formLayout->addRow("Food ID:", txtId);
   formLayout->addRow("Food Name:", txtName);
-  formLayout->addRow("Price ($):", txtPrice);
+  formLayout->addRow("Price (VND):", txtPrice);
   formLayout->addRow("Select Booking:", cbBookingId);
   formLayout->addRow("Quantity:", txtQuantity);
 
@@ -512,11 +512,11 @@ void MainWindowController::showFilterFoodDialog() {
                        "background-color: #f0f9ff; }";
 
   QLineEdit *txtMinPrice = new QLineEdit(filterDialog);
-  txtMinPrice->setPlaceholderText("Min Price ($)...");
+  txtMinPrice->setPlaceholderText("Min Price (VND)...");
   txtMinPrice->setStyleSheet(inputStyle);
 
   QLineEdit *txtMaxPrice = new QLineEdit(filterDialog);
-  txtMaxPrice->setPlaceholderText("Max Price ($)...");
+  txtMaxPrice->setPlaceholderText("Max Price (VND)...");
   txtMaxPrice->setStyleSheet(inputStyle);
 
   formLayout->addRow("Min Price:", txtMinPrice);

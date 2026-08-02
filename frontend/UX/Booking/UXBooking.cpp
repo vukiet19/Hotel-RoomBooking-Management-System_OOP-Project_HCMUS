@@ -125,10 +125,6 @@ void MainWindowController::showUpdateBookingDialog() {
   dateCheckOut->setCalendarPopup(true);
   dateCheckOut->setStyleSheet(inputStyle);
 
-  QLineEdit *txtPrice = new QLineEdit(dialog);
-  txtPrice->setPlaceholderText("Total Price ($)...");
-  txtPrice->setStyleSheet(inputStyle);
-
   QComboBox *cbStatus = new QComboBox(dialog);
   cbStatus->addItems({"UNCONFIRMED", "CONFIRMED", "CHECKED_IN", "CHECKED_OUT"});
   cbStatus->setStyleSheet(inputStyle);
@@ -155,9 +151,6 @@ void MainWindowController::showUpdateBookingDialog() {
     }
     if (tableBooking->item(row, 5))
       cbStatus->setCurrentText(tableBooking->item(row, 5)->text());
-
-    if (tableBooking->item(row, 6))
-      txtPrice->setText(tableBooking->item(row, 6)->text());
   }
 
   formLayout->addRow("Booking ID:", txtBookingId);
@@ -165,7 +158,6 @@ void MainWindowController::showUpdateBookingDialog() {
   formLayout->addRow("Room Number:", txtRoomNumber);
   formLayout->addRow("Check-In:", dateCheckIn);
   formLayout->addRow("Check-Out:", dateCheckOut);
-  formLayout->addRow("Total Price:", txtPrice);
   formLayout->addRow("Status:", cbStatus);
 
   mainLayout->addLayout(formLayout);
@@ -213,14 +205,11 @@ void MainWindowController::showUpdateBookingDialog() {
 
     QString customerIdStr = txtCustomerId->text().trimmed();
     QString roomNumberStr = txtRoomNumber->text().trimmed();
-    QString priceStr = txtPrice->text().trimmed();
     QString checkInStr =
         dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
     QString checkOutStr =
         dateCheckOut->date().toString("yyyy-MM-dd") + " 12:00:00";
     QString statusStr = cbStatus->currentText();
-
-    double priceVal = priceStr.toDouble();
 
     QDateTime inDT = QDateTime::fromString(checkInStr, "yyyy-MM-dd hh:mm:ss");
     QDateTime outDT = QDateTime::fromString(checkOutStr, "yyyy-MM-dd hh:mm:ss");
@@ -228,17 +217,17 @@ void MainWindowController::showUpdateBookingDialog() {
     BookingRepository repo;
     bool success =
         repo.updateBooking(bookingId, customerIdStr.toInt(), roomNumberStr,
-                           inDT, outDT, priceVal, statusStr);
+                           inDT, outDT, statusStr);
 
     if (success) {
       QMessageBox::information(dialog, "Success",
                                "Booking updated successfully!");
       Backend::loadTableData(
           tableBooking,
-          "SELECT id AS 'Booking ID', customer_id AS 'Customer "
-          "ID', room_number AS 'Room Number', check_in_time AS "
-          "'Check-In', check_out_time AS 'Check-Out', status AS"
-          "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+          "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
+          "room_number AS 'Room Number', check_in_time AS 'Check-In', "
+          "check_out_time AS 'Check-Out', status AS 'Status', "
+          "total_price AS 'Total Price (VND)' FROM Bookings "
           "ORDER BY check_in_time DESC, id DESC");
       dialog->accept();
     } else {
@@ -351,10 +340,10 @@ void MainWindowController::showDeleteBookingDialog() {
       dialog->accept();
       Backend::loadTableData(
           tableBooking,
-          "SELECT id AS 'Booking ID', customer_id AS 'Customer "
-          "ID', room_number AS 'Room Number', check_in_time AS "
-          "'Check-In', check_out_time AS 'Check-Out', status AS"
-          "'Status' total_price AS 'Total Price ($)' FROM Bookings"
+          "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
+          "room_number AS 'Room Number', check_in_time AS 'Check-In', "
+          "check_out_time AS 'Check-Out', status AS 'Status', "
+          "total_price AS 'Total Price (VND)' FROM Bookings "
           "ORDER BY check_in_time DESC, id DESC");
       Backend::loadTableData(
           tableRoom,
@@ -486,11 +475,12 @@ void MainWindowController::showFilterBookingDialog() {
   connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
   connect(btnReset, &QPushButton::clicked, [=]() {
     Backend::loadTableData(
-        tableBooking, "SELECT id AS 'Booking ID', customer_id AS 'Customer "
-                      "ID', room_number AS 'Room Number', check_in_time AS "
-                      "'Check-In', check_out_time AS 'Check-Out', status AS"
-                      "'Status' total_price AS 'Total Price ($)' FROM Bookings"
-                      "ORDER BY check_in_time DESC, id DESC");
+        tableBooking,
+        "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
+        "room_number AS 'Room Number', check_in_time AS 'Check-In', "
+        "check_out_time AS 'Check-Out', status AS 'Status', "
+        "total_price AS 'Total Price (VND)' FROM Bookings "
+        "ORDER BY check_in_time DESC, id DESC");
     dialog->accept();
   });
   connect(btnApply, &QPushButton::clicked, [=]() {
@@ -698,12 +688,13 @@ void MainWindowController::showAddBookingDialog() {
       return;
     }
 
-    QString currentRmStatus = checkRoomExist.value(0).toString();
-    if (currentRmStatus == "Occupied" || currentRmStatus == "Maintenance") {
+    QString currentRmStatus = checkRoomExist.value(0).toString().trimmed();
+    if (currentRmStatus.compare("Available", Qt::CaseInsensitive) != 0 &&
+        currentRmStatus.compare("AVAILABLE", Qt::CaseInsensitive) != 0) {
       QMessageBox::warning(
           addDialog, "Room Error",
-          QString("Room '%1' is currently %2 and not available for booking.")
-              .arg(room, currentRmStatus));
+          QString("Room '%1' is currently %2 and not available for booking!")
+              .arg(room, currentRmStatus.isEmpty() ? "Unavailable" : currentRmStatus));
       return;
     }
 

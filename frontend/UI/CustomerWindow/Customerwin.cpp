@@ -377,6 +377,22 @@ void CustomerWindow::onBookRoomClicked() {
     return;
   }
 
+  QSqlQuery roomCheck(db);
+  roomCheck.prepare("SELECT status FROM ListRooms WHERE room_id = :rm OR room_number = :rm");
+  roomCheck.bindValue(":rm", roomId);
+  if (!roomCheck.exec() || !roomCheck.next()) {
+    QMessageBox::warning(this, "Room Error",
+                         QString("Room '%1' does not exist in the database!").arg(roomId));
+    return;
+  }
+  QString st = roomCheck.value(0).toString().trimmed();
+  if (st.compare("Available", Qt::CaseInsensitive) != 0 &&
+      st.compare("AVAILABLE", Qt::CaseInsensitive) != 0) {
+    QMessageBox::warning(this, "Room Error",
+                         QString("Room '%1' is currently %2 and not available for booking!").arg(roomId, st.isEmpty() ? "Unavailable" : st));
+    return;
+  }
+
   db.transaction();
 
   // Lưu biến để lưu thông tin customer

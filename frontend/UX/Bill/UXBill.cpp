@@ -8,6 +8,7 @@
 #include <QDialog>
 #include <QFormLayout>
 #include <QHBoxLayout>
+#include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMessageBox>
@@ -32,7 +33,7 @@ struct BillFilter {
 };
 
 QString formatMoney(double amount) {
-  return QString::number(amount, 'f', 2) + " VND";
+  return QLocale(QLocale::English).toString(amount, 'f', 0) + " VND";
 }
 
 bool loadBills(QTableWidget *table, const BillFilter &filter,
@@ -107,25 +108,33 @@ bool loadBills(QTableWidget *table, const BillFilter &filter,
                    new QTableWidgetItem(query.value("bill_id").toString()));
     table->setItem(row, 1,
                    new QTableWidgetItem(query.value("booking_id").toString()));
-    table->setItem(row, 2,
-                   new QTableWidgetItem(query.value("customer_name").toString()));
+    table->setItem(
+        row, 2, new QTableWidgetItem(query.value("customer_name").toString()));
     table->setItem(row, 3,
                    new QTableWidgetItem(query.value("room_number").toString()));
     table->setItem(row, 4,
-                   new QTableWidgetItem(formatMoney(query.value("room_charge").toDouble())));
+                   new QTableWidgetItem(
+                       formatMoney(query.value("room_charge").toDouble())));
     table->setItem(row, 5,
-                   new QTableWidgetItem(formatMoney(query.value("service_charge").toDouble())));
+                   new QTableWidgetItem(
+                       formatMoney(query.value("service_charge").toDouble())));
     table->setItem(row, 6,
-                   new QTableWidgetItem(formatMoney(query.value("discount_amount").toDouble())));
+                   new QTableWidgetItem(
+                       formatMoney(query.value("discount_amount").toDouble())));
     table->setItem(row, 7,
-                   new QTableWidgetItem(formatMoney(query.value("deposit_amount").toDouble())));
+                   new QTableWidgetItem(
+                       formatMoney(query.value("deposit_amount").toDouble())));
     table->setItem(row, 8,
-                   new QTableWidgetItem(formatMoney(query.value("total_amount").toDouble())));
-    table->setItem(row, 9,
-                   new QTableWidgetItem(query.value("payment_method").toString()));
-    table->setItem(row, 10,
-                   new QTableWidgetItem(query.value("checkout_time").toString()));
+                   new QTableWidgetItem(
+                       formatMoney(query.value("total_amount").toDouble())));
+    table->setItem(
+        row, 9, new QTableWidgetItem(query.value("payment_method").toString()));
+    table->setItem(
+        row, 10, new QTableWidgetItem(query.value("checkout_time").toString()));
   }
+
+  table->resizeColumnsToContents();
+  table->horizontalHeader()->setMinimumSectionSize(110);
   return true;
 }
 
@@ -247,7 +256,8 @@ void MainWindowController::showFilterBillDialog() {
   endDate->setPlaceholderText("YYYY-MM-DD");
   minTotal->setPlaceholderText("No minimum");
   maxTotal->setPlaceholderText("No maximum");
-  for (auto *input : {billId, bookingId, startDate, endDate, minTotal, maxTotal})
+  for (auto *input :
+       {billId, bookingId, startDate, endDate, minTotal, maxTotal})
     input->setStyleSheet(inputStyle());
   paymentMethod->setStyleSheet(inputStyle());
 
@@ -269,12 +279,14 @@ void MainWindowController::showFilterBillDialog() {
       "8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
   reset->setStyleSheet(
       "QPushButton { background-color: #cbd5e1; color: #475569; border: none; "
-      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
+      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: "
+      "bold; }"
       "QPushButton:hover { background-color: #94a3b8; color: #1e293b; }");
   apply->setStyleSheet(
       "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
       "stop:0 #10b981, stop:1 #059669); color: white; border: none; "
-      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
+      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: "
+      "bold; }"
       "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
       "stop:0 #059669, stop:1 #047857); }");
   for (auto *button : {cancel, reset, apply})
@@ -289,42 +301,47 @@ void MainWindowController::showFilterBillDialog() {
     showBillTab();
     dialog->accept();
   });
-  connect(apply, &QPushButton::clicked, this,
-          [this, dialog, billId, bookingId, startDate, endDate, minTotal,
-           maxTotal, paymentMethod] {
-            BillFilter filter;
-            if (!readOptionalId(billId, filter.billId, "Bill ID", dialog) ||
-                !readOptionalId(bookingId, filter.bookingId, "Booking ID", dialog) ||
-                !readOptionalDate(startDate, filter.startDate, "Start date", dialog) ||
-                !readOptionalDate(endDate, filter.endDate, "End date", dialog) ||
-                !readOptionalAmount(minTotal, filter.minTotal, "Minimum total", dialog) ||
-                !readOptionalAmount(maxTotal, filter.maxTotal, "Maximum total", dialog)) {
-              return;
-            }
-            if (!filter.startDate.isEmpty() && !filter.endDate.isEmpty() &&
-                filter.startDate > filter.endDate) {
-              QMessageBox::warning(dialog, "Invalid input",
-                                   "Start date cannot be after end date.");
-              return;
-            }
-            if (filter.minTotal >= 0.0 && filter.maxTotal >= 0.0 &&
-                filter.minTotal > filter.maxTotal) {
-              QMessageBox::warning(dialog, "Invalid input",
-                                   "Minimum total cannot exceed maximum total.");
-              return;
-            }
+  connect(
+      apply, &QPushButton::clicked, this,
+      [this, dialog, billId, bookingId, startDate, endDate, minTotal, maxTotal,
+       paymentMethod] {
+        BillFilter filter;
+        if (!readOptionalId(billId, filter.billId, "Bill ID", dialog) ||
+            !readOptionalId(bookingId, filter.bookingId, "Booking ID",
+                            dialog) ||
+            !readOptionalDate(startDate, filter.startDate, "Start date",
+                              dialog) ||
+            !readOptionalDate(endDate, filter.endDate, "End date", dialog) ||
+            !readOptionalAmount(minTotal, filter.minTotal, "Minimum total",
+                                dialog) ||
+            !readOptionalAmount(maxTotal, filter.maxTotal, "Maximum total",
+                                dialog)) {
+          return;
+        }
+        if (!filter.startDate.isEmpty() && !filter.endDate.isEmpty() &&
+            filter.startDate > filter.endDate) {
+          QMessageBox::warning(dialog, "Invalid input",
+                               "Start date cannot be after end date.");
+          return;
+        }
+        if (filter.minTotal >= 0.0 && filter.maxTotal >= 0.0 &&
+            filter.minTotal > filter.maxTotal) {
+          QMessageBox::warning(dialog, "Invalid input",
+                               "Minimum total cannot exceed maximum total.");
+          return;
+        }
 
-            filter.paymentMethod = paymentMethod->currentData().toString();
-            QString errorMessage;
-            if (!loadBills(tableBill, filter, &errorMessage)) {
-              QMessageBox::critical(dialog, "Cannot filter bills", errorMessage);
-              return;
-            }
-            QMessageBox::information(
-                dialog, "Filter Results",
-                QString("Found %1 bill(s).").arg(tableBill->rowCount()));
-            dialog->accept();
-          });
+        filter.paymentMethod = paymentMethod->currentData().toString();
+        QString errorMessage;
+        if (!loadBills(tableBill, filter, &errorMessage)) {
+          QMessageBox::critical(dialog, "Cannot filter bills", errorMessage);
+          return;
+        }
+        QMessageBox::information(
+            dialog, "Filter Results",
+            QString("Found %1 bill(s).").arg(tableBill->rowCount()));
+        dialog->accept();
+      });
 
   dialog->exec();
   dialog->deleteLater();

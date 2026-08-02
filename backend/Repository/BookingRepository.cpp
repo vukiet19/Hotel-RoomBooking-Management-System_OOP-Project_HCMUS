@@ -384,6 +384,53 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
                                       const QString &roomNumber,
                                       const QDateTime &checkIn,
                                       const QDateTime &checkOut,
+                                      const QString &statusStr) {
+  QSqlDatabase db = DatabaseManager::instance().database();
+
+  double basePrice = 0.0;
+  if (!roomNumber.isEmpty()) {
+    QSqlQuery rq(db);
+    rq.prepare("SELECT base_price FROM ListRooms WHERE room_number = :rm OR room_id = :rm");
+    rq.bindValue(":rm", roomNumber);
+    if (rq.exec() && rq.next()) {
+      basePrice = rq.value(0).toDouble();
+    }
+  }
+
+  int nights = checkIn.daysTo(checkOut);
+  if (nights <= 0) nights = 1;
+  double calcTotalPrice = basePrice * nights;
+
+  QSqlQuery q(db);
+  if (calcTotalPrice > 0.0) {
+    q.prepare("UPDATE Bookings SET customer_id = :cid, room_number = :rm, "
+              "check_in_time = :in, check_out_time = :out, status = :st, "
+              "total_price = :price WHERE id = :id");
+    q.bindValue(":price", calcTotalPrice);
+  } else {
+    q.prepare("UPDATE Bookings SET customer_id = :cid, room_number = :rm, "
+              "check_in_time = :in, check_out_time = :out, status = :st "
+              "WHERE id = :id");
+  }
+
+  q.bindValue(":cid", customerId);
+  q.bindValue(":rm", roomNumber);
+  q.bindValue(":in", checkIn.toString(Qt::ISODate));
+  q.bindValue(":out", checkOut.toString(Qt::ISODate));
+  q.bindValue(":st", statusStr.isEmpty() ? "UNCONFIRMED" : statusStr);
+  q.bindValue(":id", bookingId);
+
+  bool ok = q.exec();
+  if (!ok) {
+    qDebug() << "ERROR: Failed to update booking:" << q.lastError().text();
+  }
+  return ok;
+}
+
+bool BookingRepository::updateBooking(int bookingId, int customerId,
+                                      const QString &roomNumber,
+                                      const QDateTime &checkIn,
+                                      const QDateTime &checkOut,
                                       double depositInput,
                                       const QString &statusStr) {
   Customer *cust = new Customer();

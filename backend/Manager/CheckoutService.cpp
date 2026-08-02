@@ -31,7 +31,8 @@ bool addColumnIfMissing(QSqlDatabase db, const QString &tableName,
     return true;
 
   QSqlQuery query(db);
-  if (query.exec("ALTER TABLE " + tableName + " ADD COLUMN " + columnDefinition))
+  if (query.exec("ALTER TABLE " + tableName + " ADD COLUMN " +
+                 columnDefinition))
     return true;
 
   if (errorMessage) {
@@ -68,7 +69,8 @@ bool CheckoutService::ensureSchema(QString *errorMessage) {
     return false;
   }
 
-  // Bills keeps a checkout snapshot so later price changes cannot alter history.
+  // Bills keeps a checkout snapshot so later price changes cannot alter
+  // history.
   return addColumnIfMissing(db, "Bills", "room_charge REAL DEFAULT 0.0",
                             "room_charge", errorMessage) &&
          addColumnIfMissing(db, "Bills", "service_charge REAL DEFAULT 0.0",
@@ -77,8 +79,8 @@ bool CheckoutService::ensureSchema(QString *errorMessage) {
                             "discount_amount", errorMessage) &&
          addColumnIfMissing(db, "Bills", "deposit_amount REAL DEFAULT 0.0",
                             "deposit_amount", errorMessage) &&
-         addColumnIfMissing(db, "Bills", "payment_method TEXT", "payment_method",
-                            errorMessage) &&
+         addColumnIfMissing(db, "Bills", "payment_method TEXT",
+                            "payment_method", errorMessage) &&
          addColumnIfMissing(db, "Bills", "checkout_time TEXT", "checkout_time",
                             errorMessage);
 }
@@ -87,8 +89,9 @@ bool CheckoutService::prepareSchema(QString *errorMessage) {
   return ensureSchema(errorMessage);
 }
 
-std::optional<CheckoutBookingPreview> CheckoutService::loadBooking(
-    int bookingId, bool activeOnly, QString *errorMessage) {
+std::optional<CheckoutBookingPreview>
+CheckoutService::loadBooking(int bookingId, bool activeOnly,
+                             QString *errorMessage) {
   QSqlDatabase db = DatabaseManager::instance().database();
   QSqlQuery query(db);
   QString sql = R"(
@@ -100,16 +103,16 @@ std::optional<CheckoutBookingPreview> CheckoutService::loadBooking(
            b.deposit_amount,
            b.deposit_status,
            c.full_name,
-           c.phone_number,
+           COALESCE(c.phone_number, '') AS phone_number,
            r.room_id,
            r.room_number AS room_number,
-           r.room_type,
+           COALESCE(r.room_type, 'Standard') AS room_type,
            r.base_price
       FROM Bookings b
       LEFT JOIN Customer c
-        ON c.id = b.customer_id
+        ON (c.id_customer = b.customer_id OR c.id = b.customer_id)
       LEFT JOIN ListRooms r
-        ON r.room_number = b.room_number
+        ON (r.room_number = b.room_number OR r.room_id = b.room_number)
      WHERE b.id = :booking_id
   )";
   if (activeOnly)
@@ -136,6 +139,8 @@ std::optional<CheckoutBookingPreview> CheckoutService::loadBooking(
   if (booking.roomNumber.isEmpty())
     booking.roomNumber = query.value("booked_room_number").toString();
   booking.roomType = query.value("room_type").toString();
+  if (booking.roomType.isEmpty())
+    booking.roomType = "Standard";
   booking.checkInDate = query.value("check_in_time").toString();
   booking.expectedCheckOutDate = query.value("check_out_time").toString();
 
@@ -182,14 +187,14 @@ std::optional<CheckoutBookingPreview> CheckoutService::loadBooking(
     booking.services.append(service);
     booking.serviceCharge += service.quantity * service.unitPrice;
   }
-  booking.totalAmount = qMax(
-      0.0, booking.roomCharge + booking.serviceCharge - booking.discount - booking.deposit);
+  booking.totalAmount = qMax(0.0, booking.roomCharge + booking.serviceCharge -
+                                      booking.discount - booking.deposit);
 
   return booking;
 }
 
-QVector<CheckoutBookingPreview> CheckoutService::getActiveBookings(
-    QString *errorMessage) {
+QVector<CheckoutBookingPreview>
+CheckoutService::getActiveBookings(QString *errorMessage) {
   QVector<CheckoutBookingPreview> bookings;
   if (!ensureSchema(errorMessage))
     return bookings;
@@ -206,7 +211,8 @@ QVector<CheckoutBookingPreview> CheckoutService::getActiveBookings(
 
   while (idsQuery.next()) {
     QString bookingError;
-    const auto booking = loadBooking(idsQuery.value(0).toInt(), true, &bookingError);
+    const auto booking =
+        loadBooking(idsQuery.value(0).toInt(), true, &bookingError);
     if (booking) {
       bookings.append(*booking);
     } else {
@@ -229,7 +235,8 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   const auto booking = loadBooking(bookingId, true, &result.errorMessage);
   if (!booking) {
     if (result.errorMessage.isEmpty())
-      result.errorMessage = "Booking does not exist or has already been checked out.";
+      result.errorMessage =
+          "Booking does not exist or has already been checked out.";
     return result;
   }
 
@@ -245,7 +252,8 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   };
 
   QSqlQuery existingBill(db);
-  existingBill.prepare("SELECT 1 FROM Bills WHERE booking_id = :booking_id LIMIT 1");
+  existingBill.prepare(
+      "SELECT 1 FROM Bills WHERE booking_id = :booking_id LIMIT 1");
   existingBill.bindValue(":booking_id", bookingId);
   if (!existingBill.exec()) {
     rollbackWithError(existingBill.lastError().text());
@@ -270,16 +278,17 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   insertBill.bindValue(":discount_amount", booking->discount);
   insertBill.bindValue(":deposit_amount", booking->deposit);
   insertBill.bindValue(":payment_method", paymentMethod.trimmed());
-  insertBill.bindValue(":checkout_time", QDateTime::currentDateTime().toString(Qt::ISODate));
+  insertBill.bindValue(":checkout_time",
+                       QDateTime::currentDateTime().toString(Qt::ISODate));
   if (!insertBill.exec()) {
     rollbackWithError(insertBill.lastError().text());
     return result;
   }
 
   QSqlQuery updateBooking(db);
-  updateBooking.prepare(
-      "UPDATE Bookings SET status = 'CHECKED_OUT' "
-      "WHERE id = :booking_id AND COALESCE(status, 'UNCONFIRMED') <> 'CHECKED_OUT'");
+  updateBooking.prepare("UPDATE Bookings SET status = 'CHECKED_OUT' "
+                        "WHERE id = :booking_id AND COALESCE(status, "
+                        "'UNCONFIRMED') <> 'CHECKED_OUT'");
   updateBooking.bindValue(":booking_id", booking->bookingId);
   if (!updateBooking.exec() || updateBooking.numRowsAffected() != 1) {
     rollbackWithError(updateBooking.lastError().isValid()
@@ -289,11 +298,10 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   }
 
   QSqlQuery updateRoom(db);
-  updateRoom.prepare(
-      "UPDATE ListRooms SET status = 'Available' "
-      "WHERE room_number = :room_number OR room_id = :room_id");
-  updateRoom.bindValue(":room_number", booking->roomNumber);
+  updateRoom.prepare("UPDATE ListRooms SET status = 'Available' "
+                     "WHERE room_number = :room_number OR room_id = :room_id");
   updateRoom.bindValue(":room_id", booking->roomId);
+  updateRoom.bindValue(":room_number", booking->roomId);
   if (!updateRoom.exec() || updateRoom.numRowsAffected() < 1) {
     rollbackWithError(updateRoom.lastError().isValid()
                           ? updateRoom.lastError().text()

@@ -127,8 +127,8 @@ void MainWindowController::showAddRoomDialog() {
     cbStatus->addItems({ "Available", "Reserved", "Occupied", "Maintenance" });
     cbStatus->setStyleSheet(inputStyle);
 
-    QLineEdit* txtPrice = new QLineEdit(dialog);
-    txtPrice->setPlaceholderText("EX: 100$, 200$...");
+    QLineEdit *txtPrice = new QLineEdit(dialog);
+    txtPrice->setPlaceholderText("EX: 500000 VND, 1000000 VND...");
     txtPrice->setStyleSheet(inputStyle);
 
     QLineEdit* txtPeople = new QLineEdit(dialog);
@@ -277,7 +277,7 @@ void MainWindowController::showUpdateRoomDialog() {
     form->addRow("Room Number:", txtNumber);
     form->addRow("Type Room:", cbType);
     form->addRow("Status:", cbStatus);
-    form->addRow("Base Price ($):", txtPrice);
+    form->addRow("Base Price (VND):", txtPrice);
     form->addRow("Capacity:", txtPeople);
 
     mainLayout->addLayout(form);

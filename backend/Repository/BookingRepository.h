@@ -16,7 +16,8 @@ class Customer;
 class Room;
 class ServiceItem;
 
-// Truyen du lieu ve thong tin dat phong vao file hotel.db (for backward compatibility)
+// Truyen du lieu ve thong tin dat phong vao file hotel.db (for backward
+// compatibility)
 struct BookingData {
   int customerId;
   QString roomNumber;
@@ -40,10 +41,14 @@ public:
 
   // các hàm thay đổi database
 
-  bool add(const BookingData &booking); // thêm data cũ (giữ lại để tương thích code cũ)
+  bool add(const BookingData
+               &booking); // thêm data cũ (giữ lại để tương thích code cũ)
 
-  int add(Booking *booking);     // thêm data mới (chủ yếu dùng hàm này)
+  int add(Booking *booking); // thêm data mới (chủ yếu dùng hàm này)
   bool update(Booking *booking); // cập nhật lại booking
+  bool updateBooking(int bookingId, int customerId, const QString &roomNumber,
+                     const QDateTime &checkIn, const QDateTime &checkOut,
+                     const QString &statusStr);
   bool updateBooking(int bookingId, int customerId, const QString &roomNumber,
                      const QDateTime &checkIn, const QDateTime &checkOut,
                      double depositInput, const QString &statusStr);
@@ -52,9 +57,10 @@ public:
                      double totalPrice, const QString &depositStatusStr,
                      const QString &statusStr);
   bool remove(int bookingId); // xoá booking
-  bool addServiceItemToBooking(int bookingId, const string &itemId, int quantity,
-                              double finalPrice,
-                              const string &note); // thêm serviceItem vào booking
+  bool
+  addServiceItemToBooking(int bookingId, const string &itemId, int quantity,
+                          double finalPrice,
+                          const string &note); // thêm serviceItem vào booking
 
   // Reconstructs booking from DB. Note: caller manages the lifecycle of the
   // returned pointer. lấy 1 booking cụ thể từ database
