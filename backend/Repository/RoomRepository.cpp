@@ -158,7 +158,13 @@ int RoomRepository::add(Room *room)
 	query.prepare("INSERT INTO ListRooms (room_id, room_number, room_type, status, base_price, number_people) "
 				  "VALUES (:room_id, :room_number, :room_type, :status, :base_price, :number_people)");
 
-	query.bindValue(":room_id", roomIdToDatabaseId(room->getId()));
+	QString rId = QString::fromStdString(room->getId()).trimmed();
+	if (rId.isEmpty())
+	{
+		rId = "R" + QString::fromStdString(room->getRoomNumber()).trimmed();
+	}
+
+	query.bindValue(":room_id", rId);
 	query.bindValue(":room_number", QString::fromStdString(room->getRoomNumber()));
 	query.bindValue(":room_type", typeToString(room->getType()));
 	query.bindValue(":status", statusToString(room->getStatus()));
@@ -231,8 +237,8 @@ Room *RoomRepository::getById(const string &roomId)
 	QSqlQuery query(db);
 
 	query.prepare("SELECT room_id, room_number, room_type, status, base_price, number_people "
-				  "FROM ListRooms WHERE room_id = :room_id");
-	query.bindValue(":room_id", roomIdToDatabaseId(roomId));
+				  "FROM ListRooms WHERE room_id = :room_id OR room_number = :room_id");
+	query.bindValue(":room_id", QString::fromStdString(roomId));
 
 	if (!query.exec() || !query.next())
 	{

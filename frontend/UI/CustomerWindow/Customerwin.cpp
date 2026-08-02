@@ -198,8 +198,8 @@ void CustomerInputWindow::onNextClicked() {
   QString name = txtName->text();
   QString phone = txtPhone->text();
   QString id = ID->text();
-  QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
-  QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd");
+  QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
+  QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd") + " 12:00:00";
   int people = spinPeople->value();
   bool isMem = chkMembership->isChecked();
 

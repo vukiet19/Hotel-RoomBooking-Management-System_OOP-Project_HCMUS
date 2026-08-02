@@ -173,6 +173,8 @@ void MainWindowController::showAddRoomDialog() {
 
         if (!txtId->text().trimmed().isEmpty()) {
             newRoom->setId(txtId->text().trimmed().toStdString());
+        } else {
+            newRoom->setId("R" + txtNumber->text().trimmed().toStdString());
         }
 
         newRoom->setRoomNumber(txtNumber->text().toStdString());

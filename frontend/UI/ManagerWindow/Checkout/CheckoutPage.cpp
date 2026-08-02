@@ -17,6 +17,15 @@
 
 namespace
 {
+    QString formatCleanDate(QString dtStr)
+    {
+        if (dtStr.isEmpty()) return "-";
+        dtStr.replace("T", " ");
+        if (dtStr.length() > 16)
+            dtStr = dtStr.left(16);
+        return dtStr;
+    }
+
     QString formatMoney(double amount)
     {
         return QString("%1 VND").arg(amount, 0, 'f', 0);
@@ -314,8 +323,8 @@ void CheckoutPage::populateBookingTable(const QString &filter)
         bookingTable->setItem(row, 0, bookingIdItem);
         bookingTable->setItem(row, 1, new QTableWidgetItem(booking.customerName));
         bookingTable->setItem(row, 2, new QTableWidgetItem(booking.roomNumber));
-        bookingTable->setItem(row, 3, new QTableWidgetItem(booking.checkInDate));
-        bookingTable->setItem(row, 4, new QTableWidgetItem(booking.expectedCheckOutDate));
+        bookingTable->setItem(row, 3, new QTableWidgetItem(formatCleanDate(booking.checkInDate)));
+        bookingTable->setItem(row, 4, new QTableWidgetItem(formatCleanDate(booking.expectedCheckOutDate)));
     }
 
     if (bookingTable->rowCount() > 0)
@@ -339,8 +348,8 @@ void CheckoutPage::showBookingDetails(int row)
     phoneLabel->setText(booking.phone);
     roomLabel->setText(booking.roomNumber);
     roomTypeLabel->setText(booking.roomType);
-    checkInLabel->setText(booking.checkInDate);
-    expectedCheckOutLabel->setText(booking.expectedCheckOutDate);
+    checkInLabel->setText(formatCleanDate(booking.checkInDate));
+    expectedCheckOutLabel->setText(formatCleanDate(booking.expectedCheckOutDate));
     nightsLabel->setText(QString::number(booking.nights));
 
     serviceTable->setRowCount(0);

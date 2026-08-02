@@ -278,8 +278,9 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   insertBill.bindValue(":discount_amount", booking->discount);
   insertBill.bindValue(":deposit_amount", booking->deposit);
   insertBill.bindValue(":payment_method", paymentMethod.trimmed());
-  insertBill.bindValue(":checkout_time",
-                       QDateTime::currentDateTime().toString(Qt::ISODate));
+  insertBill.bindValue(
+      ":checkout_time",
+      QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"));
   if (!insertBill.exec()) {
     rollbackWithError(insertBill.lastError().text());
     return result;

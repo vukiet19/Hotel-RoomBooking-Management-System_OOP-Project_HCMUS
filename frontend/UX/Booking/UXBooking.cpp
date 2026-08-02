@@ -25,6 +25,8 @@
 
 // Section 1: Bookings Handler
 void MainWindowController::showBookingTab() {
+  setActiveButton(buttonBooking);
+  bookingPage->setSection(0);
   setActionBarVisible(true);
   stackedWidget->setCurrentIndex(BookingIndex);
   QString bookingQuery = R"(
@@ -663,8 +665,8 @@ void MainWindowController::showAddBookingDialog() {
       }
     }
 
-    QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd");
-    QString checkOutDate = dateCheckOut->date().toString("yyyy-MM-dd");
+    QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
+    QString checkOutDate = dateCheckOut->date().toString("yyyy-MM-dd") + " 12:00:00";
 
     if (id.isEmpty() || customer.isEmpty() || phone.isEmpty() ||
         room.isEmpty()) {
