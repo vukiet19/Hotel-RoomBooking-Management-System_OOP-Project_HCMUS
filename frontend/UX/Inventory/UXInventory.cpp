@@ -72,12 +72,15 @@ void MainWindowController::showInventoryTab() {
   btnDelete->setVisible(true);
   btnFilter->setVisible(true);
   if (btnAddToBooking)
-    btnAddToBooking->setVisible(false);
+    btnAddToBooking->setVisible(true);
 
   btnAdd->disconnect();
   btnUpdate->disconnect();
   btnDelete->disconnect();
   btnFilter->disconnect();
+
+  if (btnAddToBooking)
+    btnAddToBooking->disconnect(); 
 
   connect(btnAdd, &QPushButton::clicked, this,
           &MainWindowController::AddInventoryClick);
@@ -87,6 +90,8 @@ void MainWindowController::showInventoryTab() {
           &MainWindowController::DeleteInventoryClick);
   connect(btnFilter, &QPushButton::clicked, this,
           &MainWindowController::FilterInventoryClick);
+  connect(btnAddToBooking, &QPushButton::clicked, this,
+          &MainWindowController::AddToBookingInventoryClick);
 }
 
 void MainWindowController::AddInventoryClick() {
@@ -135,7 +140,7 @@ void MainWindowController::AddInventoryClick() {
 
   // Category dropdown (dựa trên ServiceCatalog)
   QComboBox *cbCategory = new QComboBox(dialog);
-  cbCategory->addItems({"Minibar", "Food", "Furniture", "Facility", "Damage"});
+  cbCategory->addItems({"Food", "Minibar", "Furniture"});
   cbCategory->setStyleSheet(inputStyle);
   cbCategory->setCursor(Qt::PointingHandCursor);
 
@@ -383,7 +388,7 @@ void MainWindowController::FilterInventoryClick() {
 
   // Filter by category
   QComboBox *cbCategory = new QComboBox(dialog);
-  cbCategory->addItems({"All", "Minibar", "Food", "Furniture", "Facility", "Damage"});
+  cbCategory->addItems({"All", "Food", "Minibar", "Furniture"});
   cbCategory->setStyleSheet(inputStyle);
   cbCategory->setCursor(Qt::PointingHandCursor);
 
