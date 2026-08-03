@@ -15,49 +15,43 @@
 
 #include <QDebug>
 
-namespace
-{
-    QString formatCleanDate(QString dtStr)
-    {
-        if (dtStr.isEmpty()) return "-";
-        dtStr.replace("T", " ");
-        if (dtStr.length() > 16)
-            dtStr = dtStr.left(16);
-        return dtStr;
-    }
-
-    QString formatMoney(double amount)
-    {
-        return QString("%1 VND").arg(amount, 0, 'f', 0);
-    }
-
-    QLabel *createValueLabel(QWidget *parent)
-    {
-        auto *label = new QLabel("-", parent);
-        label->setStyleSheet("color: #1e293b; font-weight: normal;");
-        return label;
-    }
+namespace {
+QString formatCleanDate(QString dtStr) {
+  if (dtStr.isEmpty())
+    return "-";
+  dtStr.replace("T", " ");
+  if (dtStr.length() > 16)
+    dtStr = dtStr.left(16);
+  return dtStr;
 }
 
-CheckoutPage::CheckoutPage(QWidget *parent) : QWidget(parent)
-{
-    setObjectName("checkoutPage");
-    setupUi();
-    loadBookings();
-    populateBookingTable();
-    clearBookingDetails();
+QString formatMoney(double amount) {
+  return QString("%1 VND").arg(amount, 0, 'f', 0);
 }
 
-void CheckoutPage::showEvent(QShowEvent *event)
-{
-    QWidget::showEvent(event);
-    loadBookings();
-    populateBookingTable();
+QLabel *createValueLabel(QWidget *parent) {
+  auto *label = new QLabel("-", parent);
+  label->setStyleSheet("color: #1e293b; font-weight: normal;");
+  return label;
+}
+} // namespace
+
+CheckoutPage::CheckoutPage(QWidget *parent) : QWidget(parent) {
+  setObjectName("checkoutPage");
+  setupUi();
+  loadBookings();
+  populateBookingTable();
+  clearBookingDetails();
 }
 
-void CheckoutPage::setupUi()
-{
-    setStyleSheet(R"(
+void CheckoutPage::showEvent(QShowEvent *event) {
+  QWidget::showEvent(event);
+  loadBookings();
+  populateBookingTable();
+}
+
+void CheckoutPage::setupUi() {
+  setStyleSheet(R"(
         #checkoutPage { background-color: transparent; }
         #checkoutPage QGroupBox {
             background-color: #ffffff;
@@ -136,300 +130,299 @@ void CheckoutPage::setupUi()
         #checkoutPage QLabel { color: #3730a3; font-weight: bold; font-size: 14px; }
     )");
 
-    auto *rootLayout = new QVBoxLayout(this);
-    rootLayout->setContentsMargins(0, 0, 0, 0);
-    rootLayout->setSpacing(12);
+  auto *rootLayout = new QVBoxLayout(this);
+  rootLayout->setContentsMargins(0, 0, 0, 0);
+  rootLayout->setSpacing(12);
 
-    auto *title = new QLabel("Checkout", this);
-    title->setStyleSheet("font-size: 24px; font-weight: bold; color: #1e3a8a;");
-    rootLayout->addWidget(title);
+  auto *title = new QLabel("Checkout", this);
+  title->setStyleSheet("font-size: 24px; font-weight: bold; color: #1e3a8a;");
+  rootLayout->addWidget(title);
 
-    auto *subtitle = new QLabel(
-        "Select an active booking to review guest info and calculate checkout total.", this);
-    subtitle->setStyleSheet("color: #64748b; font-size: 13px;");
-    rootLayout->addWidget(subtitle);
+  auto *subtitle = new QLabel("Select an active booking to review guest info "
+                              "and calculate checkout total.",
+                              this);
+  subtitle->setStyleSheet("color: #64748b; font-size: 13px;");
+  rootLayout->addWidget(subtitle);
 
-    auto *searchLayout = new QHBoxLayout();
-    searchEdit = new QLineEdit(this);
-    searchEdit->setPlaceholderText("Search by booking ID, customer name, phone or room...");
+  auto *searchLayout = new QHBoxLayout();
+  searchEdit = new QLineEdit(this);
+  searchEdit->setPlaceholderText(
+      "Search by booking ID, customer name, phone or room...");
 
-    auto *searchButton = new QPushButton("Search", this);
-    auto *clearButton = new QPushButton("Clear", this);
-    searchLayout->addWidget(searchEdit, 1);
-    searchLayout->addWidget(searchButton);
-    searchLayout->addWidget(clearButton);
-    rootLayout->addLayout(searchLayout);
+  auto *searchButton = new QPushButton("Search", this);
+  auto *clearButton = new QPushButton("Clear", this);
+  searchLayout->addWidget(searchEdit, 1);
+  searchLayout->addWidget(searchButton);
+  searchLayout->addWidget(clearButton);
+  rootLayout->addLayout(searchLayout);
 
-    auto *bookingGroup = new QGroupBox("Active bookings", this);
-    auto *bookingLayout = new QVBoxLayout(bookingGroup);
-    bookingLayout->setContentsMargins(10, 14, 10, 10);
+  auto *bookingGroup = new QGroupBox("Active bookings", this);
+  auto *bookingLayout = new QVBoxLayout(bookingGroup);
+  bookingLayout->setContentsMargins(10, 14, 10, 10);
 
-    bookingTable = new QTableWidget(0, 5, bookingGroup);
-    bookingTable->setHorizontalHeaderLabels(
-        {"Booking ID", "Customer", "Room", "Check-in", "Expected checkout"});
-    bookingTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-    bookingTable->setSelectionMode(QAbstractItemView::SingleSelection);
-    bookingTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    bookingTable->setAlternatingRowColors(true);
-    bookingTable->verticalHeader()->setVisible(false);
-    bookingTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    bookingTable->setMinimumHeight(170);
-    bookingTable->setMaximumHeight(220);
-    bookingLayout->addWidget(bookingTable);
-    rootLayout->addWidget(bookingGroup);
+  bookingTable = new QTableWidget(0, 5, bookingGroup);
+  bookingTable->setHorizontalHeaderLabels(
+      {"Booking ID", "Customer", "Room", "Check-in", "Expected checkout"});
+  bookingTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+  bookingTable->setSelectionMode(QAbstractItemView::SingleSelection);
+  bookingTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  bookingTable->setAlternatingRowColors(true);
+  bookingTable->verticalHeader()->setVisible(false);
+  bookingTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  bookingTable->setMinimumHeight(170);
+  bookingTable->setMaximumHeight(220);
+  bookingLayout->addWidget(bookingTable);
+  rootLayout->addWidget(bookingGroup);
 
-    auto *detailsScroll = new QScrollArea(this);
-    detailsScroll->setWidgetResizable(true);
-    detailsScroll->setFrameShape(QFrame::NoFrame);
+  auto *detailsScroll = new QScrollArea(this);
+  detailsScroll->setWidgetResizable(true);
+  detailsScroll->setFrameShape(QFrame::NoFrame);
 
-    detailsContainer = new QWidget(detailsScroll);
-    detailsContainer->setObjectName("checkoutDetailsContainer");
-    detailsContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    auto *detailsLayout = new QVBoxLayout(detailsContainer);
-    detailsLayout->setContentsMargins(0, 0, 0, 0);
-    detailsLayout->setSpacing(12);
+  detailsContainer = new QWidget(detailsScroll);
+  detailsContainer->setObjectName("checkoutDetailsContainer");
+  detailsContainer->setSizePolicy(QSizePolicy::Expanding,
+                                  QSizePolicy::Preferred);
+  auto *detailsLayout = new QVBoxLayout(detailsContainer);
+  detailsLayout->setContentsMargins(0, 0, 0, 0);
+  detailsLayout->setSpacing(12);
 
-    auto *topDetailsLayout = new QHBoxLayout();
-    topDetailsLayout->setSpacing(12);
+  auto *topDetailsLayout = new QHBoxLayout();
+  topDetailsLayout->setSpacing(12);
 
-    auto *bookingInfoGroup = new QGroupBox("Booking information", detailsContainer);
-    auto *bookingInfoLayout = new QFormLayout(bookingInfoGroup);
-    bookingInfoLayout->setContentsMargins(12, 16, 12, 12);
-    bookingInfoLayout->setSpacing(8);
+  auto *bookingInfoGroup =
+      new QGroupBox("Booking information", detailsContainer);
+  auto *bookingInfoLayout = new QFormLayout(bookingInfoGroup);
+  bookingInfoLayout->setContentsMargins(12, 16, 12, 12);
+  bookingInfoLayout->setSpacing(8);
 
-    bookingIdLabel = createValueLabel(bookingInfoGroup);
-    customerNameLabel = createValueLabel(bookingInfoGroup);
-    phoneLabel = createValueLabel(bookingInfoGroup);
-    roomLabel = createValueLabel(bookingInfoGroup);
-    roomTypeLabel = createValueLabel(bookingInfoGroup);
-    checkInLabel = createValueLabel(bookingInfoGroup);
-    expectedCheckOutLabel = createValueLabel(bookingInfoGroup);
-    nightsLabel = createValueLabel(bookingInfoGroup);
+  bookingIdLabel = createValueLabel(bookingInfoGroup);
+  customerNameLabel = createValueLabel(bookingInfoGroup);
+  phoneLabel = createValueLabel(bookingInfoGroup);
+  roomLabel = createValueLabel(bookingInfoGroup);
+  roomTypeLabel = createValueLabel(bookingInfoGroup);
+  checkInLabel = createValueLabel(bookingInfoGroup);
+  expectedCheckOutLabel = createValueLabel(bookingInfoGroup);
+  nightsLabel = createValueLabel(bookingInfoGroup);
 
-    bookingInfoLayout->addRow("Booking ID:", bookingIdLabel);
-    bookingInfoLayout->addRow("Customer:", customerNameLabel);
-    bookingInfoLayout->addRow("Phone:", phoneLabel);
-    bookingInfoLayout->addRow("Room:", roomLabel);
-    bookingInfoLayout->addRow("Room type:", roomTypeLabel);
-    bookingInfoLayout->addRow("Check-in:", checkInLabel);
-    bookingInfoLayout->addRow("Expected checkout:", expectedCheckOutLabel);
-    bookingInfoLayout->addRow("Number of nights:", nightsLabel);
-    topDetailsLayout->addWidget(bookingInfoGroup, 1);
+  bookingInfoLayout->addRow("Booking ID:", bookingIdLabel);
+  bookingInfoLayout->addRow("Customer:", customerNameLabel);
+  bookingInfoLayout->addRow("Phone:", phoneLabel);
+  bookingInfoLayout->addRow("Room:", roomLabel);
+  bookingInfoLayout->addRow("Room type:", roomTypeLabel);
+  bookingInfoLayout->addRow("Check-in:", checkInLabel);
+  bookingInfoLayout->addRow("Expected checkout:", expectedCheckOutLabel);
+  bookingInfoLayout->addRow("Number of nights:", nightsLabel);
+  topDetailsLayout->addWidget(bookingInfoGroup, 1);
 
-    auto *summaryGroup = new QGroupBox("Checkout summary", detailsContainer);
-    auto *summaryLayout = new QFormLayout(summaryGroup);
-    summaryLayout->setContentsMargins(12, 16, 12, 12);
-    summaryLayout->setSpacing(8);
-    roomChargeLabel = createValueLabel(summaryGroup);
-    serviceChargeLabel = createValueLabel(summaryGroup);
-    discountLabel = createValueLabel(summaryGroup);
-    depositLabel = createValueLabel(summaryGroup);
-    totalLabel = createValueLabel(summaryGroup);
-    totalLabel->setStyleSheet(
-        "color: #1d4ed8; font-size: 17px; font-weight: bold; padding: 4px 0;");
+  auto *summaryGroup = new QGroupBox("Checkout summary", detailsContainer);
+  auto *summaryLayout = new QFormLayout(summaryGroup);
+  summaryLayout->setContentsMargins(12, 16, 12, 12);
+  summaryLayout->setSpacing(8);
+  roomChargeLabel = createValueLabel(summaryGroup);
+  serviceChargeLabel = createValueLabel(summaryGroup);
+  discountLabel = createValueLabel(summaryGroup);
+  depositLabel = createValueLabel(summaryGroup);
+  totalLabel = createValueLabel(summaryGroup);
+  totalLabel->setStyleSheet(
+      "color: #1d4ed8; font-size: 17px; font-weight: bold; padding: 4px 0;");
 
-    summaryLayout->addRow("Room charge:", roomChargeLabel);
-    summaryLayout->addRow("Service charge:", serviceChargeLabel);
-    summaryLayout->addRow("Discount:", discountLabel);
-    summaryLayout->addRow("Deposit deducted:", depositLabel);
-    summaryLayout->addRow("Total to pay:", totalLabel);
-    topDetailsLayout->addWidget(summaryGroup, 1);
-    detailsLayout->addLayout(topDetailsLayout);
+  summaryLayout->addRow("Room charge:", roomChargeLabel);
+  summaryLayout->addRow("Service charge:", serviceChargeLabel);
+  summaryLayout->addRow("Discount:", discountLabel);
+  summaryLayout->addRow("Deposit deducted:", depositLabel);
+  summaryLayout->addRow("Total to pay:", totalLabel);
+  topDetailsLayout->addWidget(summaryGroup, 1);
+  detailsLayout->addLayout(topDetailsLayout);
 
-    auto *serviceGroup = new QGroupBox("Services used", detailsContainer);
-    auto *serviceLayout = new QVBoxLayout(serviceGroup);
-    serviceLayout->setContentsMargins(10, 16, 10, 10);
-    serviceTable = new QTableWidget(0, 3, serviceGroup);
-    serviceTable->setHorizontalHeaderLabels({"Service", "Quantity", "Amount"});
-    serviceTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    serviceTable->verticalHeader()->setVisible(false);
-    serviceTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    serviceTable->setMinimumHeight(100);
-    serviceTable->setMaximumHeight(150);
-    serviceLayout->addWidget(serviceTable);
-    detailsLayout->addWidget(serviceGroup);
+  auto *serviceGroup = new QGroupBox("Services used", detailsContainer);
+  auto *serviceLayout = new QVBoxLayout(serviceGroup);
+  serviceLayout->setContentsMargins(10, 16, 10, 10);
+  serviceTable = new QTableWidget(0, 3, serviceGroup);
+  serviceTable->setHorizontalHeaderLabels({"Service", "Quantity", "Amount"});
+  serviceTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  serviceTable->verticalHeader()->setVisible(false);
+  serviceTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  serviceTable->setMinimumHeight(100);
+  serviceTable->setMaximumHeight(150);
+  serviceLayout->addWidget(serviceTable);
+  detailsLayout->addWidget(serviceGroup);
 
-    auto *actionsLayout = new QHBoxLayout();
-    actionsLayout->setSpacing(10);
-    auto *paymentLabel = new QLabel("Payment method:", detailsContainer);
-    paymentMethodComboBox = new QComboBox(detailsContainer);
-    paymentMethodComboBox->addItems({"Cash", "Card", "Bank transfer"});
-    paymentMethodComboBox->setMinimumWidth(150);
-    actionsLayout->addWidget(paymentLabel);
-    actionsLayout->addWidget(paymentMethodComboBox);
-    actionsLayout->addStretch();
+  auto *actionsLayout = new QHBoxLayout();
+  actionsLayout->setSpacing(10);
+  auto *paymentLabel = new QLabel("Payment method:", detailsContainer);
+  paymentMethodComboBox = new QComboBox(detailsContainer);
+  paymentMethodComboBox->addItems({"Cash", "Card", "Bank transfer"});
+  paymentMethodComboBox->setMinimumWidth(150);
+  actionsLayout->addWidget(paymentLabel);
+  actionsLayout->addWidget(paymentMethodComboBox);
+  actionsLayout->addStretch();
 
-    confirmButton = new QPushButton("Confirm checkout", detailsContainer);
-    confirmButton->setMinimumSize(190, 38);
-    confirmButton->setStyleSheet(
-        "QPushButton { background-color: #10b981; color: white; border: none; border-radius: 6px; "
-        "padding: 9px 16px; font-weight: bold; }"
-        "QPushButton:hover { background-color: #059669; }"
-        "QPushButton:disabled { background-color: #cbd5e1; color: #64748b; }");
-    actionsLayout->addWidget(confirmButton);
-    detailsLayout->addLayout(actionsLayout);
+  confirmButton = new QPushButton("Confirm checkout", detailsContainer);
+  confirmButton->setMinimumSize(190, 38);
+  confirmButton->setStyleSheet(
+      "QPushButton { background-color: #10b981; color: white; border: none; "
+      "border-radius: 6px; "
+      "padding: 9px 16px; font-weight: bold; }"
+      "QPushButton:hover { background-color: #059669; }"
+      "QPushButton:disabled { background-color: #cbd5e1; color: #64748b; }");
+  actionsLayout->addWidget(confirmButton);
+  detailsLayout->addLayout(actionsLayout);
 
-    detailsScroll->setWidget(detailsContainer);
-    rootLayout->addWidget(detailsScroll, 1);
+  detailsScroll->setWidget(detailsContainer);
+  rootLayout->addWidget(detailsScroll, 1);
 
-    connect(searchButton, &QPushButton::clicked, this, [this]()
-            { populateBookingTable(searchEdit->text()); });
-    connect(searchEdit, &QLineEdit::returnPressed, this, [this]()
-            { populateBookingTable(searchEdit->text()); });
-    connect(clearButton, &QPushButton::clicked, this, [this]()
-            {
-        searchEdit->clear();
-        loadBookings();
-        populateBookingTable(); });
-    connect(bookingTable, &QTableWidget::cellClicked, this,
-            [this](int row, int)
-            { showBookingDetails(row); });
-    connect(confirmButton, &QPushButton::clicked, this,
-            &CheckoutPage::showConfirmDialog);
-}
-
-void CheckoutPage::loadBookings()
-{
-    QString errorMessage;
-    CheckoutService checkoutService;
-    bookings = checkoutService.getActiveBookings(&errorMessage);
-    if (!errorMessage.isEmpty())
-        qDebug() << "[ERROR] Failed to load checkout bookings:" << errorMessage;
-}
-void CheckoutPage::populateBookingTable(const QString &filter)
-{
-    bookingTable->setRowCount(0);
-    clearBookingDetails();
-
-    const QString needle = filter.trimmed().toLower();
-    for (int index = 0; index < bookings.size(); ++index)
-    {
-        const auto &booking = bookings.at(index);
-        const QString searchable = QString("%1 %2 %3 %4")
-                                       .arg(QString::number(booking.bookingId),
-                                            booking.customerName,
-                                            booking.phone,
-                                            booking.roomNumber)
-                                       .toLower();
-        if (!needle.isEmpty() && !searchable.contains(needle))
-            continue;
-
-        const int row = bookingTable->rowCount();
-        bookingTable->insertRow(row);
-
-        auto *bookingIdItem =
-            new QTableWidgetItem(QString::number(booking.bookingId));
-        bookingIdItem->setData(Qt::UserRole, index);
-        bookingTable->setItem(row, 0, bookingIdItem);
-        bookingTable->setItem(row, 1, new QTableWidgetItem(booking.customerName));
-        bookingTable->setItem(row, 2, new QTableWidgetItem(booking.roomNumber));
-        bookingTable->setItem(row, 3, new QTableWidgetItem(formatCleanDate(booking.checkInDate)));
-        bookingTable->setItem(row, 4, new QTableWidgetItem(formatCleanDate(booking.expectedCheckOutDate)));
-    }
-
-    if (bookingTable->rowCount() > 0)
-        bookingTable->selectRow(0);
-}
-
-void CheckoutPage::showBookingDetails(int row)
-{
-    if (row < 0 || !bookingTable->item(row, 0))
-        return;
-
-    const int index = bookingTable->item(row, 0)->data(Qt::UserRole).toInt();
-    if (index < 0 || index >= bookings.size())
-        return;
-
-    const auto &booking = bookings.at(index);
-    detailsContainer->setEnabled(true);
-
-    bookingIdLabel->setText(QString::number(booking.bookingId));
-    customerNameLabel->setText(booking.customerName);
-    phoneLabel->setText(booking.phone);
-    roomLabel->setText(booking.roomNumber);
-    roomTypeLabel->setText(booking.roomType);
-    checkInLabel->setText(formatCleanDate(booking.checkInDate));
-    expectedCheckOutLabel->setText(formatCleanDate(booking.expectedCheckOutDate));
-    nightsLabel->setText(QString::number(booking.nights));
-
-    serviceTable->setRowCount(0);
-    for (const auto &service : booking.services)
-    {
-        const int serviceRow = serviceTable->rowCount();
-        serviceTable->insertRow(serviceRow);
-        serviceTable->setItem(serviceRow, 0, new QTableWidgetItem(service.name));
-        serviceTable->setItem(serviceRow, 1, new QTableWidgetItem(QString::number(service.quantity)));
-        serviceTable->setItem(serviceRow, 2,
-                              new QTableWidgetItem(formatMoney(service.quantity * service.unitPrice)));
-    }
-
-    roomChargeLabel->setText(formatMoney(booking.roomCharge));
-    serviceChargeLabel->setText(formatMoney(booking.serviceCharge));
-    discountLabel->setText(formatMoney(booking.discount));
-    depositLabel->setText(formatMoney(booking.deposit));
-    totalLabel->setText(formatMoney(booking.totalAmount));
-}
-
-void CheckoutPage::clearBookingDetails()
-{
-    detailsContainer->setEnabled(false);
-    bookingIdLabel->setText("-");
-    customerNameLabel->setText("-");
-    phoneLabel->setText("-");
-    roomLabel->setText("-");
-    roomTypeLabel->setText("-");
-    checkInLabel->setText("-");
-    expectedCheckOutLabel->setText("-");
-    nightsLabel->setText("-");
-    serviceTable->setRowCount(0);
-    roomChargeLabel->setText("-");
-    serviceChargeLabel->setText("-");
-    discountLabel->setText("-");
-    depositLabel->setText("-");
-    totalLabel->setText("-");
-}
-
-void CheckoutPage::showConfirmDialog()
-{
-    if (!bookingTable->currentItem())
-        return;
-
-    const int row = bookingTable->currentRow();
-    const int index = bookingTable->item(row, 0)->data(Qt::UserRole).toInt();
-    if (index < 0 || index >= bookings.size())
-        return;
-
-    const auto &booking = bookings.at(index);
-    const double finalTotal = booking.totalAmount;
-
-    const QString message = QString(
-                                "Customer: %1\nRoom: %2\nTotal amount: %3\nPayment method: %4\n\n"
-                                "Confirm guest checkout and release room?")
-                                .arg(booking.customerName,
-                                     booking.roomNumber,
-                                     formatMoney(finalTotal),
-                                     paymentMethodComboBox->currentText());
-
-    if (QMessageBox::question(this, "Confirm Checkout", message,
-                              QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-        return;
-
-    CheckoutService checkoutService;
-    const CheckoutResult result = checkoutService.checkout(
-        booking.bookingId, paymentMethodComboBox->currentText());
-    if (!result.success)
-    {
-        QMessageBox::critical(this, "Checkout failed", result.errorMessage);
-        return;
-    }
-
-    QMessageBox::information(
-        this, "Checkout Success",
-        QString("Checkout processed successfully. Bill #%1 was created and room %2 is now available.")
-            .arg(result.billId)
-            .arg(result.booking.roomNumber));
+  connect(searchButton, &QPushButton::clicked, this,
+          [this]() { populateBookingTable(searchEdit->text()); });
+  connect(searchEdit, &QLineEdit::returnPressed, this,
+          [this]() { populateBookingTable(searchEdit->text()); });
+  connect(clearButton, &QPushButton::clicked, this, [this]() {
+    searchEdit->clear();
     loadBookings();
-    populateBookingTable(searchEdit->text());
+    populateBookingTable();
+  });
+  connect(bookingTable, &QTableWidget::cellClicked, this,
+          [this](int row, int) { showBookingDetails(row); });
+  connect(confirmButton, &QPushButton::clicked, this,
+          &CheckoutPage::showConfirmDialog);
+}
+
+void CheckoutPage::loadBookings() {
+  QString errorMessage;
+  CheckoutService checkoutService;
+  bookings = checkoutService.getActiveBookings(&errorMessage);
+  if (!errorMessage.isEmpty())
+    qDebug() << "[ERROR] Failed to load checkout bookings:" << errorMessage;
+}
+void CheckoutPage::populateBookingTable(const QString &filter) {
+  bookingTable->setRowCount(0);
+  clearBookingDetails();
+
+  const QString needle = filter.trimmed().toLower();
+  for (int index = 0; index < bookings.size(); ++index) {
+    const auto &booking = bookings.at(index);
+    const QString searchable =
+        QString("%1 %2 %3 %4")
+            .arg(QString::number(booking.bookingId), booking.customerName,
+                 booking.phone, booking.roomNumber)
+            .toLower();
+    if (!needle.isEmpty() && !searchable.contains(needle))
+      continue;
+
+    const int row = bookingTable->rowCount();
+    bookingTable->insertRow(row);
+
+    auto *bookingIdItem =
+        new QTableWidgetItem(QString::number(booking.bookingId));
+    bookingIdItem->setData(Qt::UserRole, index);
+    bookingTable->setItem(row, 0, bookingIdItem);
+    bookingTable->setItem(row, 1, new QTableWidgetItem(booking.customerName));
+    bookingTable->setItem(row, 2, new QTableWidgetItem(booking.roomNumber));
+    bookingTable->setItem(
+        row, 3, new QTableWidgetItem(formatCleanDate(booking.checkInDate)));
+    bookingTable->setItem(
+        row, 4,
+        new QTableWidgetItem(formatCleanDate(booking.expectedCheckOutDate)));
+  }
+
+  if (bookingTable->rowCount() > 0)
+    bookingTable->selectRow(0);
+}
+
+void CheckoutPage::showBookingDetails(int row) {
+  if (row < 0 || !bookingTable->item(row, 0))
+    return;
+
+  const int index = bookingTable->item(row, 0)->data(Qt::UserRole).toInt();
+  if (index < 0 || index >= bookings.size())
+    return;
+
+  const auto &booking = bookings.at(index);
+  detailsContainer->setEnabled(true);
+
+  bookingIdLabel->setText(QString::number(booking.bookingId));
+  customerNameLabel->setText(booking.customerName);
+  phoneLabel->setText(booking.phone);
+  roomLabel->setText(booking.roomNumber);
+  roomTypeLabel->setText(booking.roomType);
+  checkInLabel->setText(formatCleanDate(booking.checkInDate));
+  expectedCheckOutLabel->setText(formatCleanDate(booking.expectedCheckOutDate));
+  nightsLabel->setText(QString::number(booking.nights));
+
+  serviceTable->setRowCount(0);
+  for (const auto &service : booking.services) {
+    const int serviceRow = serviceTable->rowCount();
+    serviceTable->insertRow(serviceRow);
+    serviceTable->setItem(serviceRow, 0, new QTableWidgetItem(service.name));
+    serviceTable->setItem(
+        serviceRow, 1, new QTableWidgetItem(QString::number(service.quantity)));
+    serviceTable->setItem(serviceRow, 2,
+                          new QTableWidgetItem(formatMoney(service.quantity *
+                                                           service.unitPrice)));
+  }
+
+  roomChargeLabel->setText(formatMoney(booking.roomCharge));
+  serviceChargeLabel->setText(formatMoney(booking.serviceCharge));
+  discountLabel->setText(formatMoney(booking.discount));
+  depositLabel->setText(formatMoney(booking.deposit));
+  totalLabel->setText(formatMoney(booking.totalAmount));
+}
+
+void CheckoutPage::clearBookingDetails() {
+  detailsContainer->setEnabled(false);
+  bookingIdLabel->setText("-");
+  customerNameLabel->setText("-");
+  phoneLabel->setText("-");
+  roomLabel->setText("-");
+  roomTypeLabel->setText("-");
+  checkInLabel->setText("-");
+  expectedCheckOutLabel->setText("-");
+  nightsLabel->setText("-");
+  serviceTable->setRowCount(0);
+  roomChargeLabel->setText("-");
+  serviceChargeLabel->setText("-");
+  discountLabel->setText("-");
+  depositLabel->setText("-");
+  totalLabel->setText("-");
+}
+
+void CheckoutPage::showConfirmDialog() {
+  if (!bookingTable->currentItem())
+    return;
+
+  const int row = bookingTable->currentRow();
+  const int index = bookingTable->item(row, 0)->data(Qt::UserRole).toInt();
+  if (index < 0 || index >= bookings.size())
+    return;
+
+  const auto &booking = bookings.at(index);
+  const double finalTotal = booking.totalAmount;
+
+  const QString message =
+      QString("Customer: %1\nRoom: %2\nTotal amount: %3\nPayment method: %4\n\n"
+              "Confirm guest checkout and release room?")
+          .arg(booking.customerName, booking.roomNumber,
+               formatMoney(finalTotal), paymentMethodComboBox->currentText());
+
+  if (QMessageBox::question(this, "Confirm Checkout", message,
+                            QMessageBox::Yes | QMessageBox::No) !=
+      QMessageBox::Yes)
+    return;
+
+  CheckoutService checkoutService;
+  const CheckoutResult result = checkoutService.checkout(
+      booking.bookingId, paymentMethodComboBox->currentText());
+  if (!result.success) {
+    QMessageBox::critical(this, "Checkout failed", result.errorMessage);
+    return;
+  }
+
+  QMessageBox::information(this, "Checkout Success",
+                           QString("Checkout processed successfully. Bill #%1 "
+                                   "was created and room %2 is now available.")
+                               .arg(result.billId)
+                               .arg(result.booking.roomNumber));
+  loadBookings();
+  populateBookingTable(searchEdit->text());
 
 #if 0 // Replaced by CheckoutService transaction above.
     {

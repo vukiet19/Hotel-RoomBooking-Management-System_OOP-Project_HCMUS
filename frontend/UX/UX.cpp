@@ -381,6 +381,6 @@ void MainWindowController::onBookingStatusObserved(
         tableBooking,
         "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number "
         "AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS "
-        "'Check-Out', total_price AS 'Total Price ($)' FROM Bookings");
+        "'Check-Out', total_price AS 'Total Price (VND)' FROM Bookings");
   }
 }
