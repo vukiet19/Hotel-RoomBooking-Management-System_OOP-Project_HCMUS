@@ -148,7 +148,7 @@ std::vector<BookingRevenue> DashboardService::getBookingRevenues(const QString& 
 
 	query.prepare("SELECT b.id, c.full_name, b.total_price, b.check_in_time "
 		"FROM Bookings b "
-		"LEFT JOIN Customer c ON b.customer_id = c.id_customer "
+		"LEFT JOIN Customer c ON b.customer_id = c.id "
 		"WHERE b.check_in_time >= :startDate AND b.check_in_time <= :endDate");
 	query.bindValue(":startDate", startBound);
 	query.bindValue(":endDate", endBound);

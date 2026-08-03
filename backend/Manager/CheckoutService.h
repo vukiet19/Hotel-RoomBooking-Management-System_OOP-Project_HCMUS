@@ -13,6 +13,8 @@ struct CheckoutServicePreview {
 
 struct CheckoutBookingPreview {
   int bookingId = -1;
+  int customerId = -1;
+  int customerType = 0;
   QString customerName;
   QString phone;
   QString roomId;

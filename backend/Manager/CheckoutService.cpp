@@ -96,6 +96,8 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
   QSqlQuery query(db);
   QString sql = R"(
     SELECT b.id AS booking_id,
+           COALESCE(c.id, -1) AS customer_id,
+           COALESCE(c.Type, 0) AS customer_type, 
            b.room_number AS booked_room_number,
            b.check_in_time,
            b.check_out_time,
@@ -130,6 +132,8 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
 
   CheckoutBookingPreview booking;
   booking.bookingId = query.value("booking_id").toInt();
+  booking.customerId = query.value("customer_id").toInt();
+  booking.customerType = query.value("customer_type").toInt();
   booking.customerName = query.value("full_name").toString();
   if (booking.customerName.isEmpty())
     booking.customerName = "Guest #" + QString::number(booking.bookingId);
@@ -165,11 +169,12 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
 
   QSqlQuery servicesQuery(db);
   servicesQuery.prepare(R"(
-    SELECT COALESCE(c.item_name, bsi.item_id) AS item_name,
+    SELECT COALESCE(c.item_name, i.item_name, bsi.item_id) AS item_name,
            bsi.quantity,
            bsi.final_price
       FROM BookingServiceItems bsi
       LEFT JOIN ServiceCatalog c ON c.item_id = bsi.item_id
+      LEFT JOIN Inventory i ON CAST(i.item_id AS TEXT) = bsi.item_id
      WHERE bsi.booking_id = :booking_id
   )");
   servicesQuery.bindValue(":booking_id", booking.bookingId);
@@ -183,9 +188,12 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
     CheckoutServicePreview service;
     service.name = servicesQuery.value("item_name").toString();
     service.quantity = servicesQuery.value("quantity").toInt();
-    service.unitPrice = servicesQuery.value("final_price").toDouble();
+    
+    double finalPrice = servicesQuery.value("final_price").toDouble();
+    service.unitPrice = service.quantity > 0 ? (finalPrice / service.quantity) : 0.0;
+    
     booking.services.append(service);
-    booking.serviceCharge += service.quantity * service.unitPrice;
+    booking.serviceCharge += finalPrice;
   }
   booking.totalAmount = qMax(0.0, booking.roomCharge + booking.serviceCharge -
                                       booking.discount - booking.deposit);
@@ -309,6 +317,47 @@ CheckoutResult CheckoutService::checkout(int bookingId,
                           : "The booked room could not be released.");
     return result;
   }
+
+  // Update customer loyalty points and tier
+  if (booking->customerType == -1) {
+    QSqlQuery updateBookingCustomer(db);
+    updateBookingCustomer.prepare("UPDATE Bookings SET customer_id = 0 WHERE id = :booking_id");
+    updateBookingCustomer.bindValue(":booking_id", booking->bookingId);
+    if (!updateBookingCustomer.exec()) {
+      rollbackWithError(updateBookingCustomer.lastError().text());
+      return result;
+    }
+
+    QSqlQuery deleteCustomer(db);
+    deleteCustomer.prepare("DELETE FROM Customer WHERE id = :customer_id");
+    deleteCustomer.bindValue(":customer_id", booking->customerId);
+    if (!deleteCustomer.exec()) {
+      rollbackWithError(deleteCustomer.lastError().text());
+      return result;
+    }
+  } 
+  else if (booking->customerId > 0) {
+    int bonusPoints = booking->totalAmount / 1000000;
+    if (bonusPoints > 0) {
+      QSqlQuery updatePoints(db);
+      updatePoints.prepare(R"(
+        UPDATE Customer 
+        SET Point = COALESCE(Point, 0) + :bonus,
+            Type = CASE 
+                     WHEN COALESCE(Point, 0) + :bonus >= 50 THEN 3
+                     WHEN COALESCE(Point, 0) + :bonus >= 20 THEN 2
+                     WHEN COALESCE(Point, 0) + :bonus >= 5 THEN 1
+                     ELSE Type 
+                   END
+        WHERE id = :customer_id
+      )");
+      updatePoints.bindValue(":bonus", bonusPoints);
+      updatePoints.bindValue(":customer_id", booking->customerId);
+      if (!updatePoints.exec()) {
+        rollbackWithError(updatePoints.lastError().text());
+        return result;
+      }
+    }
 
   if (!db.commit()) {
     result.errorMessage = "Cannot commit the checkout transaction.";

@@ -163,9 +163,13 @@ void CustomerInputWindow::onNextClicked() {
     QMessageBox::warning(this, "Warning", "Please input name and phone");
     return;
   }
+  
+  QString customerName = txtName->text().trimmed();
+  QString customerPhone = txtPhone->text().trimmed();
 
   // Kiểm tra điều kiện id
-  if (ID->text().toStdString().size() != 10) {
+  QString idText = ID->text().trimmed();
+  if (idText.toStdString().size() != 10) {
     QMessageBox::warning(this, "Input Error",
                          "Error: ID Card must be 10 digits long.");
     return;
@@ -195,9 +199,9 @@ void CustomerInputWindow::onNextClicked() {
   }
 
   // Lấy dữ liệu
-  QString name = txtName->text();
-  QString phone = txtPhone->text();
-  QString id = ID->text();
+  QString name = txtName->text().trimmed();
+  QString phone = txtPhone->text().trimmed();
+  QString id = ID->text().trimmed();
   QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
   QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd") + " 12:00:00";
   int people = spinPeople->value();
@@ -400,6 +404,7 @@ void CustomerWindow::onBookRoomClicked() {
   QString finalCustomerId = ID;
   bool isExistingCustomer = false;
   int currentPoints = 0;
+  int realCustomerId = 0;
   QSqlQuery checkCustomer(db);
 
   // CUstomer repository
@@ -410,13 +415,25 @@ void CustomerWindow::onBookRoomClicked() {
   // point)
   QString sqlString =
       QString(
-          "SELECT id_customer, points FROM Customer WHERE id_customer = '%1'")
+          "SELECT id, id_customer, Point, Type FROM Customer WHERE id_customer = '%1'")
           .arg(ID);
+  checkCustomer.exec(sqlString);
+
+  int currentTierVal = static_cast<int>(this->isMembership ? MembershipTier::Unknown : MembershipTier::Temporary);
 
   // Kiểm tra xem có tồn tại không
   if (checkCustomer.next()) {
-    finalCustomerId = checkCustomer.value(":id_customer").toString();
-    currentPoints = checkCustomer.value("points").toInt();
+    realCustomerId = checkCustomer.value("id").toInt();
+    finalCustomerId = checkCustomer.value("id_customer").toString();
+    currentPoints = checkCustomer.value("Point").toInt();
+    int dbTier = checkCustomer.value("Type").toInt();
+    // Nếu khách hàng trong db đã là member (Tier >= 0), giữ nguyên tier của họ.
+    if (dbTier >= 0) {
+        currentTierVal = dbTier;
+    } else if (this->isMembership) {
+        // Nếu db là Temporary (-1) nhưng lần này họ tick Membership, thì upgrade lên Unknown (0)
+        currentTierVal = static_cast<int>(MembershipTier::Unknown);
+    }
     isExistingCustomer = true;
   }
 
@@ -427,22 +444,36 @@ void CustomerWindow::onBookRoomClicked() {
   newCustomer.setIdroom(roomId.toStdString());
 
   // Set tier cho Customer
-  MembershipTier selectedTier = this->isMembership ? MembershipTier::Unknown : MembershipTier::Temporary;
-  newCustomer.setTier(selectedTier);
+  newCustomer.setTier(static_cast<MembershipTier>(currentTierVal));
 
-  // add vào database
-  if (!customerRepo.add(newCustomer)) {
-    db.rollback();
-    QMessageBox::critical(this, "Database Error",
-                          "Failed to create new customer via Repository!");
-    return;
+  // add hoặc update vào database
+  if (isExistingCustomer) {
+    if (!customerRepo.update(newCustomer)) {
+      db.rollback();
+      QMessageBox::critical(this, "Database Error",
+                            "Failed to update customer via Repository!");
+      return;
+    }
+  } else {
+    if (!customerRepo.add(newCustomer)) {
+      db.rollback();
+      QMessageBox::critical(this, "Database Error",
+                            "Failed to create new customer via Repository!");
+      return;
+    }
+    QSqlQuery newCustQuery(db);
+    newCustQuery.prepare("SELECT id FROM Customer WHERE id_customer = :id_cust");
+    newCustQuery.bindValue(":id_cust", finalCustomerId);
+    if (newCustQuery.exec() && newCustQuery.next()) {
+      realCustomerId = newCustQuery.value("id").toInt();
+    }
   }
   currentPoints = 0;
 
   BookingData bookingData;
   BookingRepository sp;
 
-  bookingData.customerId = finalCustomerId.toInt();
+  bookingData.customerId = realCustomerId;
   bookingData.roomNumber = roomId;
   bookingData.checkInTime = checkInDate;
   bookingData.checkOutTime = datecheckout;

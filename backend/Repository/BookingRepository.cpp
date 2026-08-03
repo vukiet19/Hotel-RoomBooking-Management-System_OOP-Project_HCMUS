@@ -586,11 +586,15 @@ Booking *BookingRepository::getById(int bookingId, Customer *customer,
 
     // Tải service item từ database vào Booking
     QSqlQuery itemQuery(db);
-    itemQuery.prepare("SELECT b.item_id, b.quantity, b.customer_note, "
-                      "b.final_price, s.item_name, s.category "
-                      "FROM BookingServiceItems b "
-                      "JOIN ServiceCatalog s ON b.item_id = s.item_id "
-                      "WHERE b.booking_id = :booking_id");
+    itemQuery.prepare(R"(
+        SELECT b.item_id, b.quantity, b.customer_note, b.final_price, 
+               COALESCE(s.item_name, i.item_name) AS item_name, 
+               COALESCE(s.category, i.type) AS category 
+        FROM BookingServiceItems b 
+        LEFT JOIN ServiceCatalog s ON b.item_id = s.item_id 
+        LEFT JOIN Inventory i ON b.item_id = CAST(i.item_id AS TEXT) 
+        WHERE b.booking_id = :booking_id
+    )");
     itemQuery.bindValue(":booking_id", bookingId);
 
     if (itemQuery.exec()) {

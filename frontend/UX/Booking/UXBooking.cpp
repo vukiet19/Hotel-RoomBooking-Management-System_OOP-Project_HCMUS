@@ -719,20 +719,38 @@ void MainWindowController::showAddBookingDialog() {
     if (doublePrice <= 0.0)
       doublePrice = 1000000.0;
     
-    MembershipTier selectedTier = chkMembership->isChecked() ? MembershipTier::Unknown : MembershipTier::Temporary;
+    int currentTierVal = static_cast<int>(chkMembership->isChecked() ? MembershipTier::Unknown : MembershipTier::Temporary);
 
     CustomerRepository re;
     Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
-    re.add(a);
+    a.setIdroom(room.toStdString());
 
     int realCustomerId = 0;
     QSqlQuery custQuery(db);
-    custQuery.prepare("SELECT id FROM Customer WHERE id_customer = :id_cust");
+    custQuery.prepare("SELECT id, Point, Type FROM Customer WHERE id_customer = :id_cust");
     custQuery.bindValue(":id_cust", id);
     if (custQuery.exec() && custQuery.next()) {
-      realCustomerId = custQuery.value(0).toInt();
+      a.setPoint(custQuery.value("Point").toInt());
+      int dbTier = custQuery.value("Type").toInt();
+      if (dbTier >= 0) {
+          currentTierVal = dbTier;
+      } else if (chkMembership->isChecked()) {
+          currentTierVal = static_cast<int>(MembershipTier::Unknown);
+      }
+      a.setTier(static_cast<MembershipTier>(currentTierVal));
+      re.update(a);
+      realCustomerId = custQuery.value("id").toInt();
     } else {
-      realCustomerId = id.toInt();
+      a.setTier(static_cast<MembershipTier>(currentTierVal));
+      re.add(a);
+      QSqlQuery newCustQuery(db);
+      newCustQuery.prepare("SELECT id FROM Customer WHERE id_customer = :id_cust");
+      newCustQuery.bindValue(":id_cust", id);
+      if (newCustQuery.exec() && newCustQuery.next()) {
+        realCustomerId = newCustQuery.value("id").toInt();
+      } else {
+        realCustomerId = id.toInt();
+      }
     }
 
     if (!db.transaction()) {

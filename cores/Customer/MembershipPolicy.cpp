@@ -7,6 +7,7 @@ MembershipPolicy::MembershipPolicy()
 {
     // Khi khởi tạo mặc định thì tier sẽ mặc định là Unknown( nghĩa là newbie)
     tier = Unknown;
+    point = 0;
     // set discount rate cho từng hạn mục( ko có Unknown do trong map ko định nghĩa thfi mặc định là 0)
     discountRates[Silver] = 0.05;
     discountRates[Gold] = 0.1;
@@ -36,11 +37,11 @@ MembershipPolicy::MembershipPolicy(MembershipTier tier)
 void MembershipPolicy::setPoint(int point)
 {
     this->point = point;
-    if (point >= 10)
+    if (point >= 5)
         tier = Silver;
-    if (point >= 100)
+    if (point >= 20)
         tier = Gold;
-    if (point >= 1000)
+    if (point >= 50)
         tier = Platinum;
 }
 // getter

@@ -75,6 +75,7 @@ private:
   void UpdateInventoryClick();
   void DeleteInventoryClick();
   void FilterInventoryClick();
+  void AddToBookingInventoryClick();
 
   void FilterInventoryLogClick();
 };
