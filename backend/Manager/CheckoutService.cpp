@@ -338,29 +338,33 @@ CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMe
     int bonusPoints = static_cast<int>(booking->totalAmount / 1000000.0);
     if (bonusPoints > 0) {
       int currentPoints = 0;
-      
+      int currentTier = 0;
       {
         QSqlQuery getPoints(db);
-        getPoints.prepare("SELECT Point FROM Customer WHERE id = :customer_id");
+        getPoints.prepare("SELECT Point, Type FROM Customer WHERE id = :customer_id");
         getPoints.bindValue(":customer_id", booking->customerId);
         if (getPoints.exec() && getPoints.next()) {
             currentPoints = getPoints.value(0).toInt();
+            currentTier = getPoints.value(1).toInt();
         }
       }
 
-      // Tính Rank bằng C++
+      // Tính hạng nhảy cóc dựa trên tổng điểm mới
       int newPoints = currentPoints + bonusPoints;
-      int newTier = 0; // Default Unknown
-      if (newPoints >= 50) newTier = 3;       // Platinum
-      else if (newPoints >= 20) newTier = 2;  // Gold
-      else if (newPoints >= 5) newTier = 1;   // Silver
+              int calculatedTier = 0; // Default Unknown
+              if (newPoints >= 50) calculatedTier = 3;       // Platinum
+              else if (newPoints >= 20) calculatedTier = 2;  // Gold
+              else if (newPoints >= 5) calculatedTier = 1;   // Silver
 
-      // Cập nhật vào DB an toàn
-      QSqlQuery updatePoints(db);
-      updatePoints.prepare("UPDATE Customer SET Point = :newPoints, Type = :newTier WHERE id = :customer_id");
-      updatePoints.bindValue(":newPoints", newPoints);
-      updatePoints.bindValue(":newTier", newTier);
-      updatePoints.bindValue(":customer_id", booking->customerId);
+              // BẢO VỆ RỚT HẠNG: Hạng chỉ có tăng lên hoặc giữ nguyên
+              int newTier = std::max(currentTier, calculatedTier);
+
+              // Cập nhật vào DB an toàn
+              QSqlQuery updatePoints(db);
+              updatePoints.prepare("UPDATE Customer SET Point = :newPoints, Type = :newTier WHERE id = :customer_id");
+              updatePoints.bindValue(":newPoints", newPoints);
+              updatePoints.bindValue(":newTier", newTier);
+              updatePoints.bindValue(":customer_id", booking->customerId);
       
       if (!updatePoints.exec()) {
         rollbackWithError(updatePoints.lastError().text());

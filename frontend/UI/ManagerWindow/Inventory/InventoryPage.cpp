@@ -7,7 +7,7 @@ InventoryPage::InventoryPage(QWidget *parent)
     : QWidget(parent),
       sections(new SplitTablePage(
           "Inventory", {"Item ID", "Name", "Type", "Quantity", "Price"},
-          "Inventory Log", {"Log ID", "Item ID", "Quantity", "Action Type", "Date"}, this))
+          "Inventory Log", {"Log ID", "Item ID", "Item Name", "Quantity", "Action Type", "Date"}, this))
 {
     auto *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);

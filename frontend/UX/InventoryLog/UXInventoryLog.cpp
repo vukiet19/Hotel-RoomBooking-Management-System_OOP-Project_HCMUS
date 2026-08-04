@@ -20,10 +20,18 @@ void MainWindowController::showInventoryLogTab()
     setActionBarVisible(true);
     setActiveButton(buttonInventory);
     
-    QString logQuery = "SELECT log_id AS 'Log ID', item_id AS 'Item ID', "
-                       "CASE WHEN quantity > 0 THEN '+' || quantity ELSE quantity END AS 'Quantity', "
-                       "action_type AS 'Action Type', date AS 'Date' "
-                       "FROM InventoryLog ORDER BY date DESC";
+    QString logQuery = R"(
+        SELECT 
+            l.log_id AS "Log ID", 
+            l.item_id AS "Item ID", 
+            COALESCE(i.item_name, 'Unknown Item') AS "Item Name", 
+            l.quantity AS "Quantity", 
+            l.action_type AS "Action Type", 
+            l.date AS "Date"
+        FROM InventoryLog l
+        LEFT JOIN Inventory i ON l.item_id = i.item_id
+        ORDER BY l.date DESC
+    )";
     Backend::loadTableData(tableInventoryLog, logQuery);
     
     btnAdd->setVisible(false);

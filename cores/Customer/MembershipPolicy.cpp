@@ -37,12 +37,14 @@ MembershipPolicy::MembershipPolicy(MembershipTier tier)
 void MembershipPolicy::setPoint(int point)
 {
     this->point = point;
-    if (point >= 5 && point < 20)
-        tier = Silver;
-    else if (point >= 20 && point < 50)
-        tier = Gold;
-    if (point >= 50)
+    if (this->point >= 50)
         tier = Platinum;
+    else if (this->point >= 20)
+        tier = Gold;
+    else if (this->point >= 5)
+        tier = Silver;
+    else
+        tier = Unknown;
 }
 // getter
 MembershipTier MembershipPolicy::getTier() const { return tier; }

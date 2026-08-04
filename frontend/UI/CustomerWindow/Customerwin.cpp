@@ -453,9 +453,6 @@ void CustomerWindow::onBookRoomClicked() {
   newCustomer.setPoint(currentPoints);
   newCustomer.setIdroom(roomId.toStdString());
 
-  // Set tier cho Customer
-  newCustomer.setTier(static_cast<MembershipTier>(currentTierVal));
-
   // add hoặc update vào database
   if (isExistingCustomer) {
     if (!customerRepo.update(newCustomer)) {
