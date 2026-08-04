@@ -4,8 +4,10 @@
 #include "backend/Manager/DatabaseManager.h"
 #include "backend/Repository/BookingRepository.h"
 #include "backend/Repository/CustomerRepository.h"
+#include "backend/Repository/RoomRepository.h"
 #include "cores/Booking/Booking.h"
 #include "cores/Customer/Customer.h"
+#include "cores/Room/Room.h"
 #include <QDate>
 #include <QDebug>
 #include <QFormLayout>
@@ -107,11 +109,6 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   ID->setStyleSheet(inputStyle);
   ID->setPlaceholderText("Enter ID or Passport number");
 
-  txtDeposit = new QLineEdit(this);
-  txtDeposit->setStyleSheet(inputStyle);
-  txtDeposit->setPlaceholderText("Enter deposit amount (VND)");
-  txtDeposit->setText("0");
-
   //"-----------------------"
 
   QLabel *lblName = new QLabel("Your name:", this);
@@ -126,8 +123,6 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   lblCheckOut->setStyleSheet(labelStyle);
   QLabel *lblPeople = new QLabel("Number of people:", this);
   lblPeople->setStyleSheet(labelStyle);
-  QLabel *lblDeposit = new QLabel("Deposit amount:", this);
-  lblDeposit->setStyleSheet(labelStyle);
 
   form->addRow(lblName, txtName);
   form->addRow(lblID, ID);
@@ -135,7 +130,6 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   form->addRow(lblCheckIn, dateCheckIn);
   form->addRow(lblCheckOut, datecheckout);
   form->addRow(lblPeople, spinPeople);
-  form->addRow(lblDeposit, txtDeposit);
 
   // Checkbox chọn tích điểm hay không
   chkMembership = new QCheckBox("Register for Membership (Accumulate Points)", this);
@@ -214,11 +208,10 @@ void CustomerInputWindow::onNextClicked() {
   QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd") + " 12:00:00";
   int people = spinPeople->value();
   bool isMem = chkMembership->isChecked();
-  double depositAmt = txtDeposit->text().toDouble();
 
   // Mở Window tìm phòng và truyền dữ liệu sang
   CustomerWindow *roomWindow =
-      new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people, isMem, depositAmt);
+      new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people, isMem);
   roomWindow->show();
 
   // Đóng Window
@@ -229,10 +222,9 @@ void CustomerInputWindow::onNextClicked() {
 // customer)
 CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
                                QString date, QString dateout, int people, bool isMem,
-                               double depositAmt, QWidget *parent)
+                               QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone),
-      checkInDate(date), datecheckout(dateout), numPeople(people), isMembership(isMem),
-      depositAmount(depositAmt) {
+      checkInDate(date), datecheckout(dateout), numPeople(people), isMembership(isMem) {
   setFixedSize(850, 650);
   setWindowTitle("Select a Room");
 
@@ -318,6 +310,11 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
 
   layout->addWidget(tableRoom);
 
+  chkDeposit = new QCheckBox("Pay Deposit (Base Room Rate)", this);
+  chkDeposit->setStyleSheet("color: #475569; font-weight: bold; font-size: 14px; background: transparent;");
+  chkDeposit->setChecked(false);
+  layout->addWidget(chkDeposit);
+
   btnBook = new QPushButton("Confirm Booking", this);
   btnBook->setCursor(Qt::PointingHandCursor);
 
@@ -384,7 +381,6 @@ void CustomerWindow::onBookRoomClicked() {
   double price = tableRoom->item(selectedRow, 3)->text().toDouble();
 
   QSqlDatabase db = DatabaseManager::instance().database();
-  qDebug() << db.databaseName() << '\n';
 
   if (!db.isOpen()) {
     QMessageBox::critical(this, "Database Error", "Database is not open!");
@@ -483,12 +479,14 @@ void CustomerWindow::onBookRoomClicked() {
   BookingData bookingData;
   BookingRepository sp;
 
+  double calculatedDeposit = chkDeposit->isChecked() ? price : 0.0;
+
   bookingData.customerId = realCustomerId;
   bookingData.roomNumber = roomId;
   bookingData.checkInTime = checkInDate;
   bookingData.checkOutTime = datecheckout;
-  bookingData.depositAmount = depositAmount;
-  bookingData.depositStatus = (depositAmount > 0) ? "HELD" : "NONE";
+  bookingData.depositAmount = calculatedDeposit;
+  bookingData.depositStatus = (calculatedDeposit > 0) ? "HELD" : "NONE";
   // Khúc này lấy tiền theo type room
   bookingData.totalPrice = (price > 0) ? price : 1000000;
 

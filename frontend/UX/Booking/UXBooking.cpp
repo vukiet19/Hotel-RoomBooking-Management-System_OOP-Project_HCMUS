@@ -754,8 +754,17 @@ void MainWindowController::showAddBookingDialog() {
         doublePrice = rq.value(0).toDouble();
       }
     }
-    if (doublePrice <= 0.0)
-      doublePrice = 1000000.0;
+    if (doublePrice <= 0.0) {
+      QSqlQuery catalogQuery(db);
+      catalogQuery.prepare(
+          "SELECT R.base_price FROM ListRooms L "
+          "JOIN RoomTypeCatalog R ON L.room_type = R.room_type "
+          "WHERE L.room_id = :rm OR L.room_number = :rm");
+      catalogQuery.bindValue(":rm", room);
+      if (catalogQuery.exec() && catalogQuery.next()) {
+        doublePrice = catalogQuery.value(0).toDouble();
+      }
+    }
     
     int currentTierVal = static_cast<int>(chkMembership->isChecked() ? MembershipTier::Unknown : MembershipTier::Temporary);
 
