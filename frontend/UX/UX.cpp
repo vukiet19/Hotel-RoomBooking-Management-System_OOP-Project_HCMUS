@@ -107,6 +107,13 @@ void MainWindowController::handleCheckout() {
 }
 
 // Dashboard
+static QString formatPrice(double val) {
+  if (val == std::floor(val)) {
+    return QString::number(static_cast<long long>(val));
+  }
+  return QString::number(val, 'f', 2);
+}
+
 void MainWindowController::handleDashboardTab() {
   qDebug() << "[DEBUG] handleDashboardTab - Switched to Dashboard tab";
   setActionBarVisible(false);
@@ -116,7 +123,22 @@ void MainWindowController::handleDashboardTab() {
   btnUpdate->setVisible(false);
   btnDelete->setVisible(false);
   btnFilter->setVisible(false);
-  btnAdd->disconnect();
+
+  DashboardService ds;
+  int todayBookings = ds.getTodayBookings();
+  double dailyRevenue = ds.getRevenue("day");
+  double monthlyRevenue = ds.getRevenue("month");
+  double yearlyRevenue = ds.getRevenue("year");
+
+  if (lblTodayBookings)
+    lblTodayBookings->setText(QString::number(todayBookings));
+  if (lblDailyRevenue)
+    lblDailyRevenue->setText(formatPrice(dailyRevenue) + " VND");
+  if (lblMonthlyRevenue)
+    lblMonthlyRevenue->setText(formatPrice(monthlyRevenue) + " VND");
+  if (lblYearlyRevenue)
+    lblYearlyRevenue->setText(formatPrice(yearlyRevenue) + " VND");
+
   btnUpdate->disconnect();
   btnDelete->disconnect();
   btnFilter->disconnect();
@@ -124,25 +146,8 @@ void MainWindowController::handleDashboardTab() {
   connect(btnFilter, &QPushButton::clicked, this,
           &MainWindowController::showFilterDashboardDialog);
 
-  DashboardService ds;
-
-  int todayBookings = ds.getTodayBookings();
-  double dailyRevenue = ds.getRevenue("day");
-  double monthlyRevenue = ds.getRevenue("month");
-  double yearlyRevenue = ds.getRevenue("year");
-
-  qDebug() << "[DEBUG] Today's Bookings:" << todayBookings
-           << "| Daily:" << dailyRevenue << "| Monthly:" << monthlyRevenue
-           << "| Yearly:" << yearlyRevenue;
-
-  lblTodayBookings->setText(QString::number(todayBookings));
-  lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2) + " VND");
-  lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2) + " VND");
-  lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
-
   std::vector<BookingRevenue> data =
       ds.getBookingRevenues("2026-01-01", "2026-12-31");
-  qDebug() << "[DEBUG] Revenues table row count:" << data.size();
 
   tableDashboard->setRowCount(0);
   int row = 0;
@@ -152,7 +157,7 @@ void MainWindowController::handleDashboardTab() {
         row, 0, new QTableWidgetItem(QString::number(record.bookingId)));
     tableDashboard->setItem(row, 1, new QTableWidgetItem(record.customerName));
     tableDashboard->setItem(
-        row, 2, new QTableWidgetItem(QString::number(record.revenue, 'f', 2)));
+        row, 2, new QTableWidgetItem(formatPrice(record.revenue)));
     tableDashboard->setItem(row, 3, new QTableWidgetItem(record.checkIn));
     row++;
   }

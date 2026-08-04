@@ -95,7 +95,43 @@ void Backend::loadTableData(QTableWidget *table, const QString &queryStr)
         table->insertRow(row);
         for (int col = 0; col < columnCount; ++col)
         {
-            QString valStr = query.value(col).toString();
+            QVariant val = query.value(col);
+            QString valStr;
+
+            if (val.userType() == QMetaType::Double || val.userType() == QMetaType::Float)
+            {
+                double d = val.toDouble();
+                if (d == std::floor(d))
+                {
+                    valStr = QString::number(static_cast<long long>(d));
+                }
+                else
+                {
+                    valStr = QString::number(d, 'f', 2);
+                }
+            }
+            else
+            {
+                valStr = val.toString();
+            }
+
+            if (valStr.contains("e+", Qt::CaseInsensitive) || valStr.contains("e-", Qt::CaseInsensitive) || (valStr.contains('e', Qt::CaseInsensitive) && valStr.contains('.')))
+            {
+                bool ok = false;
+                double d = valStr.toDouble(&ok);
+                if (ok)
+                {
+                    if (d == std::floor(d))
+                    {
+                        valStr = QString::number(static_cast<long long>(d));
+                    }
+                    else
+                    {
+                        valStr = QString::number(d, 'f', 2);
+                    }
+                }
+            }
+
             QTableWidgetItem *item = new QTableWidgetItem(valStr);
 
             QString fieldName = rec.fieldName(col);
