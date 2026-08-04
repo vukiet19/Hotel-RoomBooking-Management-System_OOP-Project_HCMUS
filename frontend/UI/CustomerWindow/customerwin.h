@@ -23,7 +23,6 @@ private:
     QSpinBox *spinPeople;
     QPushButton *btnNext;
     QLineEdit *ID;
-    QLineEdit *txtDeposit;
     QCheckBox *chkMembership;
     void onNextClicked();
 };
@@ -32,10 +31,11 @@ class CustomerWindow : public QWidget
 {
 
 public:
-    CustomerWindow(QString name, QString phone, QString id, QString date, QString datecheckout, int people, bool isMembership, double depositAmount = 0.0, QWidget *parent = nullptr);
+    CustomerWindow(QString name, QString phone, QString id, QString date, QString datecheckout, int people, bool isMembership, QWidget *parent = nullptr);
 
 private:
     QTableWidget *tableRoom;
+    QCheckBox *chkDeposit;
     QPushButton *btnBook;
 
     QString customerName;
@@ -47,7 +47,6 @@ private:
 
     int numPeople;
     bool isMembership;
-    double depositAmount;
 
     void loadFilteredRooms();
     void onBookRoomClicked();
