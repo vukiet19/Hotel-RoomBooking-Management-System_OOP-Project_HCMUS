@@ -23,8 +23,9 @@ struct BookingData {
   QString roomNumber;
   QString checkInTime;
   QString checkOutTime;
-  double totalPrice;
+  double totalPrice = 0.0;
   QString depositStatus = "NONE";
+  double depositAmount = 0.0;
 };
 
 // Filter options for Booking search
@@ -46,6 +47,7 @@ public:
 
   int add(Booking *booking); // thêm data mới (chủ yếu dùng hàm này)
   bool update(Booking *booking); // cập nhật lại booking
+  bool updateBooking(int bookingId, const BookingData &data);
   bool updateBooking(int bookingId, int customerId, const QString &roomNumber,
                      const QDateTime &checkIn, const QDateTime &checkOut,
                      const QString &statusStr);
@@ -54,8 +56,9 @@ public:
                      double depositInput, const QString &statusStr);
   bool updateBooking(int bookingId, int customerId, const QString &roomNumber,
                      const QDateTime &checkIn, const QDateTime &checkOut,
-                     double totalPrice, const QString &depositStatusStr,
-                     const QString &statusStr);
+                     double totalPrice, double depositAmount = 0.0,
+                     const QString &depositStatusStr = "NONE",
+                     const QString &statusStr = "");
   bool remove(int bookingId); // xoá booking
   bool
   addServiceItemToBooking(int bookingId, const string &itemId, int quantity,

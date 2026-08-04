@@ -167,13 +167,14 @@ bool BookingRepository::add(const BookingData &booking) {
                 "check_in_time, check_out_time, total_price, booking_type, "
                 "status, deposit_amount, deposit_status) "
                 "VALUES (:customer_id, :room_number, :check_in, :check_out, "
-                ":totalPrice, 'STANDARD', 'UNCONFIRMED', 0.0, :deposit_status)");
+                ":totalPrice, 'STANDARD', 'UNCONFIRMED', :deposit_amount, :deposit_status)");
 
   query.bindValue(":customer_id", booking.customerId);
   query.bindValue(":room_number", booking.roomNumber);
   query.bindValue(":check_in", booking.checkInTime);
   query.bindValue(":check_out", booking.checkOutTime);
   query.bindValue(":totalPrice", booking.totalPrice);
+  query.bindValue(":deposit_amount", booking.depositAmount);
   query.bindValue(":deposit_status", booking.depositStatus.isEmpty() ? "NONE" : booking.depositStatus);
 
   if (!query.exec()) {
@@ -452,15 +453,30 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
   return res;
 }
 
-bool BookingRepository::updateBooking(int bookingId, int customerId, const QString &roomNumber, const QDateTime &checkIn, const QDateTime &checkOut, double totalPrice, const QString &depositStatusStr, const QString &statusStr)
+bool BookingRepository::updateBooking(int bookingId, const BookingData &data) {
+  QDateTime inDT = QDateTime::fromString(data.checkInTime, Qt::ISODate);
+  if (!inDT.isValid()) {
+    inDT = QDateTime::fromString(data.checkInTime, "yyyy-MM-dd hh:mm:ss");
+  }
+  QDateTime outDT = QDateTime::fromString(data.checkOutTime, Qt::ISODate);
+  if (!outDT.isValid()) {
+    outDT = QDateTime::fromString(data.checkOutTime, "yyyy-MM-dd hh:mm:ss");
+  }
+
+  return updateBooking(bookingId, data.customerId, data.roomNumber, inDT, outDT,
+                       data.totalPrice, data.depositAmount, data.depositStatus);
+}
+
+bool BookingRepository::updateBooking(int bookingId, int customerId, const QString &roomNumber, const QDateTime &checkIn, const QDateTime &checkOut, double totalPrice, double depositAmount, const QString &depositStatusStr, const QString &statusStr)
 {
 	Customer *cust = new Customer();
 	cust->setId(customerId);
 
 	StandardRoom *room = new StandardRoom(roomNumber.toStdString());
 
-	StandardRoomBooking *srb = new StandardRoomBooking(cust, room, checkIn, checkOut, 0.0);
+	StandardRoomBooking *srb = new StandardRoomBooking(cust, room, checkIn, checkOut, depositAmount);
 	srb->id = bookingId;
+	srb->depositAmount = depositAmount;
 	srb->depositStatus = stringToDepositStatus(depositStatusStr);
 
 	if (!statusStr.isEmpty())

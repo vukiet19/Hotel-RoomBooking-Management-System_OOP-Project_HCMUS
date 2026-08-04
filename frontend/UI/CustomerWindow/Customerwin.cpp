@@ -48,24 +48,25 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
       "}"
       "QCalendarWidget QAbstractItemView:disabled { color: #cbd5e1; }");
   QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(50, 40, 50, 40);
+  layout->setContentsMargins(40, 30, 40, 30);
 
   QLabel *titleLabel = new QLabel("Guest Registration", this);
   titleLabel->setStyleSheet(
-      "font-size: 28px; font-weight: bold; color: #3730a3; margin-bottom: "
-      "20px; background: transparent;"); // Transparent background for label
+      "font-size: 26px; font-weight: bold; color: #3730a3; margin-bottom: "
+      "10px; background: transparent;"); // Transparent background for label
   layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
   QFormLayout *form = new QFormLayout();
-  form->setSpacing(20);
+  form->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+  form->setSpacing(12);
 
   QString inputStyle =
       "QLineEdit, QDateEdit, QSpinBox {"
       "   background-color: #ffffff; "
       "   border: 2px solid #38bdf8; "
       "   border-radius: 8px; "
-      "   padding: 12px; "
-      "   font-size: 15px; "
+      "   padding: 10px 12px; "
+      "   font-size: 14px; "
       "   color: #0f172a; "
       "}"
       "QLineEdit:hover, QDateEdit:hover, QSpinBox:hover { border: 2px solid "
@@ -106,6 +107,11 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   ID->setStyleSheet(inputStyle);
   ID->setPlaceholderText("Enter ID or Passport number");
 
+  txtDeposit = new QLineEdit(this);
+  txtDeposit->setStyleSheet(inputStyle);
+  txtDeposit->setPlaceholderText("Enter deposit amount (VND)");
+  txtDeposit->setText("0");
+
   //"-----------------------"
 
   QLabel *lblName = new QLabel("Your name:", this);
@@ -120,6 +126,8 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   lblCheckOut->setStyleSheet(labelStyle);
   QLabel *lblPeople = new QLabel("Number of people:", this);
   lblPeople->setStyleSheet(labelStyle);
+  QLabel *lblDeposit = new QLabel("Deposit amount:", this);
+  lblDeposit->setStyleSheet(labelStyle);
 
   form->addRow(lblName, txtName);
   form->addRow(lblID, ID);
@@ -127,6 +135,7 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   form->addRow(lblCheckIn, dateCheckIn);
   form->addRow(lblCheckOut, datecheckout);
   form->addRow(lblPeople, spinPeople);
+  form->addRow(lblDeposit, txtDeposit);
 
   // Checkbox chọn tích điểm hay không
   chkMembership = new QCheckBox("Register for Membership (Accumulate Points)", this);
@@ -135,8 +144,7 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   form->addRow("", chkMembership);
 
   layout->addLayout(form);
-
-  layout->addStretch(); // Pushes the button to the bottom nicely
+  layout->addSpacing(15);
 
   btnNext = new QPushButton("Find Available Rooms", this);
   btnNext->setCursor(Qt::PointingHandCursor);
@@ -206,10 +214,11 @@ void CustomerInputWindow::onNextClicked() {
   QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd") + " 12:00:00";
   int people = spinPeople->value();
   bool isMem = chkMembership->isChecked();
+  double depositAmt = txtDeposit->text().toDouble();
 
   // Mở Window tìm phòng và truyền dữ liệu sang
   CustomerWindow *roomWindow =
-      new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people, isMem);
+      new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people, isMem, depositAmt);
   roomWindow->show();
 
   // Đóng Window
@@ -220,9 +229,10 @@ void CustomerInputWindow::onNextClicked() {
 // customer)
 CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
                                QString date, QString dateout, int people, bool isMem,
-                               QWidget *parent)
+                               double depositAmt, QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone),
-      checkInDate(date), datecheckout(dateout), numPeople(people) {
+      checkInDate(date), datecheckout(dateout), numPeople(people), isMembership(isMem),
+      depositAmount(depositAmt) {
   setFixedSize(850, 650);
   setWindowTitle("Select a Room");
 
@@ -477,6 +487,8 @@ void CustomerWindow::onBookRoomClicked() {
   bookingData.roomNumber = roomId;
   bookingData.checkInTime = checkInDate;
   bookingData.checkOutTime = datecheckout;
+  bookingData.depositAmount = depositAmount;
+  bookingData.depositStatus = (depositAmount > 0) ? "HELD" : "NONE";
   // Khúc này lấy tiền theo type room
   bookingData.totalPrice = (price > 0) ? price : 1000000;
 

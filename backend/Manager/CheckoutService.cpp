@@ -358,7 +358,7 @@ CheckoutResult CheckoutService::checkout(int bookingId,
         return result;
       }
     }
-
+  }
   if (!db.commit()) {
     result.errorMessage = "Cannot commit the checkout transaction.";
     return result;

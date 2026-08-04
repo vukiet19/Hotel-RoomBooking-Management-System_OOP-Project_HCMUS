@@ -95,16 +95,89 @@ void Backend::loadTableData(QTableWidget *table, const QString &queryStr)
         table->insertRow(row);
         for (int col = 0; col < columnCount; ++col)
         {
-            QString valStr = query.value(col).toString();
+            QVariant val = query.value(col);
+            QString valStr;
+
+            if (val.userType() == QMetaType::Double || val.userType() == QMetaType::Float)
+            {
+                double d = val.toDouble();
+                if (d == std::floor(d))
+                {
+                    valStr = QString::number(static_cast<long long>(d));
+                }
+                else
+                {
+                    valStr = QString::number(d, 'f', 2);
+                }
+            }
+            else
+            {
+                valStr = val.toString();
+            }
+
+            if (valStr.contains("e+", Qt::CaseInsensitive) || valStr.contains("e-", Qt::CaseInsensitive) || (valStr.contains('e', Qt::CaseInsensitive) && valStr.contains('.')))
+            {
+                bool ok = false;
+                double d = valStr.toDouble(&ok);
+                if (ok)
+                {
+                    if (d == std::floor(d))
+                    {
+                        valStr = QString::number(static_cast<long long>(d));
+                    }
+                    else
+                    {
+                        valStr = QString::number(d, 'f', 2);
+                    }
+                }
+            }
+
             QTableWidgetItem *item = new QTableWidgetItem(valStr);
 
-            if (valStr.contains("Available", Qt::CaseInsensitive) || valStr == "0")
+            QString fieldName = rec.fieldName(col);
+            if (fieldName.contains("status", Qt::CaseInsensitive))
             {
-                item->setForeground(QColor("#16a34a")); // Emerald green
-                item->setBackground(QColor("#f0fdf4")); // Soft green highlight background
                 QFont font = item->font();
                 font.setBold(true);
                 item->setFont(font);
+
+                if (valStr.compare("Occupied", Qt::CaseInsensitive) == 0)
+                {
+                    item->setText("OCCUPIED");
+                    item->setForeground(QColor("#ffffff")); // Vivid white text
+                    item->setBackground(QColor("#dc2626")); // Bold crimson red badge highlight
+                }
+                else if (valStr.compare("Available", Qt::CaseInsensitive) == 0)
+                {
+                    item->setText("available");
+                    item->setForeground(QColor("#15803d")); // Green text
+                    item->setBackground(QColor("#dcfce7")); // Soft green background
+                }
+                else if (valStr.compare("CONFIRMED", Qt::CaseInsensitive) == 0 ||
+                         valStr.compare("CHECKED_IN", Qt::CaseInsensitive) == 0)
+                {
+                    item->setForeground(QColor("#15803d")); // Green text
+                    item->setBackground(QColor("#dcfce7")); // Soft green background
+                }
+                else if (valStr.compare("Maintenance", Qt::CaseInsensitive) == 0)
+                {
+                    item->setForeground(QColor("#dc2626")); // Red text
+                    item->setBackground(QColor("#fee2e2")); // Soft red background
+                }
+                else if (valStr.compare("Reserved", Qt::CaseInsensitive) == 0 ||
+                         valStr.compare("UNCONFIRMED", Qt::CaseInsensitive) == 0 ||
+                         valStr.compare("HELD", Qt::CaseInsensitive) == 0)
+                {
+                    item->setForeground(QColor("#d97706")); // Amber text
+                    item->setBackground(QColor("#fef3c7")); // Soft amber background
+                }
+                else if (valStr.compare("CHECKED_OUT", Qt::CaseInsensitive) == 0 ||
+                         valStr.compare("RETURNED", Qt::CaseInsensitive) == 0 ||
+                         valStr.compare("NONE", Qt::CaseInsensitive) == 0)
+                {
+                    item->setForeground(QColor("#64748b")); // Slate text
+                    item->setBackground(QColor("#f1f5f9")); // Soft slate background
+                }
             }
 
             table->setItem(row, col, item);
