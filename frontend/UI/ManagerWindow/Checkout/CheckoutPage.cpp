@@ -29,9 +29,15 @@ QString formatMoney(double amount) {
   return QString("%1 VND").arg(amount, 0, 'f', 0);
 }
 
+QLabel *createFieldLabel(const QString &text, QWidget *parent) {
+  auto *label = new QLabel(text, parent);
+  label->setStyleSheet("color: #475569; font-weight: 600; font-size: 14px;");
+  return label;
+}
+
 QLabel *createValueLabel(QWidget *parent) {
   auto *label = new QLabel("-", parent);
-  label->setStyleSheet("color: #1e293b; font-weight: normal;");
+  label->setStyleSheet("color: #0f172a; font-weight: 600; font-size: 14px;");
   return label;
 }
 } // namespace
@@ -56,7 +62,7 @@ void CheckoutPage::setupUi() {
         #checkoutPage QGroupBox {
             background-color: #ffffff;
             color: #3730a3;
-            border: 2px solid #38bdf8;
+            border: 2px solid #bae6fd;
             border-radius: 8px;
             margin-top: 15px;
             padding: 15px 10px 10px 10px;
@@ -74,26 +80,26 @@ void CheckoutPage::setupUi() {
         #checkoutPage QScrollArea { background-color: transparent; border: none; }
         #checkoutPage QTableWidget {
             background-color: #ffffff;
-            alternate-background-color: #f5f3ff;
-            border: 2px solid #a5b4fc;
+            alternate-background-color: #f0f9ff;
+            border: 2px solid #bae6fd;
             border-radius: 8px;
-            gridline-color: #e0e7ff; 
+            gridline-color: #e0f2fe; 
             font-size: 14px;
-            color: #312e81; 
-            selection-background-color: #6366f1; 
+            color: #0f172a; 
+            selection-background-color: #38bdf8; 
             selection-color: #ffffff;
             outline: none; 
         }
-        #checkoutPage QTableWidget::item { padding: 5px; }
-        #checkoutPage QTableWidget::item:hover { background-color: #e0e7ff; color: #312e81; }
+        #checkoutPage QTableWidget::item { padding: 6px; }
+        #checkoutPage QTableWidget::item:hover { background-color: #e0f2fe; color: #0f172a; }
         #checkoutPage QHeaderView::section:horizontal {
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #312e81, stop:1 #312e81); 
+            background-color: #312e81; 
             color: #ffffff;
             font-weight: bold;
             font-size: 14px;
-            padding: 12px;
+            padding: 10px;
             border: none;
-            border-right: 1px solid #ffffff;
+            border-right: 1px solid #1e1b4b;
         }
         #checkoutPage QHeaderView::section:horizontal:first { border-top-left-radius: 8px; }
         #checkoutPage QHeaderView::section:horizontal:last { border-top-right-radius: 8px; border-right: none; }
@@ -105,29 +111,31 @@ void CheckoutPage::setupUi() {
             border: none;
             border-right: 1px solid #bae6fd;
         }
-        #checkoutPage QTableCornerButton::section { background-color: #38bdf8; border: none; }
+        #checkoutPage QTableCornerButton::section { background-color: #312e81; border: none; }
         #checkoutPage QComboBox, #checkoutPage QLineEdit {
             background-color: #ffffff;
             border: 2px solid #38bdf8;
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px 12px;
             font-size: 14px;
-            color: #312e81;
+            color: #0f172a;
         }
-        #checkoutPage QComboBox:hover, #checkoutPage QLineEdit:hover { border: 2px solid #6366f1; }
-        #checkoutPage QComboBox:focus, #checkoutPage QLineEdit:focus { border: 2px solid #8b5cf6; background-color: #f0f9ff; }
-        #checkoutPage QComboBox::drop-down { border: none; width: 25px; }
-        #checkoutPage QComboBox::down-arrow { image: none; }
+        #checkoutPage QComboBox:hover, #checkoutPage QLineEdit:hover { border: 2px solid #0284c7; }
+        #checkoutPage QComboBox:focus, #checkoutPage QLineEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }
         #checkoutPage QComboBox QAbstractItemView, #checkoutPage QComboBox QListView {
             background-color: #ffffff;
-            color: #312e81;
-            border: 2px solid #a5b4fc;
-            border-radius: 4px;
-            selection-background-color: #e0e7ff;
-            selection-color: #312e81;
+            color: #0f172a;
+            border: 2px solid #38bdf8;
+            border-radius: 6px;
+            selection-background-color: #f0f9ff;
+            selection-color: #0369a1;
             outline: none;
         }
-        #checkoutPage QLabel { color: #3730a3; font-weight: bold; font-size: 14px; }
+        #checkoutPage QGroupBox QLabel {
+            color: #475569;
+            font-weight: 600;
+            font-size: 14px;
+        }
     )");
 
   auto *rootLayout = new QVBoxLayout(this);
@@ -135,13 +143,16 @@ void CheckoutPage::setupUi() {
   rootLayout->setSpacing(12);
 
   auto *title = new QLabel("Checkout", this);
-  title->setStyleSheet("font-size: 24px; font-weight: bold; color: #1e3a8a;");
+  title->setStyleSheet(
+      "font-size: 28px; font-weight: bold; color: #3730a3; font-family: 'Segoe "
+      "UI', Arial, sans-serif; background: transparent;");
   rootLayout->addWidget(title);
 
   auto *subtitle = new QLabel("Select an active booking to review guest info "
                               "and calculate checkout total.",
                               this);
-  subtitle->setStyleSheet("color: #64748b; font-size: 13px;");
+  subtitle->setStyleSheet("color: #475569; font-size: 14px; font-weight: 500; "
+                          "background: transparent;");
   rootLayout->addWidget(subtitle);
 
   auto *searchLayout = new QHBoxLayout();
@@ -151,6 +162,20 @@ void CheckoutPage::setupUi() {
 
   auto *searchButton = new QPushButton("Search", this);
   auto *clearButton = new QPushButton("Clear", this);
+  searchButton->setCursor(Qt::PointingHandCursor);
+  clearButton->setCursor(Qt::PointingHandCursor);
+  searchButton->setStyleSheet(
+      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; "
+      "border-radius: 8px; padding: 9px 20px; font-size: 14px; font-weight: "
+      "bold; }"
+      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #4f46e5, stop:1 #7c3aed); }");
+  clearButton->setStyleSheet(
+      "QPushButton { background-color: #cbd5e1; color: #475569; border: none; "
+      "border-radius: 8px; padding: 9px 20px; font-size: 14px; font-weight: "
+      "bold; }"
+      "QPushButton:hover { background-color: #94a3b8; color: #ffffff; }");
   searchLayout->addWidget(searchEdit, 1);
   searchLayout->addWidget(searchButton);
   searchLayout->addWidget(clearButton);
@@ -204,14 +229,23 @@ void CheckoutPage::setupUi() {
   expectedCheckOutLabel = createValueLabel(bookingInfoGroup);
   nightsLabel = createValueLabel(bookingInfoGroup);
 
-  bookingInfoLayout->addRow("Booking ID:", bookingIdLabel);
-  bookingInfoLayout->addRow("Customer:", customerNameLabel);
-  bookingInfoLayout->addRow("Phone:", phoneLabel);
-  bookingInfoLayout->addRow("Room:", roomLabel);
-  bookingInfoLayout->addRow("Room type:", roomTypeLabel);
-  bookingInfoLayout->addRow("Check-in:", checkInLabel);
-  bookingInfoLayout->addRow("Expected checkout:", expectedCheckOutLabel);
-  bookingInfoLayout->addRow("Number of nights:", nightsLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Booking ID:", bookingInfoGroup),
+                            bookingIdLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Customer:", bookingInfoGroup),
+                            customerNameLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Phone:", bookingInfoGroup),
+                            phoneLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Room:", bookingInfoGroup),
+                            roomLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Room type:", bookingInfoGroup),
+                            roomTypeLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Check-in:", bookingInfoGroup),
+                            checkInLabel);
+  bookingInfoLayout->addRow(
+      createFieldLabel("Expected checkout:", bookingInfoGroup),
+      expectedCheckOutLabel);
+  bookingInfoLayout->addRow(
+      createFieldLabel("Number of nights:", bookingInfoGroup), nightsLabel);
   topDetailsLayout->addWidget(bookingInfoGroup, 1);
 
   auto *summaryGroup = new QGroupBox("Checkout summary", detailsContainer);
@@ -226,11 +260,16 @@ void CheckoutPage::setupUi() {
   totalLabel->setStyleSheet(
       "color: #1d4ed8; font-size: 17px; font-weight: bold; padding: 4px 0;");
 
-  summaryLayout->addRow("Room charge:", roomChargeLabel);
-  summaryLayout->addRow("Service charge:", serviceChargeLabel);
-  summaryLayout->addRow("Discount:", discountLabel);
-  summaryLayout->addRow("Deposit deducted:", depositLabel);
-  summaryLayout->addRow("Total to pay:", totalLabel);
+  summaryLayout->addRow(createFieldLabel("Room charge:", summaryGroup),
+                        roomChargeLabel);
+  summaryLayout->addRow(createFieldLabel("Service charge:", summaryGroup),
+                        serviceChargeLabel);
+  summaryLayout->addRow(createFieldLabel("Discount:", summaryGroup),
+                        discountLabel);
+  summaryLayout->addRow(createFieldLabel("Deposit deducted:", summaryGroup),
+                        depositLabel);
+  summaryLayout->addRow(createFieldLabel("Total to pay:", summaryGroup),
+                        totalLabel);
   topDetailsLayout->addWidget(summaryGroup, 1);
   detailsLayout->addLayout(topDetailsLayout);
 
@@ -249,7 +288,7 @@ void CheckoutPage::setupUi() {
 
   auto *actionsLayout = new QHBoxLayout();
   actionsLayout->setSpacing(10);
-  auto *paymentLabel = new QLabel("Payment method:", detailsContainer);
+  auto *paymentLabel = createFieldLabel("Payment method:", detailsContainer);
   paymentMethodComboBox = new QComboBox(detailsContainer);
   paymentMethodComboBox->addItems({"Cash", "Card", "Bank transfer"});
   paymentMethodComboBox->setMinimumWidth(150);
@@ -258,12 +297,15 @@ void CheckoutPage::setupUi() {
   actionsLayout->addStretch();
 
   confirmButton = new QPushButton("Confirm checkout", detailsContainer);
-  confirmButton->setMinimumSize(190, 38);
+  confirmButton->setMinimumSize(190, 42);
+  confirmButton->setCursor(Qt::PointingHandCursor);
   confirmButton->setStyleSheet(
-      "QPushButton { background-color: #10b981; color: white; border: none; "
-      "border-radius: 6px; "
-      "padding: 9px 16px; font-weight: bold; }"
-      "QPushButton:hover { background-color: #059669; }"
+      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #10b981, stop:1 #059669); color: white; border: none; "
+      "border-radius: 8px; padding: 10px 22px; font-size: 15px; font-weight: "
+      "bold; }"
+      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #059669, stop:1 #047857); }"
       "QPushButton:disabled { background-color: #cbd5e1; color: #64748b; }");
   actionsLayout->addWidget(confirmButton);
   detailsLayout->addLayout(actionsLayout);
