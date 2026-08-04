@@ -25,7 +25,14 @@ void MainWindowController::showCustomerTab() {
         id_customer AS "Customer ID",
         full_name AS "Full Name",
         phone_number AS "Phone Number",
-        Type AS "Rank",
+        CASE Type
+            WHEN -1 THEN 'Temporary'
+            WHEN 0 THEN 'Newbie'
+            WHEN 1 THEN 'Silver'
+            WHEN 2 THEN 'Gold'
+            WHEN 3 THEN 'Platinum'
+            ELSE 'Unknown'
+        END AS "Rank",
         id_room AS "Room ID",
         Point AS "Points"
     FROM Customer
@@ -125,7 +132,14 @@ void MainWindowController::showFilterCustomerDialog() {
         id_customer AS "Customer ID",
         full_name AS "Full Name",
         phone_number AS "Phone Number",
-        Type AS "Rank",
+        CASE Type
+            WHEN -1 THEN 'Temporary'
+            WHEN 0 THEN 'Newbie'
+            WHEN 1 THEN 'Silver'
+            WHEN 2 THEN 'Gold'
+            WHEN 3 THEN 'Platinum'
+            ELSE 'Unknown'
+        END AS "Rank",
         id_room AS "Room ID",
         Point AS "Points"
     FROM Customer
@@ -139,14 +153,21 @@ void MainWindowController::showFilterCustomerDialog() {
   connect(btnApply, &QPushButton::clicked, [=]() {
     QString queryStr = R"(
       SELECT 
-          id AS "ID",
-          id_customer AS "Customer ID",
-          full_name AS "Full Name",
-          phone_number AS "Phone Number",
-          Type AS "Rank",
-          id_room AS "Room ID",
-          Point AS "Points"
-      FROM Customer WHERE 1=1
+        id AS "ID",
+        id_customer AS "Customer ID",
+        full_name AS "Full Name",
+        phone_number AS "Phone Number",
+        CASE Type
+            WHEN -1 THEN 'Temporary'
+            WHEN 0 THEN 'Newbie'
+            WHEN 1 THEN 'Silver'
+            WHEN 2 THEN 'Gold'
+            WHEN 3 THEN 'Platinum'
+            ELSE 'Unknown'
+        END AS "Rank",
+        id_room AS "Room ID",
+        Point AS "Points"
+    FROM Customer
     )";
     if (!txtName->text().trimmed().isEmpty()) {
       queryStr +=

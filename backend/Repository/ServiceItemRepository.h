@@ -14,7 +14,7 @@ struct ServiceCatalogData {
     string name;
     string category;
     double basePrice;
-    bool vipFreeStatus;
+    bool isActive;
 };
 
 // dữ liệu của một dịch vụ được khách dùng trong một booking cụ thể
@@ -33,7 +33,7 @@ struct ServiceCatalogFilter {
     string category = "";
     double minBasePrice = -1.0;
     double maxBasePrice = -1.0;
-    int vipFreeStatus = -1; // -1 means no filter, 0 means false, 1 means true
+    int isActive = -1;
 };
 
 struct BookingServiceItemFilter {

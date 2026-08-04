@@ -4,8 +4,11 @@
 #include "backend/Manager/DatabaseManager.h"
 #include "backend/Repository/BookingRepository.h"
 #include "backend/Repository/CustomerRepository.h"
+#include "backend/Repository/RoomRepository.h"
 #include "cores/Booking/Booking.h"
 #include "cores/Customer/Customer.h"
+#include "cores/Room/Room.h"
+#include "frontend/UI/Login/Login.h"
 #include <QDate>
 #include <QDebug>
 #include <QFormLayout>
@@ -23,7 +26,7 @@ using namespace std;
 
 // Hàm này để chứa thông tin nhập customer infomation
 CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
-  setFixedSize(800, 600);
+  setFixedSize(800, 660);
   setWindowTitle("Customer Information");
 
   setStyleSheet(
@@ -48,24 +51,25 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
       "}"
       "QCalendarWidget QAbstractItemView:disabled { color: #cbd5e1; }");
   QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(50, 40, 50, 40);
+  layout->setContentsMargins(40, 30, 40, 30);
 
   QLabel *titleLabel = new QLabel("Guest Registration", this);
   titleLabel->setStyleSheet(
-      "font-size: 28px; font-weight: bold; color: #3730a3; margin-bottom: "
-      "20px; background: transparent;"); // Transparent background for label
+      "font-size: 26px; font-weight: bold; color: #3730a3; margin-bottom: "
+      "10px; background: transparent;"); // Transparent background for label
   layout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
   QFormLayout *form = new QFormLayout();
-  form->setSpacing(20);
+  form->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+  form->setSpacing(12);
 
   QString inputStyle =
       "QLineEdit, QDateEdit, QSpinBox {"
       "   background-color: #ffffff; "
       "   border: 2px solid #38bdf8; "
       "   border-radius: 8px; "
-      "   padding: 12px; "
-      "   font-size: 15px; "
+      "   padding: 10px 12px; "
+      "   font-size: 14px; "
       "   color: #0f172a; "
       "}"
       "QLineEdit:hover, QDateEdit:hover, QSpinBox:hover { border: 2px solid "
@@ -135,8 +139,7 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   form->addRow("", chkMembership);
 
   layout->addLayout(form);
-
-  layout->addStretch(); // Pushes the button to the bottom nicely
+  layout->addSpacing(15);
 
   btnNext = new QPushButton("Find Available Rooms", this);
   btnNext->setCursor(Qt::PointingHandCursor);
@@ -222,7 +225,7 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
                                QString date, QString dateout, int people, bool isMem,
                                QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone),
-      checkInDate(date), datecheckout(dateout), numPeople(people) {
+      checkInDate(date), datecheckout(dateout), numPeople(people), isMembership(isMem) {
   setFixedSize(850, 650);
   setWindowTitle("Select a Room");
 
@@ -308,6 +311,11 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
 
   layout->addWidget(tableRoom);
 
+  chkDeposit = new QCheckBox("Pay Deposit (Base Room Rate)", this);
+  chkDeposit->setStyleSheet("color: #475569; font-weight: bold; font-size: 14px; background: transparent;");
+  chkDeposit->setChecked(false);
+  layout->addWidget(chkDeposit);
+
   btnBook = new QPushButton("Confirm Booking", this);
   btnBook->setCursor(Qt::PointingHandCursor);
 
@@ -355,7 +363,12 @@ void CustomerWindow::loadFilteredRooms() {
     tableRoom->setItem(row, 0, new QTableWidgetItem(query.value(0).toString()));
     tableRoom->setItem(row, 1, new QTableWidgetItem(query.value(1).toString()));
     tableRoom->setItem(row, 2, new QTableWidgetItem(query.value(2).toString()));
-    tableRoom->setItem(row, 3, new QTableWidgetItem(query.value(3).toString()));
+
+    double priceVal = query.value(3).toDouble();
+    QString formattedPrice = (priceVal == std::floor(priceVal))
+                                 ? QString::number(static_cast<long long>(priceVal))
+                                 : QString::number(priceVal, 'f', 2);
+    tableRoom->setItem(row, 3, new QTableWidgetItem(formattedPrice));
     tableRoom->setItem(row, 4, new QTableWidgetItem(query.value(4).toString()));
     row++;
   }
@@ -374,7 +387,6 @@ void CustomerWindow::onBookRoomClicked() {
   double price = tableRoom->item(selectedRow, 3)->text().toDouble();
 
   QSqlDatabase db = DatabaseManager::instance().database();
-  qDebug() << db.databaseName() << '\n';
 
   if (!db.isOpen()) {
     QMessageBox::critical(this, "Database Error", "Database is not open!");
@@ -473,10 +485,14 @@ void CustomerWindow::onBookRoomClicked() {
   BookingData bookingData;
   BookingRepository sp;
 
+  double calculatedDeposit = chkDeposit->isChecked() ? price : 0.0;
+
   bookingData.customerId = realCustomerId;
   bookingData.roomNumber = roomId;
   bookingData.checkInTime = checkInDate;
   bookingData.checkOutTime = datecheckout;
+  bookingData.depositAmount = calculatedDeposit;
+  bookingData.depositStatus = (calculatedDeposit > 0) ? "HELD" : "NONE";
   // Khúc này lấy tiền theo type room
   bookingData.totalPrice = (price > 0) ? price : 1000000;
 
@@ -505,11 +521,8 @@ void CustomerWindow::onBookRoomClicked() {
   if (db.commit()) {
     QString infoText =
         isExistingCustomer
-            ? QString("Welcome back %1!\nYour booking is complete.")
-                  .arg(customerName)
-                  .arg(currentPoints)
-            : QString("Thank you %1!\nBooking created successfully.\n")
-                  .arg(customerName);
+            ? QString("Welcome back %1!\nYour booking is complete.").arg(customerName)
+            : QString("Thank you %1!\nBooking created successfully.").arg(customerName);
 
     QMessageBox msgBox(this);
     msgBox.setWindowTitle("Success");
@@ -523,6 +536,8 @@ void CustomerWindow::onBookRoomClicked() {
         "border-radius: 4px; border: none; font-weight: bold; }");
     msgBox.exec();
 
+    LoginWindow *loginWin = new LoginWindow();
+    loginWin->show();
     this->close();
   } else {
     db.rollback();

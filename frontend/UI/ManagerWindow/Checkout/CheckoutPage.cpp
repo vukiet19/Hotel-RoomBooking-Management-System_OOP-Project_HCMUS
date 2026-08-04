@@ -1,6 +1,7 @@
 #include "CheckoutPage.h"
 
 #include <QComboBox>
+#include <QDate>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QHeaderView>
@@ -17,11 +18,14 @@
 
 namespace {
 QString formatCleanDate(QString dtStr) {
+  dtStr = dtStr.trimmed();
   if (dtStr.isEmpty())
     return "-";
-  dtStr.replace("T", " ");
-  if (dtStr.length() > 16)
-    dtStr = dtStr.left(16);
+  if (dtStr.length() >= 10 && dtStr[4] == '-' && dtStr[7] == '-') {
+    QDate dVal = QDate::fromString(dtStr.left(10), "yyyy-MM-dd");
+    if (dVal.isValid())
+      return dVal.toString("yyyy-MM-dd");
+  }
   return dtStr;
 }
 
@@ -465,58 +469,4 @@ void CheckoutPage::showConfirmDialog() {
                                .arg(result.booking.roomNumber));
   loadBookings();
   populateBookingTable(searchEdit->text());
-
-#if 0 // Replaced by CheckoutService transaction above.
-    {
-        QSqlDatabase db = DatabaseManager::instance().database();
-        db.transaction();
-
-        // 1. Cập nhật trạng thái phòng về Trống (0)
-        QSqlQuery updateRoom(db);
-        updateRoom.prepare("UPDATE ListRooms SET Status = 0 WHERE room_id = :roomId");
-        updateRoom.bindValue(":roomId", booking.roomNumber);
-
-        // 2. Thêm hóa đơn vào bảng Bills
-        // QSqlQuery insertBill(db);
-        // insertBill.prepare("INSERT INTO Bills (booking_id, customer_name, total_amount, payment_method, date) "
-        //                   "VALUES (:bId, :cName, :amount, :method, :date)");
-        // insertBill.bindValue(":bId", booking.bookingId);
-        // insertBill.bindValue(":cName", booking.customerName);
-        // insertBill.bindValue(":amount", finalTotal);
-        // insertBill.bindValue(":method", paymentMethodComboBox->currentText());
-        // insertBill.bindValue(":date", QDate::currentDate().toString("yyyy-MM-dd"));
-
-        if (updateRoom.exec())
-        {
-            // Xóa khách vãng lai
-            if (booking.customerType == -1) // -1 là Temporary
-            {
-                // 1. Chuyển Bookings sang khách mặc định (ID = 0)
-                QSqlQuery updateBooking(db);
-                updateBooking.prepare("UPDATE Bookings SET customer_id = 0 WHERE id = :bId");
-                updateBooking.bindValue(":bId", booking.bookingId);
-                updateBooking.exec();
-
-                // 2. Xóa vĩnh viễn Customer khỏi DB
-                QSqlQuery deleteCustomer(db);
-                deleteCustomer.prepare("DELETE FROM Customer WHERE id_customer = :cId");
-                deleteCustomer.bindValue(":cId", booking.customerId);
-                deleteCustomer.exec();
-                
-                qDebug() << "[INFO] Đã xóa khách vãng lai và set booking về 0 thành công!";
-            }
-
-            db.commit();
-            QMessageBox::information(this, "Checkout Success",
-                                     "Checkout processed successfully! Room status set to Available.");
-            loadMockBookings();
-            populateBookingTable();
-        }
-        else
-        {
-            db.rollback();
-            QMessageBox::critical(this, "Database Error", "Failed to process checkout in database!");
-        }
-    }
-#endif
 }

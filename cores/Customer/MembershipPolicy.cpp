@@ -37,9 +37,9 @@ MembershipPolicy::MembershipPolicy(MembershipTier tier)
 void MembershipPolicy::setPoint(int point)
 {
     this->point = point;
-    if (point >= 5)
+    if (point >= 5 && point < 20)
         tier = Silver;
-    if (point >= 20)
+    else if (point >= 20 && point < 50)
         tier = Gold;
     if (point >= 50)
         tier = Platinum;
@@ -62,15 +62,6 @@ void MembershipPolicy::setDiscount(double rate, MembershipTier tier)
 void MembershipPolicy::setTier(MembershipTier tier)
 {
     this->tier = tier;
-
-    if (this->tier == 0)
-        point = 0;
-    if (this->tier == 1)
-        point = 10;
-    if (this->tier == 2)
-        point = 100;
-    if (this->tier == 3)
-        point = 1000;
 }
 
 // getter

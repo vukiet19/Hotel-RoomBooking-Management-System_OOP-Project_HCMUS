@@ -26,7 +26,7 @@ vector<ServiceCatalogData> ServiceItemRepository::getAllCatalogItems() {
 
     query.prepare(
         "SELECT item_id, item_name, category, base_price, vip_free_status "
-        "FROM ServiceCatalog"
+        "FROM ServiceCatalog" 
     );
 
     if (!query.exec()) {
@@ -40,7 +40,7 @@ vector<ServiceCatalogData> ServiceItemRepository::getAllCatalogItems() {
         item.name = query.value("item_name").toString().toStdString();
         item.category = query.value("category").toString().toStdString();
         item.basePrice = query.value("base_price").toDouble();
-        item.vipFreeStatus = query.value("vip_free_status").toBool();
+        item.isActive = query.value("is_active").toBool();
 
         items.push_back(item);
     }
@@ -84,7 +84,7 @@ optional<ServiceCatalogData> ServiceItemRepository::findCatalogItemById(const st
     item.name = query.value("item_name").toString().toStdString();
     item.category = query.value("category").toString().toStdString();
     item.basePrice = query.value("base_price").toDouble();
-    item.vipFreeStatus = query.value("vip_free_status").toBool();
+    item.isActive = query.value("is_active").toBool();
 
     return item;
 }
@@ -129,8 +129,8 @@ vector<ServiceCatalogData> ServiceItemRepository::getFilteredCatalogItems(const 
     if (filter.maxBasePrice >= 0.0) {
         conditions.push_back("base_price <= :max_base_price");
     }
-    if (filter.vipFreeStatus != -1) {
-        conditions.push_back("vip_free_status = :vip_free_status");
+    if (filter.isActive != -1) {
+        conditions.push_back("is_active = :is_active");
     }
 
     if (!conditions.empty()) {
@@ -158,8 +158,8 @@ vector<ServiceCatalogData> ServiceItemRepository::getFilteredCatalogItems(const 
     if (filter.maxBasePrice >= 0.0) {
         query.bindValue(":max_base_price", filter.maxBasePrice);
     }
-    if (filter.vipFreeStatus != -1) {
-        query.bindValue(":vip_free_status", filter.vipFreeStatus);
+    if (filter.isActive != -1) {
+        query.bindValue(":is_active", filter.isActive);
     }
 
     if (!query.exec()) {
@@ -173,7 +173,7 @@ vector<ServiceCatalogData> ServiceItemRepository::getFilteredCatalogItems(const 
         item.name = query.value("item_name").toString().toStdString();
         item.category = query.value("category").toString().toStdString();
         item.basePrice = query.value("base_price").toDouble();
-        item.vipFreeStatus = query.value("vip_free_status").toBool();
+        item.isActive = query.value("is_active").toBool();
 
         items.push_back(item);
     }
@@ -188,13 +188,13 @@ bool ServiceItemRepository::addCatalogItem(const ServiceCatalogData& item) {
 
     QSqlQuery query(DatabaseManager::instance().database());
     query.prepare(
-        "INSERT INTO ServiceCatalog (item_id, item_name, category, base_price, vip_free_status) "
-        "VALUES (:item_id, :item_name, :category, :base_price, :vip_free_status)");
+        "INSERT INTO ServiceCatalog (item_id, item_name, category, base_price, is_active) "
+        "VALUES (:item_id, :item_name, :category, :base_price, :is_active)");
     query.bindValue(":item_id", QString::fromStdString(item.id));
     query.bindValue(":item_name", QString::fromStdString(item.name));
     query.bindValue(":category", QString::fromStdString(item.category));
     query.bindValue(":base_price", item.basePrice);
-    query.bindValue(":vip_free_status", item.vipFreeStatus ? 1 : 0);
+    query.bindValue(":is_active", item.isActive ? 1 : 0);
 
     if (!query.exec()) {
         qDebug() << "ERROR: Khong the them ServiceCatalog item!" << query.lastError().text();
@@ -212,13 +212,13 @@ bool ServiceItemRepository::updateCatalogItem(const ServiceCatalogData& item) {
     query.prepare(
         "UPDATE ServiceCatalog "
         "SET item_name = :item_name, category = :category, base_price = :base_price, "
-        "vip_free_status = :vip_free_status "
+        "is_active = :is_active "
         "WHERE item_id = :item_id");
     query.bindValue(":item_id", QString::fromStdString(item.id));
     query.bindValue(":item_name", QString::fromStdString(item.name));
     query.bindValue(":category", QString::fromStdString(item.category));
     query.bindValue(":base_price", item.basePrice);
-    query.bindValue(":vip_free_status", item.vipFreeStatus ? 1 : 0);
+    query.bindValue(":is_active", item.isActive ? 1 : 0);
 
     if (!query.exec()) {
         qDebug() << "ERROR: Khong the cap nhat ServiceCatalog item!" << query.lastError().text();

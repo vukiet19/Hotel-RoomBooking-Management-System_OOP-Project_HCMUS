@@ -8,6 +8,7 @@
 #include "cores/Room/RoomFactory.h"
 #include "cores/Room/TypeRoom.h"
 #include <QColor>
+#include <QDate>
 #include <QFont>
 #include <QHeaderView>
 #include <QSqlQuery>
@@ -80,22 +81,47 @@ void Backend::loadTableData(QTableWidget *table, const QString &queryStr) {
   while (query.next()) {
     table->insertRow(row);
     for (int col = 0; col < columnCount; ++col) {
-      QString valStr = query.value(col).toString();
-      QTableWidgetItem *hItem = table->horizontalHeaderItem(col);
-      if (hItem) {
-        QString headerText = hItem->text().toLower();
-        if (headerText.contains("check-in") || headerText.contains("checkin") ||
-            headerText.contains("check-out") || headerText.contains("checkout") ||
-            headerText.contains("check in") || headerText.contains("check out")) {
-          if (valStr.length() > 10) {
-            valStr = valStr.left(10);
+      QVariant val = query.value(col);
+      QString valStr;
+
+      if (val.userType() == QMetaType::Double ||
+          val.userType() == QMetaType::Float) {
+        double d = val.toDouble();
+        if (d == std::floor(d)) {
+          valStr = QString::number(static_cast<long long>(d));
+        } else {
+          valStr = QString::number(d, 'f', 2);
+        }
+      } else {
+        valStr = val.toString();
+      }
+
+      // Format date values cleanly as YYYY-MM-DD (removing time component or ISO 'T')
+      if (valStr.length() >= 10 && valStr[4] == '-' && valStr[7] == '-') {
+        QDate dVal = QDate::fromString(valStr.left(10), "yyyy-MM-dd");
+        if (dVal.isValid()) {
+          valStr = dVal.toString("yyyy-MM-dd");
+        }
+      }
+
+      if (valStr.contains("e+", Qt::CaseInsensitive) ||
+          valStr.contains("e-", Qt::CaseInsensitive) ||
+          (valStr.contains('e', Qt::CaseInsensitive) && valStr.contains('.'))) {
+        bool ok = false;
+        double d = valStr.toDouble(&ok);
+        if (ok) {
+          if (d == std::floor(d)) {
+            valStr = QString::number(static_cast<long long>(d));
+          } else {
+            valStr = QString::number(d, 'f', 2);
           }
         }
       }
 
       QTableWidgetItem *item = new QTableWidgetItem(valStr);
 
-      if (valStr.contains("Available", Qt::CaseInsensitive) || valStr == "0") {
+      if (valStr.contains("Available", Qt::CaseInsensitive) || valStr == "0" ||
+          valStr.compare("CONFIRMED", Qt::CaseInsensitive) == 0) {
         item->setForeground(QColor("#16a34a")); // Emerald green
         item->setBackground(
             QColor("#f0fdf4")); // Soft green highlight background
@@ -103,7 +129,6 @@ void Backend::loadTableData(QTableWidget *table, const QString &queryStr) {
         font.setBold(true);
         item->setFont(font);
       } else if (valStr.compare("Occupied", Qt::CaseInsensitive) == 0 ||
-                 valStr.compare("CONFIRMED", Qt::CaseInsensitive) == 0 ||
                  valStr.compare("CHECKED_IN", Qt::CaseInsensitive) == 0) {
         item->setForeground(QColor("#dc2626")); // Red text
         item->setBackground(QColor("#fee2e2")); // Soft red background

@@ -35,6 +35,7 @@ public:
 
 private:
     QTableWidget *tableRoom;
+    QCheckBox *chkDeposit;
     QPushButton *btnBook;
 
     QString customerName;

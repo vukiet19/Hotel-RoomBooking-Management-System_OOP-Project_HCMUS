@@ -36,8 +36,8 @@ void MainWindowController::initConnections() {
           &MainWindowController::showCustomerTab);
   connect(buttonRoom, &QPushButton::clicked, this,
           &MainWindowController::showRoomTab);
-  connect(buttonService, &QPushButton::clicked, this,
-          &MainWindowController::showFoodTab);
+  connect(buttonService, &QPushButton::clicked, this, 
+          &MainWindowController::showServiceTab);
   connect(buttonInventory, &QPushButton::clicked, this,
           &MainWindowController::showInventoryTab);
   connect(buttonBill, &QPushButton::clicked, this,
@@ -55,10 +55,6 @@ void MainWindowController::initConnections() {
           &MainWindowController::showRoomTab);
   connect(roomPage->roomTypeTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showRoomTypeTab);
-  connect(servicePage->serviceCatalogTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::showServiceTab);
-  connect(servicePage->foodOptionsTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::showFoodTab);
   connect(inventoryPage->inventoryTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showInventoryTab);
   connect(inventoryPage->inventoryLogTabButton(), &QPushButton::clicked, this,
@@ -88,7 +84,7 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton) {
     btn->style()->polish(btn);
   }
 
-  if (btnAddToBooking && clickedButton != buttonService) {
+  if (btnAddToBooking && clickedButton != buttonService && clickedButton != buttonInventory) {
     btnAddToBooking->setVisible(false);
   }
 }
@@ -107,6 +103,13 @@ void MainWindowController::handleCheckout() {
 }
 
 // Dashboard
+static QString formatPrice(double val) {
+  if (val == std::floor(val)) {
+    return QString::number(static_cast<long long>(val));
+  }
+  return QString::number(val, 'f', 2);
+}
+
 void MainWindowController::handleDashboardTab() {
   qDebug() << "[DEBUG] handleDashboardTab - Switched to Dashboard tab";
   setActionBarVisible(false);
@@ -116,7 +119,22 @@ void MainWindowController::handleDashboardTab() {
   btnUpdate->setVisible(false);
   btnDelete->setVisible(false);
   btnFilter->setVisible(false);
-  btnAdd->disconnect();
+
+  DashboardService ds;
+  int todayBookings = ds.getTodayBookings();
+  double dailyRevenue = ds.getRevenue("day");
+  double monthlyRevenue = ds.getRevenue("month");
+  double yearlyRevenue = ds.getRevenue("year");
+
+  if (lblTodayBookings)
+    lblTodayBookings->setText(QString::number(todayBookings));
+  if (lblDailyRevenue)
+    lblDailyRevenue->setText(formatPrice(dailyRevenue) + " VND");
+  if (lblMonthlyRevenue)
+    lblMonthlyRevenue->setText(formatPrice(monthlyRevenue) + " VND");
+  if (lblYearlyRevenue)
+    lblYearlyRevenue->setText(formatPrice(yearlyRevenue) + " VND");
+
   btnUpdate->disconnect();
   btnDelete->disconnect();
   btnFilter->disconnect();
@@ -124,25 +142,8 @@ void MainWindowController::handleDashboardTab() {
   connect(btnFilter, &QPushButton::clicked, this,
           &MainWindowController::showFilterDashboardDialog);
 
-  DashboardService ds;
-
-  int todayBookings = ds.getTodayBookings();
-  double dailyRevenue = ds.getRevenue("day");
-  double monthlyRevenue = ds.getRevenue("month");
-  double yearlyRevenue = ds.getRevenue("year");
-
-  qDebug() << "[DEBUG] Today's Bookings:" << todayBookings
-           << "| Daily:" << dailyRevenue << "| Monthly:" << monthlyRevenue
-           << "| Yearly:" << yearlyRevenue;
-
-  lblTodayBookings->setText(QString::number(todayBookings));
-  lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2) + " VND");
-  lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2) + " VND");
-  lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
-
   std::vector<BookingRevenue> data =
       ds.getBookingRevenues("2026-01-01", "2026-12-31");
-  qDebug() << "[DEBUG] Revenues table row count:" << data.size();
 
   tableDashboard->setRowCount(0);
   int row = 0;
@@ -152,7 +153,7 @@ void MainWindowController::handleDashboardTab() {
         row, 0, new QTableWidgetItem(QString::number(record.bookingId)));
     tableDashboard->setItem(row, 1, new QTableWidgetItem(record.customerName));
     tableDashboard->setItem(
-        row, 2, new QTableWidgetItem(QString::number(record.revenue, 'f', 2)));
+        row, 2, new QTableWidgetItem(formatPrice(record.revenue)));
     tableDashboard->setItem(row, 3, new QTableWidgetItem(record.checkIn));
     row++;
   }
@@ -355,7 +356,10 @@ void MainWindowController::onBookingStatusObserved(
     tableDashboard->setItem(0, 1, new QTableWidgetItem(customerName));
     tableDashboard->setItem(
         0, 2, new QTableWidgetItem(QString::number(totalPrice, 'f', 2)));
-    tableDashboard->setItem(0, 3, new QTableWidgetItem(timestamp));
+    QString cleanTs = timestamp;
+    if (cleanTs.length() >= 10 && cleanTs[4] == '-' && cleanTs[7] == '-')
+      cleanTs = cleanTs.left(10);
+    tableDashboard->setItem(0, 3, new QTableWidgetItem(cleanTs));
 
     tableDashboard->selectRow(0);
   }

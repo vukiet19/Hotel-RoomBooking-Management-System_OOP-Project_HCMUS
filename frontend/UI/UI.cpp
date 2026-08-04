@@ -56,7 +56,8 @@ void MainWindowUi::setupUi() {
   btnAddToBooking = new QPushButton("Add to Booking", actionBar);
   btnFilter = new QPushButton("Filter", actionBar);
   btnAddToBooking->setVisible(false);
-  for (auto *button : {btnAdd, btnUpdate, btnDelete, btnAddToBooking, btnFilter})
+  for (auto *button :
+       {btnAdd, btnUpdate, btnDelete, btnAddToBooking, btnFilter})
     actionBarLayout->addWidget(button);
   actionBarLayout->addStretch();
 
@@ -84,7 +85,6 @@ void MainWindowUi::setupUi() {
   tableCustomer = customerPage->table();
   tableRoom = roomPage->roomTable();
   tableRoomType = roomPage->roomTypeTable();
-  tableFood = servicePage->foodOptionsTable();
   tableService = servicePage->serviceCatalogTable();
   tableInventory = inventoryPage->inventoryTable();
   tableInventoryLog = inventoryPage->inventoryLogTable();
@@ -111,6 +111,22 @@ void MainWindowUi::setupUi() {
         #actionBar QPushButton:last-child { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #10b981, stop:1 #059669); color: white; border: none; }
         #actionBar QPushButton:last-child:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #059669, stop:1 #047857); }
         QTableWidget { background-color: #ffffff; alternate-background-color: #f5f3ff; border: 2px solid #bae6fd; border-radius: 8px; gridline-color: #dbeafe; color: #1e293b; selection-background-color: #6366f1; selection-color: #ffffff; }
-        QHeaderView::section { background-color: #3730a3; color: #ffffff; font-weight: bold; padding: 10px; border: none; }
+        QHeaderView::section { background-color: #312e81; color: #ffffff; font-weight: bold; padding: 8px 12px; border: none; border-right: 1px solid #1e1b4b; }
+        QHeaderView::section:vertical { background-color: #3730a3; color: #ffffff; font-weight: bold; padding: 4px; border: none; border-bottom: 1px solid #1e1b4b; }
+        QTableCornerButton::section { background-color: #312e81; border: none; }
+
+        QMessageBox { background-color: #f8fafc; }
+        QMessageBox QLabel { color: #0f172a; font-size: 14px; font-weight: 600; }
+        QMessageBox QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2563eb, stop:1 #3b82f6); color: #ffffff; border: none; border-radius: 6px; padding: 8px 20px; font-size: 14px; font-weight: bold; min-width: 65px; }
+        QMessageBox QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #1d4ed8, stop:1 #2563eb); }
+
+        QScrollBar:vertical { background-color: #f1f5f9; width: 10px; margin: 0px; border-radius: 5px; }
+        QScrollBar::handle:vertical { background-color: #6366f1; min-height: 30px; border-radius: 5px; }
+        QScrollBar::handle:vertical:hover { background-color: #4f46e5; }
+        QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0px; background: none; }
+        QScrollBar:horizontal { background-color: #f1f5f9; height: 10px; margin: 0px; border-radius: 5px; }
+        QScrollBar::handle:horizontal { background-color: #6366f1; min-width: 30px; border-radius: 5px; }
+        QScrollBar::handle:horizontal:hover { background-color: #4f46e5; }
+        QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal { width: 0px; background: none; }
     )");
 }
