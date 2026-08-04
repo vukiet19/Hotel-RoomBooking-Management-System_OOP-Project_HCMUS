@@ -29,18 +29,11 @@ void MainWindowController::showBookingTab() {
   bookingPage->setSection(0);
   setActionBarVisible(true);
   stackedWidget->setCurrentIndex(BookingIndex);
-  QString bookingQuery = R"(
-  SELECT
-    id AS "Booking ID",
-    customer_id AS "Customer ID",
-    room_number AS "Room Number",
-    check_in_time AS "Check-in",
-    check_out_time AS "Check-out",
-    status AS "Status",
-    total_price AS "Total Price"
-  FROM Bookings
-  ORDER BY check_in_time DESC, id DESC;
-)";
+  QString bookingQuery =
+      "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number AS 'Room Number', "
+      "check_in_time AS 'Check-in', check_out_time AS 'Check-out', status AS 'Status', "
+      "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit Status', "
+      "total_price AS 'Total Price (VND)' FROM Bookings ORDER BY check_in_time DESC, id DESC";
 
   Backend::loadTableData(tableBooking, bookingQuery);
   btnAdd->setVisible(true);
@@ -64,7 +57,7 @@ void MainWindowController::showBookingTab() {
 void MainWindowController::showUpdateBookingDialog() {
   QDialog *dialog = new QDialog(this);
   dialog->setWindowTitle("Update Booking");
-  dialog->setFixedSize(450, 560);
+  dialog->setFixedSize(520, 680);
 
   dialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
@@ -131,6 +124,14 @@ void MainWindowController::showUpdateBookingDialog() {
   cbStatus->addItems({"UNCONFIRMED", "CONFIRMED", "CHECKED_IN", "CHECKED_OUT"});
   cbStatus->setStyleSheet(inputStyle);
 
+  QLineEdit *txtDepositAmount = new QLineEdit(dialog);
+  txtDepositAmount->setPlaceholderText("Deposit Amount (VND)...");
+  txtDepositAmount->setStyleSheet(inputStyle);
+
+  QComboBox *cbDepositStatus = new QComboBox(dialog);
+  cbDepositStatus->addItems({"NONE", "HELD", "RETURNED"});
+  cbDepositStatus->setStyleSheet(inputStyle);
+
   if (tableBooking && tableBooking->currentRow() >= 0) {
     int row = tableBooking->currentRow();
     if (tableBooking->item(row, 0))
@@ -153,6 +154,10 @@ void MainWindowController::showUpdateBookingDialog() {
     }
     if (tableBooking->item(row, 5))
       cbStatus->setCurrentText(tableBooking->item(row, 5)->text());
+    if (tableBooking->item(row, 6))
+      txtDepositAmount->setText(tableBooking->item(row, 6)->text());
+    if (tableBooking->item(row, 7))
+      cbDepositStatus->setCurrentText(tableBooking->item(row, 7)->text());
   }
 
   formLayout->addRow("Booking ID:", txtBookingId);
@@ -161,6 +166,8 @@ void MainWindowController::showUpdateBookingDialog() {
   formLayout->addRow("Check-In:", dateCheckIn);
   formLayout->addRow("Check-Out:", dateCheckOut);
   formLayout->addRow("Status:", cbStatus);
+  formLayout->addRow("Deposit Amount:", txtDepositAmount);
+  formLayout->addRow("Deposit Status:", cbDepositStatus);
 
   mainLayout->addLayout(formLayout);
 
@@ -212,6 +219,11 @@ void MainWindowController::showUpdateBookingDialog() {
     QString checkOutStr =
         dateCheckOut->date().toString("yyyy-MM-dd") + " 12:00:00";
     QString statusStr = cbStatus->currentText();
+    double depositAmt = txtDepositAmount->text().toDouble();
+    QString depositStatusStr = cbDepositStatus->currentText();
+    if (depositAmt > 0 && depositStatusStr == "NONE") {
+      depositStatusStr = "HELD";
+    }
 
     QDateTime inDT = QDateTime::fromString(checkInStr, "yyyy-MM-dd hh:mm:ss");
     QDateTime outDT = QDateTime::fromString(checkOutStr, "yyyy-MM-dd hh:mm:ss");
@@ -219,7 +231,7 @@ void MainWindowController::showUpdateBookingDialog() {
     BookingRepository repo;
     bool success =
         repo.updateBooking(bookingId, customerIdStr.toInt(), roomNumberStr,
-                           inDT, outDT, statusStr);
+                           inDT, outDT, 0.0, depositAmt, depositStatusStr, statusStr);
 
     if (success) {
       QMessageBox::information(dialog, "Success",
@@ -229,6 +241,7 @@ void MainWindowController::showUpdateBookingDialog() {
           "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
           "room_number AS 'Room Number', check_in_time AS 'Check-In', "
           "check_out_time AS 'Check-Out', status AS 'Status', "
+          "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit Status', "
           "total_price AS 'Total Price (VND)' FROM Bookings "
           "ORDER BY check_in_time DESC, id DESC");
       dialog->accept();
@@ -345,6 +358,7 @@ void MainWindowController::showDeleteBookingDialog() {
           "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
           "room_number AS 'Room Number', check_in_time AS 'Check-In', "
           "check_out_time AS 'Check-Out', status AS 'Status', "
+          "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit Status', "
           "total_price AS 'Total Price (VND)' FROM Bookings "
           "ORDER BY check_in_time DESC, id DESC");
       Backend::loadTableData(
@@ -366,7 +380,7 @@ void MainWindowController::showDeleteBookingDialog() {
 void MainWindowController::showFilterBookingDialog() {
   QDialog *dialog = new QDialog(this);
   dialog->setWindowTitle("Filter Bookings");
-  dialog->setFixedSize(450, 520);
+  dialog->setFixedSize(520, 640);
 
   dialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
@@ -481,6 +495,7 @@ void MainWindowController::showFilterBookingDialog() {
         "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
         "room_number AS 'Room Number', check_in_time AS 'Check-In', "
         "check_out_time AS 'Check-Out', status AS 'Status', "
+        "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit Status', "
         "total_price AS 'Total Price (VND)' FROM Bookings "
         "ORDER BY check_in_time DESC, id DESC");
     dialog->accept();
@@ -497,7 +512,8 @@ void MainWindowController::showFilterBookingDialog() {
         "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', "
         "room_number AS 'Room Number', check_in_time AS 'Check-in', "
         "check_out_time AS 'Check-out', status AS 'Status', "
-        "total_price AS 'Total Price' "
+        "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit Status', "
+        "total_price AS 'Total Price (VND)' "
         "FROM Bookings WHERE 1=1";
 
     if (!custIdStr.isEmpty()) {
@@ -535,7 +551,7 @@ void MainWindowController::showFilterBookingDialog() {
 void MainWindowController::showAddBookingDialog() {
   QDialog *addDialog = new QDialog(this);
   addDialog->setWindowTitle("Add Booking");
-  addDialog->setFixedSize(450, 500);
+  addDialog->setFixedSize(520, 680);
 
   addDialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
@@ -554,17 +570,28 @@ void MainWindowController::showAddBookingDialog() {
   formLayout->setSpacing(15);
 
   QString inputStyle =
-      "QLineEdit, QDateEdit {"
+      "QLineEdit, QComboBox, QDateEdit {"
       "   background-color: #ffffff; "
       "   border: 2px solid #38bdf8; "
       "   border-radius: 8px; "
-      "   padding: 10px; "
+      "   padding: 8px; "
       "   font-size: 14px; "
       "   color: #0f172a; "
       "}"
-      "QLineEdit:hover, QDateEdit:hover { border: 2px solid #0284c7; }"
-      "QLineEdit:focus, QDateEdit:focus { border: 2px solid #0369a1; "
-      "background-color: #f0f9ff; }";
+      "QLineEdit:hover, QComboBox:hover, QDateEdit:hover { border: 2px solid #0284c7; }"
+      "QLineEdit:focus, QComboBox:focus, QDateEdit:focus { border: 2px solid #0369a1; "
+      "background-color: #f0f9ff; }"
+      "QComboBox::drop-down { border: none; width: 25px; }"
+      "QComboBox::down-arrow { image: none; }"
+      "QComboBox QAbstractItemView, QComboBox QListView {"
+      "   background-color: #ffffff; "
+      "   color: #0f172a; "
+      "   border: 2px solid #38bdf8; "
+      "   border-radius: 6px; "
+      "   selection-background-color: #f0f9ff; "
+      "   selection-color: #0369a1; "
+      "   outline: none;"
+      "}";
 
   QLineEdit *txtId = new QLineEdit(addDialog);
   txtId->setPlaceholderText("Customer ID ...");
@@ -591,15 +618,26 @@ void MainWindowController::showAddBookingDialog() {
   dateCheckOut->setCalendarPopup(true);
   dateCheckOut->setStyleSheet(inputStyle);
 
+  QLineEdit *txtDepositAmount = new QLineEdit(addDialog);
+  txtDepositAmount->setPlaceholderText("Deposit Amount (VND)...");
+  txtDepositAmount->setText("0");
+  txtDepositAmount->setStyleSheet(inputStyle);
+
+  QComboBox *cbDepositStatus = new QComboBox(addDialog);
+  cbDepositStatus->addItems({"NONE", "HELD", "RETURNED"});
+  cbDepositStatus->setStyleSheet(inputStyle);
+
   formLayout->addRow(new QLabel("Customer ID:", addDialog), txtId);
   formLayout->addRow(new QLabel("Customer Name:", addDialog), txtCustomer);
   formLayout->addRow(new QLabel("Phone Number:", addDialog), txtPhone);
   formLayout->addRow(new QLabel("Room ID:", addDialog), txtRoom);
   formLayout->addRow(new QLabel("Check-In:", addDialog), dateCheckIn);
   formLayout->addRow(new QLabel("Check-Out:", addDialog), dateCheckOut);
+  formLayout->addRow(new QLabel("Deposit Amount:", addDialog), txtDepositAmount);
+  formLayout->addRow(new QLabel("Deposit Status:", addDialog), cbDepositStatus);
 
   // Tích điểm Membership
-  QCheckBox *chkMembership = new QCheckBox("Register Membership (Accumulate Points)", addDialog);
+  QCheckBox *chkMembership = new QCheckBox("Register Membership (Earn Points)", addDialog);
   chkMembership->setStyleSheet("color: #0f172a; font-weight: bold; font-size: 13px;");
   chkMembership->setChecked(false); // Mặc định là không tích điểm (Khách vãng lai)
   formLayout->addRow("", chkMembership);
@@ -759,6 +797,12 @@ void MainWindowController::showAddBookingDialog() {
       return;
     }
 
+    double depositAmt = txtDepositAmount->text().toDouble();
+    QString depositStatusStr = cbDepositStatus->currentText();
+    if (depositAmt > 0 && depositStatusStr == "NONE") {
+      depositStatusStr = "HELD";
+    }
+
     BookingRepository bookingRepository;
     BookingData bookingData;
     bookingData.customerId = realCustomerId;
@@ -766,6 +810,8 @@ void MainWindowController::showAddBookingDialog() {
     bookingData.checkInTime = checkInDate;
     bookingData.checkOutTime = checkOutDate;
     bookingData.totalPrice = doublePrice;
+    bookingData.depositAmount = depositAmt;
+    bookingData.depositStatus = depositStatusStr;
 
     if (!bookingRepository.add(bookingData)) {
       db.rollback();
