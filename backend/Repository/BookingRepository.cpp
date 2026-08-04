@@ -490,6 +490,10 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
       finalStatus = "UNCONFIRMED";
     }
   }
+  if ((finalStatus.isEmpty() || finalStatus == "UNCONFIRMED") &&
+      (depositAmount > 0.0 || depositStatusStr == "HELD")) {
+    finalStatus = "CONFIRMED";
+  }
 
   // 5. Execute SQL Update
   QSqlQuery query(db);

@@ -35,7 +35,7 @@ void MainWindowController::showBookingTab() {
       "check_in_time AS 'Check-in', check_out_time AS 'Check-out', status AS "
       "'Status', "
       "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit Status', "
-      "total_price AS 'Total Price (VND)' FROM Bookings ORDER BY check_in_time "
+      "total_price AS 'Total Price' FROM Bookings ORDER BY check_in_time "
       "DESC, id DESC";
 
   Backend::loadTableData(tableBooking, bookingQuery);
@@ -120,19 +120,27 @@ void MainWindowController::showUpdateBookingDialog() {
 
   QDateEdit *dateCheckIn = new QDateEdit(QDate::currentDate(), dialog);
   dateCheckIn->setCalendarPopup(true);
-  dateCheckIn->setStyleSheet(inputStyle);
+  dateCheckIn->setEnabled(false);
+  dateCheckIn->setReadOnly(true);
+  dateCheckIn->setStyleSheet(
+      inputStyle + "QDateEdit { background-color: #e2e8f0; color: #475569; }");
 
   QDateEdit *dateCheckOut =
       new QDateEdit(QDate::currentDate().addDays(1), dialog);
   dateCheckOut->setCalendarPopup(true);
-  dateCheckOut->setStyleSheet(inputStyle);
+  dateCheckOut->setEnabled(false);
+  dateCheckOut->setReadOnly(true);
+  dateCheckOut->setStyleSheet(
+      inputStyle + "QDateEdit { background-color: #e2e8f0; color: #475569; }");
 
   QComboBox *cbStatus = new QComboBox(dialog);
   cbStatus->addItems({"UNCONFIRMED", "CONFIRMED", "CHECKED_IN", "CHECKED_OUT"});
-  cbStatus->setStyleSheet(inputStyle);
+  cbStatus->setEnabled(false);
+  cbStatus->setStyleSheet(
+      inputStyle + "QComboBox { background-color: #e2e8f0; color: #475569; }");
 
   QLineEdit *txtDepositAmount = new QLineEdit(dialog);
-  txtDepositAmount->setPlaceholderText("Deposit Amount (VND)...");
+  txtDepositAmount->setPlaceholderText("Deposit Amount...");
   txtDepositAmount->setStyleSheet(inputStyle);
 
   QComboBox *cbDepositStatus = new QComboBox(dialog);
@@ -231,6 +239,9 @@ void MainWindowController::showUpdateBookingDialog() {
     if (depositAmt > 0 && depositStatusStr == "NONE") {
       depositStatusStr = "HELD";
     }
+    if ((depositAmt > 0 || depositStatusStr == "HELD") && statusStr == "UNCONFIRMED") {
+      statusStr = "CONFIRMED";
+    }
 
     QDateTime inDT = QDateTime::fromString(checkInStr, "yyyy-MM-dd hh:mm:ss");
     QDateTime outDT = QDateTime::fromString(checkOutStr, "yyyy-MM-dd hh:mm:ss");
@@ -250,7 +261,7 @@ void MainWindowController::showUpdateBookingDialog() {
           "check_out_time AS 'Check-Out', status AS 'Status', "
           "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit "
           "Status', "
-          "total_price AS 'Total Price (VND)' FROM Bookings "
+          "total_price AS 'Total Price' FROM Bookings "
           "ORDER BY check_in_time DESC, id DESC");
       dialog->accept();
     } else {
@@ -368,7 +379,7 @@ void MainWindowController::showDeleteBookingDialog() {
           "check_out_time AS 'Check-Out', status AS 'Status', "
           "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit "
           "Status', "
-          "total_price AS 'Total Price (VND)' FROM Bookings "
+          "total_price AS 'Total Price' FROM Bookings "
           "ORDER BY check_in_time DESC, id DESC");
       Backend::loadTableData(
           tableRoom,
@@ -506,7 +517,7 @@ void MainWindowController::showFilterBookingDialog() {
         "check_out_time AS 'Check-Out', status AS 'Status', "
         "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit "
         "Status', "
-        "total_price AS 'Total Price (VND)' FROM Bookings "
+        "total_price AS 'Total Price' FROM Bookings "
         "ORDER BY check_in_time DESC, id DESC");
     dialog->accept();
   });
@@ -524,7 +535,7 @@ void MainWindowController::showFilterBookingDialog() {
         "check_out_time AS 'Check-out', status AS 'Status', "
         "deposit_amount AS 'Deposit Amount', deposit_status AS 'Deposit "
         "Status', "
-        "total_price AS 'Total Price (VND)' "
+        "total_price AS 'Total Price' "
         "FROM Bookings WHERE 1=1";
 
     if (!custIdStr.isEmpty()) {
@@ -631,7 +642,7 @@ void MainWindowController::showAddBookingDialog() {
   dateCheckOut->setStyleSheet(inputStyle);
 
   QLineEdit *txtDepositAmount = new QLineEdit(addDialog);
-  txtDepositAmount->setPlaceholderText("Deposit Amount (VND)...");
+  txtDepositAmount->setPlaceholderText("Deposit Amount...");
   txtDepositAmount->setText("0");
   txtDepositAmount->setStyleSheet(inputStyle);
 

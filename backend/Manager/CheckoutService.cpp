@@ -154,11 +154,13 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
                        ? qMax(1, checkIn.daysTo(expectedCheckOut))
                        : 1;
 
-  const double bookedRoomPrice = query.value("total_price").toDouble();
   const double currentBasePrice = query.value("base_price").toDouble();
-  booking.roomCharge = bookedRoomPrice > 0.0
-                           ? bookedRoomPrice
-                           : currentBasePrice * booking.nights;
+  const double bookedRoomPrice = query.value("total_price").toDouble();
+  if (currentBasePrice > 0.0) {
+    booking.roomCharge = currentBasePrice * booking.nights;
+  } else {
+    booking.roomCharge = bookedRoomPrice;
+  }
 
   const QString depositStatus = query.value("deposit_status").toString();
   booking.deposit = depositStatus == "HELD"
@@ -188,10 +190,11 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
     CheckoutServicePreview service;
     service.name = servicesQuery.value("item_name").toString();
     service.quantity = servicesQuery.value("quantity").toInt();
-    
+
     double finalPrice = servicesQuery.value("final_price").toDouble();
-    service.unitPrice = service.quantity > 0 ? (finalPrice / service.quantity) : 0.0;
-    
+    service.unitPrice =
+        service.quantity > 0 ? (finalPrice / service.quantity) : 0.0;
+
     booking.services.append(service);
     booking.serviceCharge += finalPrice;
   }
@@ -230,7 +233,8 @@ CheckoutService::getActiveBookings(QString *errorMessage) {
   return bookings;
 }
 
-CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMethod) {
+CheckoutResult CheckoutService::checkout(int bookingId,
+                                         const QString &paymentMethod) {
   CheckoutResult result;
   if (bookingId <= 0 || paymentMethod.trimmed().isEmpty()) {
     result.errorMessage = "A booking and payment method are required.";
@@ -259,7 +263,8 @@ CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMe
   };
 
   QSqlQuery existingBill(db);
-  existingBill.prepare("SELECT 1 FROM Bills WHERE booking_id = :booking_id LIMIT 1");
+  existingBill.prepare(
+      "SELECT 1 FROM Bills WHERE booking_id = :booking_id LIMIT 1");
   existingBill.bindValue(":booking_id", bookingId);
   if (!existingBill.exec()) {
     rollbackWithError(existingBill.lastError().text());
@@ -284,20 +289,17 @@ CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMe
   insertBill.bindValue(":discount_amount", booking->discount);
   insertBill.bindValue(":deposit_amount", booking->deposit);
   insertBill.bindValue(":payment_method", paymentMethod.trimmed());
-  insertBill.bindValue(
-      ":checkout_time",
-      QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"));
+  insertBill.bindValue(":checkout_time", QDateTime::currentDateTime().toString(
+                                             "yyyy-MM-dd HH:mm:ss"));
   if (!insertBill.exec()) {
     rollbackWithError(insertBill.lastError().text());
     return result;
   }
 
   QSqlQuery updateBooking(db);
-  updateBooking.prepare("UPDATE Bookings SET status = 'CHECKED_OUT', "
-                        "total_price = :final_total "
+  updateBooking.prepare("UPDATE Bookings SET status = 'CHECKED_OUT' "
                         "WHERE id = :booking_id AND COALESCE(status, "
                         "'UNCONFIRMED') <> 'CHECKED_OUT'");
-  updateBooking.bindValue(":final_total", qMax(0.0, booking->roomCharge + booking->serviceCharge - booking->discount));
   updateBooking.bindValue(":booking_id", booking->bookingId);
   if (!updateBooking.exec() || updateBooking.numRowsAffected() != 1) {
     rollbackWithError(updateBooking.lastError().isValid()
@@ -321,7 +323,8 @@ CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMe
   // Update customer loyalty points and tier
   if (booking->customerType == -1) {
     QSqlQuery updateBookingCustomer(db);
-    updateBookingCustomer.prepare("UPDATE Bookings SET customer_id = 0 WHERE id = :booking_id");
+    updateBookingCustomer.prepare(
+        "UPDATE Bookings SET customer_id = 0 WHERE id = :booking_id");
     updateBookingCustomer.bindValue(":booking_id", booking->bookingId);
     if (!updateBookingCustomer.exec()) {
       rollbackWithError(updateBookingCustomer.lastError().text());
@@ -329,42 +332,49 @@ CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMe
     }
 
     QSqlQuery deleteCustomer(db);
-    deleteCustomer.prepare("DELETE FROM Customer WHERE id = :customer_id OR id_customer = :customer_id_str");
+    deleteCustomer.prepare("DELETE FROM Customer WHERE id = :customer_id");
     deleteCustomer.bindValue(":customer_id", booking->customerId);
-    deleteCustomer.bindValue(":customer_id_str", QString::number(booking->customerId));
     if (!deleteCustomer.exec()) {
       rollbackWithError(deleteCustomer.lastError().text());
       return result;
     }
-  } 
-  else if (booking->customerId > 0) {
+  } else if (booking->customerId > 0) {
     int bonusPoints = static_cast<int>(booking->totalAmount / 1000000.0);
     if (bonusPoints > 0) {
       int currentPoints = 0;
-      
+      int currentTier = 0;
       {
         QSqlQuery getPoints(db);
-        getPoints.prepare("SELECT Point FROM Customer WHERE id = :customer_id");
+        getPoints.prepare(
+            "SELECT Point, Type FROM Customer WHERE id = :customer_id");
         getPoints.bindValue(":customer_id", booking->customerId);
         if (getPoints.exec() && getPoints.next()) {
-            currentPoints = getPoints.value(0).toInt();
+          currentPoints = getPoints.value(0).toInt();
+          currentTier = getPoints.value(1).toInt();
         }
       }
 
-      // Tính Rank bằng C++
+      // Tính hạng nhảy cóc dựa trên tổng điểm mới
       int newPoints = currentPoints + bonusPoints;
-      int newTier = 0; // Default Unknown
-      if (newPoints >= 50) newTier = 3;       // Platinum
-      else if (newPoints >= 20) newTier = 2;  // Gold
-      else if (newPoints >= 5) newTier = 1;   // Silver
+      int calculatedTier = 0; // Default Unknown
+      if (newPoints >= 50)
+        calculatedTier = 3; // Platinum
+      else if (newPoints >= 20)
+        calculatedTier = 2; // Gold
+      else if (newPoints >= 5)
+        calculatedTier = 1; // Silver
+
+      // BẢO VỆ RỚT HẠNG: Hạng chỉ có tăng lên hoặc giữ nguyên
+      int newTier = std::max(currentTier, calculatedTier);
 
       // Cập nhật vào DB an toàn
       QSqlQuery updatePoints(db);
-      updatePoints.prepare("UPDATE Customer SET Point = :newPoints, Type = :newTier WHERE id = :customer_id");
+      updatePoints.prepare("UPDATE Customer SET Point = :newPoints, Type = "
+                           ":newTier WHERE id = :customer_id");
       updatePoints.bindValue(":newPoints", newPoints);
       updatePoints.bindValue(":newTier", newTier);
       updatePoints.bindValue(":customer_id", booking->customerId);
-      
+
       if (!updatePoints.exec()) {
         rollbackWithError(updatePoints.lastError().text());
         return result;

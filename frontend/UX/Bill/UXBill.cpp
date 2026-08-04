@@ -33,7 +33,7 @@ struct BillFilter {
 };
 
 QString formatMoney(double amount) {
-  return QLocale(QLocale::English).toString(amount, 'f', 0) + " VND";
+  return QLocale(QLocale::English).toString(amount, 'f', 0);
 }
 
 bool loadBills(QTableWidget *table, const BillFilter &filter,

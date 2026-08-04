@@ -31,7 +31,7 @@ void MainWindowController::showInventoryTab() {
   QString inventoryQuery =
       "SELECT item_id AS 'Item ID', item_name AS 'Item Name', "
       "COALESCE(item_type, 'N/A') AS 'Category', "
-      "quantity AS 'Quantity', price AS 'Price (VND)', "
+      "quantity AS 'Quantity', price AS 'Price', "
       "COALESCE(minimum_quantity_required, 0) AS 'Min Required' FROM Inventory";
   Backend::loadTableData(tableInventory, inventoryQuery);
 
@@ -161,7 +161,7 @@ void MainWindowController::AddInventoryClick() {
   spinQty->setStyleSheet(inputStyle);
 
   QLineEdit *txtPrice = new QLineEdit(dialog);
-  txtPrice->setPlaceholderText("Price (VND)...");
+  txtPrice->setPlaceholderText("Price...");
   txtPrice->setStyleSheet(inputStyle);
 
   // Minimum quantity required để trigger cảnh báo
@@ -176,7 +176,7 @@ void MainWindowController::AddInventoryClick() {
   formLayout->addRow("Item Type:", cbType);
   formLayout->addRow("Category:", cbCategory);
   formLayout->addRow("Quantity:", spinQty);
-  formLayout->addRow("Price (VND):", txtPrice);
+  formLayout->addRow("Price:", txtPrice);
   formLayout->addRow("Min. Stock Alert:", spinMinQty);
 
   // Note for Min Stock Alert
@@ -296,7 +296,7 @@ void MainWindowController::UpdateInventoryClick() {
 
   formLayout->addRow("Item Name:", lblName);
   formLayout->addRow("New Quantity:", spinQty);
-  formLayout->addRow("New Price (VND):", txtPrice);
+  formLayout->addRow("New Price:", txtPrice);
   mainLayout->addLayout(formLayout);
 
   QHBoxLayout *buttonLayout = new QHBoxLayout();
@@ -455,7 +455,7 @@ void MainWindowController::FilterInventoryClick() {
   QString baseSelect =
       "SELECT item_id AS 'Item ID', item_name AS 'Item Name', "
       "COALESCE(item_type, 'N/A') AS 'Category', "
-      "quantity AS 'Quantity', price AS 'Price (VND)', "
+      "quantity AS 'Quantity', price AS 'Price', "
       "COALESCE(minimum_quantity_required, 0) AS 'Min Required' FROM Inventory";
 
   // Nút tắt lọc về default

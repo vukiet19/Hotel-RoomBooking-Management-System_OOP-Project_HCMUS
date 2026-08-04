@@ -30,7 +30,7 @@ QString formatCleanDate(QString dtStr) {
 }
 
 QString formatMoney(double amount) {
-  return QString("%1 VND").arg(amount, 0, 'f', 0);
+  return QString("%1").arg(amount, 0, 'f', 0);
 }
 
 QLabel *createFieldLabel(const QString &text, QWidget *parent) {

@@ -8,7 +8,6 @@
 #include "cores/Booking/Booking.h"
 #include "cores/Customer/Customer.h"
 #include "cores/Room/Room.h"
-#include "frontend/UI/Login/Login.h"
 #include <QDate>
 #include <QDebug>
 #include <QFormLayout>
@@ -133,9 +132,11 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   form->addRow(lblPeople, spinPeople);
 
   // Checkbox chọn tích điểm hay không
-  chkMembership = new QCheckBox("Register for Membership (Accumulate Points)", this);
-  chkMembership->setStyleSheet("color: #475569; font-weight: bold; font-size: 14px;");
-  chkMembership->setChecked(false); 
+  chkMembership =
+      new QCheckBox("Register for Membership (Accumulate Points)", this);
+  chkMembership->setStyleSheet(
+      "color: #475569; font-weight: bold; font-size: 14px;");
+  chkMembership->setChecked(false);
   form->addRow("", chkMembership);
 
   layout->addLayout(form);
@@ -166,7 +167,7 @@ void CustomerInputWindow::onNextClicked() {
     QMessageBox::warning(this, "Warning", "Please input name and phone");
     return;
   }
-  
+
   QString customerName = txtName->text().trimmed();
   QString customerPhone = txtPhone->text().trimmed();
 
@@ -205,14 +206,16 @@ void CustomerInputWindow::onNextClicked() {
   QString name = txtName->text().trimmed();
   QString phone = txtPhone->text().trimmed();
   QString id = ID->text().trimmed();
-  QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
-  QString checkOutDate = datecheckout->date().toString("yyyy-MM-dd") + " 12:00:00";
+  QString checkInDate =
+      dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
+  QString checkOutDate =
+      datecheckout->date().toString("yyyy-MM-dd") + " 12:00:00";
   int people = spinPeople->value();
   bool isMem = chkMembership->isChecked();
 
   // Mở Window tìm phòng và truyền dữ liệu sang
-  CustomerWindow *roomWindow =
-      new CustomerWindow(name, phone, id, checkInDate, checkOutDate, people, isMem);
+  CustomerWindow *roomWindow = new CustomerWindow(name, phone, id, checkInDate,
+                                                  checkOutDate, people, isMem);
   roomWindow->show();
 
   // Đóng Window
@@ -222,10 +225,11 @@ void CustomerInputWindow::onNextClicked() {
 // Hàm này là constructor của UI chọn phòng( nhận input là các thông tin
 // customer)
 CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
-                               QString date, QString dateout, int people, bool isMem,
-                               QWidget *parent)
+                               QString date, QString dateout, int people,
+                               bool isMem, QWidget *parent)
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone),
-      checkInDate(date), datecheckout(dateout), numPeople(people), isMembership(isMem) {
+      checkInDate(date), datecheckout(dateout), numPeople(people),
+      isMembership(isMem) {
   setFixedSize(850, 650);
   setWindowTitle("Select a Room");
 
@@ -312,7 +316,8 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
   layout->addWidget(tableRoom);
 
   chkDeposit = new QCheckBox("Pay Deposit (Base Room Rate)", this);
-  chkDeposit->setStyleSheet("color: #475569; font-weight: bold; font-size: 14px; background: transparent;");
+  chkDeposit->setStyleSheet("color: #475569; font-weight: bold; font-size: "
+                            "14px; background: transparent;");
   chkDeposit->setChecked(false);
   layout->addWidget(chkDeposit);
 
@@ -363,12 +368,7 @@ void CustomerWindow::loadFilteredRooms() {
     tableRoom->setItem(row, 0, new QTableWidgetItem(query.value(0).toString()));
     tableRoom->setItem(row, 1, new QTableWidgetItem(query.value(1).toString()));
     tableRoom->setItem(row, 2, new QTableWidgetItem(query.value(2).toString()));
-
-    double priceVal = query.value(3).toDouble();
-    QString formattedPrice = (priceVal == std::floor(priceVal))
-                                 ? QString::number(static_cast<long long>(priceVal))
-                                 : QString::number(priceVal, 'f', 2);
-    tableRoom->setItem(row, 3, new QTableWidgetItem(formattedPrice));
+    tableRoom->setItem(row, 3, new QTableWidgetItem(query.value(3).toString()));
     tableRoom->setItem(row, 4, new QTableWidgetItem(query.value(4).toString()));
     row++;
   }
@@ -394,18 +394,22 @@ void CustomerWindow::onBookRoomClicked() {
   }
 
   QSqlQuery roomCheck(db);
-  roomCheck.prepare("SELECT status FROM ListRooms WHERE room_id = :rm OR room_number = :rm");
+  roomCheck.prepare(
+      "SELECT status FROM ListRooms WHERE room_id = :rm OR room_number = :rm");
   roomCheck.bindValue(":rm", roomId);
   if (!roomCheck.exec() || !roomCheck.next()) {
-    QMessageBox::warning(this, "Room Error",
-                         QString("Room '%1' does not exist in the database!").arg(roomId));
+    QMessageBox::warning(
+        this, "Room Error",
+        QString("Room '%1' does not exist in the database!").arg(roomId));
     return;
   }
   QString st = roomCheck.value(0).toString().trimmed();
   if (st.compare("Available", Qt::CaseInsensitive) != 0 &&
       st.compare("AVAILABLE", Qt::CaseInsensitive) != 0) {
-    QMessageBox::warning(this, "Room Error",
-                         QString("Room '%1' is currently %2 and not available for booking!").arg(roomId, st.isEmpty() ? "Unavailable" : st));
+    QMessageBox::warning(
+        this, "Room Error",
+        QString("Room '%1' is currently %2 and not available for booking!")
+            .arg(roomId, st.isEmpty() ? "Unavailable" : st));
     return;
   }
 
@@ -425,13 +429,13 @@ void CustomerWindow::onBookRoomClicked() {
 
   // Tạo query kiểm tra query có tồn tại trong database chưa( có rồi thì copy
   // point)
-  QString sqlString =
-      QString(
-          "SELECT id, id_customer, Point, Type FROM Customer WHERE id_customer = '%1'")
-          .arg(ID);
+  QString sqlString = QString("SELECT id, id_customer, Point, Type FROM "
+                              "Customer WHERE id_customer = '%1'")
+                          .arg(ID);
   checkCustomer.exec(sqlString);
 
-  int currentTierVal = static_cast<int>(this->isMembership ? MembershipTier::Unknown : MembershipTier::Temporary);
+  int currentTierVal = static_cast<int>(
+      this->isMembership ? MembershipTier::Unknown : MembershipTier::Temporary);
 
   // Kiểm tra xem có tồn tại không
   if (checkCustomer.next()) {
@@ -441,10 +445,11 @@ void CustomerWindow::onBookRoomClicked() {
     int dbTier = checkCustomer.value("Type").toInt();
     // Nếu khách hàng trong db đã là member (Tier >= 0), giữ nguyên tier của họ.
     if (dbTier >= 0) {
-        currentTierVal = dbTier;
+      currentTierVal = dbTier;
     } else if (this->isMembership) {
-        // Nếu db là Temporary (-1) nhưng lần này họ tick Membership, thì upgrade lên Unknown (0)
-        currentTierVal = static_cast<int>(MembershipTier::Unknown);
+      // Nếu db là Temporary (-1) nhưng lần này họ tick Membership, thì upgrade
+      // lên Unknown (0)
+      currentTierVal = static_cast<int>(MembershipTier::Unknown);
     }
     isExistingCustomer = true;
   }
@@ -454,9 +459,6 @@ void CustomerWindow::onBookRoomClicked() {
   newCustomer.setPhone(customerPhone.toStdString());
   newCustomer.setPoint(currentPoints);
   newCustomer.setIdroom(roomId.toStdString());
-
-  // Set tier cho Customer
-  newCustomer.setTier(static_cast<MembershipTier>(currentTierVal));
 
   // add hoặc update vào database
   if (isExistingCustomer) {
@@ -474,7 +476,8 @@ void CustomerWindow::onBookRoomClicked() {
       return;
     }
     QSqlQuery newCustQuery(db);
-    newCustQuery.prepare("SELECT id FROM Customer WHERE id_customer = :id_cust");
+    newCustQuery.prepare(
+        "SELECT id FROM Customer WHERE id_customer = :id_cust");
     newCustQuery.bindValue(":id_cust", finalCustomerId);
     if (newCustQuery.exec() && newCustQuery.next()) {
       realCustomerId = newCustQuery.value("id").toInt();
@@ -521,8 +524,10 @@ void CustomerWindow::onBookRoomClicked() {
   if (db.commit()) {
     QString infoText =
         isExistingCustomer
-            ? QString("Welcome back %1!\nYour booking is complete.").arg(customerName)
-            : QString("Thank you %1!\nBooking created successfully.").arg(customerName);
+            ? QString("Welcome back %1!\nYour booking is complete.")
+                  .arg(customerName)
+            : QString("Thank you %1!\nBooking created successfully.")
+                  .arg(customerName);
 
     QMessageBox msgBox(this);
     msgBox.setWindowTitle("Success");
@@ -536,8 +541,6 @@ void CustomerWindow::onBookRoomClicked() {
         "border-radius: 4px; border: none; font-weight: bold; }");
     msgBox.exec();
 
-    LoginWindow *loginWin = new LoginWindow();
-    loginWin->show();
     this->close();
   } else {
     db.rollback();

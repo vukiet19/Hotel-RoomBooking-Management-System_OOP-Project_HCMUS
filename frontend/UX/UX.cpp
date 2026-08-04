@@ -129,11 +129,11 @@ void MainWindowController::handleDashboardTab() {
   if (lblTodayBookings)
     lblTodayBookings->setText(QString::number(todayBookings));
   if (lblDailyRevenue)
-    lblDailyRevenue->setText(formatPrice(dailyRevenue) + " VND");
+    lblDailyRevenue->setText(formatPrice(dailyRevenue));
   if (lblMonthlyRevenue)
-    lblMonthlyRevenue->setText(formatPrice(monthlyRevenue) + " VND");
+    lblMonthlyRevenue->setText(formatPrice(monthlyRevenue));
   if (lblYearlyRevenue)
-    lblYearlyRevenue->setText(formatPrice(yearlyRevenue) + " VND");
+    lblYearlyRevenue->setText(formatPrice(yearlyRevenue));
 
   btnUpdate->disconnect();
   btnDelete->disconnect();
@@ -373,18 +373,17 @@ void MainWindowController::onBookingStatusObserved(
   if (lblTodayBookings)
     lblTodayBookings->setText(QString::number(todayBookings));
   if (lblDailyRevenue)
-    lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2) + " VND");
+    lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2));
   if (lblMonthlyRevenue)
-    lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2) +
-                               " VND");
+    lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2));
   if (lblYearlyRevenue)
-    lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
+    lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2));
 
   if (tableBooking) {
     Backend::loadTableData(
         tableBooking,
         "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number "
         "AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS "
-        "'Check-Out', total_price AS 'Total Price (VND)' FROM Bookings");
+        "'Check-Out', total_price AS 'Total Price' FROM Bookings");
   }
 }
