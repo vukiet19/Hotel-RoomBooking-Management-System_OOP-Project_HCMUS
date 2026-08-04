@@ -551,31 +551,33 @@ void MainWindowController::showFilterBookingDialog() {
 void MainWindowController::showAddBookingDialog() {
   QDialog *addDialog = new QDialog(this);
   addDialog->setWindowTitle("Add Booking");
-  addDialog->setFixedSize(520, 680);
+  addDialog->setFixedSize(500, 470);
 
   addDialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
       "#f0f9ff, stop:1 #ffffff); }"
-      "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
+      "QLabel { color: #1e293b; font-weight: bold; font-size: 13px; }");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(addDialog);
-  mainLayout->setContentsMargins(30, 30, 30, 30);
+  mainLayout->setContentsMargins(25, 18, 25, 18);
 
-  QLabel *titleLabel = new QLabel("Booking Information", addDialog);
-  titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: "
-                            "#3730a3; margin-bottom: 20px;");
+  QLabel *titleLabel = new QLabel("BOOKING INFORMATION", addDialog);
+  titleLabel->setStyleSheet("font-size: 20px; font-weight: 800; color: "
+                            "#3730a3; margin-bottom: 8px; letter-spacing: 1px;");
   mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
   QFormLayout *formLayout = new QFormLayout();
-  formLayout->setSpacing(15);
+  formLayout->setSpacing(8);
+  formLayout->setLabelAlignment(Qt::AlignLeft);
+  formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
 
   QString inputStyle =
       "QLineEdit, QComboBox, QDateEdit {"
       "   background-color: #ffffff; "
       "   border: 2px solid #38bdf8; "
-      "   border-radius: 8px; "
-      "   padding: 8px; "
-      "   font-size: 14px; "
+      "   border-radius: 6px; "
+      "   padding: 5px 8px; "
+      "   font-size: 13px; "
       "   color: #0f172a; "
       "}"
       "QLineEdit:hover, QComboBox:hover, QDateEdit:hover { border: 2px solid #0284c7; }"
@@ -618,14 +620,30 @@ void MainWindowController::showAddBookingDialog() {
   dateCheckOut->setCalendarPopup(true);
   dateCheckOut->setStyleSheet(inputStyle);
 
-  QLineEdit *txtDepositAmount = new QLineEdit(addDialog);
-  txtDepositAmount->setPlaceholderText("Deposit Amount (VND)...");
-  txtDepositAmount->setText("0");
-  txtDepositAmount->setStyleSheet(inputStyle);
+  for (QWidget *w : std::initializer_list<QWidget*>{txtId, txtCustomer, txtPhone, txtRoom, dateCheckIn, dateCheckOut}) {
+    w->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+  }
 
-  QComboBox *cbDepositStatus = new QComboBox(addDialog);
-  cbDepositStatus->addItems({"NONE", "HELD", "RETURNED"});
-  cbDepositStatus->setStyleSheet(inputStyle);
+  QString checkBoxStyle =
+      "QCheckBox { color: #0f172a; font-weight: bold; font-size: 13px; spacing: 8px; background: transparent; margin-top: 8px; }"
+      "QCheckBox::indicator { width: 18px; height: 18px; border: 2px solid #38bdf8; border-radius: 4px; background-color: #ffffff; }"
+      "QCheckBox::indicator:hover { border-color: #0284c7; }"
+      "QCheckBox::indicator:checked { background-color: #0369a1; border-color: #0369a1; image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>\"); }";
+
+  QCheckBox *chkDeposit = new QCheckBox("Yes (Base Room Rate)", addDialog);
+  chkDeposit->setStyleSheet(checkBoxStyle);
+  chkDeposit->setChecked(false);
+
+  // Tích điểm Membership
+  QCheckBox *chkMembership = new QCheckBox("Register & Earn Points", addDialog);
+  chkMembership->setStyleSheet(checkBoxStyle);
+  chkMembership->setChecked(false);
+
+  QLabel *lblDeposit = new QLabel("Pay Deposit:", addDialog);
+  lblDeposit->setStyleSheet("color: #1e293b; font-weight: bold; font-size: 13px; margin-top: 8px;");
+
+  QLabel *lblMembership = new QLabel("Membership:", addDialog);
+  lblMembership->setStyleSheet("color: #1e293b; font-weight: bold; font-size: 13px; margin-top: 8px;");
 
   formLayout->addRow(new QLabel("Customer ID:", addDialog), txtId);
   formLayout->addRow(new QLabel("Customer Name:", addDialog), txtCustomer);
@@ -633,14 +651,8 @@ void MainWindowController::showAddBookingDialog() {
   formLayout->addRow(new QLabel("Room ID:", addDialog), txtRoom);
   formLayout->addRow(new QLabel("Check-In:", addDialog), dateCheckIn);
   formLayout->addRow(new QLabel("Check-Out:", addDialog), dateCheckOut);
-  formLayout->addRow(new QLabel("Deposit Amount:", addDialog), txtDepositAmount);
-  formLayout->addRow(new QLabel("Deposit Status:", addDialog), cbDepositStatus);
-
-  // Tích điểm Membership
-  QCheckBox *chkMembership = new QCheckBox("Register Membership (Earn Points)", addDialog);
-  chkMembership->setStyleSheet("color: #0f172a; font-weight: bold; font-size: 13px;");
-  chkMembership->setChecked(false); // Mặc định là không tích điểm (Khách vãng lai)
-  formLayout->addRow("", chkMembership);
+  formLayout->addRow(lblDeposit, chkDeposit);
+  formLayout->addRow(lblMembership, chkMembership);
   
   mainLayout->addLayout(formLayout);
 
@@ -670,10 +682,10 @@ void MainWindowController::showAddBookingDialog() {
   connect(btnCancel, &QPushButton::clicked, addDialog, &QDialog::reject);
 
   connect(btnSave, &QPushButton::clicked, [=]() {
-    QString id = txtId->text();
-    QString customer = txtCustomer->text();
-    QString phone = txtPhone->text();
-    QString room = txtRoom->text();
+    QString id = txtId->text().trimmed();
+    QString customer = txtCustomer->text().trimmed();
+    QString phone = txtPhone->text().trimmed();
+    QString room = txtRoom->text().trimmed();
 
     if (id.toStdString().size() != 10) {
       QMessageBox::warning(this, "Input Error",
@@ -703,66 +715,72 @@ void MainWindowController::showAddBookingDialog() {
       }
     }
 
+    if (chkDeposit->isChecked() && room.isEmpty()) {
+      QMessageBox::warning(addDialog, "Deposit Error",
+                           "Please enter a valid Room ID to pay a deposit for the room.");
+      return;
+    }
+
     QString checkInDate = dateCheckIn->date().toString("yyyy-MM-dd") + " 14:00:00";
     QString checkOutDate = dateCheckOut->date().toString("yyyy-MM-dd") + " 12:00:00";
 
-    if (id.isEmpty() || customer.isEmpty() || phone.isEmpty() ||
-        room.isEmpty()) {
+    if (id.isEmpty() || customer.isEmpty() || phone.isEmpty()) {
       QMessageBox::warning(addDialog, "Error",
-                           "Please fill in all customer and room details!");
+                           "Please fill in customer details (ID, Name, Phone)!");
       return;
     }
 
     QSqlDatabase db = DatabaseManager::instance().database();
-
-    // 1. Check if room number/ID exists and is available
-    QSqlQuery checkRoomExist(db);
-    checkRoomExist.prepare("SELECT status FROM ListRooms WHERE room_id = :rm "
-                           "OR room_number = :rm");
-    checkRoomExist.bindValue(":rm", room);
-    if (!checkRoomExist.exec() || !checkRoomExist.next()) {
-      QMessageBox::warning(
-          addDialog, "Room Error",
-          QString("Room number/ID '%1' does not exist in the system!")
-              .arg(room));
-      return;
-    }
-
-    QString currentRmStatus = checkRoomExist.value(0).toString().trimmed();
-    if (currentRmStatus.compare("Available", Qt::CaseInsensitive) != 0 &&
-        currentRmStatus.compare("AVAILABLE", Qt::CaseInsensitive) != 0) {
-      QMessageBox::warning(
-          addDialog, "Room Error",
-          QString("Room '%1' is currently %2 and not available for booking!")
-              .arg(room, currentRmStatus.isEmpty() ? "Unavailable" : currentRmStatus));
-      return;
-    }
-
     double doublePrice = 0.0;
 
-    RoomRepository roomRepo;
-    Room *roomObj = roomRepo.getById(room.toStdString());
-    if (roomObj) {
-      doublePrice = roomObj->getBasePrice();
-      delete roomObj;
-    } else {
-      QSqlQuery rq(db);
-      rq.prepare("SELECT base_price FROM ListRooms WHERE room_id = :rm OR "
-                 "room_number = :rm");
-      rq.bindValue(":rm", room);
-      if (rq.exec() && rq.next()) {
-        doublePrice = rq.value(0).toDouble();
+    // 1. If room number/ID is provided, check if room exists and is available
+    if (!room.isEmpty()) {
+      QSqlQuery checkRoomExist(db);
+      checkRoomExist.prepare("SELECT status FROM ListRooms WHERE room_id = :rm "
+                             "OR room_number = :rm");
+      checkRoomExist.bindValue(":rm", room);
+      if (!checkRoomExist.exec() || !checkRoomExist.next()) {
+        QMessageBox::warning(
+            addDialog, "Room Error",
+            QString("Room number/ID '%1' does not exist in the system!")
+                .arg(room));
+        return;
       }
-    }
-    if (doublePrice <= 0.0) {
-      QSqlQuery catalogQuery(db);
-      catalogQuery.prepare(
-          "SELECT R.base_price FROM ListRooms L "
-          "JOIN RoomTypeCatalog R ON L.room_type = R.room_type "
-          "WHERE L.room_id = :rm OR L.room_number = :rm");
-      catalogQuery.bindValue(":rm", room);
-      if (catalogQuery.exec() && catalogQuery.next()) {
-        doublePrice = catalogQuery.value(0).toDouble();
+
+      QString currentRmStatus = checkRoomExist.value(0).toString().trimmed();
+      if (currentRmStatus.compare("Available", Qt::CaseInsensitive) != 0 &&
+          currentRmStatus.compare("AVAILABLE", Qt::CaseInsensitive) != 0) {
+        QMessageBox::warning(
+            addDialog, "Room Error",
+            QString("Room '%1' is currently %2 and not available for booking!")
+                .arg(room, currentRmStatus.isEmpty() ? "Unavailable" : currentRmStatus));
+        return;
+      }
+
+      RoomRepository roomRepo;
+      Room *roomObj = roomRepo.getById(room.toStdString());
+      if (roomObj) {
+        doublePrice = roomObj->getBasePrice();
+        delete roomObj;
+      } else {
+        QSqlQuery rq(db);
+        rq.prepare("SELECT base_price FROM ListRooms WHERE room_id = :rm OR "
+                   "room_number = :rm");
+        rq.bindValue(":rm", room);
+        if (rq.exec() && rq.next()) {
+          doublePrice = rq.value(0).toDouble();
+        }
+      }
+      if (doublePrice <= 0.0) {
+        QSqlQuery catalogQuery(db);
+        catalogQuery.prepare(
+            "SELECT R.base_price FROM ListRooms L "
+            "JOIN RoomTypeCatalog R ON L.room_type = R.room_type "
+            "WHERE L.room_id = :rm OR L.room_number = :rm");
+        catalogQuery.bindValue(":rm", room);
+        if (catalogQuery.exec() && catalogQuery.next()) {
+          doublePrice = catalogQuery.value(0).toDouble();
+        }
       }
     }
     
@@ -770,27 +788,17 @@ void MainWindowController::showAddBookingDialog() {
 
     CustomerRepository re;
     Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
-    a.setIdroom(room.toStdString());
+    if (!room.isEmpty()) {
+      a.setIdroom(room.toStdString());
+    }
 
     int realCustomerId = 0;
     
     QSqlQuery custQuery(db);
-    custQuery.prepare("SELECT id, id_customer, full_name, phone_number, Point, Type FROM Customer WHERE id_customer = :id_cust");
+    custQuery.prepare("SELECT id, Point, Type FROM Customer WHERE id_customer = :id_cust");
     custQuery.bindValue(":id_cust", id);
     
     if (custQuery.exec() && custQuery.next()) {
-      QString dbName = custQuery.value("full_name").toString();
-      QString dbPhone = custQuery.value("phone_number").toString();
-
-      // Kiểm tra 3 điều kiện: Tên, SĐT, CCCD
-      if (dbName.compare(customer, Qt::CaseInsensitive) != 0 || dbPhone != phone) {
-          db.rollback();
-          QMessageBox::warning(addDialog, "Verification Failed", 
-              "CCCD/ID này đã được đăng ký với một Tên hoặc Số Điện Thoại khác.\n"
-              "Cả 3 thông tin (ID, Tên, SĐT) phải trùng khớp 100%!");
-          return;
-      }
-
       a.setPoint(custQuery.value("Point").toInt());
       int dbTier = custQuery.value("Type").toInt();
       if (dbTier >= 0) {
@@ -818,11 +826,8 @@ void MainWindowController::showAddBookingDialog() {
       return;
     }
 
-    double depositAmt = txtDepositAmount->text().toDouble();
-    QString depositStatusStr = cbDepositStatus->currentText();
-    if (depositAmt > 0 && depositStatusStr == "NONE") {
-      depositStatusStr = "HELD";
-    }
+    double depositAmt = (chkDeposit->isChecked() && !room.isEmpty()) ? doublePrice : 0.0;
+    QString depositStatusStr = (depositAmt > 0.0) ? "HELD" : "NONE";
 
     BookingRepository bookingRepository;
     BookingData bookingData;
