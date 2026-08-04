@@ -433,15 +433,25 @@ void CustomerWindow::onBookRoomClicked() {
 
   // Kiểm tra xem có tồn tại không
   if (checkCustomer.next()) {
+    // Ràng buộc định danh khách hàng
+    QString dbName = checkCustomer.value("full_name").toString();
+    QString dbPhone = checkCustomer.value("phone_number").toString();
+
+    if (dbName.compare(customerName, Qt::CaseInsensitive) != 0 || dbPhone != customerPhone) {
+        db.rollback();
+        QMessageBox::warning(this, "Verification Failed", 
+            "CCCD/ID này đã được đăng ký với một Tên hoặc Số Điện Thoại khác.\n"
+            "Cả 3 thông tin (ID, Tên, SĐT) phải trùng khớp!");
+        return;
+    }
+
     realCustomerId = checkCustomer.value("id").toInt();
     finalCustomerId = checkCustomer.value("id_customer").toString();
     currentPoints = checkCustomer.value("Point").toInt();
     int dbTier = checkCustomer.value("Type").toInt();
-    // Nếu khách hàng trong db đã là member (Tier >= 0), giữ nguyên tier của họ.
     if (dbTier >= 0) {
         currentTierVal = dbTier;
     } else if (this->isMembership) {
-        // Nếu db là Temporary (-1) nhưng lần này họ tick Membership, thì upgrade lên Unknown (0)
         currentTierVal = static_cast<int>(MembershipTier::Unknown);
     }
     isExistingCustomer = true;

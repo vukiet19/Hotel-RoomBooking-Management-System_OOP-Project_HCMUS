@@ -1,6 +1,7 @@
 #include "backend/Manager/DatabaseManager.h"
 #include "backend/Repository/BookingRepository.h"
 #include "backend/Repository/ServiceItemRepository.h"
+#include "cores/Service/InventoryService.h"
 #include "frontend/UI/UI.h"
 #include "frontend/UX/UX.h"
 
@@ -220,12 +221,9 @@ void MainWindowController::showAddServiceToBookingDialog() {
   id->setReadOnly(true);
   name->setReadOnly(true);
   price->setReadOnly(true);
-  id->setStyleSheet(inputStyle() +
-                    "QLineEdit { background-color: #e2e8f0; color: #475569; }");
-  name->setStyleSheet(inputStyle() +
-                      "QLineEdit { background-color: #e2e8f0; color: #475569; }");
-  price->setStyleSheet(inputStyle() +
-                       "QLineEdit { background-color: #e2e8f0; color: #475569; }");
+  id->setStyleSheet(inputStyle() + "QLineEdit { background-color: #e2e8f0; color: #475569; }");
+  name->setStyleSheet(inputStyle() + "QLineEdit { background-color: #e2e8f0; color: #475569; }");
+  price->setStyleSheet(inputStyle() + "QLineEdit { background-color: #e2e8f0; color: #475569; }");
   quantity->setRange(1, 9999);
   quantity->setValue(1);
   note->setPlaceholderText("Optional customer note");
@@ -240,7 +238,18 @@ void MainWindowController::showAddServiceToBookingDialog() {
   form->addRow("Service name:", name);
   form->addRow("Final unit price:", price);
   form->addRow("Booking:", booking);
-  form->addRow("Quantity:", quantity);
+
+  // LOGIC ẨN/HIỆN QUANTITY DỰA VÀO CATEGORY
+  QString categoryStr = QString::fromStdString(service->category);
+  QLabel *qtyLabel = new QLabel("Quantity:", &dialog);
+  qtyLabel->setStyleSheet("color: #1e293b; font-weight: bold; font-size: 14px;");
+  
+  if (categoryStr == "Facility" || categoryStr == "Damage") {
+      quantity->setVisible(false);
+      qtyLabel->setVisible(false);
+  }
+  
+  form->addRow(qtyLabel, quantity);
   form->addRow("Customer note:", note);
   layout->addLayout(form);
 
@@ -258,7 +267,7 @@ void MainWindowController::showAddServiceToBookingDialog() {
 
   connect(cancel, &QPushButton::clicked, &dialog, &QDialog::reject);
   connect(save, &QPushButton::clicked, &dialog,
-          [this, &dialog, service, booking, quantity, note] {
+          [this, &dialog, service, booking, quantity, note, categoryStr] {
             const int bookingId = booking->currentData().toInt();
             if (bookingId <= 0 || !isBookingActive(bookingId)) {
               QMessageBox::warning(&dialog, "Booking unavailable",
@@ -266,11 +275,30 @@ void MainWindowController::showAddServiceToBookingDialog() {
               return;
             }
 
+            int finalQty = (categoryStr == "Facility" || categoryStr == "Damage") ? 1 : quantity->value();
+
+            // NẾU LÀ HÀNG HÓA TỪ KHO -> CHECK VÀ TRỪ KHO (INVENTORY LOG)
+            if (categoryStr == "Food" || categoryStr == "Minibar" || categoryStr == "Furniture") {
+                InventoryService invService;
+                QString itemName = QString::fromStdString(service->name);
+                if (!invService.reserveItem(itemName, finalQty)) {
+                    QMessageBox::critical(&dialog, "Out of Stock", 
+                                         QString("Not enough '%1' in inventory!").arg(itemName));
+                    return;
+                }
+            }
+
             BookingRepository bookingRepository;
             const bool added = bookingRepository.addServiceItemToBooking(
-                bookingId, service->id, quantity->value(), service->basePrice,
+                bookingId, service->id, finalQty, service->basePrice * finalQty,
                 note->text().trimmed().toStdString());
+            
             if (!added) {
+              // NẾU LỖI LƯU BOOKING -> HOÀN TRẢ LẠI KHO ĐỂ KHÔNG BỊ THẤT THOÁT
+              if (categoryStr == "Food" || categoryStr == "Minibar" || categoryStr == "Furniture") {
+                  InventoryService invService;
+                  invService.releaseItem(QString::fromStdString(service->name), finalQty);
+              }
               QMessageBox::critical(&dialog, "Cannot add service",
                                    "The service could not be added to the selected booking.");
               return;
@@ -298,7 +326,9 @@ void MainWindowController::showAddServiceDialog() {
   form->setSpacing(15);
   auto *id = new QLineEdit(&dialog);
   auto *name = new QLineEdit(&dialog);
-  auto *category = new QLineEdit(&dialog);
+  auto *category = new QComboBox(&dialog);
+  category->addItems({"Food", "Minibar", "Furniture", "Facility", "Damage"});
+  category->setStyleSheet(inputStyle());
   auto *price = new QLineEdit(&dialog);
   auto *vipFree = new QCheckBox("Free for VIP customers", &dialog);
 
@@ -306,8 +336,9 @@ void MainWindowController::showAddServiceDialog() {
   name->setPlaceholderText("Service name");
   category->setPlaceholderText("Example: Spa, Laundry");
   price->setPlaceholderText("0.00");
-  for (auto *input : {id, name, category, price})
+  for (auto *input : {id, name, price})
     input->setStyleSheet(inputStyle());
+  category->setStyleSheet(inputStyle());
 
   form->addRow("Service ID:", id);
   form->addRow("Name:", name);
@@ -333,7 +364,7 @@ void MainWindowController::showAddServiceDialog() {
                                                    category, price, vipFree] {
     double basePrice = 0.0;
     if (id->text().trimmed().isEmpty() || name->text().trimmed().isEmpty() ||
-        category->text().trimmed().isEmpty()) {
+        category->currentText().trimmed().isEmpty()) {
       QMessageBox::warning(&dialog, "Invalid input",
                            "Service ID, name, and category are required.");
       return;
@@ -343,7 +374,7 @@ void MainWindowController::showAddServiceDialog() {
 
     ServiceCatalogData item{ id->text().trimmed().toStdString(),
                              name->text().trimmed().toStdString(),
-                             category->text().trimmed().toStdString(), basePrice,
+                             category->currentText().trimmed().toStdString(), basePrice,
                              vipFree->isChecked() };
     ServiceItemRepository repository;
     if (!repository.addCatalogItem(item)) {
@@ -388,13 +419,17 @@ void MainWindowController::showUpdateServiceDialog() {
   form->setSpacing(15);
   auto *id = new QLineEdit(QString::fromStdString(current->id), &dialog);
   auto *name = new QLineEdit(QString::fromStdString(current->name), &dialog);
-  auto *category = new QLineEdit(QString::fromStdString(current->category), &dialog);
+  auto *category = new QComboBox(&dialog);
+  category->addItems({"Food", "Minibar", "Furniture", "Facility", "Damage"});
+  category->setCurrentText(QString::fromStdString(current->category));
+  category->setStyleSheet(inputStyle());
   auto *price = new QLineEdit(QString::number(current->basePrice, 'f', 2), &dialog);
   auto *vipFree = new QCheckBox("Free for VIP customers", &dialog);
   vipFree->setChecked(current->vipFreeStatus);
   id->setReadOnly(true);
-  for (auto *input : {id, name, category, price})
+  for (auto *input : {id, name, price})
     input->setStyleSheet(inputStyle());
+  category->setStyleSheet(inputStyle());
   id->setStyleSheet(inputStyle() +
                     "QLineEdit { background-color: #e2e8f0; color: #475569; }");
 
@@ -421,7 +456,7 @@ void MainWindowController::showUpdateServiceDialog() {
   connect(save, &QPushButton::clicked, &dialog, [this, &dialog, id, name,
                                                    category, price, vipFree] {
     double basePrice = 0.0;
-    if (name->text().trimmed().isEmpty() || category->text().trimmed().isEmpty()) {
+    if (name->text().trimmed().isEmpty() || category->currentText().trimmed().isEmpty()) {
       QMessageBox::warning(&dialog, "Invalid input",
                            "Name and category are required.");
       return;
@@ -431,7 +466,7 @@ void MainWindowController::showUpdateServiceDialog() {
 
     ServiceCatalogData item{ id->text().trimmed().toStdString(),
                              name->text().trimmed().toStdString(),
-                             category->text().trimmed().toStdString(), basePrice,
+                             category->currentText().trimmed().toStdString(), basePrice,
                              vipFree->isChecked() };
     ServiceItemRepository repository;
     if (!repository.updateCatalogItem(item)) {

@@ -21,7 +21,8 @@ void MainWindowController::showInventoryLogTab()
     setActiveButton(buttonInventory);
     
     QString logQuery = "SELECT log_id AS 'Log ID', item_id AS 'Item ID', "
-                       "quantity AS 'Quantity', action_type AS 'Action Type', date AS 'Date' "
+                       "CASE WHEN quantity > 0 THEN '+' || quantity ELSE quantity END AS 'Quantity', "
+                       "action_type AS 'Action Type', date AS 'Date' "
                        "FROM InventoryLog ORDER BY date DESC";
     Backend::loadTableData(tableInventoryLog, logQuery);
     

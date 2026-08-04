@@ -6,6 +6,7 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QDebug>
+#include <QDateTime>
 
 // Tạo một item mới trong table Inventory trên database
 bool InventoryRepository::insertItem(const QString& name, const QString& type, int quantity, double price) {
@@ -35,9 +36,29 @@ bool InventoryRepository::insertItemFull(const QString& name, const QString& ite
     query.bindValue(":minQty", minQty);
 
     if (!query.exec()) {
-        qDebug() << "ERR: Khong them duoc item (full) vao kho:" << query.lastError().text();
+        qDebug() << "ERR: Khong them duoc item vao kho:" << query.lastError().text();
         return false;
     }
+
+    int newId = query.lastInsertId().toInt();
+    
+    // Ghi InventoryLog
+    QSqlQuery logQuery(DatabaseManager::instance().database());
+    logQuery.prepare("INSERT INTO InventoryLog (item_id, quantity, action_type, date) VALUES (?, ?, 'ADD_NEW', ?)");
+    logQuery.addBindValue(newId);
+    logQuery.addBindValue(quantity); 
+    logQuery.addBindValue(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"));
+    logQuery.exec();
+    
+    // TỰ ĐỘNG ĐĂNG KÝ VÀO MENU SERVICE
+    QSqlQuery serviceQuery(DatabaseManager::instance().database());
+    serviceQuery.prepare("INSERT INTO ServiceCatalog (item_id, item_name, category, base_price, vip_free_status) VALUES (?, ?, ?, ?, 0)");
+    serviceQuery.addBindValue(QString::number(newId));
+    serviceQuery.addBindValue(name);
+    serviceQuery.addBindValue(itemType);
+    serviceQuery.addBindValue(price);
+    serviceQuery.exec();
+
     return true;
 }
 
@@ -48,12 +69,38 @@ bool InventoryRepository::updateItem(int itemId, int newQuantity, double newPric
     if (newQuantity < 0 || newPrice < 0) return false;
 
     QSqlDatabase db = DatabaseManager::instance().database();
-    QSqlQuery query(db);
+    
+    QSqlQuery getOld(db);
+    getOld.prepare("SELECT quantity FROM Inventory WHERE item_id = :id");
+    getOld.bindValue(":id", itemId);
+    int oldQty = 0;
+    if (getOld.exec() && getOld.next()) oldQty = getOld.value(0).toInt();
+    int delta = newQuantity - oldQty;
 
+    QSqlQuery query(db);
     query.prepare("UPDATE Inventory SET quantity = :newQuantity, price = :newPrice WHERE item_id = :itemId");
     query.bindValue(":newQuantity", newQuantity);
     query.bindValue(":newPrice", newPrice);
     query.bindValue(":itemId", itemId);
 
-    return query.exec();
+    if (query.exec()) {
+        // ĐỒNG BỘ GIÁ MỚI SANG MENU SERVICE
+        QSqlQuery updateService(db);
+        updateService.prepare("UPDATE ServiceCatalog SET base_price = :newPrice WHERE item_id = :itemId");
+        updateService.bindValue(":newPrice", newPrice);
+        updateService.bindValue(":itemId", QString::number(itemId));
+        updateService.exec();
+
+        // Ghi Log nếu có thay đổi số lượng
+        if (delta != 0) {
+            QSqlQuery logQuery(db);
+            logQuery.prepare("INSERT INTO InventoryLog (item_id, quantity, action_type, date) VALUES (?, ?, 'UPDATE_QTY', ?)");
+            logQuery.addBindValue(itemId);
+            logQuery.addBindValue(delta); 
+            logQuery.addBindValue(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"));
+            logQuery.exec();
+        }
+        return true;
+    }
+    return false;
 }

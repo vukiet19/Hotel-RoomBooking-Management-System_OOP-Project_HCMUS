@@ -59,9 +59,9 @@ bool InventoryService::reserveItem(const QString& itemName, int quantity) {
     // Ghi lịch sử lấy item từ Inventory vào bảng InventoryLog
     QString currentDate = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
     query.prepare("INSERT INTO InventoryLog (item_id, quantity, action_type, date) "
-                  "VALUES (:id, :qty, 'RESERVE', :date)");
+                  "VALUES (:id, :qty, 'ADD_TO_BOOKING', :date)");
     query.bindValue(":id", itemId);
-    query.bindValue(":qty", quantity);
+    query.bindValue(":qty", -quantity);
     query.bindValue(":date", currentDate);
     if (!query.exec()) {
         qDebug() << "ERROR: Khong the ghi lich su lay item tu Inventory len InventoryLog (database)!" << query.lastError().text();

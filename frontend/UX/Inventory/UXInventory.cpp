@@ -72,9 +72,7 @@ void MainWindowController::showInventoryTab() {
   btnDelete->setVisible(true);
   btnFilter->setVisible(true);
   if (btnAddToBooking) {
-    btnAddToBooking->setVisible(true); 
-    btnAddToBooking->disconnect();
-    connect(btnAddToBooking, &QPushButton::clicked, this, &MainWindowController::AddToBookingInventoryClick);
+    btnAddToBooking->setVisible(false); 
   }
 
   btnAdd->disconnect();
@@ -498,7 +496,7 @@ void MainWindowController::AddToBookingInventoryClick()
     QString inputStyle = "QLineEdit, QSpinBox, QComboBox {"
                        "   background-color: #ffffff; border: 2px solid #38bdf8; "
                        "   border-radius: 8px; padding: 4px 10px; font-size: 14px; "
-                       "   color: #0f172a; min-height: 25px; }";
+                       "   color: #0f172a; min-height: 28px; }";
 
     // CHUYỂN TỪ NHẬP ID TAY SANG DROPDOWN CHỌN BOOKING ĐỂ KHÔNG BỊ LỖI
     QComboBox *cbBookingId = new QComboBox(dialog);
@@ -549,7 +547,7 @@ void MainWindowController::AddToBookingInventoryClick()
         int qty = spinQty->value();
 
         InventoryService invService;
-        if (!invService.reserveItem(itemName, qty)) {
+        if (!invService.reserveItem(itemName, qty)) { 
             QMessageBox::critical(dialog, "Out of Stock", "Not enough quantity in inventory!");
             return;
         }

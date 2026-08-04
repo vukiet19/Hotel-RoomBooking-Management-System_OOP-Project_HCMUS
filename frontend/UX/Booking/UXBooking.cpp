@@ -764,10 +764,24 @@ void MainWindowController::showAddBookingDialog() {
     a.setIdroom(room.toStdString());
 
     int realCustomerId = 0;
+    
     QSqlQuery custQuery(db);
-    custQuery.prepare("SELECT id, Point, Type FROM Customer WHERE id_customer = :id_cust");
+    custQuery.prepare("SELECT id, id_customer, full_name, phone_number, Point, Type FROM Customer WHERE id_customer = :id_cust");
     custQuery.bindValue(":id_cust", id);
+    
     if (custQuery.exec() && custQuery.next()) {
+      QString dbName = custQuery.value("full_name").toString();
+      QString dbPhone = custQuery.value("phone_number").toString();
+
+      // Kiểm tra 3 điều kiện: Tên, SĐT, CCCD
+      if (dbName.compare(customer, Qt::CaseInsensitive) != 0 || dbPhone != phone) {
+          db.rollback();
+          QMessageBox::warning(addDialog, "Verification Failed", 
+              "CCCD/ID này đã được đăng ký với một Tên hoặc Số Điện Thoại khác.\n"
+              "Cả 3 thông tin (ID, Tên, SĐT) phải trùng khớp 100%!");
+          return;
+      }
+
       a.setPoint(custQuery.value("Point").toInt());
       int dbTier = custQuery.value("Type").toInt();
       if (dbTier >= 0) {

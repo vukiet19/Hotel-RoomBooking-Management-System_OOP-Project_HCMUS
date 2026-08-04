@@ -230,8 +230,7 @@ CheckoutService::getActiveBookings(QString *errorMessage) {
   return bookings;
 }
 
-CheckoutResult CheckoutService::checkout(int bookingId,
-                                         const QString &paymentMethod) {
+CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMethod) {
   CheckoutResult result;
   if (bookingId <= 0 || paymentMethod.trimmed().isEmpty()) {
     result.errorMessage = "A booking and payment method are required.";
@@ -260,8 +259,7 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   };
 
   QSqlQuery existingBill(db);
-  existingBill.prepare(
-      "SELECT 1 FROM Bills WHERE booking_id = :booking_id LIMIT 1");
+  existingBill.prepare("SELECT 1 FROM Bills WHERE booking_id = :booking_id LIMIT 1");
   existingBill.bindValue(":booking_id", bookingId);
   if (!existingBill.exec()) {
     rollbackWithError(existingBill.lastError().text());
@@ -337,22 +335,33 @@ CheckoutResult CheckoutService::checkout(int bookingId,
     }
   } 
   else if (booking->customerId > 0) {
-    int bonusPoints = booking->totalAmount / 1000000;
+    int bonusPoints = static_cast<int>(booking->totalAmount / 1000000.0);
     if (bonusPoints > 0) {
+      int currentPoints = 0;
+      
+      {
+          QSqlQuery getPoints(db);
+          getPoints.prepare("SELECT Point FROM Customer WHERE id = :customer_id");
+          getPoints.bindValue(":customer_id", booking->customerId);
+          if (getPoints.exec() && getPoints.next()) {
+              currentPoints = getPoints.value(0).toInt();
+          }
+      }
+
+      // Tính Rank bằng C++
+      int newPoints = currentPoints + bonusPoints;
+      int newTier = 0; // Default Unknown
+      if (newPoints >= 50) newTier = 3;       // Platinum
+      else if (newPoints >= 20) newTier = 2;  // Gold
+      else if (newPoints >= 5) newTier = 1;   // Silver
+
+      // Cập nhật vào DB an toàn
       QSqlQuery updatePoints(db);
-      updatePoints.prepare(R"(
-        UPDATE Customer 
-        SET Point = COALESCE(Point, 0) + :bonus,
-            Type = CASE 
-                     WHEN COALESCE(Point, 0) + :bonus >= 50 THEN 3
-                     WHEN COALESCE(Point, 0) + :bonus >= 20 THEN 2
-                     WHEN COALESCE(Point, 0) + :bonus >= 5 THEN 1
-                     ELSE Type 
-                   END
-        WHERE id = :customer_id
-      )");
-      updatePoints.bindValue(":bonus", bonusPoints);
+      updatePoints.prepare("UPDATE Customer SET Point = :newPoints, Type = :newTier WHERE id = :customer_id");
+      updatePoints.bindValue(":newPoints", newPoints);
+      updatePoints.bindValue(":newTier", newTier);
       updatePoints.bindValue(":customer_id", booking->customerId);
+      
       if (!updatePoints.exec()) {
         rollbackWithError(updatePoints.lastError().text());
         return result;
@@ -368,5 +377,4 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   result.billId = insertBill.lastInsertId().toInt();
   result.booking = *booking;
   return result;
-  }
 }
