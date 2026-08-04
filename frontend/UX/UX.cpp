@@ -36,8 +36,8 @@ void MainWindowController::initConnections() {
           &MainWindowController::showCustomerTab);
   connect(buttonRoom, &QPushButton::clicked, this,
           &MainWindowController::showRoomTab);
-  connect(buttonService, &QPushButton::clicked, this,
-          &MainWindowController::showFoodTab);
+  connect(buttonService, &QPushButton::clicked, this, 
+          &MainWindowController::showServiceTab);
   connect(buttonInventory, &QPushButton::clicked, this,
           &MainWindowController::showInventoryTab);
   connect(buttonBill, &QPushButton::clicked, this,
@@ -55,10 +55,6 @@ void MainWindowController::initConnections() {
           &MainWindowController::showRoomTab);
   connect(roomPage->roomTypeTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showRoomTypeTab);
-  connect(servicePage->serviceCatalogTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::showServiceTab);
-  connect(servicePage->foodOptionsTabButton(), &QPushButton::clicked, this,
-          &MainWindowController::showFoodTab);
   connect(inventoryPage->inventoryTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showInventoryTab);
   connect(inventoryPage->inventoryLogTabButton(), &QPushButton::clicked, this,
@@ -88,7 +84,7 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton) {
     btn->style()->polish(btn);
   }
 
-  if (btnAddToBooking && clickedButton != buttonService) {
+  if (btnAddToBooking && clickedButton != buttonService && clickedButton != buttonInventory) {
     btnAddToBooking->setVisible(false);
   }
 }

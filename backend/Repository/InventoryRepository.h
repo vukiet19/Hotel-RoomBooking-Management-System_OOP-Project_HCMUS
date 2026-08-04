@@ -10,6 +10,6 @@ public:
     // Thêm mặt hàng đầy đủ thông tin (item_type + minimum_quantity_required)
     bool insertItemFull(const QString& name, const QString& itemType, int quantity, double price, int minQty);
 
-    // Cập nhật số lượng
-    bool updateQuantity(int itemId, int newQuantity);
+    // Cập nhật thông tin mặt hàng
+    bool updateItem(int itemId, int newQuantity, double newPrice);
 };

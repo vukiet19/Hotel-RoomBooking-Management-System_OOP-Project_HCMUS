@@ -71,8 +71,11 @@ void MainWindowController::showInventoryTab() {
   btnUpdate->setVisible(true);
   btnDelete->setVisible(true);
   btnFilter->setVisible(true);
-  if (btnAddToBooking)
-    btnAddToBooking->setVisible(true);
+  if (btnAddToBooking) {
+    btnAddToBooking->setVisible(true); 
+    btnAddToBooking->disconnect();
+    connect(btnAddToBooking, &QPushButton::clicked, this, &MainWindowController::AddToBookingInventoryClick);
+  }
 
   btnAdd->disconnect();
   btnUpdate->disconnect();
@@ -228,44 +231,33 @@ void MainWindowController::AddInventoryClick() {
 void MainWindowController::UpdateInventoryClick() {
   int currentRow = tableInventory->currentRow();
   if (currentRow < 0) {
-    QMessageBox::warning(this, "Select Item",
-                         "Please select an inventory item row to update!");
+    QMessageBox::warning(this, "Select Item", "Please select an inventory item row to update!");
     return;
   }
 
   QString id          = tableInventory->item(currentRow, 0)->text();
   QString currentName = tableInventory->item(currentRow, 1)->text();
-  int currentQty      = tableInventory->item(currentRow, 3)
-                         ? tableInventory->item(currentRow, 3)->text().toInt()
-                         : 0;
+  int currentQty      = tableInventory->item(currentRow, 3) ? tableInventory->item(currentRow, 3)->text().toInt() : 0;
+  double currentPrice = tableInventory->item(currentRow, 4) ? tableInventory->item(currentRow, 4)->text().toDouble() : 0.0;
 
   QDialog *dialog = new QDialog(this);
-  dialog->setWindowTitle("Update Inventory Stock");
-  dialog->setFixedSize(400, 320);
+  dialog->setWindowTitle("Update Inventory Item");
+  dialog->setFixedSize(400, 360);
   dialog->setStyleSheet(
-      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
-      "#f0f9ff, stop:1 #ffffff); }"
+      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
       "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(dialog);
   mainLayout->setContentsMargins(30, 25, 30, 25);
 
-  QLabel *titleLabel = new QLabel("Update Item Stock", dialog);
-  titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: "
-                            "#3730a3; margin-bottom: 10px;");
+  QLabel *titleLabel = new QLabel("Update Item Info", dialog);
+  titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #3730a3; margin-bottom: 10px;");
   mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
 
   QFormLayout *formLayout = new QFormLayout();
   formLayout->setSpacing(12);
 
-  QString inputStyle = "QLineEdit, QSpinBox {"
-                       "   background-color: #ffffff; "
-                       "   border: 2px solid #38bdf8; "
-                       "   border-radius: 8px; "
-                       "   padding: 8px; "
-                       "   font-size: 14px; "
-                       "   color: #0f172a; "
-                       "}";
+  QString inputStyle = "QLineEdit, QSpinBox { background-color: #ffffff; border: 2px solid #38bdf8; border-radius: 8px; padding: 8px; font-size: 14px; color: #0f172a; }";
 
   QLabel *lblName = new QLabel(currentName, dialog);
   lblName->setStyleSheet("font-size: 15px; color: #0284c7;");
@@ -275,27 +267,21 @@ void MainWindowController::UpdateInventoryClick() {
   spinQty->setValue(currentQty);
   spinQty->setStyleSheet(inputStyle);
 
+  QLineEdit *txtPrice = new QLineEdit(QString::number(currentPrice, 'f', 0), dialog);
+  txtPrice->setStyleSheet(inputStyle);
+
   formLayout->addRow("Item Name:", lblName);
   formLayout->addRow("New Quantity:", spinQty);
+  formLayout->addRow("New Price (VND):", txtPrice);
   mainLayout->addLayout(formLayout);
 
   QHBoxLayout *buttonLayout = new QHBoxLayout();
   buttonLayout->setContentsMargins(0, 15, 0, 0);
-  QPushButton *btnSave   = new QPushButton("Update Stock", dialog);
+  QPushButton *btnSave   = new QPushButton("Update", dialog);
   QPushButton *btnCancel = new QPushButton("Cancel", dialog);
 
-  btnSave->setStyleSheet(
-      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; "
-      "border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }"
-      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-      "stop:0 #4f46e5, stop:1 #7c3aed); }");
-  btnCancel->setStyleSheet(
-      "background-color: #cbd5e1; color: #475569; border: none; border-radius: "
-      "8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
-
-  btnSave->setCursor(Qt::PointingHandCursor);
-  btnCancel->setCursor(Qt::PointingHandCursor);
+  btnSave->setStyleSheet("QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }");
+  btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
 
   buttonLayout->addWidget(btnCancel);
   buttonLayout->addWidget(btnSave);
@@ -304,14 +290,13 @@ void MainWindowController::UpdateInventoryClick() {
   connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
   connect(btnSave, &QPushButton::clicked, [=]() {
     InventoryRepository repo;
-    if (repo.updateQuantity(id.toInt(), spinQty->value())) {
-      QMessageBox::information(dialog, "Success",
-                               "Item stock updated successfully!");
+    // BÂY GIỜ ĐÃ SỬ DỤNG ĐÚNG HÀM updateItem CÓ 3 THAM SỐ
+    if (repo.updateItem(id.toInt(), spinQty->value(), txtPrice->text().toDouble())) {
+      QMessageBox::information(dialog, "Success", "Item updated successfully!");
       dialog->accept();
       showInventoryTab();
     } else {
-      QMessageBox::critical(dialog, "Error",
-                            "Failed to update stock quantity!");
+      QMessageBox::critical(dialog, "Error", "Failed to update item!");
     }
   });
 
@@ -494,46 +479,74 @@ void MainWindowController::AddToBookingInventoryClick()
 
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("Add " + itemName + " to Booking");
-    dialog->setFixedSize(350, 250);
-    dialog->setStyleSheet("QDialog { background-color: white; } QLabel { font-weight: bold; }");
+    dialog->setFixedSize(450, 350);
+    // FIX LỖI Ô ĐEN TẠI ĐÂY
+    dialog->setStyleSheet(
+      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+      "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; background: transparent; }");
 
-    QVBoxLayout *layout = new QVBoxLayout(dialog);
-    QFormLayout *form = new QFormLayout();
+    QVBoxLayout *mainLayout = new QVBoxLayout(dialog);
+    mainLayout->setContentsMargins(30, 30, 30, 30);
 
-    QLineEdit *txtBookingId = new QLineEdit(dialog);
-    txtBookingId->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;");
+    QLabel *titleLabel = new QLabel("Add " + itemName + " to Booking", dialog);
+    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #3730a3; margin-bottom: 15px;");
+    mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+    QFormLayout *formLayout = new QFormLayout();
+    formLayout->setSpacing(12);
+
+    QString inputStyle = "QLineEdit, QSpinBox, QComboBox {"
+                       "   background-color: #ffffff; border: 2px solid #38bdf8; "
+                       "   border-radius: 8px; padding: 4px 10px; font-size: 14px; "
+                       "   color: #0f172a; min-height: 25px; }";
+
+    // CHUYỂN TỪ NHẬP ID TAY SANG DROPDOWN CHỌN BOOKING ĐỂ KHÔNG BỊ LỖI
+    QComboBox *cbBookingId = new QComboBox(dialog);
+    cbBookingId->setStyleSheet(inputStyle);
+    
+    QSqlQuery bQuery(DatabaseManager::instance().database());
+    if (bQuery.exec("SELECT id, room_number, status FROM Bookings WHERE status IS NULL OR status <> 'CHECKED_OUT' ORDER BY id DESC")) {
+      while (bQuery.next()) {
+        int bId = bQuery.value("id").toInt();
+        QString rm = bQuery.value("room_number").toString();
+        cbBookingId->addItem(QString("Booking #%1 — Room %2").arg(bId).arg(rm.isEmpty() ? "-" : rm), bId);
+      }
+    }
 
     QSpinBox *spinQty = new QSpinBox(dialog);
     spinQty->setMinimum(1);
     spinQty->setMaximum(100);
-    spinQty->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;");
+    spinQty->setStyleSheet(inputStyle);
 
     QLineEdit *txtNote = new QLineEdit(dialog);
-    txtNote->setStyleSheet("border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;");
+    txtNote->setStyleSheet(inputStyle);
 
-    form->addRow("Booking ID:", txtBookingId);
-    form->addRow("Quantity:", spinQty);
-    form->addRow("Customer Note:", txtNote);
-    layout->addLayout(form);
+    formLayout->addRow("Select Booking:", cbBookingId);
+    formLayout->addRow("Quantity:", spinQty);
+    formLayout->addRow("Customer Note:", txtNote);
+    mainLayout->addLayout(formLayout);
 
-    QHBoxLayout *btnLayout = new QHBoxLayout();
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0, 15, 0, 0);
     QPushButton *btnSave = new QPushButton("Confirm Add", dialog);
     QPushButton *btnCancel = new QPushButton("Cancel", dialog);
     
-    btnSave->setStyleSheet("background-color: #10b981; color: white; border-radius: 4px; padding: 8px; font-weight: bold;");
-    btnLayout->addWidget(btnCancel);
-    btnLayout->addWidget(btnSave);
-    layout->addLayout(btnLayout);
+    btnSave->setStyleSheet("QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #10b981, stop:1 #059669); color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold; }");
+    btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; border: none; border-radius: 8px; padding: 10px 0; font-size: 15px; font-weight: bold;");
+
+    buttonLayout->addWidget(btnCancel);
+    buttonLayout->addWidget(btnSave);
+    mainLayout->addLayout(buttonLayout);
 
     connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
     connect(btnSave, &QPushButton::clicked, [=]() {
-        int bookingId = txtBookingId->text().toInt();
-        int qty = spinQty->value();
-
-        if (bookingId <= 0) {
-            QMessageBox::warning(dialog, "Error", "Invalid Booking ID!");
+        if (!cbBookingId->currentData().isValid()) {
+            QMessageBox::warning(dialog, "Error", "No active bookings available!");
             return;
         }
+        
+        int bookingId = cbBookingId->currentData().toInt();
+        int qty = spinQty->value();
 
         InventoryService invService;
         if (!invService.reserveItem(itemName, qty)) {
@@ -547,14 +560,14 @@ void MainWindowController::AddToBookingInventoryClick()
         itemData.itemId = itemId.toStdString();
         itemData.quantity = qty;
         itemData.customerNote = txtNote->text().toStdString();
-        itemData.finalPrice = itemPrice * qty;
+        itemData.finalPrice = itemPrice * qty; 
         
         if (serviceRepo.addBookingServiceItem(itemData) != -1) {
             QMessageBox::information(dialog, "Success", "Added to Booking successfully and deducted from Inventory!");
             dialog->accept();
-            showInventoryTab();
+            showInventoryTab(); 
         } else {
-            invService.releaseItem(itemName, qty);
+            invService.releaseItem(itemName, qty); // Rollback nếu lỗi DB
             QMessageBox::critical(dialog, "Error", "Failed to add to booking bill!");
         }
     });

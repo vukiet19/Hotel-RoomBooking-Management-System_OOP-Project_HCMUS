@@ -27,12 +27,8 @@ private:
   void showBookingServicesTab();
   void showFilterBookingServicesDialog();
   void showCustomerTab();
-  void showFoodTab();
-  void showInventoryTab();
-  void showInventoryLogTab();
   void showRoomTab();
   void showRoomTypeTab();
-  void showServiceTab();
   void showBillTab();
   void showFilterBillDialog();
   void handleCheckout();
@@ -54,28 +50,22 @@ private:
   void showUpdateRoomDialog();
   void showDeleteRoomDialog();
 
-  void showAddFoodDialog();
-  void showUpdateFoodDialog();
-  void showDeleteFoodDialog();
-  void showFilterFoodDialog();
-  void showAddFoodToBookingDialog();
-
+  // Service
+  void showServiceTab();
   void showAddServiceDialog();
-  void showAddServiceToBookingDialog();
   void showUpdateServiceDialog();
   void showDeleteServiceDialog();
   void showFilterServiceDialog();
-  void AddNewFoodClick();
-  void UpdateFoodClick();
-  void DeleteFoodClick();
-  void FilterFoodClick();
+  void showAddServiceToBookingDialog();
 
   // Inventory
+  void showInventoryTab();
   void AddInventoryClick();
   void UpdateInventoryClick();
   void DeleteInventoryClick();
   void FilterInventoryClick();
   void AddToBookingInventoryClick();
 
+  void showInventoryLogTab();
   void FilterInventoryLogClick();
 };

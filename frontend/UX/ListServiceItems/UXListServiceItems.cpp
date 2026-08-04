@@ -148,7 +148,6 @@ bool isBookingActive(int bookingId) {
 
 void MainWindowController::showServiceTab() {
   stackedWidget->setCurrentIndex(ServiceIndex);
-  servicePage->setSection(0);
   setActionBarVisible(true);
   setActiveButton(buttonService);
 

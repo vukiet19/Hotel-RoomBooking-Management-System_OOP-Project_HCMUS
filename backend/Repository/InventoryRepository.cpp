@@ -42,19 +42,17 @@ bool InventoryRepository::insertItemFull(const QString& name, const QString& ite
 }
 
 
-// Cập nhật số lượng của một item có sẵn trong bảng Inventory trên database
-//chắc chắn rằng số lượng đưa vào > 0 (vì <= 0 thì không thể có để bán)
-bool InventoryRepository::updateQuantity(int itemId, int newQuantity) {
-    assert(newQuantity >= 0 && "Số lượng cập nhật vào kho không được nhỏ hơn 0!");
-
-    if (newQuantity < 0) 
-        return false;
+// Cập nhật thông tin của một item có sẵn trong bảng Inventory trên database
+// chắc chắn rằng số lượng và giá đưa vào > 0 (vì <= 0 thì không thể có để bán)
+bool InventoryRepository::updateItem(int itemId, int newQuantity, double newPrice) {
+    if (newQuantity < 0 || newPrice < 0) return false;
 
     QSqlDatabase db = DatabaseManager::instance().database();
     QSqlQuery query(db);
 
-    query.prepare("UPDATE Inventory SET quantity = :newQuantity WHERE item_id = :itemId");
+    query.prepare("UPDATE Inventory SET quantity = :newQuantity, price = :newPrice WHERE item_id = :itemId");
     query.bindValue(":newQuantity", newQuantity);
+    query.bindValue(":newPrice", newPrice);
     query.bindValue(":itemId", itemId);
 
     return query.exec();

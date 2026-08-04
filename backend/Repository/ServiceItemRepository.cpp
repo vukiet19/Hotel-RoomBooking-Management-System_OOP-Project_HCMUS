@@ -26,7 +26,7 @@ vector<ServiceCatalogData> ServiceItemRepository::getAllCatalogItems() {
 
     query.prepare(
         "SELECT item_id, item_name, category, base_price, vip_free_status "
-        "FROM ServiceCatalog"
+        "FROM ServiceCatalog" 
     );
 
     if (!query.exec()) {
