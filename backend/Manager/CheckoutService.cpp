@@ -340,12 +340,12 @@ CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMe
       int currentPoints = 0;
       
       {
-          QSqlQuery getPoints(db);
-          getPoints.prepare("SELECT Point FROM Customer WHERE id = :customer_id");
-          getPoints.bindValue(":customer_id", booking->customerId);
-          if (getPoints.exec() && getPoints.next()) {
-              currentPoints = getPoints.value(0).toInt();
-          }
+        QSqlQuery getPoints(db);
+        getPoints.prepare("SELECT Point FROM Customer WHERE id = :customer_id");
+        getPoints.bindValue(":customer_id", booking->customerId);
+        if (getPoints.exec() && getPoints.next()) {
+            currentPoints = getPoints.value(0).toInt();
+        }
       }
 
       // Tính Rank bằng C++

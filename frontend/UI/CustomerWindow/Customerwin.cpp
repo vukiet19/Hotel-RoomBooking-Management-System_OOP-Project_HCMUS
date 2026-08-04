@@ -515,11 +515,8 @@ void CustomerWindow::onBookRoomClicked() {
   if (db.commit()) {
     QString infoText =
         isExistingCustomer
-            ? QString("Welcome back %1!\nYour booking is complete.")
-                  .arg(customerName)
-                  .arg(currentPoints)
-            : QString("Thank you %1!\nBooking created successfully.\n")
-                  .arg(customerName);
+            ? QString("Welcome back %1!\nYour booking is complete.").arg(customerName)
+            : QString("Thank you %1!\nBooking created successfully.").arg(customerName);
 
     QMessageBox msgBox(this);
     msgBox.setWindowTitle("Success");
