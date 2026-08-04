@@ -368,5 +368,4 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   result.billId = insertBill.lastInsertId().toInt();
   result.booking = *booking;
   return result;
-  }
 }
