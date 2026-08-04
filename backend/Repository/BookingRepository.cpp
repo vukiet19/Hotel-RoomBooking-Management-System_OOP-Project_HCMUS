@@ -452,31 +452,29 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
   QString rmNumber = roomNumber.trimmed();
   QString bookingType = rmNumber.isEmpty() ? "WALK_IN" : "STANDARD";
 
-  // 3. Calculate total price if not provided
-  double finalTotalPrice = totalPrice;
-  if (finalTotalPrice <= 0.0) {
-    if (!rmNumber.isEmpty()) {
-      QSqlQuery rq(db);
-      rq.prepare("SELECT base_price FROM ListRooms WHERE room_number = :rm OR "
-                 "room_id = :rm");
-      rq.bindValue(":rm", rmNumber);
-      if (rq.exec() && rq.next()) {
-        double baseP = rq.value(0).toDouble();
-        int nights = checkIn.daysTo(checkOut);
-        if (nights <= 0)
-          nights = 1;
-        finalTotalPrice = baseP * nights;
-      }
-    }
-    if (finalTotalPrice <= 0.0) {
-      QSqlQuery rq(db);
-      rq.prepare("SELECT total_price FROM Bookings WHERE id = :id");
-      rq.bindValue(":id", bookingId);
-      if (rq.exec() && rq.next()) {
-        finalTotalPrice = rq.value(0).toDouble();
-      }
+  // 3. Calculate live current total price (room rate * nights + service total - deposit)
+  double roomRate = 0.0;
+  if (!rmNumber.isEmpty()) {
+    QSqlQuery rq(db);
+    rq.prepare("SELECT base_price FROM ListRooms WHERE room_number = :rm OR room_id = :rm");
+    rq.bindValue(":rm", rmNumber);
+    if (rq.exec() && rq.next()) {
+      roomRate = rq.value(0).toDouble();
     }
   }
+  int nights = checkIn.daysTo(checkOut);
+  if (nights <= 0) nights = 1;
+  double roomTotal = roomRate * nights;
+
+  double serviceTotal = 0.0;
+  QSqlQuery sq(db);
+  sq.prepare("SELECT SUM(final_price) FROM BookingServiceItems WHERE booking_id = :id");
+  sq.bindValue(":id", bookingId);
+  if (sq.exec() && sq.next()) {
+    serviceTotal = sq.value(0).toDouble();
+  }
+
+  double finalTotalPrice = qMax(0.0, roomTotal + serviceTotal - depositAmount);
 
   // 4. Resolve status
   QString finalStatus = statusStr.trimmed();
