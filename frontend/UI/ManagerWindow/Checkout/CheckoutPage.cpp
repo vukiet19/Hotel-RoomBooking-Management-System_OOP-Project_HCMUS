@@ -2,8 +2,12 @@
 
 #include <QComboBox>
 #include <QDate>
+#include <QDialog>
 #include <QFormLayout>
+#include <QFrame>
+#include <QGridLayout>
 #include <QGroupBox>
+#include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
@@ -67,21 +71,27 @@ void CheckoutPage::setupUi() {
             background-color: #ffffff;
             color: #3730a3;
             border: 2px solid #bae6fd;
-            border-radius: 8px;
-            margin-top: 15px;
-            padding: 15px 10px 10px 10px;
+            border-radius: 10px;
+            margin-top: 12px;
+            padding: 16px 12px 12px 12px;
             font-weight: bold;
             font-size: 15px;
         }
         #checkoutPage QGroupBox::title {
             subcontrol-origin: margin;
             left: 12px;
-            padding: 0 8px;
+            padding: 0 6px;
             color: #3730a3;
-            background-color: #ffffff;
-            border-radius: 4px;
+            background: transparent;
         }
-        #checkoutPage QScrollArea { background-color: transparent; border: none; }
+        #checkoutPage QScrollArea#checkoutDetailsScroll {
+            background: transparent;
+            border: none;
+        }
+        #checkoutPage QScrollArea#checkoutDetailsScroll::viewport {
+            background: transparent;
+        }
+        #checkoutPage #checkoutDetailsContainer { background: transparent; }
         #checkoutPage QTableWidget {
             background-color: #ffffff;
             alternate-background-color: #f0f9ff;
@@ -204,11 +214,14 @@ void CheckoutPage::setupUi() {
   rootLayout->addWidget(bookingGroup);
 
   auto *detailsScroll = new QScrollArea(this);
+  detailsScroll->setObjectName("checkoutDetailsScroll");
   detailsScroll->setWidgetResizable(true);
   detailsScroll->setFrameShape(QFrame::NoFrame);
+  detailsScroll->viewport()->setAutoFillBackground(false);
 
   detailsContainer = new QWidget(detailsScroll);
   detailsContainer->setObjectName("checkoutDetailsContainer");
+  detailsContainer->setAttribute(Qt::WA_StyledBackground, true);
   detailsContainer->setSizePolicy(QSizePolicy::Expanding,
                                   QSizePolicy::Preferred);
   auto *detailsLayout = new QVBoxLayout(detailsContainer);
@@ -441,17 +454,111 @@ void CheckoutPage::showConfirmDialog() {
     return;
 
   const auto &booking = bookings.at(index);
-  const double finalTotal = booking.totalAmount;
+  QDialog dialog(this);
+  dialog.setObjectName("checkoutConfirmDialog");
+  dialog.setWindowTitle("Confirm checkout");
+  dialog.setModal(true);
+  dialog.setFixedSize(480, 330);
+  dialog.setStyleSheet(R"(
+    QDialog#checkoutConfirmDialog { background: #f8fafc; }
+    #checkoutConfirmDialog QLabel { font-family: 'Segoe UI', Arial, sans-serif; }
+    #checkoutConfirmDialog #checkoutSummaryCard {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+    }
+    #checkoutConfirmDialog QPushButton {
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      min-width: 120px;
+    }
+    #checkoutConfirmDialog QPushButton#cancelCheckoutButton {
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+    #checkoutConfirmDialog QPushButton#cancelCheckoutButton:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    #checkoutConfirmDialog QPushButton#confirmCheckoutButton {
+      background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                  stop:0 #10b981, stop:1 #059669);
+      color: #ffffff;
+      border: none;
+    }
+    #checkoutConfirmDialog QPushButton#confirmCheckoutButton:hover {
+      background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                  stop:0 #059669, stop:1 #047857);
+    }
+  )");
 
-  const QString message =
-      QString("Customer: %1\nRoom: %2\nTotal amount: %3\nPayment method: %4\n\n"
-              "Confirm guest checkout and release room?")
-          .arg(booking.customerName, booking.roomNumber,
-               formatMoney(finalTotal), paymentMethodComboBox->currentText());
+  auto *layout = new QVBoxLayout(&dialog);
+  layout->setContentsMargins(26, 24, 26, 22);
+  layout->setSpacing(12);
 
-  if (QMessageBox::question(this, "Confirm Checkout", message,
-                            QMessageBox::Yes | QMessageBox::No) !=
-      QMessageBox::Yes)
+  auto *title = new QLabel("Confirm checkout", &dialog);
+  title->setStyleSheet("color: #3730a3; font-size: 22px; font-weight: 700;");
+  layout->addWidget(title);
+
+  auto *subtitle = new QLabel(
+      "Review the payment details before completing this checkout.", &dialog);
+  subtitle->setWordWrap(true);
+  subtitle->setStyleSheet("color: #64748b; font-size: 13px; font-weight: 500;");
+  layout->addWidget(subtitle);
+
+  auto *summaryCard = new QFrame(&dialog);
+  summaryCard->setObjectName("checkoutSummaryCard");
+  auto *summaryLayout = new QGridLayout(summaryCard);
+  summaryLayout->setContentsMargins(16, 14, 16, 14);
+  summaryLayout->setHorizontalSpacing(22);
+  summaryLayout->setVerticalSpacing(8);
+
+  const auto addSummaryRow = [&summaryLayout, summaryCard](int row,
+                                                             const QString &label,
+                                                             const QString &value,
+                                                             bool emphasize = false) {
+    auto *field = new QLabel(label, summaryCard);
+    field->setStyleSheet("color: #64748b; font-size: 13px; font-weight: 600;");
+    auto *data = new QLabel(value, summaryCard);
+    data->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    data->setStyleSheet(emphasize
+                            ? "color: #047857; font-size: 16px; font-weight: 700;"
+                            : "color: #0f172a; font-size: 13px; font-weight: 700;");
+    summaryLayout->addWidget(field, row, 0);
+    summaryLayout->addWidget(data, row, 1);
+  };
+  addSummaryRow(0, "Customer", booking.customerName);
+  addSummaryRow(1, "Room", booking.roomNumber);
+  addSummaryRow(2, "Payment method", paymentMethodComboBox->currentText());
+  addSummaryRow(3, "Total to pay", formatMoney(booking.totalAmount), true);
+  summaryLayout->setColumnStretch(1, 1);
+  layout->addWidget(summaryCard);
+
+  auto *hint = new QLabel(
+      "This will create the bill and make the room available again.", &dialog);
+  hint->setStyleSheet("color: #475569; font-size: 12px; font-weight: 500;");
+  layout->addWidget(hint);
+  layout->addStretch();
+
+  auto *buttonLayout = new QHBoxLayout();
+  buttonLayout->addStretch();
+  auto *cancelButton = new QPushButton("Cancel", &dialog);
+  cancelButton->setObjectName("cancelCheckoutButton");
+  auto *confirmDialogButton = new QPushButton("Confirm checkout", &dialog);
+  confirmDialogButton->setObjectName("confirmCheckoutButton");
+  confirmDialogButton->setDefault(true);
+  buttonLayout->addWidget(cancelButton);
+  buttonLayout->addWidget(confirmDialogButton);
+  layout->addLayout(buttonLayout);
+
+  connect(cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
+  connect(confirmDialogButton, &QPushButton::clicked, &dialog,
+          &QDialog::accept);
+
+  if (dialog.exec() != QDialog::Accepted)
     return;
 
   CheckoutService checkoutService;

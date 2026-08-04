@@ -1,6 +1,7 @@
 #include "CheckoutService.h"
 
 #include "DatabaseManager.h"
+#include "cores/Customer/MembershipPolicy.h"
 
 #include <QDate>
 #include <QDateTime>
@@ -47,6 +48,22 @@ QDate parseBookingDate(const QString &value) {
   if (!date.isValid())
     date = QDate::fromString(value.left(10), "yyyy-MM-dd");
   return date;
+}
+
+double membershipDiscountRate(int customerType) {
+  const auto tier = static_cast<MembershipTier>(customerType);
+  switch (tier) {
+  case Silver:
+  case Gold:
+  case Platinum: {
+    MembershipPolicy policy;
+    return policy.getDiscountRate(tier);
+  }
+  case Temporary:
+  case Unknown:
+  default:
+    return 0.0;
+  }
 }
 
 } // namespace
@@ -166,8 +183,6 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
   booking.deposit = depositStatus == "HELD"
                         ? qMax(0.0, query.value("deposit_amount").toDouble())
                         : 0.0;
-  // No booking-level discount is persisted in the current schema yet.
-  booking.discount = 0.0;
 
   QSqlQuery servicesQuery(db);
   servicesQuery.prepare(R"(
@@ -198,8 +213,11 @@ CheckoutService::loadBooking(int bookingId, bool activeOnly,
     booking.services.append(service);
     booking.serviceCharge += finalPrice;
   }
-  booking.totalAmount = qMax(0.0, booking.roomCharge + booking.serviceCharge -
-                                      booking.discount - booking.deposit);
+  const double subtotal = booking.roomCharge + booking.serviceCharge;
+  booking.discount =
+      booking.roomCharge * membershipDiscountRate(booking.customerType);
+  booking.totalAmount =
+      qMax(0.0, subtotal - booking.discount - booking.deposit);
 
   return booking;
 }
@@ -312,7 +330,7 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   updateRoom.prepare("UPDATE ListRooms SET status = 'Available' "
                      "WHERE room_number = :room_number OR room_id = :room_id");
   updateRoom.bindValue(":room_id", booking->roomId);
-  updateRoom.bindValue(":room_number", booking->roomId);
+  updateRoom.bindValue(":room_number", booking->roomNumber);
   if (!updateRoom.exec() || updateRoom.numRowsAffected() < 1) {
     rollbackWithError(updateRoom.lastError().isValid()
                           ? updateRoom.lastError().text()
