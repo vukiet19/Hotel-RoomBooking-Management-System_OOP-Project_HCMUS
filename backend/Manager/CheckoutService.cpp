@@ -293,9 +293,11 @@ CheckoutResult CheckoutService::checkout(int bookingId, const QString &paymentMe
   }
 
   QSqlQuery updateBooking(db);
-  updateBooking.prepare("UPDATE Bookings SET status = 'CHECKED_OUT' "
+  updateBooking.prepare("UPDATE Bookings SET status = 'CHECKED_OUT', "
+                        "total_price = :final_total "
                         "WHERE id = :booking_id AND COALESCE(status, "
                         "'UNCONFIRMED') <> 'CHECKED_OUT'");
+  updateBooking.bindValue(":final_total", qMax(0.0, booking->roomCharge + booking->serviceCharge - booking->discount));
   updateBooking.bindValue(":booking_id", booking->bookingId);
   if (!updateBooking.exec() || updateBooking.numRowsAffected() != 1) {
     rollbackWithError(updateBooking.lastError().isValid()
