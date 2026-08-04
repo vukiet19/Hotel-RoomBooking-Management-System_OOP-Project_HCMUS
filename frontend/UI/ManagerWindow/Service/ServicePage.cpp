@@ -4,7 +4,7 @@
 
 ServicePage::ServicePage(QWidget *parent)
     : QWidget(parent),
-      content(new TablePage({"Service ID", "Name", "Category", "Price", "VIP Free"}, this))
+      content(new TablePage({"Service ID", "Name", "Category", "Price", "Status"}, this))
 {
     auto *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
