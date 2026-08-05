@@ -35,6 +35,7 @@ Release/
 .agents/
 
 *.user
+.cache/
 
 CMakeLists.txt
 

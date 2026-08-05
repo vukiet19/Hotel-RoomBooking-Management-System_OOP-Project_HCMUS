@@ -32,6 +32,7 @@ private:
   void showBillTab();
   void showFilterBillDialog();
   void handleCheckout();
+  void handleLogout();
 
   void showFilterDashboardDialog();
 

@@ -33,7 +33,7 @@ struct BillFilter {
 };
 
 QString formatMoney(double amount) {
-  return QLocale(QLocale::English).toString(amount, 'f', 0) + " VND";
+  return QLocale(QLocale::English).toString(amount, 'f', 0);
 }
 
 bool loadBills(QTableWidget *table, const BillFilter &filter,
@@ -126,7 +126,7 @@ bool loadBills(QTableWidget *table, const BillFilter &filter,
                        formatMoney(query.value("deposit_amount").toDouble())));
     table->setItem(row, 8,
                    new QTableWidgetItem(
-                       formatMoney(query.value("total_amount").toDouble())));
+                        formatMoney(query.value("total_amount").toDouble())));
     table->setItem(
         row, 9, new QTableWidgetItem(query.value("payment_method").toString()));
     table->setItem(

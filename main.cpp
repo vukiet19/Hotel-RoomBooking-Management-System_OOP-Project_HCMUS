@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
   if (!DatabaseManager::instance().open()) {
     qDebug() << "ERROR: Khong mo duoc Database!";
   }
-  LoginWindow loginWindow;
-  loginWindow.show();
+  LoginWindow *loginWindow = new LoginWindow();
+  loginWindow->show();
   return app.exec();
 }

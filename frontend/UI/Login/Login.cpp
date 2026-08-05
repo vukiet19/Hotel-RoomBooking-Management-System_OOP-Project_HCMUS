@@ -6,6 +6,7 @@
 using namespace std;
 
 LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
+  setAttribute(Qt::WA_DeleteOnClose, true);
   setAttribute(Qt::WA_StyledBackground, true);
   setFixedSize(1000, 800);
   setWindowTitle("Hotel_Management");
@@ -16,8 +17,6 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
                 "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
                 "#f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff);"
                 "}");
-
-  window2 = new MainWindowController();
 
   label1 = new QLabel("LOGIN", this);
   QLabel *subLabel = new QLabel("Please log in to manage your hotel", this);
@@ -117,7 +116,7 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
   connect(button, &QPushButton::clicked, this, &LoginWindow::handleLogin);
 }
 
-LoginWindow::~LoginWindow() { delete window2; }
+LoginWindow::~LoginWindow() {}
 
 void LoginWindow::handleLogin() {
   QString user = inputBox_user->text();

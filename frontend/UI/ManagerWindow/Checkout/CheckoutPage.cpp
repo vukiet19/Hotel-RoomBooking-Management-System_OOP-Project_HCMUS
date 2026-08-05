@@ -1,8 +1,13 @@
 #include "CheckoutPage.h"
 
 #include <QComboBox>
+#include <QDate>
+#include <QDialog>
 #include <QFormLayout>
+#include <QFrame>
+#include <QGridLayout>
 #include <QGroupBox>
+#include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
@@ -17,21 +22,30 @@
 
 namespace {
 QString formatCleanDate(QString dtStr) {
+  dtStr = dtStr.trimmed();
   if (dtStr.isEmpty())
     return "-";
-  dtStr.replace("T", " ");
-  if (dtStr.length() > 16)
-    dtStr = dtStr.left(16);
+  if (dtStr.length() >= 10 && dtStr[4] == '-' && dtStr[7] == '-') {
+    QDate dVal = QDate::fromString(dtStr.left(10), "yyyy-MM-dd");
+    if (dVal.isValid())
+      return dVal.toString("yyyy-MM-dd");
+  }
   return dtStr;
 }
 
 QString formatMoney(double amount) {
-  return QString("%1 VND").arg(amount, 0, 'f', 0);
+  return QString("%1").arg(amount, 0, 'f', 0);
+}
+
+QLabel *createFieldLabel(const QString &text, QWidget *parent) {
+  auto *label = new QLabel(text, parent);
+  label->setStyleSheet("color: #475569; font-weight: 600; font-size: 14px;");
+  return label;
 }
 
 QLabel *createValueLabel(QWidget *parent) {
   auto *label = new QLabel("-", parent);
-  label->setStyleSheet("color: #1e293b; font-weight: normal;");
+  label->setStyleSheet("color: #0f172a; font-weight: 600; font-size: 14px;");
   return label;
 }
 } // namespace
@@ -56,44 +70,50 @@ void CheckoutPage::setupUi() {
         #checkoutPage QGroupBox {
             background-color: #ffffff;
             color: #3730a3;
-            border: 2px solid #38bdf8;
-            border-radius: 8px;
-            margin-top: 15px;
-            padding: 15px 10px 10px 10px;
+            border: 2px solid #bae6fd;
+            border-radius: 10px;
+            margin-top: 12px;
+            padding: 16px 12px 12px 12px;
             font-weight: bold;
             font-size: 15px;
         }
         #checkoutPage QGroupBox::title {
             subcontrol-origin: margin;
             left: 12px;
-            padding: 0 8px;
+            padding: 0 6px;
             color: #3730a3;
-            background-color: #ffffff;
-            border-radius: 4px;
+            background: transparent;
         }
-        #checkoutPage QScrollArea { background-color: transparent; border: none; }
+        #checkoutPage QScrollArea#checkoutDetailsScroll {
+            background: transparent;
+            border: none;
+        }
+        #checkoutPage QScrollArea#checkoutDetailsScroll::viewport {
+            background: transparent;
+        }
+        #checkoutPage #checkoutDetailsContainer { background: transparent; }
         #checkoutPage QTableWidget {
             background-color: #ffffff;
-            alternate-background-color: #f5f3ff;
-            border: 2px solid #a5b4fc;
+            alternate-background-color: #f0f9ff;
+            border: 2px solid #bae6fd;
             border-radius: 8px;
-            gridline-color: #e0e7ff; 
+            gridline-color: #e0f2fe; 
             font-size: 14px;
-            color: #312e81; 
-            selection-background-color: #6366f1; 
+            color: #0f172a; 
+            selection-background-color: #38bdf8; 
             selection-color: #ffffff;
             outline: none; 
         }
-        #checkoutPage QTableWidget::item { padding: 5px; }
-        #checkoutPage QTableWidget::item:hover { background-color: #e0e7ff; color: #312e81; }
+        #checkoutPage QTableWidget::item { padding: 6px; }
+        #checkoutPage QTableWidget::item:hover { background-color: #e0f2fe; color: #0f172a; }
         #checkoutPage QHeaderView::section:horizontal {
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #312e81, stop:1 #312e81); 
+            background-color: #312e81; 
             color: #ffffff;
             font-weight: bold;
             font-size: 14px;
-            padding: 12px;
+            padding: 10px;
             border: none;
-            border-right: 1px solid #ffffff;
+            border-right: 1px solid #1e1b4b;
         }
         #checkoutPage QHeaderView::section:horizontal:first { border-top-left-radius: 8px; }
         #checkoutPage QHeaderView::section:horizontal:last { border-top-right-radius: 8px; border-right: none; }
@@ -105,29 +125,31 @@ void CheckoutPage::setupUi() {
             border: none;
             border-right: 1px solid #bae6fd;
         }
-        #checkoutPage QTableCornerButton::section { background-color: #38bdf8; border: none; }
+        #checkoutPage QTableCornerButton::section { background-color: #312e81; border: none; }
         #checkoutPage QComboBox, #checkoutPage QLineEdit {
             background-color: #ffffff;
             border: 2px solid #38bdf8;
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px 12px;
             font-size: 14px;
-            color: #312e81;
+            color: #0f172a;
         }
-        #checkoutPage QComboBox:hover, #checkoutPage QLineEdit:hover { border: 2px solid #6366f1; }
-        #checkoutPage QComboBox:focus, #checkoutPage QLineEdit:focus { border: 2px solid #8b5cf6; background-color: #f0f9ff; }
-        #checkoutPage QComboBox::drop-down { border: none; width: 25px; }
-        #checkoutPage QComboBox::down-arrow { image: none; }
+        #checkoutPage QComboBox:hover, #checkoutPage QLineEdit:hover { border: 2px solid #0284c7; }
+        #checkoutPage QComboBox:focus, #checkoutPage QLineEdit:focus { border: 2px solid #0369a1; background-color: #f0f9ff; }
         #checkoutPage QComboBox QAbstractItemView, #checkoutPage QComboBox QListView {
             background-color: #ffffff;
-            color: #312e81;
-            border: 2px solid #a5b4fc;
-            border-radius: 4px;
-            selection-background-color: #e0e7ff;
-            selection-color: #312e81;
+            color: #0f172a;
+            border: 2px solid #38bdf8;
+            border-radius: 6px;
+            selection-background-color: #f0f9ff;
+            selection-color: #0369a1;
             outline: none;
         }
-        #checkoutPage QLabel { color: #3730a3; font-weight: bold; font-size: 14px; }
+        #checkoutPage QGroupBox QLabel {
+            color: #475569;
+            font-weight: 600;
+            font-size: 14px;
+        }
     )");
 
   auto *rootLayout = new QVBoxLayout(this);
@@ -135,13 +157,16 @@ void CheckoutPage::setupUi() {
   rootLayout->setSpacing(12);
 
   auto *title = new QLabel("Checkout", this);
-  title->setStyleSheet("font-size: 24px; font-weight: bold; color: #1e3a8a;");
+  title->setStyleSheet(
+      "font-size: 28px; font-weight: bold; color: #3730a3; font-family: 'Segoe "
+      "UI', Arial, sans-serif; background: transparent;");
   rootLayout->addWidget(title);
 
   auto *subtitle = new QLabel("Select an active booking to review guest info "
                               "and calculate checkout total.",
                               this);
-  subtitle->setStyleSheet("color: #64748b; font-size: 13px;");
+  subtitle->setStyleSheet("color: #475569; font-size: 14px; font-weight: 500; "
+                          "background: transparent;");
   rootLayout->addWidget(subtitle);
 
   auto *searchLayout = new QHBoxLayout();
@@ -151,6 +176,20 @@ void CheckoutPage::setupUi() {
 
   auto *searchButton = new QPushButton("Search", this);
   auto *clearButton = new QPushButton("Clear", this);
+  searchButton->setCursor(Qt::PointingHandCursor);
+  clearButton->setCursor(Qt::PointingHandCursor);
+  searchButton->setStyleSheet(
+      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #6366f1, stop:1 #8b5cf6); color: white; border: none; "
+      "border-radius: 8px; padding: 9px 20px; font-size: 14px; font-weight: "
+      "bold; }"
+      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #4f46e5, stop:1 #7c3aed); }");
+  clearButton->setStyleSheet(
+      "QPushButton { background-color: #cbd5e1; color: #475569; border: none; "
+      "border-radius: 8px; padding: 9px 20px; font-size: 14px; font-weight: "
+      "bold; }"
+      "QPushButton:hover { background-color: #94a3b8; color: #ffffff; }");
   searchLayout->addWidget(searchEdit, 1);
   searchLayout->addWidget(searchButton);
   searchLayout->addWidget(clearButton);
@@ -175,11 +214,14 @@ void CheckoutPage::setupUi() {
   rootLayout->addWidget(bookingGroup);
 
   auto *detailsScroll = new QScrollArea(this);
+  detailsScroll->setObjectName("checkoutDetailsScroll");
   detailsScroll->setWidgetResizable(true);
   detailsScroll->setFrameShape(QFrame::NoFrame);
+  detailsScroll->viewport()->setAutoFillBackground(false);
 
   detailsContainer = new QWidget(detailsScroll);
   detailsContainer->setObjectName("checkoutDetailsContainer");
+  detailsContainer->setAttribute(Qt::WA_StyledBackground, true);
   detailsContainer->setSizePolicy(QSizePolicy::Expanding,
                                   QSizePolicy::Preferred);
   auto *detailsLayout = new QVBoxLayout(detailsContainer);
@@ -204,14 +246,23 @@ void CheckoutPage::setupUi() {
   expectedCheckOutLabel = createValueLabel(bookingInfoGroup);
   nightsLabel = createValueLabel(bookingInfoGroup);
 
-  bookingInfoLayout->addRow("Booking ID:", bookingIdLabel);
-  bookingInfoLayout->addRow("Customer:", customerNameLabel);
-  bookingInfoLayout->addRow("Phone:", phoneLabel);
-  bookingInfoLayout->addRow("Room:", roomLabel);
-  bookingInfoLayout->addRow("Room type:", roomTypeLabel);
-  bookingInfoLayout->addRow("Check-in:", checkInLabel);
-  bookingInfoLayout->addRow("Expected checkout:", expectedCheckOutLabel);
-  bookingInfoLayout->addRow("Number of nights:", nightsLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Booking ID:", bookingInfoGroup),
+                            bookingIdLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Customer:", bookingInfoGroup),
+                            customerNameLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Phone:", bookingInfoGroup),
+                            phoneLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Room:", bookingInfoGroup),
+                            roomLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Room type:", bookingInfoGroup),
+                            roomTypeLabel);
+  bookingInfoLayout->addRow(createFieldLabel("Check-in:", bookingInfoGroup),
+                            checkInLabel);
+  bookingInfoLayout->addRow(
+      createFieldLabel("Expected checkout:", bookingInfoGroup),
+      expectedCheckOutLabel);
+  bookingInfoLayout->addRow(
+      createFieldLabel("Number of nights:", bookingInfoGroup), nightsLabel);
   topDetailsLayout->addWidget(bookingInfoGroup, 1);
 
   auto *summaryGroup = new QGroupBox("Checkout summary", detailsContainer);
@@ -226,11 +277,16 @@ void CheckoutPage::setupUi() {
   totalLabel->setStyleSheet(
       "color: #1d4ed8; font-size: 17px; font-weight: bold; padding: 4px 0;");
 
-  summaryLayout->addRow("Room charge:", roomChargeLabel);
-  summaryLayout->addRow("Service charge:", serviceChargeLabel);
-  summaryLayout->addRow("Discount:", discountLabel);
-  summaryLayout->addRow("Deposit deducted:", depositLabel);
-  summaryLayout->addRow("Total to pay:", totalLabel);
+  summaryLayout->addRow(createFieldLabel("Room charge:", summaryGroup),
+                        roomChargeLabel);
+  summaryLayout->addRow(createFieldLabel("Service charge:", summaryGroup),
+                        serviceChargeLabel);
+  summaryLayout->addRow(createFieldLabel("Discount:", summaryGroup),
+                        discountLabel);
+  summaryLayout->addRow(createFieldLabel("Deposit deducted:", summaryGroup),
+                        depositLabel);
+  summaryLayout->addRow(createFieldLabel("Total to pay:", summaryGroup),
+                        totalLabel);
   topDetailsLayout->addWidget(summaryGroup, 1);
   detailsLayout->addLayout(topDetailsLayout);
 
@@ -249,7 +305,7 @@ void CheckoutPage::setupUi() {
 
   auto *actionsLayout = new QHBoxLayout();
   actionsLayout->setSpacing(10);
-  auto *paymentLabel = new QLabel("Payment method:", detailsContainer);
+  auto *paymentLabel = createFieldLabel("Payment method:", detailsContainer);
   paymentMethodComboBox = new QComboBox(detailsContainer);
   paymentMethodComboBox->addItems({"Cash", "Card", "Bank transfer"});
   paymentMethodComboBox->setMinimumWidth(150);
@@ -258,12 +314,15 @@ void CheckoutPage::setupUi() {
   actionsLayout->addStretch();
 
   confirmButton = new QPushButton("Confirm checkout", detailsContainer);
-  confirmButton->setMinimumSize(190, 38);
+  confirmButton->setMinimumSize(190, 42);
+  confirmButton->setCursor(Qt::PointingHandCursor);
   confirmButton->setStyleSheet(
-      "QPushButton { background-color: #10b981; color: white; border: none; "
-      "border-radius: 6px; "
-      "padding: 9px 16px; font-weight: bold; }"
-      "QPushButton:hover { background-color: #059669; }"
+      "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #10b981, stop:1 #059669); color: white; border: none; "
+      "border-radius: 8px; padding: 10px 22px; font-size: 15px; font-weight: "
+      "bold; }"
+      "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+      "stop:0 #059669, stop:1 #047857); }"
       "QPushButton:disabled { background-color: #cbd5e1; color: #64748b; }");
   actionsLayout->addWidget(confirmButton);
   detailsLayout->addLayout(actionsLayout);
@@ -395,17 +454,111 @@ void CheckoutPage::showConfirmDialog() {
     return;
 
   const auto &booking = bookings.at(index);
-  const double finalTotal = booking.totalAmount;
+  QDialog dialog(this);
+  dialog.setObjectName("checkoutConfirmDialog");
+  dialog.setWindowTitle("Confirm checkout");
+  dialog.setModal(true);
+  dialog.setFixedSize(480, 330);
+  dialog.setStyleSheet(R"(
+    QDialog#checkoutConfirmDialog { background: #f8fafc; }
+    #checkoutConfirmDialog QLabel { font-family: 'Segoe UI', Arial, sans-serif; }
+    #checkoutConfirmDialog #checkoutSummaryCard {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+    }
+    #checkoutConfirmDialog QPushButton {
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      min-width: 120px;
+    }
+    #checkoutConfirmDialog QPushButton#cancelCheckoutButton {
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+    #checkoutConfirmDialog QPushButton#cancelCheckoutButton:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    #checkoutConfirmDialog QPushButton#confirmCheckoutButton {
+      background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                  stop:0 #10b981, stop:1 #059669);
+      color: #ffffff;
+      border: none;
+    }
+    #checkoutConfirmDialog QPushButton#confirmCheckoutButton:hover {
+      background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                  stop:0 #059669, stop:1 #047857);
+    }
+  )");
 
-  const QString message =
-      QString("Customer: %1\nRoom: %2\nTotal amount: %3\nPayment method: %4\n\n"
-              "Confirm guest checkout and release room?")
-          .arg(booking.customerName, booking.roomNumber,
-               formatMoney(finalTotal), paymentMethodComboBox->currentText());
+  auto *layout = new QVBoxLayout(&dialog);
+  layout->setContentsMargins(26, 24, 26, 22);
+  layout->setSpacing(12);
 
-  if (QMessageBox::question(this, "Confirm Checkout", message,
-                            QMessageBox::Yes | QMessageBox::No) !=
-      QMessageBox::Yes)
+  auto *title = new QLabel("Confirm checkout", &dialog);
+  title->setStyleSheet("color: #3730a3; font-size: 22px; font-weight: 700;");
+  layout->addWidget(title);
+
+  auto *subtitle = new QLabel(
+      "Review the payment details before completing this checkout.", &dialog);
+  subtitle->setWordWrap(true);
+  subtitle->setStyleSheet("color: #64748b; font-size: 13px; font-weight: 500;");
+  layout->addWidget(subtitle);
+
+  auto *summaryCard = new QFrame(&dialog);
+  summaryCard->setObjectName("checkoutSummaryCard");
+  auto *summaryLayout = new QGridLayout(summaryCard);
+  summaryLayout->setContentsMargins(16, 14, 16, 14);
+  summaryLayout->setHorizontalSpacing(22);
+  summaryLayout->setVerticalSpacing(8);
+
+  const auto addSummaryRow = [&summaryLayout, summaryCard](int row,
+                                                             const QString &label,
+                                                             const QString &value,
+                                                             bool emphasize = false) {
+    auto *field = new QLabel(label, summaryCard);
+    field->setStyleSheet("color: #64748b; font-size: 13px; font-weight: 600;");
+    auto *data = new QLabel(value, summaryCard);
+    data->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    data->setStyleSheet(emphasize
+                            ? "color: #047857; font-size: 16px; font-weight: 700;"
+                            : "color: #0f172a; font-size: 13px; font-weight: 700;");
+    summaryLayout->addWidget(field, row, 0);
+    summaryLayout->addWidget(data, row, 1);
+  };
+  addSummaryRow(0, "Customer", booking.customerName);
+  addSummaryRow(1, "Room", booking.roomNumber);
+  addSummaryRow(2, "Payment method", paymentMethodComboBox->currentText());
+  addSummaryRow(3, "Total to pay", formatMoney(booking.totalAmount), true);
+  summaryLayout->setColumnStretch(1, 1);
+  layout->addWidget(summaryCard);
+
+  auto *hint = new QLabel(
+      "This will create the bill and make the room available again.", &dialog);
+  hint->setStyleSheet("color: #475569; font-size: 12px; font-weight: 500;");
+  layout->addWidget(hint);
+  layout->addStretch();
+
+  auto *buttonLayout = new QHBoxLayout();
+  buttonLayout->addStretch();
+  auto *cancelButton = new QPushButton("Cancel", &dialog);
+  cancelButton->setObjectName("cancelCheckoutButton");
+  auto *confirmDialogButton = new QPushButton("Confirm checkout", &dialog);
+  confirmDialogButton->setObjectName("confirmCheckoutButton");
+  confirmDialogButton->setDefault(true);
+  buttonLayout->addWidget(cancelButton);
+  buttonLayout->addWidget(confirmDialogButton);
+  layout->addLayout(buttonLayout);
+
+  connect(cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
+  connect(confirmDialogButton, &QPushButton::clicked, &dialog,
+          &QDialog::accept);
+
+  if (dialog.exec() != QDialog::Accepted)
     return;
 
   CheckoutService checkoutService;
@@ -423,58 +576,4 @@ void CheckoutPage::showConfirmDialog() {
                                .arg(result.booking.roomNumber));
   loadBookings();
   populateBookingTable(searchEdit->text());
-
-#if 0 // Replaced by CheckoutService transaction above.
-    {
-        QSqlDatabase db = DatabaseManager::instance().database();
-        db.transaction();
-
-        // 1. Cập nhật trạng thái phòng về Trống (0)
-        QSqlQuery updateRoom(db);
-        updateRoom.prepare("UPDATE ListRooms SET Status = 0 WHERE room_id = :roomId");
-        updateRoom.bindValue(":roomId", booking.roomNumber);
-
-        // 2. Thêm hóa đơn vào bảng Bills
-        // QSqlQuery insertBill(db);
-        // insertBill.prepare("INSERT INTO Bills (booking_id, customer_name, total_amount, payment_method, date) "
-        //                   "VALUES (:bId, :cName, :amount, :method, :date)");
-        // insertBill.bindValue(":bId", booking.bookingId);
-        // insertBill.bindValue(":cName", booking.customerName);
-        // insertBill.bindValue(":amount", finalTotal);
-        // insertBill.bindValue(":method", paymentMethodComboBox->currentText());
-        // insertBill.bindValue(":date", QDate::currentDate().toString("yyyy-MM-dd"));
-
-        if (updateRoom.exec())
-        {
-            // Xóa khách vãng lai
-            if (booking.customerType == -1) // -1 là Temporary
-            {
-                // 1. Chuyển Bookings sang khách mặc định (ID = 0)
-                QSqlQuery updateBooking(db);
-                updateBooking.prepare("UPDATE Bookings SET customer_id = 0 WHERE id = :bId");
-                updateBooking.bindValue(":bId", booking.bookingId);
-                updateBooking.exec();
-
-                // 2. Xóa vĩnh viễn Customer khỏi DB
-                QSqlQuery deleteCustomer(db);
-                deleteCustomer.prepare("DELETE FROM Customer WHERE id_customer = :cId");
-                deleteCustomer.bindValue(":cId", booking.customerId);
-                deleteCustomer.exec();
-                
-                qDebug() << "[INFO] Đã xóa khách vãng lai và set booking về 0 thành công!";
-            }
-
-            db.commit();
-            QMessageBox::information(this, "Checkout Success",
-                                     "Checkout processed successfully! Room status set to Available.");
-            loadMockBookings();
-            populateBookingTable();
-        }
-        else
-        {
-            db.rollback();
-            QMessageBox::critical(this, "Database Error", "Failed to process checkout in database!");
-        }
-    }
-#endif
 }

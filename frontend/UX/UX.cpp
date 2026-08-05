@@ -5,6 +5,7 @@
 #include "backend/Manager/DatabaseManager.h"
 #include "frontend/Observers/QtHotelObserver.h"
 #include "frontend/UI/ManagerWindow/Checkout/CheckoutPage.h"
+#include "frontend/UI/Login/Login.h"
 #include "frontend/usercheck/backend.h"
 #include <QDialog>
 #include <QFormLayout>
@@ -23,6 +24,7 @@
 
 MainWindowController::MainWindowController(QWidget *parent)
     : MainWindowUi(parent) {
+  setAttribute(Qt::WA_DeleteOnClose, true);
   // Gọi UI
   MainWindowUi::setupUi();
   initConnections();
@@ -46,6 +48,8 @@ void MainWindowController::initConnections() {
           &MainWindowController::handleCheckout);
   connect(buttonDashboard, &QPushButton::clicked, this,
           &MainWindowController::handleDashboardTab);
+  connect(buttonLogout, &QPushButton::clicked, this,
+          &MainWindowController::handleLogout);
 
   connect(bookingPage->bookingTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showBookingTab);
@@ -102,6 +106,12 @@ void MainWindowController::handleCheckout() {
   setActiveButton(buttonCheckout);
 }
 
+void MainWindowController::handleLogout() {
+  LoginWindow *loginWin = new LoginWindow();
+  loginWin->show();
+  this->close();
+}
+
 // Dashboard
 static QString formatPrice(double val) {
   if (val == std::floor(val)) {
@@ -129,11 +139,11 @@ void MainWindowController::handleDashboardTab() {
   if (lblTodayBookings)
     lblTodayBookings->setText(QString::number(todayBookings));
   if (lblDailyRevenue)
-    lblDailyRevenue->setText(formatPrice(dailyRevenue) + " VND");
+    lblDailyRevenue->setText(formatPrice(dailyRevenue));
   if (lblMonthlyRevenue)
-    lblMonthlyRevenue->setText(formatPrice(monthlyRevenue) + " VND");
+    lblMonthlyRevenue->setText(formatPrice(monthlyRevenue));
   if (lblYearlyRevenue)
-    lblYearlyRevenue->setText(formatPrice(yearlyRevenue) + " VND");
+    lblYearlyRevenue->setText(formatPrice(yearlyRevenue));
 
   btnUpdate->disconnect();
   btnDelete->disconnect();
@@ -356,7 +366,10 @@ void MainWindowController::onBookingStatusObserved(
     tableDashboard->setItem(0, 1, new QTableWidgetItem(customerName));
     tableDashboard->setItem(
         0, 2, new QTableWidgetItem(QString::number(totalPrice, 'f', 2)));
-    tableDashboard->setItem(0, 3, new QTableWidgetItem(timestamp));
+    QString cleanTs = timestamp;
+    if (cleanTs.length() >= 10 && cleanTs[4] == '-' && cleanTs[7] == '-')
+      cleanTs = cleanTs.left(10);
+    tableDashboard->setItem(0, 3, new QTableWidgetItem(cleanTs));
 
     tableDashboard->selectRow(0);
   }
@@ -370,18 +383,17 @@ void MainWindowController::onBookingStatusObserved(
   if (lblTodayBookings)
     lblTodayBookings->setText(QString::number(todayBookings));
   if (lblDailyRevenue)
-    lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2) + " VND");
+    lblDailyRevenue->setText(QString::number(dailyRevenue, 'f', 2));
   if (lblMonthlyRevenue)
-    lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2) +
-                               " VND");
+    lblMonthlyRevenue->setText(QString::number(monthlyRevenue, 'f', 2));
   if (lblYearlyRevenue)
-    lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2) + " VND");
+    lblYearlyRevenue->setText(QString::number(yearlyRevenue, 'f', 2));
 
   if (tableBooking) {
     Backend::loadTableData(
         tableBooking,
         "SELECT id AS 'Booking ID', customer_id AS 'Customer ID', room_number "
         "AS 'Room Number', check_in_time AS 'Check-In', check_out_time AS "
-        "'Check-Out', total_price AS 'Total Price (VND)' FROM Bookings");
+        "'Check-Out', total_price AS 'Total Price' FROM Bookings");
   }
 }
