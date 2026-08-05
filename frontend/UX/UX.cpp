@@ -5,6 +5,7 @@
 #include "backend/Manager/DatabaseManager.h"
 #include "frontend/Observers/QtHotelObserver.h"
 #include "frontend/UI/ManagerWindow/Checkout/CheckoutPage.h"
+#include "frontend/UI/Login/Login.h"
 #include "frontend/usercheck/backend.h"
 #include <QDialog>
 #include <QFormLayout>
@@ -23,6 +24,7 @@
 
 MainWindowController::MainWindowController(QWidget *parent)
     : MainWindowUi(parent) {
+  setAttribute(Qt::WA_DeleteOnClose, true);
   // Gọi UI
   MainWindowUi::setupUi();
   initConnections();
@@ -46,6 +48,8 @@ void MainWindowController::initConnections() {
           &MainWindowController::handleCheckout);
   connect(buttonDashboard, &QPushButton::clicked, this,
           &MainWindowController::handleDashboardTab);
+  connect(buttonLogout, &QPushButton::clicked, this,
+          &MainWindowController::handleLogout);
 
   connect(bookingPage->bookingTabButton(), &QPushButton::clicked, this,
           &MainWindowController::showBookingTab);
@@ -100,6 +104,12 @@ void MainWindowController::handleCheckout() {
   setActionBarVisible(false);
   stackedWidget->setCurrentWidget(checkoutPage);
   setActiveButton(buttonCheckout);
+}
+
+void MainWindowController::handleLogout() {
+  LoginWindow *loginWin = new LoginWindow();
+  loginWin->show();
+  this->close();
 }
 
 // Dashboard

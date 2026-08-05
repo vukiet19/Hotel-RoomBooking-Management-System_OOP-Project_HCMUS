@@ -12,6 +12,7 @@
 #include <QDate>
 #include <QDebug>
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
 #include <QMessageBox>
@@ -144,20 +145,41 @@ CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
   layout->addLayout(form);
   layout->addSpacing(15);
 
+  QHBoxLayout *btnLayout = new QHBoxLayout();
+  btnLayout->setSpacing(15);
+
+  btnBack = new QPushButton("Back to Login", this);
+  btnBack->setCursor(Qt::PointingHandCursor);
+  btnBack->setStyleSheet(
+      "QPushButton { background: #cbd5e1; color: #334155; padding: 14px; "
+      "font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
+      "QPushButton:hover { background: #94a3b8; color: #0f172a; }");
+
   btnNext = new QPushButton("Find Available Rooms", this);
   btnNext->setCursor(Qt::PointingHandCursor);
 
-  // --- ĐỒNG BỘ NÚT VIBRANT GRADIENT ---
   btnNext->setStyleSheet(
       "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
       "stop:0 #6366f1, stop:1 #8b5cf6); color: white; padding: 14px; "
       "font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
       "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
       "stop:0 #4f46e5, stop:1 #7c3aed); }");
-  layout->addWidget(btnNext);
 
+  btnLayout->addWidget(btnBack, 1);
+  btnLayout->addWidget(btnNext, 2);
+
+  layout->addLayout(btnLayout);
+
+  connect(btnBack, &QPushButton::clicked, this,
+          &CustomerInputWindow::onBackClicked);
   connect(btnNext, &QPushButton::clicked, this,
           &CustomerInputWindow::onNextClicked);
+}
+
+void CustomerInputWindow::onBackClicked() {
+  LoginWindow *loginWin = new LoginWindow();
+  loginWin->show();
+  this->close();
 }
 
 // Hàm kiểm tra thông tin khách hàng ghi click
@@ -324,6 +346,16 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
   chkDeposit->setChecked(false);
   layout->addWidget(chkDeposit);
 
+  QHBoxLayout *btnLayout = new QHBoxLayout();
+  btnLayout->setSpacing(15);
+
+  btnBack = new QPushButton("Back", this);
+  btnBack->setCursor(Qt::PointingHandCursor);
+  btnBack->setStyleSheet(
+      "QPushButton { background: #cbd5e1; color: #334155; padding: 14px; "
+      "font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
+      "QPushButton:hover { background: #94a3b8; color: #0f172a; }");
+
   btnBook = new QPushButton("Confirm Booking", this);
   btnBook->setCursor(Qt::PointingHandCursor);
 
@@ -333,8 +365,14 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
       "font-size: 16px; font-weight: bold; border-radius: 8px; border: none; }"
       "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
       "stop:0 #4f46e5, stop:1 #7c3aed); }");
-  layout->addWidget(btnBook);
 
+  btnLayout->addWidget(btnBack, 1);
+  btnLayout->addWidget(btnBook, 2);
+
+  layout->addLayout(btnLayout);
+
+  connect(btnBack, &QPushButton::clicked, this,
+          &CustomerWindow::onBackClicked);
   connect(btnBook, &QPushButton::clicked, this,
           &CustomerWindow::onBookRoomClicked);
 
@@ -553,4 +591,10 @@ void CustomerWindow::onBookRoomClicked() {
                           "Transaction commit failed:\n" +
                               db.lastError().text());
   }
+}
+
+void CustomerWindow::onBackClicked() {
+  CustomerInputWindow *inputWindow = new CustomerInputWindow();
+  inputWindow->show();
+  this->close();
 }

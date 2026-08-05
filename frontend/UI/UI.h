@@ -43,6 +43,7 @@ protected:
   QPushButton *buttonInventory;
   QPushButton *buttonBill;
   QPushButton *buttonCheckout;
+  QPushButton *buttonLogout;
 
   QPushButton *btnAdd;
   QPushButton *btnUpdate;

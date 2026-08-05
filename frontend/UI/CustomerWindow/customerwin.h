@@ -22,9 +22,11 @@ private:
     QDateEdit *datecheckout;
     QSpinBox *spinPeople;
     QPushButton *btnNext;
+    QPushButton *btnBack;
     QLineEdit *ID;
     QCheckBox *chkMembership;
     void onNextClicked();
+    void onBackClicked();
 };
 
 class CustomerWindow : public QWidget
@@ -37,6 +39,7 @@ private:
     QTableWidget *tableRoom;
     QCheckBox *chkDeposit;
     QPushButton *btnBook;
+    QPushButton *btnBack;
 
     QString customerName;
     QString customerPhone;
@@ -50,4 +53,5 @@ private:
 
     void loadFilteredRooms();
     void onBookRoomClicked();
+    void onBackClicked();
 };

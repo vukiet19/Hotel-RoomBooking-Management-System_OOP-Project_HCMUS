@@ -18,8 +18,6 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
                 "#f0f9ff, stop:0.5 #e0f2fe, stop:1 #ffffff);"
                 "}");
 
-  window2 = new MainWindowController();
-
   label1 = new QLabel("LOGIN", this);
   QLabel *subLabel = new QLabel("Please log in to manage your hotel", this);
 
@@ -118,7 +116,7 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
   connect(button, &QPushButton::clicked, this, &LoginWindow::handleLogin);
 }
 
-LoginWindow::~LoginWindow() { delete window2; }
+LoginWindow::~LoginWindow() {}
 
 void LoginWindow::handleLogin() {
   QString user = inputBox_user->text();

@@ -14,8 +14,6 @@ public:
     ~LoginWindow();
 
 private:
-    MainWindowController *window2;
-
     QLabel *label1;
     QLabel *l1;
     QLabel *imageLabel;

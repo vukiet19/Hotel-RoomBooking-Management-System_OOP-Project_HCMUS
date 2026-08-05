@@ -31,6 +31,8 @@ void MainWindowUi::setupUi() {
   buttonInventory = new QPushButton("Inventory", sidebar);
   buttonBill = new QPushButton("Bill", sidebar);
   buttonCheckout = new QPushButton("Checkout", sidebar);
+  buttonLogout = new QPushButton("Logout", sidebar);
+  buttonLogout->setObjectName("buttonLogout");
 
   for (auto *button :
        {buttonDashboard, buttonBooking, buttonCustomer, buttonRoom,
@@ -39,6 +41,8 @@ void MainWindowUi::setupUi() {
     sidebarLayout->addWidget(button);
   }
   sidebarLayout->addStretch();
+  buttonLogout->setCursor(Qt::PointingHandCursor);
+  sidebarLayout->addWidget(buttonLogout);
 
   auto *contentArea = new QWidget(this);
   contentArea->setObjectName("contentArea");
@@ -106,6 +110,8 @@ void MainWindowUi::setupUi() {
         #sidebar QPushButton { background: transparent; color: #e0e7ff; border: none; border-radius: 10px; padding: 12px 20px; margin: 4px 12px; font-size: 15px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: 600; text-align: left; }
         #sidebar QPushButton:hover { background-color: #818cf8; color: #ffffff; }
         #sidebar QPushButton[active="true"] { background-color: #0a7ed0; color: #ffffff; font-weight: bold; }
+        #sidebar QPushButton#buttonLogout { background-color: #ef4444; color: #ffffff; text-align: center; margin-bottom: 15px; font-weight: bold; }
+        #sidebar QPushButton#buttonLogout:hover { background-color: #dc2626; color: #ffffff; }
         #actionBar QPushButton { background-color: #ffffff; color: #3730a3; border: 2px solid #a5b4fc; border-radius: 18px; padding: 8px 20px; font-size: 14px; font-weight: 600; }
         #actionBar QPushButton:hover { background-color: #eef2ff; }
         #actionBar QPushButton:last-child { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #10b981, stop:1 #059669); color: white; border: none; }
