@@ -161,12 +161,34 @@ bool BookingRepository::add(const BookingData &booking) {
     }
   }
 
+  const bool depositRequested =
+      booking.depositAmount > 0.0 || booking.depositStatus == "HELD";
+  double calculatedDeposit = 0.0;
+  if (depositRequested && !booking.roomNumber.trimmed().isEmpty()) {
+    QSqlQuery roomPriceQuery(db);
+    roomPriceQuery.prepare(
+        "SELECT base_price FROM ListRooms "
+        "WHERE room_number = :room OR room_id = :room");
+    roomPriceQuery.bindValue(":room", booking.roomNumber);
+    if (roomPriceQuery.exec() && roomPriceQuery.next()) {
+      const QDateTime checkIn =
+          QDateTime::fromString(booking.checkInTime, "yyyy-MM-dd hh:mm:ss");
+      const QDateTime checkOut = QDateTime::fromString(
+          booking.checkOutTime, "yyyy-MM-dd hh:mm:ss");
+      int nights = checkIn.daysTo(checkOut);
+      if (nights <= 0)
+        nights = 1;
+      calculatedDeposit =
+          0.30 * roomPriceQuery.value(0).toDouble() * nights;
+    }
+  }
+  const QString calculatedDepositStatus =
+      calculatedDeposit > 0.0 ? "HELD" : "NONE";
+
   QSqlQuery query(db);
 
-  QString bookingStatusStr =
-      (booking.depositAmount > 0.0 || booking.depositStatus == "HELD")
-          ? "CONFIRMED"
-          : "UNCONFIRMED";
+  QString bookingStatusStr = calculatedDeposit > 0.0 ? "CONFIRMED"
+                                                      : "UNCONFIRMED";
 
   query.prepare(
       "INSERT INTO Bookings (customer_id, room_number, "
@@ -181,10 +203,8 @@ bool BookingRepository::add(const BookingData &booking) {
   query.bindValue(":check_out", booking.checkOutTime);
   query.bindValue(":totalPrice", booking.totalPrice);
   query.bindValue(":status", bookingStatusStr);
-  query.bindValue(":deposit_amount", booking.depositAmount);
-  query.bindValue(":deposit_status", booking.depositStatus.isEmpty()
-                                         ? "NONE"
-                                         : booking.depositStatus);
+  query.bindValue(":deposit_amount", calculatedDeposit);
+  query.bindValue(":deposit_status", calculatedDepositStatus);
 
   if (!query.exec()) {
     qDebug() << "ERROR: Khong the ghi data Booking!"
@@ -245,7 +265,28 @@ int BookingRepository::add(Booking *booking) {
   // sử dụng dynamic cast để check phân biệt standardRoomBooking vs Walk-in tab
   StandardRoomBooking *srb = dynamic_cast<StandardRoomBooking *>(booking);
   if (srb != nullptr) {
-    if (srb->depositAmount > 0.0 || srb->depositStatus == DepositStatus::HELD) {
+    const bool depositRequested =
+        srb->depositAmount > 0.0 || srb->depositStatus == DepositStatus::HELD;
+    int nights = srb->getNights();
+    if (nights <= 0)
+      nights = 1;
+
+    if (srb->getRoom()) {
+      const double basePrice = srb->getRoom()->getBasePrice();
+      if (depositRequested && basePrice > 0.0) {
+        srb->depositAmount = 0.30 * basePrice * nights;
+        srb->depositStatus = DepositStatus::HELD;
+      } else if (!depositRequested) {
+        srb->depositAmount = 0.0;
+        srb->depositStatus = DepositStatus::NONE;
+      }
+
+      if (basePrice > 0.0)
+        booking->totalPrice = basePrice * nights;
+    }
+
+    if (srb->depositAmount > 0.0 ||
+        srb->depositStatus == DepositStatus::HELD) {
       booking->status = BookingStatus::CONFIRMED;
     }
     query.bindValue(
@@ -258,15 +299,6 @@ int BookingRepository::add(Booking *booking) {
     query.bindValue(":deposit_status",
                     depositStatusToString(srb->depositStatus));
 
-    if (srb->getRoom()) {
-      int baseP = srb->getRoom()->getBasePrice();
-      int nights = srb->getNights();
-      if (nights <= 0)
-        nights = 1;
-      if (baseP > 0) {
-        booking->totalPrice = baseP * nights;
-      }
-    }
   } else {
     WalkInTab *wit = dynamic_cast<WalkInTab *>(booking);
     query.bindValue(":room_number",
@@ -437,6 +469,22 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
                                       const QString &statusStr) {
   QSqlDatabase db = DatabaseManager::instance().database();
 
+  // Deposits are collected at booking creation. Preserve the stored amount
+  // and status so an ordinary booking update cannot alter that payment.
+  double storedDeposit = 0.0;
+  QString storedDepositStatus = "NONE";
+  QSqlQuery existingBooking(db);
+  existingBooking.prepare(
+      "SELECT deposit_amount, deposit_status FROM Bookings WHERE id = :id");
+  existingBooking.bindValue(":id", bookingId);
+  if (!existingBooking.exec() || !existingBooking.next()) {
+    qDebug() << "ERROR: Booking" << bookingId
+             << "does not exist when preserving its deposit.";
+    return false;
+  }
+  storedDeposit = existingBooking.value("deposit_amount").toDouble();
+  storedDepositStatus = existingBooking.value("deposit_status").toString();
+
   // 1. Resolve real integer Customer ID if customerId string/number was passed
   int realCustomerId = customerId;
   if (customerId > 0) {
@@ -474,7 +522,10 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
     serviceTotal = sq.value(0).toDouble();
   }
 
-  double finalTotalPrice = qMax(0.0, roomTotal + serviceTotal - depositAmount);
+  const double effectiveDeposit =
+      storedDepositStatus == "HELD" ? storedDeposit : 0.0;
+  double finalTotalPrice =
+      qMax(0.0, roomTotal + serviceTotal - effectiveDeposit);
 
   // 4. Resolve status
   QString finalStatus = statusStr.trimmed();
@@ -489,7 +540,7 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
     }
   }
   if ((finalStatus.isEmpty() || finalStatus == "UNCONFIRMED") &&
-      (depositAmount > 0.0 || depositStatusStr == "HELD")) {
+      (storedDeposit > 0.0 || storedDepositStatus == "HELD")) {
     finalStatus = "CONFIRMED";
   }
 
@@ -527,9 +578,10 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
   query.bindValue(":price", finalTotalPrice);
   query.bindValue(":btype", bookingType);
   query.bindValue(":status", finalStatus);
-  query.bindValue(":dep_amt", depositAmount);
-  query.bindValue(":dep_st",
-                  depositStatusStr.isEmpty() ? "NONE" : depositStatusStr);
+  query.bindValue(":dep_amt", storedDeposit);
+  query.bindValue(":dep_st", storedDepositStatus.isEmpty()
+                                ? "NONE"
+                                : storedDepositStatus);
   query.bindValue(":id", bookingId);
 
   if (!query.exec()) {

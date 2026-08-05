@@ -157,10 +157,7 @@ void StandardRoomBooking::cancelBooking()
 // hàm resolve thực thi khi và set room/deposit status đúng trạng thái
 void StandardRoomBooking::resolveDeposit()
 {
-    if (this->room->getStatus() == RoomStatus::Reserved)
-    {
-        this->depositStatus = DepositStatus::RETURNED;
-    }
+    // A collected deposit remains HELD until checkout deducts it from the bill.
 }
 
 int StandardRoomBooking::getNights() const

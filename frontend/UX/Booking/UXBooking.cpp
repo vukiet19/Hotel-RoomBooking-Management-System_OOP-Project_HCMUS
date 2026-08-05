@@ -60,7 +60,7 @@ void MainWindowController::showBookingTab() {
 void MainWindowController::showUpdateBookingDialog() {
   QDialog *dialog = new QDialog(this);
   dialog->setWindowTitle("Update Booking");
-  dialog->setFixedSize(520, 680);
+  dialog->setFixedSize(520, 570);
 
   dialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
@@ -127,14 +127,6 @@ void MainWindowController::showUpdateBookingDialog() {
   cbStatus->addItems({"UNCONFIRMED", "CONFIRMED", "CHECKED_IN", "CHECKED_OUT"});
   cbStatus->setStyleSheet(inputStyle);
 
-  QLineEdit *txtDepositAmount = new QLineEdit(dialog);
-  txtDepositAmount->setPlaceholderText("Deposit Amount (VND)...");
-  txtDepositAmount->setStyleSheet(inputStyle);
-
-  QComboBox *cbDepositStatus = new QComboBox(dialog);
-  cbDepositStatus->addItems({"NONE", "HELD", "RETURNED"});
-  cbDepositStatus->setStyleSheet(inputStyle);
-
   if (tableBooking && tableBooking->currentRow() >= 0) {
     int row = tableBooking->currentRow();
     if (tableBooking->item(row, 0))
@@ -157,10 +149,6 @@ void MainWindowController::showUpdateBookingDialog() {
     }
     if (tableBooking->item(row, 5))
       cbStatus->setCurrentText(tableBooking->item(row, 5)->text());
-    if (tableBooking->item(row, 6))
-      txtDepositAmount->setText(tableBooking->item(row, 6)->text());
-    if (tableBooking->item(row, 7))
-      cbDepositStatus->setCurrentText(tableBooking->item(row, 7)->text());
   }
 
   formLayout->addRow("Booking ID:", txtBookingId);
@@ -169,8 +157,6 @@ void MainWindowController::showUpdateBookingDialog() {
   formLayout->addRow("Check-In:", dateCheckIn);
   formLayout->addRow("Check-Out:", dateCheckOut);
   formLayout->addRow("Status:", cbStatus);
-  formLayout->addRow("Deposit Amount:", txtDepositAmount);
-  formLayout->addRow("Deposit Status:", cbDepositStatus);
 
   mainLayout->addLayout(formLayout);
 
@@ -222,45 +208,12 @@ void MainWindowController::showUpdateBookingDialog() {
     QString checkOutStr =
         dateCheckOut->date().toString("yyyy-MM-dd") + " 12:00:00";
     QString statusStr = cbStatus->currentText();
-    double depositAmt = txtDepositAmount->text().toDouble();
-    QString depositStatusStr = cbDepositStatus->currentText();
-
-    // Prevent deposit from exceeding total room base price
-    double roomBasePrice = 0.0;
-    if (!roomNumberStr.isEmpty()) {
-      QSqlQuery rq(DatabaseManager::instance().database());
-      rq.prepare("SELECT base_price FROM ListRooms WHERE room_number = :rm OR room_id = :rm");
-      rq.bindValue(":rm", roomNumberStr);
-      if (rq.exec() && rq.next()) {
-        roomBasePrice = rq.value(0).toDouble();
-      }
-    }
-    int nights = dateCheckIn->date().daysTo(dateCheckOut->date());
-    if (nights <= 0) nights = 1;
-    double maxAllowedDeposit = (roomBasePrice > 0.0) ? (roomBasePrice * nights) : 0.0;
-
-    if (maxAllowedDeposit > 0.0 && depositAmt > maxAllowedDeposit) {
-      QMessageBox::warning(dialog, "Input Error",
-                           QString("Deposit amount (%1) cannot exceed the room base price (%2).")
-                               .arg(QLocale(QLocale::English).toString(depositAmt, 'f', 0))
-                               .arg(QLocale(QLocale::English).toString(maxAllowedDeposit, 'f', 0)));
-      return;
-    }
-
-    if (depositAmt > 0 && depositStatusStr == "NONE") {
-      depositStatusStr = "HELD";
-    }
-    if ((depositAmt > 0 || depositStatusStr == "HELD") && statusStr == "UNCONFIRMED") {
-      statusStr = "CONFIRMED";
-    }
-
     QDateTime inDT = QDateTime::fromString(checkInStr, "yyyy-MM-dd hh:mm:ss");
     QDateTime outDT = QDateTime::fromString(checkOutStr, "yyyy-MM-dd hh:mm:ss");
 
     BookingRepository repo;
     bool success = repo.updateBooking(bookingId, customerIdStr.toInt(),
-                                      roomNumberStr, inDT, outDT, 0.0,
-                                      depositAmt, depositStatusStr, statusStr);
+                                      roomNumberStr, inDT, outDT, statusStr);
 
     if (success) {
       QMessageBox::information(dialog, "Success",
@@ -803,7 +756,8 @@ void MainWindowController::showAddBookingDialog() {
       "stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 "
       "17 4 12'></polyline></svg>\"); }";
 
-  QCheckBox *chkDeposit = new QCheckBox("Yes (Base Room Rate)", addDialog);
+  QCheckBox *chkDeposit =
+      new QCheckBox("Yes (30% of room total)", addDialog);
   chkDeposit->setStyleSheet(checkBoxStyle);
   chkDeposit->setChecked(false);
 
@@ -1013,8 +967,12 @@ void MainWindowController::showAddBookingDialog() {
       return;
     }
 
-    double depositAmt =
-        (chkDeposit->isChecked() && !room.isEmpty()) ? doublePrice : 0.0;
+    int nights = dateCheckIn->date().daysTo(dateCheckOut->date());
+    if (nights <= 0)
+      nights = 1;
+    double depositAmt = (chkDeposit->isChecked() && !room.isEmpty())
+                            ? 0.30 * doublePrice * nights
+                            : 0.0;
     QString depositStatusStr = (depositAmt > 0.0) ? "HELD" : "NONE";
 
     BookingRepository bookingRepository;
@@ -1023,7 +981,7 @@ void MainWindowController::showAddBookingDialog() {
     bookingData.roomNumber = room;
     bookingData.checkInTime = checkInDate;
     bookingData.checkOutTime = checkOutDate;
-    bookingData.totalPrice = doublePrice;
+    bookingData.totalPrice = doublePrice * nights;
     bookingData.depositAmount = depositAmt;
     bookingData.depositStatus = depositStatusStr;
 
