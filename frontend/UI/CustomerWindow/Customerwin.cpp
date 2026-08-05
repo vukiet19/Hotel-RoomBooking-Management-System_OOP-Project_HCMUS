@@ -371,8 +371,7 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
 
   layout->addLayout(btnLayout);
 
-  connect(btnBack, &QPushButton::clicked, this,
-          &CustomerWindow::onBackClicked);
+  connect(btnBack, &QPushButton::clicked, this, &CustomerWindow::onBackClicked);
   connect(btnBook, &QPushButton::clicked, this,
           &CustomerWindow::onBookRoomClicked);
 
@@ -470,9 +469,11 @@ void CustomerWindow::onBookRoomClicked() {
 
   // Tạo query kiểm tra query có tồn tại trong database chưa( có rồi thì copy
   // point)
-  QString sqlString = QString("SELECT id, id_customer, Point, Type FROM "
-                              "Customer WHERE id_customer = '%1'")
-                          .arg(ID);
+  QString sqlString =
+      QString(
+          "SELECT id, id_customer, Point, Type, full_name, phone_number FROM "
+          "Customer WHERE id_customer = '%1'")
+          .arg(ID);
   checkCustomer.exec(sqlString);
 
   int currentTierVal = static_cast<int>(
@@ -480,6 +481,21 @@ void CustomerWindow::onBookRoomClicked() {
 
   // Kiểm tra xem có tồn tại không
   if (checkCustomer.next()) {
+    // Ràng buộc định danh khách hàng
+    QString dbName = checkCustomer.value("full_name").toString();
+    QString dbPhone = checkCustomer.value("phone_number").toString();
+
+    if (dbName.compare(customerName, Qt::CaseInsensitive) != 0 ||
+        dbPhone != customerPhone) {
+      db.rollback();
+      QMessageBox::warning(
+          this, "Verification Failed",
+          "This ID Card/Passport is already registered with a different Name "
+          "or Phone Number.\n"
+          "All 3 credentials (ID, Name, Phone Number) must match!");
+      return;
+    }
+
     realCustomerId = checkCustomer.value("id").toInt();
     finalCustomerId = checkCustomer.value("id_customer").toString();
     currentPoints = checkCustomer.value("Point").toInt();
@@ -500,6 +516,7 @@ void CustomerWindow::onBookRoomClicked() {
   newCustomer.setPhone(customerPhone.toStdString());
   newCustomer.setPoint(currentPoints);
   newCustomer.setIdroom(roomId.toStdString());
+  newCustomer.setTier(static_cast<MembershipTier>(currentTierVal));
 
   // add hoặc update vào database
   if (isExistingCustomer) {

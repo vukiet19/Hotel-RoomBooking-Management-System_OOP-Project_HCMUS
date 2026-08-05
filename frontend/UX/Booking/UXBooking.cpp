@@ -990,9 +990,11 @@ void MainWindowController::showAddBookingDialog() {
       } else if (chkMembership->isChecked()) {
         currentTierVal = static_cast<int>(MembershipTier::Unknown);
       }
+      a.setTier(static_cast<MembershipTier>(currentTierVal));
       re.update(a);
       realCustomerId = custQuery.value("id").toInt();
     } else {
+      a.setTier(static_cast<MembershipTier>(currentTierVal));
       re.add(a);
       QSqlQuery newCustQuery(db);
       newCustQuery.prepare(
