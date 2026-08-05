@@ -11,9 +11,9 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
+#include <QLocale>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QScrollArea>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
@@ -34,7 +34,7 @@ QString formatCleanDate(QString dtStr) {
 }
 
 QString formatMoney(double amount) {
-  return QString("%1").arg(amount, 0, 'f', 0);
+  return QLocale(QLocale::English).toString(amount, 'f', 0) + " VND";
 }
 
 QLabel *createFieldLabel(const QString &text, QWidget *parent) {
@@ -46,6 +46,9 @@ QLabel *createFieldLabel(const QString &text, QWidget *parent) {
 QLabel *createValueLabel(QWidget *parent) {
   auto *label = new QLabel("-", parent);
   label->setStyleSheet("color: #0f172a; font-weight: 600; font-size: 14px;");
+  label->setWordWrap(true);
+  label->setTextInteractionFlags(Qt::TextSelectableByMouse);
+  label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   return label;
 }
 } // namespace
@@ -117,6 +120,10 @@ void CheckoutPage::setupUi() {
         }
         #checkoutPage QHeaderView::section:horizontal:first { border-top-left-radius: 8px; }
         #checkoutPage QHeaderView::section:horizontal:last { border-top-right-radius: 8px; border-right: none; }
+        #checkoutPage QTableWidget#activeBookingsTable QHeaderView::section:horizontal {
+            font-size: 13px;
+            padding: 8px 4px;
+        }
         #checkoutPage QHeaderView::section:vertical {
             background-color: #f8fafc;
             color: #64748b;
@@ -195,11 +202,27 @@ void CheckoutPage::setupUi() {
   searchLayout->addWidget(clearButton);
   rootLayout->addLayout(searchLayout);
 
-  auto *bookingGroup = new QGroupBox("Active bookings", this);
+  detailsContainer = new QWidget(this);
+  detailsContainer->setObjectName("checkoutDetailsContainer");
+  detailsContainer->setAttribute(Qt::WA_StyledBackground, true);
+  detailsContainer->setSizePolicy(QSizePolicy::Expanding,
+                                  QSizePolicy::Expanding);
+  auto *detailsLayout = new QVBoxLayout(detailsContainer);
+  detailsLayout->setContentsMargins(0, 0, 0, 0);
+  detailsLayout->setSpacing(12);
+
+  auto *checkoutGrid = new QGridLayout();
+  checkoutGrid->setContentsMargins(0, 0, 0, 0);
+  checkoutGrid->setHorizontalSpacing(16);
+  checkoutGrid->setVerticalSpacing(12);
+
+  auto *bookingGroup = new QGroupBox("Active bookings", detailsContainer);
+  bookingGroup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   auto *bookingLayout = new QVBoxLayout(bookingGroup);
   bookingLayout->setContentsMargins(10, 14, 10, 10);
 
   bookingTable = new QTableWidget(0, 5, bookingGroup);
+  bookingTable->setObjectName("activeBookingsTable");
   bookingTable->setHorizontalHeaderLabels(
       {"Booking ID", "Customer", "Room", "Check-in", "Expected checkout"});
   bookingTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -207,35 +230,31 @@ void CheckoutPage::setupUi() {
   bookingTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
   bookingTable->setAlternatingRowColors(true);
   bookingTable->verticalHeader()->setVisible(false);
-  bookingTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-  bookingTable->setMinimumHeight(170);
-  bookingTable->setMaximumHeight(220);
+  bookingTable->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
+  bookingTable->horizontalHeader()->setSectionResizeMode(
+      QHeaderView::Interactive);
+  bookingTable->horizontalHeader()->setMinimumSectionSize(55);
+  bookingTable->horizontalHeader()->setStretchLastSection(true);
+  bookingTable->setColumnWidth(0, 85);
+  bookingTable->setColumnWidth(1, 100);
+  bookingTable->setColumnWidth(2, 60);
+  bookingTable->setColumnWidth(3, 95);
+  bookingTable->setColumnWidth(4, 125);
+  bookingTable->verticalHeader()->setDefaultSectionSize(40);
+  bookingTable->setWordWrap(false);
+  bookingTable->setMinimumHeight(280);
+  bookingTable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   bookingLayout->addWidget(bookingTable);
-  rootLayout->addWidget(bookingGroup);
-
-  auto *detailsScroll = new QScrollArea(this);
-  detailsScroll->setObjectName("checkoutDetailsScroll");
-  detailsScroll->setWidgetResizable(true);
-  detailsScroll->setFrameShape(QFrame::NoFrame);
-  detailsScroll->viewport()->setAutoFillBackground(false);
-
-  detailsContainer = new QWidget(detailsScroll);
-  detailsContainer->setObjectName("checkoutDetailsContainer");
-  detailsContainer->setAttribute(Qt::WA_StyledBackground, true);
-  detailsContainer->setSizePolicy(QSizePolicy::Expanding,
-                                  QSizePolicy::Preferred);
-  auto *detailsLayout = new QVBoxLayout(detailsContainer);
-  detailsLayout->setContentsMargins(0, 0, 0, 0);
-  detailsLayout->setSpacing(12);
-
-  auto *topDetailsLayout = new QHBoxLayout();
-  topDetailsLayout->setSpacing(12);
 
   auto *bookingInfoGroup =
       new QGroupBox("Booking information", detailsContainer);
   auto *bookingInfoLayout = new QFormLayout(bookingInfoGroup);
   bookingInfoLayout->setContentsMargins(12, 16, 12, 12);
-  bookingInfoLayout->setSpacing(8);
+  bookingInfoLayout->setSpacing(6);
+  bookingInfoLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+  bookingInfoLayout->setRowWrapPolicy(QFormLayout::WrapLongRows);
+  bookingInfoLayout->setLabelAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+  bookingInfoLayout->setFormAlignment(Qt::AlignTop);
 
   bookingIdLabel = createValueLabel(bookingInfoGroup);
   customerNameLabel = createValueLabel(bookingInfoGroup);
@@ -263,12 +282,14 @@ void CheckoutPage::setupUi() {
       expectedCheckOutLabel);
   bookingInfoLayout->addRow(
       createFieldLabel("Number of nights:", bookingInfoGroup), nightsLabel);
-  topDetailsLayout->addWidget(bookingInfoGroup, 1);
-
   auto *summaryGroup = new QGroupBox("Checkout summary", detailsContainer);
   auto *summaryLayout = new QFormLayout(summaryGroup);
   summaryLayout->setContentsMargins(12, 16, 12, 12);
-  summaryLayout->setSpacing(8);
+  summaryLayout->setSpacing(6);
+  summaryLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+  summaryLayout->setRowWrapPolicy(QFormLayout::WrapLongRows);
+  summaryLayout->setLabelAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+  summaryLayout->setFormAlignment(Qt::AlignTop);
   roomChargeLabel = createValueLabel(summaryGroup);
   serviceChargeLabel = createValueLabel(summaryGroup);
   discountLabel = createValueLabel(summaryGroup);
@@ -287,34 +308,54 @@ void CheckoutPage::setupUi() {
                         depositLabel);
   summaryLayout->addRow(createFieldLabel("Total to pay:", summaryGroup),
                         totalLabel);
-  topDetailsLayout->addWidget(summaryGroup, 1);
-  detailsLayout->addLayout(topDetailsLayout);
-
   auto *serviceGroup = new QGroupBox("Services used", detailsContainer);
+  serviceGroup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   auto *serviceLayout = new QVBoxLayout(serviceGroup);
   serviceLayout->setContentsMargins(10, 16, 10, 10);
   serviceTable = new QTableWidget(0, 3, serviceGroup);
   serviceTable->setHorizontalHeaderLabels({"Service", "Quantity", "Amount"});
   serviceTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  serviceTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+  serviceTable->setSelectionMode(QAbstractItemView::SingleSelection);
   serviceTable->verticalHeader()->setVisible(false);
-  serviceTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-  serviceTable->setMinimumHeight(100);
-  serviceTable->setMaximumHeight(150);
+  serviceTable->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
+  serviceTable->horizontalHeader()->setSectionResizeMode(0,
+                                                         QHeaderView::Stretch);
+  serviceTable->horizontalHeader()->setSectionResizeMode(
+      1, QHeaderView::ResizeToContents);
+  serviceTable->horizontalHeader()->setSectionResizeMode(2,
+                                                         QHeaderView::Stretch);
+  serviceTable->verticalHeader()->setDefaultSectionSize(38);
+  serviceTable->setWordWrap(false);
+  serviceTable->setMinimumHeight(220);
+  serviceTable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   serviceLayout->addWidget(serviceTable);
-  detailsLayout->addWidget(serviceGroup);
+
+  checkoutGrid->addWidget(bookingGroup, 0, 0);
+  checkoutGrid->addWidget(serviceGroup, 0, 1);
+  checkoutGrid->addWidget(bookingInfoGroup, 1, 0);
+  checkoutGrid->addWidget(summaryGroup, 1, 1);
+  checkoutGrid->setColumnStretch(0, 1);
+  checkoutGrid->setColumnStretch(1, 1);
+  checkoutGrid->setRowStretch(0, 5);
+  checkoutGrid->setRowStretch(1, 3);
+  detailsLayout->addLayout(checkoutGrid, 1);
 
   auto *actionsLayout = new QHBoxLayout();
+  actionsLayout->setContentsMargins(0, 0, 0, 0);
   actionsLayout->setSpacing(10);
   auto *paymentLabel = createFieldLabel("Payment method:", detailsContainer);
   paymentMethodComboBox = new QComboBox(detailsContainer);
   paymentMethodComboBox->addItems({"Cash", "Card", "Bank transfer"});
-  paymentMethodComboBox->setMinimumWidth(150);
+  paymentMethodComboBox->setMinimumWidth(260);
+  paymentMethodComboBox->setMaximumWidth(360);
   actionsLayout->addWidget(paymentLabel);
   actionsLayout->addWidget(paymentMethodComboBox);
   actionsLayout->addStretch();
 
   confirmButton = new QPushButton("Confirm checkout", detailsContainer);
-  confirmButton->setMinimumSize(190, 42);
+  confirmButton->setMinimumSize(240, 42);
+  confirmButton->setMaximumWidth(300);
   confirmButton->setCursor(Qt::PointingHandCursor);
   confirmButton->setStyleSheet(
       "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
@@ -327,8 +368,7 @@ void CheckoutPage::setupUi() {
   actionsLayout->addWidget(confirmButton);
   detailsLayout->addLayout(actionsLayout);
 
-  detailsScroll->setWidget(detailsContainer);
-  rootLayout->addWidget(detailsScroll, 1);
+  rootLayout->addWidget(detailsContainer, 1);
 
   connect(searchButton, &QPushButton::clicked, this,
           [this]() { populateBookingTable(searchEdit->text()); });
@@ -383,8 +423,10 @@ void CheckoutPage::populateBookingTable(const QString &filter) {
         new QTableWidgetItem(formatCleanDate(booking.expectedCheckOutDate)));
   }
 
-  if (bookingTable->rowCount() > 0)
+  if (bookingTable->rowCount() > 0) {
     bookingTable->selectRow(0);
+    showBookingDetails(0);
+  }
 }
 
 void CheckoutPage::showBookingDetails(int row) {
@@ -458,7 +500,7 @@ void CheckoutPage::showConfirmDialog() {
   dialog.setObjectName("checkoutConfirmDialog");
   dialog.setWindowTitle("Confirm checkout");
   dialog.setModal(true);
-  dialog.setFixedSize(480, 330);
+  dialog.setFixedSize(540, 350);
   dialog.setStyleSheet(R"(
     QDialog#checkoutConfirmDialog { background: #f8fafc; }
     #checkoutConfirmDialog QLabel { font-family: 'Segoe UI', Arial, sans-serif; }
@@ -524,6 +566,8 @@ void CheckoutPage::showConfirmDialog() {
     field->setStyleSheet("color: #64748b; font-size: 13px; font-weight: 600;");
     auto *data = new QLabel(value, summaryCard);
     data->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    data->setWordWrap(true);
+    data->setTextInteractionFlags(Qt::TextSelectableByMouse);
     data->setStyleSheet(emphasize
                             ? "color: #047857; font-size: 16px; font-weight: 700;"
                             : "color: #0f172a; font-size: 13px; font-weight: 700;");
@@ -539,6 +583,7 @@ void CheckoutPage::showConfirmDialog() {
 
   auto *hint = new QLabel(
       "This will create the bill and make the room available again.", &dialog);
+  hint->setWordWrap(true);
   hint->setStyleSheet("color: #475569; font-size: 12px; font-weight: 500;");
   layout->addWidget(hint);
   layout->addStretch();

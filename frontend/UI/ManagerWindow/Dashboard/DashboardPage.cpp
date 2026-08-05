@@ -15,7 +15,10 @@ QWidget *createCard(const QString &title, QLabel *value, const QString &color)
     layout->setContentsMargins(15, 15, 15, 15);
 
     auto *titleLabel = new QLabel(title, card);
+    titleLabel->setWordWrap(true);
     titleLabel->setStyleSheet("color: #64748b; font-size: 13px; font-weight: bold;");
+    value->setWordWrap(true);
+    value->setTextInteractionFlags(Qt::TextSelectableByMouse);
     value->setStyleSheet("color: #1e293b; font-size: 20px; font-weight: bold; margin-top: 5px;");
     layout->addWidget(titleLabel);
     layout->addWidget(value);
@@ -41,9 +44,13 @@ DashboardPage::DashboardPage(QWidget *parent)
 
     dashboardTable->setHorizontalHeaderLabels({"Booking ID", "Customer Name", "Revenue", "Check-in Date"});
     dashboardTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    dashboardTable->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
     dashboardTable->verticalHeader()->setDefaultSectionSize(40);
     dashboardTable->setAlternatingRowColors(true);
     dashboardTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    dashboardTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    dashboardTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    dashboardTable->setWordWrap(false);
 
     layout->addLayout(summaryLayout);
     layout->addWidget(dashboardTable, 1);

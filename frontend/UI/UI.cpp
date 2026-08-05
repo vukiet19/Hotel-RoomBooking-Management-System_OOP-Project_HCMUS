@@ -6,7 +6,7 @@
 
 MainWindowUi::MainWindowUi(QWidget *parent) : QWidget(parent) {
   setAttribute(Qt::WA_StyledBackground, true);
-  setFixedSize(1000, 800);
+  setFixedSize(1400, 900);
   setWindowTitle("Hotel Management System");
   setObjectName("MyMainWindow");
 }
@@ -47,7 +47,7 @@ void MainWindowUi::setupUi() {
   auto *contentArea = new QWidget(this);
   contentArea->setObjectName("contentArea");
   auto *contentLayout = new QVBoxLayout(contentArea);
-  contentLayout->setContentsMargins(40, 40, 40, 40);
+  contentLayout->setContentsMargins(40, 24, 40, 24);
   contentLayout->setSpacing(20);
 
   actionBar = new QWidget(contentArea);

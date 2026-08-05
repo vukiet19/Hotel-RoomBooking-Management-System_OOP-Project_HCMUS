@@ -14,14 +14,19 @@ TablePage::TablePage(const QStringList &headers, QWidget *parent)
 
   tableWidget->setHorizontalHeaderLabels(headers);
   tableWidget->horizontalHeader()->setSectionResizeMode(
-      QHeaderView::Interactive);
+      headers.size() <= 7 ? QHeaderView::Stretch : QHeaderView::Interactive);
   tableWidget->horizontalHeader()->setMinimumSectionSize(120);
   tableWidget->horizontalHeader()->setDefaultSectionSize(140);
-  tableWidget->horizontalHeader()->setStretchLastSection(true);
+  tableWidget->horizontalHeader()->setStretchLastSection(headers.size() > 7);
+  tableWidget->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
   tableWidget->verticalHeader()->setDefaultSectionSize(45);
   tableWidget->verticalHeader()->setMinimumWidth(40);
   tableWidget->setAlternatingRowColors(true);
   tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+  tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+  tableWidget->setTextElideMode(Qt::ElideRight);
+  tableWidget->setWordWrap(false);
   tableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   tableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
   layout->addWidget(tableWidget);

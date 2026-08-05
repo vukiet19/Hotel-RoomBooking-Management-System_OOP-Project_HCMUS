@@ -3,12 +3,13 @@
 #include "frontend/UX/UX.h"
 #include <QMessageBox>
 #include <QPixmap>
+#include <QVBoxLayout>
 using namespace std;
 
 LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
   setAttribute(Qt::WA_DeleteOnClose, true);
   setAttribute(Qt::WA_StyledBackground, true);
-  setFixedSize(1000, 800);
+  setFixedSize(1400, 900);
   setWindowTitle("Hotel_Management");
   setObjectName("MyMainWindow");
 
@@ -33,21 +34,34 @@ LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
   QPixmap myImage("assets/US.png");
   imageLabel->setPixmap(myImage);
   imageLabel->setScaledContents(true);
-  imageLabel->setGeometry(440, 80, 120, 120); // Centered logo above title
+  imageLabel->setFixedSize(120, 120);
 
-  label1->setGeometry(0, 230, 1000, 60);
+  label1->setFixedHeight(60);
   label1->setAlignment(Qt::AlignCenter);
-
-  subLabel->setGeometry(0, 290, 1000, 30);
+  subLabel->setFixedHeight(30);
   subLabel->setAlignment(Qt::AlignCenter);
-
-  inputBox_user->setGeometry(300, 370, 400, 55);
-  inputBox_pass->setGeometry(300, 445, 400, 55);
-
-  button->setGeometry(300, 530, 400, 55);
-
-  l1->setGeometry(0, 720, 1000, 40);
+  inputBox_user->setFixedSize(500, 55);
+  inputBox_pass->setFixedSize(500, 55);
+  button->setFixedSize(500, 55);
+  l1->setFixedHeight(40);
   l1->setAlignment(Qt::AlignCenter);
+
+  auto *rootLayout = new QVBoxLayout(this);
+  rootLayout->setContentsMargins(80, 60, 80, 30);
+  rootLayout->setSpacing(0);
+  rootLayout->addStretch(2);
+  rootLayout->addWidget(imageLabel, 0, Qt::AlignHCenter);
+  rootLayout->addSpacing(24);
+  rootLayout->addWidget(label1);
+  rootLayout->addWidget(subLabel);
+  rootLayout->addSpacing(42);
+  rootLayout->addWidget(inputBox_user, 0, Qt::AlignHCenter);
+  rootLayout->addSpacing(18);
+  rootLayout->addWidget(inputBox_pass, 0, Qt::AlignHCenter);
+  rootLayout->addSpacing(30);
+  rootLayout->addWidget(button, 0, Qt::AlignHCenter);
+  rootLayout->addStretch(3);
+  rootLayout->addWidget(l1);
 
   // --- TYPOGRAPHY (Dark slate colors for the light background) ---
   label1->setStyleSheet("font-size: 42px; font-weight: bold; color: #0f172a; "
