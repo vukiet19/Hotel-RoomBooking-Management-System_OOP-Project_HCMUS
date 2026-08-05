@@ -1,6 +1,7 @@
 // Đây là file để customer nhập thông tin và nhập phòng
 // FIle này sẽ liên quan đến customer,room,booking . respotory
 #include "customerwin.h"
+#include "../Login/Login.h"
 #include "backend/Manager/DatabaseManager.h"
 #include "backend/Repository/BookingRepository.h"
 #include "backend/Repository/CustomerRepository.h"
@@ -25,6 +26,7 @@ using namespace std;
 
 // Hàm này để chứa thông tin nhập customer infomation
 CustomerInputWindow::CustomerInputWindow(QWidget *parent) : QWidget(parent) {
+  setAttribute(Qt::WA_DeleteOnClose, true);
   setFixedSize(800, 660);
   setWindowTitle("Customer Information");
 
@@ -230,6 +232,7 @@ CustomerWindow::CustomerWindow(QString name, QString phone, QString id,
     : QWidget(parent), customerName(name), ID(id), customerPhone(phone),
       checkInDate(date), datecheckout(dateout), numPeople(people),
       isMembership(isMem) {
+  setAttribute(Qt::WA_DeleteOnClose, true);
   setFixedSize(850, 650);
   setWindowTitle("Select a Room");
 
@@ -541,6 +544,8 @@ void CustomerWindow::onBookRoomClicked() {
         "border-radius: 4px; border: none; font-weight: bold; }");
     msgBox.exec();
 
+    LoginWindow *loginWin = new LoginWindow();
+    loginWin->show();
     this->close();
   } else {
     db.rollback();

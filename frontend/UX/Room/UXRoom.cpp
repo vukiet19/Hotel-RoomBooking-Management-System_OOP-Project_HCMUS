@@ -136,7 +136,7 @@ void MainWindowController::showAddRoomDialog() {
   cbStatus->setStyleSheet(inputStyle);
 
   QLineEdit *txtPrice = new QLineEdit(dialog);
-  txtPrice->setPlaceholderText("EX: 500000, 1000000...");
+  txtPrice->setPlaceholderText("EX: 500000 VND, 1000000 VND...");
   txtPrice->setStyleSheet(inputStyle);
 
   QLineEdit *txtPeople = new QLineEdit(dialog);

@@ -6,6 +6,7 @@
 using namespace std;
 
 LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
+  setAttribute(Qt::WA_DeleteOnClose, true);
   setAttribute(Qt::WA_StyledBackground, true);
   setFixedSize(1000, 800);
   setWindowTitle("Hotel_Management");
