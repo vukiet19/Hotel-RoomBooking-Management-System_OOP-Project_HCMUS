@@ -472,8 +472,8 @@ void CustomerWindow::onBookRoomClicked() {
   QString sqlString =
       QString(
           "SELECT id, id_customer, Point, Type, full_name, phone_number FROM "
-          "Customer WHERE id_customer = '%1'")
-          .arg(ID);
+          "Customer WHERE id_customer = '%1' OR phone_number = '%2'")
+          .arg(ID, customerPhone);
   checkCustomer.exec(sqlString);
 
   int currentTierVal = static_cast<int>(
@@ -481,18 +481,16 @@ void CustomerWindow::onBookRoomClicked() {
 
   // Kiểm tra xem có tồn tại không
   if (checkCustomer.next()) {
-    // Ràng buộc định danh khách hàng
-    QString dbName = checkCustomer.value("full_name").toString();
-    QString dbPhone = checkCustomer.value("phone_number").toString();
+    QString dbId = checkCustomer.value("id_customer").toString().trimmed();
+    QString dbName = checkCustomer.value("full_name").toString().trimmed();
+    QString dbPhone = checkCustomer.value("phone_number").toString().trimmed();
 
-    if (dbName.compare(customerName, Qt::CaseInsensitive) != 0 ||
-        dbPhone != customerPhone) {
+    if (dbId.compare(ID.trimmed(), Qt::CaseInsensitive) != 0 ||
+        dbPhone.compare(customerPhone.trimmed(), Qt::CaseInsensitive) != 0 ||
+        dbName.compare(customerName.trimmed(), Qt::CaseInsensitive) != 0) {
       db.rollback();
-      QMessageBox::warning(
-          this, "Verification Failed",
-          "This ID Card/Passport is already registered with a different Name "
-          "or Phone Number.\n"
-          "All 3 credentials (ID, Name, Phone Number) must match!");
+      QMessageBox::warning(this, "Mismatch Error",
+          "Customer details mismatch! Name, ID, and Phone Number must all match the existing customer record.");
       return;
     }
 

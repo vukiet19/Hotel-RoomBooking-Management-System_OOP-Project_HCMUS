@@ -76,7 +76,7 @@ void MainWindowController::showInventoryTab() {
   btnDelete->setVisible(true);
   btnFilter->setVisible(true);
   if (btnAddToBooking) {
-    btnAddToBooking->setVisible(true);
+    btnAddToBooking->setVisible(false);
   }
 
   btnAdd->disconnect();

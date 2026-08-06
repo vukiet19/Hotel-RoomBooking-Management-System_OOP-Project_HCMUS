@@ -364,7 +364,7 @@ void MainWindowController::showDeleteBookingDialog() {
 void MainWindowController::showFilterBookingDialog() {
   QDialog *dialog = new QDialog(this);
   dialog->setWindowTitle("Filter Bookings");
-  dialog->setFixedSize(520, 640);
+  dialog->setFixedSize(520, 450);
 
   dialog->setStyleSheet(
       "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 "
@@ -933,10 +933,23 @@ void MainWindowController::showAddBookingDialog() {
 
     QSqlQuery custQuery(db);
     custQuery.prepare(
-        "SELECT id, Point, Type FROM Customer WHERE id_customer = :id_cust");
+        "SELECT id, id_customer, full_name, phone_number, Point, Type FROM Customer WHERE id_customer = :id_cust OR phone_number = :phone");
     custQuery.bindValue(":id_cust", id);
+    custQuery.bindValue(":phone", phone);
 
     if (custQuery.exec() && custQuery.next()) {
+      QString dbId = custQuery.value("id_customer").toString().trimmed();
+      QString dbName = custQuery.value("full_name").toString().trimmed();
+      QString dbPhone = custQuery.value("phone_number").toString().trimmed();
+
+      if (dbId.compare(id.trimmed(), Qt::CaseInsensitive) != 0 ||
+          dbPhone.compare(phone.trimmed(), Qt::CaseInsensitive) != 0 ||
+          dbName.compare(customer.trimmed(), Qt::CaseInsensitive) != 0) {
+        QMessageBox::warning(addDialog, "Mismatch Error",
+            "Customer details mismatch! Name, ID, and Phone Number must all match the existing customer record.");
+        return;
+      }
+
       a.setPoint(custQuery.value("Point").toInt());
       int dbTier = custQuery.value("Type").toInt();
       if (dbTier >= 0) {

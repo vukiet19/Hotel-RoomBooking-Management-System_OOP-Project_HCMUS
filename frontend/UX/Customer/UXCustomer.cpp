@@ -13,6 +13,9 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
+#include <QSqlQuery>
+#include <QSqlError>
+#include "backend/Manager/DatabaseManager.h"
 
 // Section 3: Customer Handler
 void MainWindowController::showCustomerTab() {
@@ -40,7 +43,7 @@ void MainWindowController::showCustomerTab() {
 
   Backend::loadTableData(tableCustomer, customerQuery);
   btnAdd->setVisible(false);
-  btnUpdate->setVisible(false);
+  btnUpdate->setVisible(true);
   btnDelete->setVisible(false);
   btnFilter->setVisible(true);
   btnAdd->disconnect();
@@ -49,6 +52,101 @@ void MainWindowController::showCustomerTab() {
   btnFilter->disconnect();
   connect(btnFilter, &QPushButton::clicked, this,
           &MainWindowController::showFilterCustomerDialog);
+  connect(btnUpdate, &QPushButton::clicked, this,
+          &MainWindowController::showUpdateCustomerDialog);
+}
+
+void MainWindowController::showUpdateCustomerDialog() {
+  int currentRow = tableCustomer->currentRow();
+  if (currentRow < 0) {
+    QMessageBox::warning(this, "Selection Required", "Please select a customer to update.");
+    return;
+  }
+
+  QString customerId = tableCustomer->item(currentRow, 1)->text(); // "Customer ID"
+  QString fullName = tableCustomer->item(currentRow, 2)->text(); // "Full Name"
+  QString phone = tableCustomer->item(currentRow, 3)->text(); // "Phone Number"
+
+  QDialog *dialog = new QDialog(this);
+  dialog->setWindowTitle("Update Customer Phone");
+  dialog->setFixedSize(400, 250);
+
+  dialog->setStyleSheet(
+      "QDialog { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #f0f9ff, stop:1 #ffffff); }"
+      "QLabel { color: #1e293b; font-weight: bold; font-size: 14px; }");
+
+  QVBoxLayout *layout = new QVBoxLayout(dialog);
+  
+  QLabel *titleLabel = new QLabel("Update Phone Number", dialog);
+  titleLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #3730a3; margin-bottom: 10px;");
+  layout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+  QFormLayout *formLayout = new QFormLayout();
+  
+  QLineEdit *txtId = new QLineEdit(customerId, dialog);
+  txtId->setReadOnly(true);
+  txtId->setStyleSheet("background-color: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px; color: #475569;");
+
+  QLineEdit *txtName = new QLineEdit(fullName, dialog);
+  txtName->setReadOnly(true);
+  txtName->setStyleSheet("background-color: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px; color: #475569;");
+
+  QLineEdit *txtPhone = new QLineEdit(phone, dialog);
+  txtPhone->setStyleSheet("background-color: #ffffff; border: 2px solid #38bdf8; border-radius: 8px; padding: 8px; color: #0f172a;");
+
+  formLayout->addRow("Customer ID:", txtId);
+  formLayout->addRow("Full Name:", txtName);
+  formLayout->addRow("Phone Number:", txtPhone);
+  
+  layout->addLayout(formLayout);
+
+  QHBoxLayout *buttonLayout = new QHBoxLayout();
+  buttonLayout->setContentsMargins(0, 10, 0, 0);
+  QPushButton *btnSave = new QPushButton("Save", dialog);
+  QPushButton *btnCancel = new QPushButton("Cancel", dialog);
+
+  btnSave->setStyleSheet("QPushButton { background: #6366f1; color: white; padding: 8px 16px; border-radius: 6px; font-weight: bold; }"
+                         "QPushButton:hover { background: #4f46e5; }");
+  btnCancel->setStyleSheet("background-color: #cbd5e1; color: #475569; padding: 8px 16px; border-radius: 6px; font-weight: bold;");
+  
+  btnSave->setCursor(Qt::PointingHandCursor);
+  btnCancel->setCursor(Qt::PointingHandCursor);
+
+  buttonLayout->addWidget(btnCancel);
+  buttonLayout->addWidget(btnSave);
+  layout->addLayout(buttonLayout);
+
+  connect(btnCancel, &QPushButton::clicked, dialog, &QDialog::reject);
+  
+  connect(btnSave, &QPushButton::clicked, [=]() {
+    QString newPhone = txtPhone->text().trimmed();
+    if (newPhone.size() != 10) {
+      QMessageBox::warning(dialog, "Input Error", "Error: Phone Number must be 10 digits long.");
+      return;
+    }
+    for (char g : newPhone.toStdString()) {
+      if (!std::isdigit(g)) {
+        QMessageBox::warning(dialog, "Input Error", "Error: Phone number must contain only numbers.");
+        return;
+      }
+    }
+
+    QSqlDatabase db = DatabaseManager::instance().database();
+    QSqlQuery q(db);
+    q.prepare("UPDATE Customer SET phone_number = :phone WHERE id_customer = :id_cust");
+    q.bindValue(":phone", newPhone);
+    q.bindValue(":id_cust", customerId);
+    
+    if (q.exec()) {
+      QMessageBox::information(dialog, "Success", "Phone number updated successfully.");
+      dialog->accept();
+      showCustomerTab();
+    } else {
+      QMessageBox::critical(dialog, "Database Error", "Failed to update phone number.");
+    }
+  });
+
+  dialog->exec();
 }
 
 void MainWindowController::showFilterCustomerDialog() {

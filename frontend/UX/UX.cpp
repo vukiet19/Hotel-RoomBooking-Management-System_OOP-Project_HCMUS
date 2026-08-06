@@ -88,7 +88,7 @@ void MainWindowController::setActiveButton(QPushButton *clickedButton) {
     btn->style()->polish(btn);
   }
 
-  if (btnAddToBooking && clickedButton != buttonService && clickedButton != buttonInventory) {
+  if (btnAddToBooking && clickedButton != buttonService) {
     btnAddToBooking->setVisible(false);
   }
 }
@@ -122,13 +122,13 @@ static QString formatPrice(double val) {
 
 void MainWindowController::handleDashboardTab() {
   qDebug() << "[DEBUG] handleDashboardTab - Switched to Dashboard tab";
-  setActionBarVisible(false);
+  setActionBarVisible(true);
   stackedWidget->setCurrentIndex(DashboardIndex);
   setActiveButton(buttonDashboard);
   btnAdd->setVisible(false);
   btnUpdate->setVisible(false);
   btnDelete->setVisible(false);
-  btnFilter->setVisible(false);
+  btnFilter->setVisible(true);
 
   DashboardService ds;
   int todayBookings = ds.getTodayBookings();
