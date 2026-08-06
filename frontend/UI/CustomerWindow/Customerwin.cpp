@@ -408,7 +408,11 @@ void CustomerWindow::loadFilteredRooms() {
     tableRoom->setItem(row, 0, new QTableWidgetItem(query.value(0).toString()));
     tableRoom->setItem(row, 1, new QTableWidgetItem(query.value(1).toString()));
     tableRoom->setItem(row, 2, new QTableWidgetItem(query.value(2).toString()));
-    tableRoom->setItem(row, 3, new QTableWidgetItem(query.value(3).toString()));
+    // Display currency in regular decimal notation; QVariant::toString() can
+    // otherwise render a REAL value in scientific notation (for example 5e+05).
+    tableRoom->setItem(
+        row, 3,
+        new QTableWidgetItem(QString::number(query.value(3).toDouble(), 'f', 0)));
     tableRoom->setItem(row, 4, new QTableWidgetItem(query.value(4).toString()));
     row++;
   }
