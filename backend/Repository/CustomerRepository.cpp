@@ -15,14 +15,13 @@ bool CustomerRepository::add(Customer customer)
     QSqlQuery query(db);
 
     // Tạo các ô trống có dấu : phía trước ở các column
-    query.prepare("INSERT INTO Customer (id_customer, full_name, phone_number,Type, id_room, Point)"
-                  "VALUES (:id_customer, :full_name, :phone_number,:Type, :id_room, :Point)");
+    query.prepare("INSERT INTO Customer (id_customer, full_name, phone_number, Type, Point)"
+                  "VALUES (:id_customer, :full_name, :phone_number, :Type, :Point)");
     // Điền vào các ô trống đã tạo
     query.bindValue(":id_customer", QString::fromStdString(customer.getIdcard()));
     query.bindValue(":full_name", QString::fromStdString(customer.getFullname()));
     query.bindValue(":phone_number", QString::fromStdString(customer.getPhone()));
     query.bindValue(":Type", customer.getTier());
-    query.bindValue(":id_room", QString::fromStdString(customer.getIdRoom()));
     query.bindValue(":Point", customer.getPoint());
 
     // Thực thi ghi data lên database
@@ -44,14 +43,13 @@ bool CustomerRepository::update(Customer customer)
 
     // Dùng UPDATE ... SET ... WHERE để cập nhật thông tin
     query.prepare("UPDATE Customer SET full_name = :full_name, phone_number = :phone_number, "
-                  "Type = :Type, id_room = :id_room, Point = :Point WHERE id_customer = :id_customer");
+                  "Type = :Type, Point = :Point WHERE id_customer = :id_customer");
 
     // Điền vào các ô trống đã tạo
     query.bindValue(":id_customer", QString::fromStdString(customer.getIdcard()));
     query.bindValue(":full_name", QString::fromStdString(customer.getFullname()));
     query.bindValue(":phone_number", QString::fromStdString(customer.getPhone()));
     query.bindValue(":Type", customer.getTier());
-    query.bindValue(":id_room", QString::fromStdString(customer.getIdRoom()));
     query.bindValue(":Point", customer.getPoint());
 
     // Thực thi ghi data lên database
@@ -106,11 +104,8 @@ std::vector<Customer> CustomerRepository::filter(QString columnName, QString sea
             std::string name = query.value("full_name").toString().toStdString();
             std::string phone = query.value("phone_number").toString().toStdString();
             int tier = query.value("Type").toInt();
-            std::string roomId = query.value("id_room").toString().toStdString();
-
             // Khởi tạo đối tươgj tạm
             Customer tmp(name, phone, id, static_cast<MembershipTier>(tier));
-            tmp.setIdroom(roomId);
 
             // Them vao danh sach
             resultList.push_back(tmp);

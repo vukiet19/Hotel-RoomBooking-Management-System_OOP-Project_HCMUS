@@ -36,7 +36,6 @@ void MainWindowController::showCustomerTab() {
             WHEN 3 THEN 'Platinum'
             ELSE 'Unknown'
         END AS "Rank",
-        id_room AS "Room ID",
         Point AS "Points"
     FROM Customer
 )";
@@ -238,7 +237,6 @@ void MainWindowController::showFilterCustomerDialog() {
             WHEN 3 THEN 'Platinum'
             ELSE 'Unknown'
         END AS "Rank",
-        id_room AS "Room ID",
         Point AS "Points"
     FROM Customer
 )";
@@ -263,7 +261,6 @@ void MainWindowController::showFilterCustomerDialog() {
             WHEN 3 THEN 'Platinum'
             ELSE 'Unknown'
         END AS "Rank",
-        id_room AS "Room ID",
         Point AS "Points"
     FROM Customer
     )";

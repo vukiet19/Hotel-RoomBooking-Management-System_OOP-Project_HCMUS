@@ -38,8 +38,6 @@ void Customer::setIdcard(string idcard)
     this->idcard = idcard;
 }
 
-void Customer::setIdroom(string idRoom) { this->idRoom = idRoom; }
-
 // getter
 
 int Customer::getId() { return this->id; }
@@ -49,8 +47,6 @@ string Customer::getFullname() { return this->fullname; }
 string Customer::getPhone() { return this->phone; }
 
 string Customer::getIdcard() { return this->idcard; }
-
-string Customer::getIdRoom() { return this->idRoom; }
 
 /// hàm để display(lúc sau có thể đổi để cho phù hợp)
 void Customer::display()

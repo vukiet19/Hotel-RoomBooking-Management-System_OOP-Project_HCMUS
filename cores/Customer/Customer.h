@@ -18,7 +18,6 @@ private:
     string fullname;
     string phone;
     string idcard;
-    string idRoom;
 
 public:
     static int nextId;
@@ -32,14 +31,12 @@ public:
     void setFullname(string fullname);
     void setPhone(string phone);
     void setIdcard(string idcard);
-    void setIdroom(string idRoom);
 
     // getter
     int getId();
     string getFullname();
     string getPhone();
     string getIdcard();
-    string getIdRoom();
 
     void display();
 };

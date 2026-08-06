@@ -517,7 +517,6 @@ void CustomerWindow::onBookRoomClicked() {
   newCustomer.setFullname(customerName.toStdString());
   newCustomer.setPhone(customerPhone.toStdString());
   newCustomer.setPoint(currentPoints);
-  newCustomer.setIdroom(roomId.toStdString());
   newCustomer.setTier(static_cast<MembershipTier>(currentTierVal));
 
   // add hoặc update vào database

@@ -925,10 +925,6 @@ void MainWindowController::showAddBookingDialog() {
 
     CustomerRepository re;
     Customer a(customer.toStdString(), phone.toStdString(), id.toStdString());
-    if (!room.isEmpty()) {
-      a.setIdroom(room.toStdString());
-    }
-
     int realCustomerId = 0;
 
     QSqlQuery custQuery(db);
