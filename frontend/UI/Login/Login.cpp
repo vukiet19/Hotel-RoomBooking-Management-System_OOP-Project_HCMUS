@@ -9,7 +9,7 @@ using namespace std;
 LoginWindow::LoginWindow(QWidget *parent) : QWidget(parent) {
   setAttribute(Qt::WA_DeleteOnClose, true);
   setAttribute(Qt::WA_StyledBackground, true);
-  setFixedSize(1400, 900);
+  setFixedSize(1200, 800);
   setWindowTitle("Hotel_Management");
   setObjectName("MyMainWindow");
 

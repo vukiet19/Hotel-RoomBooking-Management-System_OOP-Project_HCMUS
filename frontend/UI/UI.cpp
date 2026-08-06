@@ -6,7 +6,7 @@
 
 MainWindowUi::MainWindowUi(QWidget *parent) : QWidget(parent) {
   setAttribute(Qt::WA_StyledBackground, true);
-  setFixedSize(1400, 900);
+  setFixedSize(1200, 800);
   setWindowTitle("Hotel Management System");
   setObjectName("MyMainWindow");
 }
