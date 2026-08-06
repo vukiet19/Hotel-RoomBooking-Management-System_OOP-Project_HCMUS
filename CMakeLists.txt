@@ -38,7 +38,8 @@ list(FILTER SOURCES EXCLUDE REGEX "_autogen/")
 if(APPLE)
     add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SOURCES})
 else()
-    add_executable(${PROJECT_NAME} ${SOURCES})
+    add_executable(${PROJECT_NAME} ${SOURCES}
+        CMakeLists.txt)
 endif()
 
 # 4. Include directories & Link Qt libraries
@@ -50,11 +51,19 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Sql Qt6::Widgets)
 
+# ==========================================
 # 5. Copy Database and Assets to build output
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/backend/Database"
-    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+# ==========================================
+
+# Chỉ copy Database NẾU TRONG BUILD CHƯA CÓ (Tránh ghi đè dữ liệu & khóa file)
+if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/Database/hotel.db")
+    file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/backend/Database"
+         DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+endif()
+
+# Copy Assets bình thường
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/assets"
-    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 
 if(APPLE)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
