@@ -315,9 +315,15 @@ CheckoutResult CheckoutService::checkout(int bookingId,
   }
 
   QSqlQuery updateBooking(db);
-  updateBooking.prepare("UPDATE Bookings SET status = 'CHECKED_OUT' "
-                        "WHERE id = :booking_id AND COALESCE(status, "
-                        "'UNCONFIRMED') <> 'CHECKED_OUT'");
+  updateBooking.prepare(
+      "UPDATE Bookings "
+      "SET status = 'CHECKED_OUT', "
+      "    deposit_status = CASE "
+      "      WHEN COALESCE(deposit_status, 'NONE') = 'HELD' THEN 'RETURNED' "
+      "      ELSE COALESCE(deposit_status, 'NONE') "
+      "    END "
+      "WHERE id = :booking_id AND COALESCE(status, 'UNCONFIRMED') <> "
+      "'CHECKED_OUT'");
   updateBooking.bindValue(":booking_id", booking->bookingId);
   if (!updateBooking.exec() || updateBooking.numRowsAffected() != 1) {
     rollbackWithError(updateBooking.lastError().isValid()
