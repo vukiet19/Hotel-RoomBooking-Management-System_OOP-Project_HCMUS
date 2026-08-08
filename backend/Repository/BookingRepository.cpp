@@ -596,13 +596,29 @@ bool BookingRepository::updateBooking(int bookingId, int customerId,
 bool BookingRepository::remove(int bookingId) {
   QSqlDatabase db = DatabaseManager::instance().database();
 
-  // Find associated room number before deleting
+  // Lấy room_number và customer_id trước khi xóa booking
   QString roomNumber;
-  QSqlQuery findRoomQuery(db);
-  findRoomQuery.prepare("SELECT room_number FROM Bookings WHERE id = :id");
-  findRoomQuery.bindValue(":id", bookingId);
-  if (findRoomQuery.exec() && findRoomQuery.next()) {
-    roomNumber = findRoomQuery.value(0).toString();
+  int customerId = -999; // sentinel: chưa load
+  int customerType = 0;
+  {
+    QSqlQuery findQuery(db);
+    findQuery.prepare(
+        "SELECT room_number, customer_id FROM Bookings WHERE id = :id");
+    findQuery.bindValue(":id", bookingId);
+    if (findQuery.exec() && findQuery.next()) {
+      roomNumber = findQuery.value(0).toString();
+      customerId = findQuery.value(1).toInt();
+    }
+  }
+
+  // Kiểm tra loại customer (chỉ cần nếu customerId hợp lệ)
+  if (customerId > 0) {
+    QSqlQuery typeQuery(db);
+    typeQuery.prepare("SELECT Type FROM Customer WHERE id = :cid");
+    typeQuery.bindValue(":cid", customerId);
+    if (typeQuery.exec() && typeQuery.next()) {
+      customerType = typeQuery.value(0).toInt();
+    }
   }
 
   ServiceItemRepository serviceRepo;
@@ -618,7 +634,23 @@ bool BookingRepository::remove(int bookingId) {
     return false;
   }
 
-  // Set room status back to Available
+  // Nếu customer là Temporary (Type = -1, khách vãng lai) thì xóa luôn
+  // khỏi DB — tương tự logic trong CheckoutService::checkout
+  if (customerType == -1 && customerId > 0) {
+    QSqlQuery deleteCustomer(db);
+    deleteCustomer.prepare("DELETE FROM Customer WHERE id = :cid");
+    deleteCustomer.bindValue(":cid", customerId);
+    if (!deleteCustomer.exec()) {
+      qDebug() << "WARN: Failed to delete temporary customer #" << customerId
+               << ":" << deleteCustomer.lastError().text();
+      // Không return false — booking đã xóa thành công, đây chỉ là cleanup
+    } else {
+      qDebug() << "INFO: Temporary customer #" << customerId
+               << "deleted after booking removal.";
+    }
+  }
+
+  // Đặt lại trạng thái phòng về Available
   if (!roomNumber.isEmpty()) {
     QSqlQuery updateRoomQuery(db);
     updateRoomQuery.prepare("UPDATE ListRooms SET status = 'Available' WHERE "
@@ -633,6 +665,7 @@ bool BookingRepository::remove(int bookingId) {
 
   return true;
 }
+
 
 // lấy 1 booking cụ thể từ database
 // Tái tạo lại Booking từ database và caller sẽ tự quản lý cái ô nhớ Booking*
@@ -907,5 +940,45 @@ bool BookingRepository::addServiceItemToBooking(int bookingId,
              << query.lastError().text();
     return false;
   }
+
+  // Cập nhật lại total_price của Booking (room charge + tổng services - deposit)
+  QSqlQuery bQuery(db);
+  bQuery.prepare(R"(
+      SELECT b.check_in_time, b.check_out_time, b.deposit_amount, b.deposit_status, r.base_price
+      FROM Bookings b
+      LEFT JOIN ListRooms r ON b.room_number = r.room_number OR b.room_number = r.room_id
+      WHERE b.id = :bId
+  )");
+  bQuery.bindValue(":bId", bookingId);
+  if (bQuery.exec() && bQuery.next()) {
+    QDateTime inDT = QDateTime::fromString(bQuery.value(0).toString(), Qt::ISODate);
+    if (!inDT.isValid())
+      inDT = QDateTime::fromString(bQuery.value(0).toString(), "yyyy-MM-dd hh:mm:ss");
+    QDateTime outDT = QDateTime::fromString(bQuery.value(1).toString(), Qt::ISODate);
+    if (!outDT.isValid())
+      outDT = QDateTime::fromString(bQuery.value(1).toString(), "yyyy-MM-dd hh:mm:ss");
+    double deposit = (bQuery.value(3).toString() == "HELD")
+                         ? bQuery.value(2).toDouble()
+                         : 0.0;
+    double baseP = bQuery.value(4).toDouble();
+    int nights = inDT.daysTo(outDT);
+    if (nights <= 0) nights = 1;
+
+    QSqlQuery sQuery(db);
+    sQuery.prepare("SELECT SUM(final_price) FROM BookingServiceItems WHERE booking_id = :bId");
+    sQuery.bindValue(":bId", bookingId);
+    double sTotal = 0.0;
+    if (sQuery.exec() && sQuery.next()) {
+      sTotal = sQuery.value(0).toDouble();
+    }
+
+    double newNetTotal = qMax(0.0, (baseP * nights) + sTotal - deposit);
+    QSqlQuery uQuery(db);
+    uQuery.prepare("UPDATE Bookings SET total_price = :tp WHERE id = :bId");
+    uQuery.bindValue(":tp", newNetTotal);
+    uQuery.bindValue(":bId", bookingId);
+    uQuery.exec();
+  }
+
   return true;
 }

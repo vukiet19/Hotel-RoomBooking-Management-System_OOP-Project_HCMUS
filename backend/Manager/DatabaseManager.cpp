@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFile>
 #include <QSqlError>
+#include <QtSql/QSqlQuery>
 
 // Constructor chỉ chạy lần đầu tiên khi gọi hàm instance()
 DatabaseManager::DatabaseManager() {
@@ -67,8 +68,61 @@ bool DatabaseManager::open() {
     // dưới dạng văn bản
     qDebug() << "ERROR: Khong the mo file hotel.db" << db.lastError().text();
     return false;
-  } else
-    return true;
+  }
+
+  // ── Migration: đảm bảo các cột mở rộng luôn tồn tại ──────────────────────
+
+  // 1. Thêm linked_inventory_id vào ServiceCatalog nếu chưa có.
+  //    Cột này map Damage service với furniture item trong Inventory.
+  {
+    QSqlQuery colCheck(db);
+    bool hasCol = false;
+    if (colCheck.exec("PRAGMA table_info(ServiceCatalog)")) {
+      while (colCheck.next()) {
+        if (colCheck.value("name").toString() == "linked_inventory_id") {
+          hasCol = true;
+          break;
+        }
+      }
+    }
+    if (!hasCol) {
+      QSqlQuery alter(db);
+      bool ok = alter.exec(
+          "ALTER TABLE ServiceCatalog ADD COLUMN linked_inventory_id "
+          "INTEGER REFERENCES Inventory(item_id)");
+      if (ok)
+        qDebug() << "Migration: added linked_inventory_id to ServiceCatalog";
+      else
+        qDebug() << "Migration ERROR (linked_inventory_id):" << alter.lastError().text();
+    }
+  }
+
+  // 2. Thêm service_name vào InventoryLog nếu chưa có.
+  //    Cột này lưu tên Damage service khi không map được với Inventory item.
+  {
+    QSqlQuery colCheck(db);
+    bool hasCol = false;
+    if (colCheck.exec("PRAGMA table_info(InventoryLog)")) {
+      while (colCheck.next()) {
+        if (colCheck.value("name").toString() == "service_name") {
+          hasCol = true;
+          break;
+        }
+      }
+    }
+    if (!hasCol) {
+      QSqlQuery alter(db);
+      bool ok = alter.exec(
+          "ALTER TABLE InventoryLog ADD COLUMN service_name TEXT");
+      if (ok)
+        qDebug() << "Migration: added service_name to InventoryLog";
+      else
+        qDebug() << "Migration ERROR (service_name):" << alter.lastError().text();
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  return true;
 }
 
 DatabaseManager::~DatabaseManager() {

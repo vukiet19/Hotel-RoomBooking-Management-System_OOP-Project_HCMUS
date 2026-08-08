@@ -197,15 +197,21 @@ void MainWindowController::showAddServiceToBookingDialog() {
 
   QSqlDatabase db = DatabaseManager::instance().database();
   QSqlQuery query(db);
-  query.prepare("SELECT item_name, category, base_price, is_active FROM "
-                "ServiceCatalog WHERE item_id = :id");
+  query.prepare("SELECT item_name, category, base_price, is_active, "
+                "linked_inventory_id FROM ServiceCatalog WHERE item_id = :id");
   query.bindValue(":id", serviceId);
 
+  int linkedInventoryId = -1;
   if (query.exec() && query.next()) {
     serviceName = query.value("item_name").toString();
     categoryStr = query.value("category").toString();
     basePrice = query.value("base_price").toDouble();
     isActive = query.value("is_active").toBool();
+    // Lấy linked_inventory_id để truyền cho damageItem() nếu là Damage service
+    QVariant linkedId = query.value("linked_inventory_id");
+    if (!linkedId.isNull()) {
+      linkedInventoryId = linkedId.toInt();
+    }
   } else {
     QMessageBox::warning(
         this, "Service not found",
@@ -268,7 +274,7 @@ void MainWindowController::showAddServiceToBookingDialog() {
   qtyLabel->setStyleSheet(
       "color: #1e293b; font-weight: bold; font-size: 14px;");
 
-  if (categoryStr == "Facility" || categoryStr == "Damage") {
+  if (categoryStr == "Facility") {
     quantity->setVisible(false);
     qtyLabel->setVisible(false);
   }
@@ -293,7 +299,7 @@ void MainWindowController::showAddServiceToBookingDialog() {
   connect(
       save, &QPushButton::clicked, &dialog,
       [this, &dialog, serviceId, serviceName, basePrice, booking, quantity,
-       note, categoryStr] {
+       note, categoryStr, linkedInventoryId] {
         const int bookingId = booking->currentData().toInt();
         if (bookingId <= 0 || !isBookingActive(bookingId)) {
           QMessageBox::warning(
@@ -302,9 +308,7 @@ void MainWindowController::showAddServiceToBookingDialog() {
           return;
         }
 
-        int finalQty = (categoryStr == "Facility" || categoryStr == "Damage")
-                           ? 1
-                           : quantity->value();
+        int finalQty = (categoryStr == "Facility") ? 1 : quantity->value();
 
         // RÚT HÀNG TỪ KHO INVENTORY (NẾU LÀ VẬT PHẨM)
         if (categoryStr == "Food" || categoryStr == "Minibar" ||
@@ -336,11 +340,25 @@ void MainWindowController::showAddServiceToBookingDialog() {
           return;
         }
 
+        // Nếu là Damage: trừ kho và ghi log DAMAGE vào InventoryLog.
+        // Truyền linkedInventoryId để damageItem() biết chính xác furniture
+        // nào cần trừ kho và ghi log (thay vì tìm theo tên không khớp).
+        if (categoryStr == "Damage") {
+          InventoryService invService;
+          if (!invService.damageItem(serviceName, finalQty, linkedInventoryId)) {
+            // Nếu item không tồn tại trong Inventory thì chỉ log cảnh báo,
+            // không rollback booking (damage đã được ghi nhận vào booking)
+            qDebug() << "[WARN] Could not log DAMAGE for item:" << serviceName
+                     << "— item may not exist in Inventory table.";
+          }
+        }
+
         QMessageBox::information(&dialog, "Success",
                                  "Service added to the booking successfully.");
         dialog.accept();
         showBookingServicesTab();
       });
+
 
   dialog.exec();
 }
@@ -348,7 +366,7 @@ void MainWindowController::showAddServiceToBookingDialog() {
 void MainWindowController::showAddServiceDialog() {
   QDialog dialog(this);
   dialog.setWindowTitle("Add Service Catalog Item");
-  dialog.setFixedSize(440, 430);
+  dialog.setFixedSize(440, 490);
   dialog.setStyleSheet(dialogStyle());
 
   auto *layout = new QVBoxLayout(&dialog);
@@ -369,6 +387,23 @@ void MainWindowController::showAddServiceDialog() {
   statusCombo->addItems({"Available", "Unavailable"});
   statusCombo->setStyleSheet(inputStyle());
 
+  // ComboBox chọn Inventory item liên kết (chỉ hiện khi category = Damage)
+  auto *cbLinkedInventory = new QComboBox(&dialog);
+  cbLinkedInventory->setStyleSheet(inputStyle());
+  cbLinkedInventory->addItem("-- None (no inventory deduction) --", -1);
+  {
+    QSqlQuery invQ(DatabaseManager::instance().database());
+    if (invQ.exec("SELECT item_id, item_name FROM Inventory ORDER BY item_name")) {
+      while (invQ.next()) {
+        cbLinkedInventory->addItem(
+            QString("%1 — %2").arg(invQ.value(0).toInt()).arg(invQ.value(1).toString()),
+            invQ.value(0).toInt());
+      }
+    }
+  }
+  auto *linkedLabel = new QLabel("Linked Furniture:", &dialog);
+  linkedLabel->setStyleSheet("color: #1e293b; font-weight: bold; font-size: 14px;");
+
   id->setPlaceholderText("Example: SPA001");
   name->setPlaceholderText("Service name");
   price->setPlaceholderText("0.00");
@@ -380,7 +415,19 @@ void MainWindowController::showAddServiceDialog() {
   form->addRow("Category:", category);
   form->addRow("Base price:", price);
   form->addRow("Status:", statusCombo);
+  form->addRow(linkedLabel, cbLinkedInventory);
   layout->addLayout(form);
+
+  // Ẩn/hiện linked inventory theo category
+  bool isDamage = (category->currentText() == "Damage");
+  linkedLabel->setVisible(isDamage);
+  cbLinkedInventory->setVisible(isDamage);
+  connect(category, &QComboBox::currentTextChanged,
+          [linkedLabel, cbLinkedInventory](const QString &cat) {
+            bool dmg = (cat == "Damage");
+            linkedLabel->setVisible(dmg);
+            cbLinkedInventory->setVisible(dmg);
+          });
 
   auto *buttons = new QHBoxLayout();
   buttons->setContentsMargins(0, 15, 0, 0);
@@ -396,7 +443,8 @@ void MainWindowController::showAddServiceDialog() {
 
   connect(cancel, &QPushButton::clicked, &dialog, &QDialog::reject);
   connect(save, &QPushButton::clicked, &dialog,
-          [this, &dialog, id, name, category, price, statusCombo] {
+          [this, &dialog, id, name, category, price, statusCombo,
+           cbLinkedInventory] {
             double basePrice = 0.0;
             if (id->text().trimmed().isEmpty() ||
                 name->text().trimmed().isEmpty()) {
@@ -408,12 +456,22 @@ void MainWindowController::showAddServiceDialog() {
               return;
 
             int is_active = (statusCombo->currentText() == "Available") ? 1 : 0;
+            int linkedInvId = cbLinkedInventory->currentData().toInt();
 
             QSqlDatabase db = DatabaseManager::instance().database();
             QSqlQuery query(db);
-            query.prepare("INSERT INTO ServiceCatalog (item_id, item_name, "
-                          "category, base_price, is_active) "
-                          "VALUES (:id, :name, :cat, :price, :status)");
+            if (linkedInvId > 0 && category->currentText() == "Damage") {
+              query.prepare(
+                  "INSERT INTO ServiceCatalog "
+                  "(item_id, item_name, category, base_price, is_active, linked_inventory_id) "
+                  "VALUES (:id, :name, :cat, :price, :status, :linkedId)");
+              query.bindValue(":linkedId", linkedInvId);
+            } else {
+              query.prepare(
+                  "INSERT INTO ServiceCatalog "
+                  "(item_id, item_name, category, base_price, is_active) "
+                  "VALUES (:id, :name, :cat, :price, :status)");
+            }
             query.bindValue(":id", id->text().trimmed());
             query.bindValue(":name", name->text().trimmed());
             query.bindValue(":cat", category->currentText());
@@ -446,8 +504,8 @@ void MainWindowController::showUpdateServiceDialog() {
 
   QSqlDatabase db = DatabaseManager::instance().database();
   QSqlQuery fetchQuery(db);
-  fetchQuery.prepare("SELECT item_name, category, base_price, is_active FROM "
-                     "ServiceCatalog WHERE item_id = :id");
+  fetchQuery.prepare("SELECT item_name, category, base_price, is_active, "
+                     "linked_inventory_id FROM ServiceCatalog WHERE item_id = :id");
   fetchQuery.bindValue(":id", itemId);
 
   if (!fetchQuery.exec() || !fetchQuery.next()) {
@@ -461,10 +519,13 @@ void MainWindowController::showUpdateServiceDialog() {
   QString currCat = fetchQuery.value("category").toString();
   double currPrice = fetchQuery.value("base_price").toDouble();
   bool currActive = fetchQuery.value("is_active").toBool();
+  // Lấy linked_inventory_id hiện tại (nếu có)
+  QVariant currLinked = fetchQuery.value("linked_inventory_id");
+  int currLinkedId = currLinked.isNull() ? -1 : currLinked.toInt();
 
   QDialog dialog(this);
   dialog.setWindowTitle("Update Service Catalog Item");
-  dialog.setFixedSize(440, 430);
+  dialog.setFixedSize(440, 490);
   dialog.setStyleSheet(dialogStyle());
 
   auto *layout = new QVBoxLayout(&dialog);
@@ -488,6 +549,28 @@ void MainWindowController::showUpdateServiceDialog() {
   statusCombo->setCurrentText(currActive ? "Available" : "Unavailable");
   statusCombo->setStyleSheet(inputStyle());
 
+  // ComboBox chọn Inventory item liên kết (chỉ hiện khi category = Damage)
+  auto *cbLinkedInventory = new QComboBox(&dialog);
+  cbLinkedInventory->setStyleSheet(inputStyle());
+  cbLinkedInventory->addItem("-- None (no inventory deduction) --", -1);
+  {
+    QSqlQuery invQ(DatabaseManager::instance().database());
+    if (invQ.exec("SELECT item_id, item_name FROM Inventory ORDER BY item_name")) {
+      while (invQ.next()) {
+        cbLinkedInventory->addItem(
+            QString("%1 — %2").arg(invQ.value(0).toInt()).arg(invQ.value(1).toString()),
+            invQ.value(0).toInt());
+      }
+    }
+  }
+  // Chọn sẵn giá trị hiện tại nếu có
+  if (currLinkedId > 0) {
+    int idx = cbLinkedInventory->findData(currLinkedId);
+    if (idx >= 0) cbLinkedInventory->setCurrentIndex(idx);
+  }
+  auto *linkedLabel = new QLabel("Linked Furniture:", &dialog);
+  linkedLabel->setStyleSheet("color: #1e293b; font-weight: bold; font-size: 14px;");
+
   id->setReadOnly(true);
   for (auto *input : {id, name, price})
     input->setStyleSheet(inputStyle());
@@ -500,7 +583,19 @@ void MainWindowController::showUpdateServiceDialog() {
   form->addRow("Category:", category);
   form->addRow("Base price:", price);
   form->addRow("Status:", statusCombo);
+  form->addRow(linkedLabel, cbLinkedInventory);
   layout->addLayout(form);
+
+  // Ẩn/hiện linked inventory theo category
+  bool isDamage = (currCat == "Damage");
+  linkedLabel->setVisible(isDamage);
+  cbLinkedInventory->setVisible(isDamage);
+  connect(category, &QComboBox::currentTextChanged,
+          [linkedLabel, cbLinkedInventory](const QString &cat) {
+            bool dmg = (cat == "Damage");
+            linkedLabel->setVisible(dmg);
+            cbLinkedInventory->setVisible(dmg);
+          });
 
   auto *buttons = new QHBoxLayout();
   buttons->setContentsMargins(0, 15, 0, 0);
@@ -517,7 +612,8 @@ void MainWindowController::showUpdateServiceDialog() {
   connect(cancel, &QPushButton::clicked, &dialog, &QDialog::reject);
   connect(
       save, &QPushButton::clicked, &dialog,
-      [this, &dialog, id, name, category, price, statusCombo] {
+      [this, &dialog, id, name, category, price, statusCombo,
+       cbLinkedInventory] {
         double basePrice = 0.0;
         if (name->text().trimmed().isEmpty()) {
           QMessageBox::warning(&dialog, "Invalid input", "Name is required.");
@@ -527,17 +623,28 @@ void MainWindowController::showUpdateServiceDialog() {
           return;
 
         int is_active = (statusCombo->currentText() == "Available") ? 1 : 0;
+        int linkedInvId = cbLinkedInventory->currentData().toInt();
 
         QSqlDatabase db = DatabaseManager::instance().database();
         QSqlQuery query(db);
+        // Luôn cập nhật linked_inventory_id:
+        //   - Damage + chọn item hợp lệ: ghi ID
+        //   - Damage + None: ghi NULL
+        //   - Các category khác: ghi NULL
+        QVariant linkedVal;
+        if (category->currentText() == "Damage" && linkedInvId > 0) {
+          linkedVal = linkedInvId;
+        }
         query.prepare(
             "UPDATE ServiceCatalog SET item_name = :name, category = :cat, "
-            "base_price = :price, is_active = :status WHERE item_id = :id");
+            "base_price = :price, is_active = :status, "
+            "linked_inventory_id = :linkedId WHERE item_id = :id");
         query.bindValue(":id", id->text().trimmed());
         query.bindValue(":name", name->text().trimmed());
         query.bindValue(":cat", category->currentText());
         query.bindValue(":price", basePrice);
         query.bindValue(":status", is_active);
+        query.bindValue(":linkedId", linkedVal);
 
         if (!query.exec()) {
           QMessageBox::critical(&dialog, "Cannot update service",

@@ -128,3 +128,96 @@ bool InventoryService::releaseItem(const QString &itemName, int quantity) {
            << itemName;
   return true;
 }
+
+// Ghi nhận hư hỏng vật phẩm: trừ kho và ghi log DAMAGE
+// linkedInventoryId > 0 : dùng trực tiếp item_id này (Damage service được
+//                         map sẵn với furniture trong Inventory).
+// linkedInventoryId <= 0: fallback tìm theo item_name trong Inventory
+//                         (đường dẫn cũ, giữ backward compat).
+bool InventoryService::damageItem(const QString &itemName, int quantity,
+                                  int linkedInventoryId) {
+  QSqlDatabase db = DatabaseManager::instance().database();
+  QSqlQuery query(db);
+
+  db.transaction();
+
+  int itemId = -1;
+  bool foundInInventory = false;
+
+  if (linkedInventoryId > 0) {
+    // Ưu tiên: dùng linkedInventoryId (Damage service đã map với furniture)
+    query.prepare("SELECT item_id FROM Inventory WHERE item_id = :id");
+    query.bindValue(":id", linkedInventoryId);
+    if (query.exec() && query.next()) {
+      itemId = linkedInventoryId;
+      foundInInventory = true;
+    } else {
+      qDebug() << "[WARN] linkedInventoryId" << linkedInventoryId
+               << "not found in Inventory — falling back to name lookup.";
+    }
+  }
+
+  if (!foundInInventory) {
+    // Fallback: tìm theo item_name (backward compat)
+    query.prepare("SELECT item_id FROM Inventory WHERE item_name = :name");
+    query.bindValue(":name", itemName);
+    if (query.exec() && query.next()) {
+      itemId = query.value(0).toInt();
+      foundInInventory = true;
+    }
+  }
+
+  if (foundInInventory) {
+    // Trừ số lượng trong bảng Inventory (hàng bị hỏng)
+    query.prepare(
+        "UPDATE Inventory SET quantity = quantity - :qty WHERE item_id = :id");
+    query.bindValue(":qty", quantity);
+    query.bindValue(":id", itemId);
+    if (!query.exec()) {
+      qDebug() << "ERROR: Failed to deduct damaged inventory quantity:"
+               << query.lastError().text();
+      db.rollback();
+      return false;
+    }
+  } else {
+    qDebug() << "[INFO] Damage item '" << itemName
+             << "' not found in Inventory — ghi log DAMAGE không kèm trừ kho.";
+  }
+
+  // Ghi log DAMAGE vào InventoryLog.
+  // Nếu item có trong Inventory: dùng item_id thật, không cần service_name.
+  // Nếu không: dùng item_id = NULL và ghi service_name vào cột service_name.
+  QString currentDate =
+      QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+
+  if (foundInInventory) {
+    query.prepare(
+        "INSERT INTO InventoryLog (item_id, quantity, action_type, date) "
+        "VALUES (:id, :qty, 'DAMAGE', :date)");
+    query.bindValue(":id", itemId);
+    query.bindValue(":qty", -quantity);
+    query.bindValue(":date", currentDate);
+  } else {
+    // Thử ghi với item_id = NULL; ghi tên service vào cột service_name
+    query.prepare(
+        "INSERT INTO InventoryLog (item_id, quantity, action_type, date, service_name) "
+        "VALUES (NULL, :qty, 'DAMAGE', :date, :sname)");
+    query.bindValue(":qty", -quantity);
+    query.bindValue(":date", currentDate);
+    query.bindValue(":sname", itemName);
+  }
+
+  if (!query.exec()) {
+    qDebug() << "ERROR: Failed to log DAMAGE action:"
+             << query.lastError().text();
+    db.rollback();
+    return false;
+  }
+
+  db.commit();
+  qDebug() << "SUCCESS: Damage recorded and logged for:" << itemName
+           << "x" << quantity
+           << (foundInInventory ? "(inventory deducted)" : "(log only, no inventory)");
+  return true;
+}
+
