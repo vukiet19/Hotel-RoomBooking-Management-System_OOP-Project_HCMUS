@@ -139,6 +139,11 @@ bool InventoryService::damageItem(const QString &itemName, int quantity,
   QSqlDatabase db = DatabaseManager::instance().database();
   QSqlQuery query(db);
 
+  qDebug() << "[DAMAGE] damageItem() called:"
+           << "serviceName=" << itemName
+           << "quantity=" << quantity
+           << "linkedInventoryId=" << linkedInventoryId;
+
   db.transaction();
 
   int itemId = -1;
@@ -146,24 +151,70 @@ bool InventoryService::damageItem(const QString &itemName, int quantity,
 
   if (linkedInventoryId > 0) {
     // Ưu tiên: dùng linkedInventoryId (Damage service đã map với furniture)
-    query.prepare("SELECT item_id FROM Inventory WHERE item_id = :id");
+    query.prepare("SELECT item_id, item_name FROM Inventory WHERE item_id = :id");
     query.bindValue(":id", linkedInventoryId);
     if (query.exec() && query.next()) {
       itemId = linkedInventoryId;
       foundInInventory = true;
+      qDebug() << "[DAMAGE] Found mapped inventory item:"
+               << "item_id=" << itemId
+               << "item_name=" << query.value("item_name").toString();
     } else {
       qDebug() << "[WARN] linkedInventoryId" << linkedInventoryId
-               << "not found in Inventory — falling back to name lookup.";
+               << "not found in Inventory — falling back to name lookup."
+               << "SQL error:" << query.lastError().text();
     }
+  } else {
+    qDebug() << "[DAMAGE] No linkedInventoryId provided (value=" << linkedInventoryId
+             << "), trying name-based lookup...";
   }
 
   if (!foundInInventory) {
-    // Fallback: tìm theo item_name (backward compat)
+    // Fallback 1: tìm theo item_name chính xác (backward compat)
     query.prepare("SELECT item_id FROM Inventory WHERE item_name = :name");
     query.bindValue(":name", itemName);
     if (query.exec() && query.next()) {
       itemId = query.value(0).toInt();
       foundInInventory = true;
+      qDebug() << "[DAMAGE] Fallback 1: found exact name match, item_id=" << itemId;
+    } else {
+      qDebug() << "[DAMAGE] Fallback 1: no exact name match for '" << itemName << "'";
+    }
+  }
+
+  if (!foundInInventory) {
+    // Fallback 2: Fuzzy match cho các dịch vụ Damage với Furniture
+    // (Xử lý trường hợp data cũ không có linked_inventory_id)
+    query.prepare("SELECT item_id, item_name FROM Inventory WHERE category = 'Furniture'");
+    if (query.exec()) {
+      QString lowerItem = itemName.toLower();
+      QString coreItemName = lowerItem;
+      // Bỏ tiền tố "hư " hoặc "hu " để match tốt hơn (vd: "Hư máy PS5" -> "máy ps5")
+      if (coreItemName.startsWith("hư ")) {
+        coreItemName = coreItemName.mid(3).trimmed();
+      } else if (coreItemName.startsWith("hu ")) {
+        coreItemName = coreItemName.mid(3).trimmed();
+      }
+
+      qDebug() << "[DAMAGE] Fallback 2: fuzzy matching with coreItemName='" << coreItemName << "'";
+
+      while (query.next()) {
+        QString invName = query.value("item_name").toString();
+        QString lowerInv = invName.toLower();
+
+        // Nếu tên Furniture chứa tên Damage (đã bỏ tiền tố) hoặc ngược lại
+        if ((!coreItemName.isEmpty() && lowerInv.contains(coreItemName)) || 
+            lowerItem.contains(lowerInv)) {
+          itemId = query.value("item_id").toInt();
+          foundInInventory = true;
+          qDebug() << "[DAMAGE] Fuzzy matched damage item '" << itemName 
+                   << "' to inventory item '" << invName << "' (item_id=" << itemId << ")";
+          break;
+        }
+      }
+      if (!foundInInventory) {
+        qDebug() << "[DAMAGE] Fallback 2: no fuzzy match found in Furniture category.";
+      }
     }
   }
 
@@ -185,18 +236,18 @@ bool InventoryService::damageItem(const QString &itemName, int quantity,
   }
 
   // Ghi log DAMAGE vào InventoryLog.
-  // Nếu item có trong Inventory: dùng item_id thật, không cần service_name.
-  // Nếu không: dùng item_id = NULL và ghi service_name vào cột service_name.
+  // Luôn ghi service_name để hiển thị matching giữa damage và furniture.
   QString currentDate =
       QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
 
   if (foundInInventory) {
     query.prepare(
-        "INSERT INTO InventoryLog (item_id, quantity, action_type, date) "
-        "VALUES (:id, :qty, 'DAMAGE', :date)");
+        "INSERT INTO InventoryLog (item_id, quantity, action_type, date, service_name) "
+        "VALUES (:id, :qty, 'DAMAGE', :date, :sname)");
     query.bindValue(":id", itemId);
     query.bindValue(":qty", -quantity);
     query.bindValue(":date", currentDate);
+    query.bindValue(":sname", itemName);
   } else {
     // Thử ghi với item_id = NULL; ghi tên service vào cột service_name
     query.prepare(

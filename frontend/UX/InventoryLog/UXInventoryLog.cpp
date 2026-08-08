@@ -23,7 +23,11 @@ void MainWindowController::showInventoryLogTab() {
         SELECT 
             l.log_id AS "Log ID", 
             l.item_id AS "Item ID", 
-            COALESCE(i.item_name, l.service_name, 'Unknown Item') AS "Item Name", 
+            CASE 
+                WHEN i.item_name IS NOT NULL AND l.service_name IS NOT NULL AND l.action_type = 'DAMAGE' THEN i.item_name || ' (' || l.service_name || ')'
+                WHEN i.item_name IS NOT NULL THEN i.item_name
+                ELSE COALESCE(l.service_name, 'Unknown Item')
+            END AS "Item Name", 
             l.quantity AS "Quantity", 
             l.action_type AS "Action Type", 
             l.date AS "Date"
@@ -114,7 +118,11 @@ void MainWindowController::FilterInventoryLogClick() {
 
   QString baseSelect = R"(
         SELECT l.log_id AS 'Log ID', l.item_id AS 'Item ID',
-               COALESCE(i.item_name, l.service_name, 'Unknown Item') AS 'Item Name',
+               CASE 
+                   WHEN i.item_name IS NOT NULL AND l.service_name IS NOT NULL AND l.action_type = 'DAMAGE' THEN i.item_name || ' (' || l.service_name || ')'
+                   WHEN i.item_name IS NOT NULL THEN i.item_name
+                   ELSE COALESCE(l.service_name, 'Unknown Item')
+               END AS 'Item Name',
                l.quantity AS 'Quantity', l.action_type AS 'Action Type', l.date AS 'Date'
         FROM InventoryLog l
         LEFT JOIN Inventory i ON l.item_id = i.item_id

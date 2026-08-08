@@ -209,9 +209,13 @@ void MainWindowController::showAddServiceToBookingDialog() {
     isActive = query.value("is_active").toBool();
     // Lấy linked_inventory_id để truyền cho damageItem() nếu là Damage service
     QVariant linkedId = query.value("linked_inventory_id");
-    if (!linkedId.isNull()) {
+    if (!linkedId.isNull() && linkedId.toInt() > 0) {
       linkedInventoryId = linkedId.toInt();
     }
+    qDebug() << "[ADD_TO_BOOKING] Service:" << serviceName
+             << "Category:" << categoryStr
+             << "linked_inventory_id from DB:" << linkedId
+             << "-> linkedInventoryId=" << linkedInventoryId;
   } else {
     QMessageBox::warning(
         this, "Service not found",
